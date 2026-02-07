@@ -1,0 +1,39 @@
+# Paths
+
+# Paths
+ffpp_root: "./dataset/face_forensics"        # fallback if datasets.ffpp.root not set
+celebdf_root: "./dataset/celeb_df"
+output_root: "./outputs"
+
+# Frame extraction
+frame_sampling_fps: 5
+max_frames_per_video: 100
+image_size: 224
+
+# Training
+batch_size: 16
+num_workers: 4
+lr: 1.0e-4
+weight_decay: 1.0e-4
+epochs: 5
+fusion_mode: two_branch  # options: two_branch, early_fusion
+n_seeds: 1
+
+# Dataset roots (edit these)
+datasets:
+  ffpp:
+    root: "./dataset/face_forensics"
+    real_keywords: ["original", "real", "pristine", "actors", "youtube"]
+    fake_keywords: ["fake", "manipulated", "deepfakes", "faceswap", "neuraltextures", "deepfakedetection", "faceshifter", "face2face"]
+  cdf:
+    root: "./dataset/celeb_df"
+    real_keywords: ["real", "authentic"]
+    fake_keywords: ["fake", "synthesis", "deepfake"]
+
+# Optional sampling (for smoke tests)
+sampling:
+  sample_size: 1000          # number of videos to copy; use a smaller number for quick runs
+  output_root: "./outputs/sampled"  # where sampled videos are stored
+  seed: 42
+  balance_real_fake: true    # try to split evenly between real/fake when labels are found
+

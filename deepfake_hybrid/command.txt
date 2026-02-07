@@ -1,0 +1,51 @@
+# Set up virtual environment and install dependencies
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install --upgrade pip
+pip install "numpy<2"
+pip install -r requirements.txt --upgrade
+
+# Download the FaceForensics++ dataset (c23, all manipulations, videos) and Celeb-DF dataset into the specified directories.
+- python face_forensics_dataset_download.py ./face_forensics  -d all  -c c23  -t videos --server EU2
+- python celeb_df_download.py ./celeb_df -m celeb_df_manifest.json --allow-gdrive
+
+# Sampling (optional, for quick tests)
+- python scripts\sample_dataset.py --config config.yaml --dataset CDF --sample-size 1000 --write-config config.CDF.sampled.yaml
+- python scripts\sample_dataset.py --config config.yaml --dataset FFPP --sample-size 1000 --write-config config.FFPP.sampled.yaml
+
+# Extract frames from the downloaded videos
+- cd deepfake_hybrid
+- python scripts\extract_frames.py --config config.yaml --dataset FFPP --fps 5 --max-frames 100
+- python scripts\extract_frames.py --config config.yaml --dataset CDF  --fps 5 --max-frames 100
+# For sampled datasets
+- python scripts\extract_frames.py --config config.CDF.sampled.yaml --dataset CDF --fps 5 --max-frames 100
+- python scripts\extract_frames.py --config config.FFPP.sampled.yaml --dataset FFPP --fps 5 --max-frames 100
+
+# Build Splits
+- python scripts\build_splits.py --config config.yaml --dataset FFPP
+- python scripts\build_splits.py --config config.yaml --dataset CDF
+# For sampled datasets
+- python scripts\build_splits.py --config config.CDF.sampled.yaml --dataset CDF
+- python scripts\build_splits.py --config config.FFPP.sampled.yaml --dataset FFPP
+
+# Compute FFT cache
+- python scripts\compute_fft_cache.py --config config.yaml --dataset FFPP --num-workers 4
+- python scripts\compute_fft_cache.py --config config.yaml --dataset CDF  --num-workers 4
+# For sampled datasets
+- python scripts\compute_fft_cache.py --config config.CDF.sampled.yaml --dataset CDF --num-workers 4
+- python scripts\compute_fft_cache.py --config config.FFPP.sampled.yaml --dataset FFPP --num-workers 4
+
+# Train the hybrid model
+- (Spatial Xception) : python scripts\train.py --config config.yaml --dataset FFPP --model spatial --pretrained
+- (Frequency) : python scripts\train.py --config config.yaml --dataset FFPP --model freq
+- (Hybrid) : python scripts\train.py --config config.yaml --dataset FFPP --model hybrid --pretrained
+# For sampled datasets
+- (Spatial Xception) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model spatial --pretrained
+- (Frequency) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model freq
+- (Hybrid) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model hybrid --pretrained
+
+# Evaluate the trained model
+- (cross-dataset) python scripts\eval.py --config config.yaml --dataset CDF --model hybrid --checkpoint outputs\runs\hybrid_FFPP_seed0\best.pt
+
+# Full Matrix
+python scripts\run_all.py --config config.yaml --pretrained
