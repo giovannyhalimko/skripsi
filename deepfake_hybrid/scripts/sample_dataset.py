@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 
 import sys
-sys.path.append(str(SRC))
+sys.path.insert(0, str(SRC))
 
 from utils import load_config, ensure_dir  # noqa: E402
 

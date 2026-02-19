@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-sys.path.append(str(SRC))
+sys.path.insert(0, str(SRC))
 
 from utils import load_config, ensure_dir
 

@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-sys.path.append(str(SRC))
+sys.path.insert(0, str(SRC))
 
 from utils import load_config, ensure_dir
 
@@ -69,8 +69,27 @@ def main():
     real_kw = ds_cfg.get("real_keywords", ["real", "original", "pristine", "actors"])
     fake_kw = ds_cfg.get("fake_keywords", ["fake", "manipulated", "synthesis", "deepfake"])
 
+    if not root.exists():
+        raise FileNotFoundError(
+            f"Dataset root not found: {root}\n"
+            "Make sure Step 3 (copy from Drive) completed successfully."
+        )
+
     videos = [p for p in root.rglob("*") if p.suffix.lower() in VIDEO_EXTS]
+
+    if not videos:
+        raise RuntimeError(
+            f"No video files ({', '.join(VIDEO_EXTS)}) found under: {root}\n"
+            "Possible causes:\n"
+            "  1. Step 3 copy failed or is still running\n"
+            "  2. Videos are in a different subfolder structure\n"
+            "     Run: find <root> -name '*.mp4' | head -10\n"
+            "  3. Files have a different extension (e.g. .avi, .mov)"
+        )
+
+    print(f"Found {len(videos)} video files under {root}")
     rows = []
+    unknown_count = 0
     for v in tqdm(videos, desc="videos"):
         label = infer_label(v.parent, real_kw, fake_kw)
         if label is None:
@@ -78,6 +97,7 @@ def main():
             label = infer_label(v, real_kw, fake_kw)
         if label is None:
             print(f"[WARN] Skip (unknown label): {v}")
+            unknown_count += 1
             continue
         vid = v.stem
         out_dir = out_root / vid
@@ -88,8 +108,21 @@ def main():
 
     import pandas as pd
 
-    pd.DataFrame(rows).to_csv(manifest_path, index=False)
+    if unknown_count > 0:
+        print(f"[WARN] {unknown_count} videos skipped (unknown label) — check real_keywords/fake_keywords in config")
+
+    df = pd.DataFrame(rows, columns=["video_id", "label", "frames_dir"])
+    df.to_csv(manifest_path, index=False)
     print(f"Saved manifest to {manifest_path} with {len(rows)} videos")
+
+    if len(rows) == 0:
+        raise RuntimeError(
+            "No videos were written to the manifest.\n"
+            f"  Total videos scanned: {len(videos)}\n"
+            f"  Skipped (unknown label): {unknown_count}\n"
+            f"  Skipped (0 frames extracted / OpenCV error): {len(videos) - unknown_count}\n"
+            "Check [WARN] lines above for details."
+        )
 
 
 if __name__ == "__main__":
