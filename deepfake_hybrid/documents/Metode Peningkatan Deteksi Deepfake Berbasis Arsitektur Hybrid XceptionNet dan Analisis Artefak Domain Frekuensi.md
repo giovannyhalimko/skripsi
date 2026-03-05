@@ -28,7 +28,7 @@
 
 **2025**
 
-**AN ENHANCED DEEFAKE DETECTION METHOD BASED ON HYBRID XCEPTIONNET ARCHITECTURE AND FREQUENCY-DOMAIN ARTIFACT ANALYSIS**
+**AN ENHANCED DEEPFAKE DETECTION METHOD BASED ON HYBRID XCEPTIONNET ARCHITECTURE AND FREQUENCY-DOMAIN ARTIFACT ANALYSIS**
 
 **FINAL RESEARCH**
 
@@ -322,99 +322,111 @@ Penulis,
 
 [2.5.5 Relevansi Spectral Distortions terhadap Penelitian Ini [17](#relevansi-spectral-distortions-terhadap-penelitian-ini)](#relevansi-spectral-distortions-terhadap-penelitian-ini)
 
-[2.6 Spectral Dropoff [17](#spectral-dropoff)](#spectral-dropoff)
+[2.5.6 Spectral Dropoff](#spectral-dropoff)
 
-[2.6.1 Spectral Dropoff pada Citra Alami [18](#spectral-dropoff-pada-citra-alami)](#spectral-dropoff-pada-citra-alami)
+[2.5.6.1 Spectral Dropoff pada Citra Alami](#spectral-dropoff-pada-citra-alami)
 
-[2.6.2 Anomali Spectral Dropoff pada Deepfake [18](#anomali-spectral-dropoff-pada-deepfake)](#anomali-spectral-dropoff-pada-deepfake)
+[2.5.6.2 Anomali Spectral Dropoff pada Deepfake](#anomali-spectral-dropoff-pada-deepfake)
 
-[2.7 Periodic Noise dalam Domain Frekuensi [18](#periodic-noise-dalam-domain-frekuensi)](#periodic-noise-dalam-domain-frekuensi)
+[2.6 Periodic Noise dalam Domain Frekuensi](#periodic-noise-dalam-domain-frekuensi)
 
-[2.7.1 Definisi dan Karakteristik Periodic Noise [19](#definisi-dan-karakteristik-periodic-noise)](#definisi-dan-karakteristik-periodic-noise)
+[2.6.1 Definisi dan Karakteristik Periodic Noise](#definisi-dan-karakteristik-periodic-noise)
 
-[2.7.2 Sumber Periodic Noise pada Citra Deepfake [19](#sumber-periodic-noise-pada-citra-deepfake)](#sumber-periodic-noise-pada-citra-deepfake)
+[2.6.2 Sumber Periodic Noise pada Citra Deepfake](#sumber-periodic-noise-pada-citra-deepfake)
 
-[2.7.3 Peran Periodic Noise dalam Deteksi Deepfake [20](#peran-periodic-noise-dalam-deteksi-deepfake)](#peran-periodic-noise-dalam-deteksi-deepfake)
+[2.6.3 Peran Periodic Noise dalam Deteksi Deepfake](#peran-periodic-noise-dalam-deteksi-deepfake)
 
-[2.7.4 Contoh Pola Periodic Noise pada Spektrum Frekuensi [20](#contoh-pola-periodic-noise-pada-spektrum-frekuensi)](#contoh-pola-periodic-noise-pada-spektrum-frekuensi)
+[2.6.4 Contoh Pola Periodic Noise pada Spektrum Frekuensi](#contoh-pola-periodic-noise-pada-spektrum-frekuensi)
 
-[2.8 Warping dalam Domain Frekuensi [20](#warping-dalam-domain-frekuensi)](#warping-dalam-domain-frekuensi)
+[2.7 Warping dalam Domain Frekuensi](#warping-dalam-domain-frekuensi)
 
-[2.8.1 Low-Frequency Warping [21](#low-frequency-warping)](#low-frequency-warping)
+[2.7.1 Low-Frequency Warping](#low-frequency-warping)
 
-[2.8.2 High-Frequency Warping [21](#high-frequency-warping)](#high-frequency-warping)
+[2.7.2 High-Frequency Warping](#high-frequency-warping)
 
-[2.9 Deep Learning [22](#deep-learning)](#deep-learning)
+[2.8 Deep Learning](#deep-learning)
 
-[2.9.1 Arsitektur Dasar Deep Learning [22](#arsitektur-dasar-deep-learning)](#arsitektur-dasar-deep-learning)
+[2.8.1 Arsitektur Dasar Deep Learning](#arsitektur-dasar-deep-learning)
 
-[2.9.2 Peran Deep Learning dalam Pembuatan Deepfake [22](#peran-deep-learning-dalam-pembuatan-deepfake)](#peran-deep-learning-dalam-pembuatan-deepfake)
+[2.8.2 Peran Deep Learning dalam Pembuatan Deepfake](#peran-deep-learning-dalam-pembuatan-deepfake)
 
-[2.9.3 Peran Deep Learning dalam Deteksi *Deepfake* [23](#peran-deep-learning-dalam-deteksi-deepfake)](#peran-deep-learning-dalam-deteksi-deepfake)
+[2.8.3 Peran Deep Learning dalam Deteksi *Deepfake*](#peran-deep-learning-dalam-deteksi-deepfake)
 
-[2.10 Convolution Neural Network (CNN) [23](#convolution-neural-network-cnn)](#convolution-neural-network-cnn)
+[2.9 Convolution Neural Network (CNN)](#convolution-neural-network-cnn)
 
-[2.11 Depthwise Separable Convolution [25](#depthwise-separable-convolution)](#depthwise-separable-convolution)
+[2.10 Depthwise Separable Convolution](#depthwise-separable-convolution)
 
-[2.11.1 Depthwise Convolution [26](#depthwise-convolution)](#depthwise-convolution)
+[2.10.1 Depthwise Convolution](#depthwise-convolution)
 
-[2.11.2 Pointwise Convolution [26](#pointwise-convolution)](#pointwise-convolution)
+[2.10.2 Pointwise Convolution](#pointwise-convolution)
 
-[2.11.3 Kompleksitas Depthwise Separable Convolution [26](#kompleksitas-depthwise-separable-convolution)](#kompleksitas-depthwise-separable-convolution)
+[2.10.3 Kompleksitas Depthwise Separable Convolution](#kompleksitas-depthwise-separable-convolution)
 
-[2.11.4 Relevansi Depthwise Separable Convolution pada Deteksi Deepfake [27](#relevansi-depthwise-separable-convolution-pada-deteksi-deepfake)](#relevansi-depthwise-separable-convolution-pada-deteksi-deepfake)
+[2.10.4 Relevansi Depthwise Separable Convolution pada Deteksi Deepfake](#relevansi-depthwise-separable-convolution-pada-deteksi-deepfake)
 
-[2.11.5 Integrasi dengan FFT sebagai Channel Tambahan [28](#integrasi-dengan-fft-sebagai-channel-tambahan)](#integrasi-dengan-fft-sebagai-channel-tambahan)
+[2.10.5 Integrasi dengan FFT sebagai Channel Tambahan](#integrasi-dengan-fft-sebagai-channel-tambahan)
 
-[2.12 XceptionNet [28](#xceptionnet)](#xceptionnet)
+[2.11 XceptionNet](#xceptionnet)
 
-[2.12.1 Keunggulan XceptionNet dalam Deteksi Deepfake [28](#keunggulan-xceptionnet-dalam-deteksi-deepfake)](#keunggulan-xceptionnet-dalam-deteksi-deepfake)
+[2.11.1 Arsitektur XceptionNet](#arsitektur-xceptionnet)
 
-[2.13 FaceForensics [28](#faceforensics)](#faceforensics)
+[2.11.2 Transfer Learning pada XceptionNet](#transfer-learning-pada-xceptionnet)
 
-[2.13.1 Struktur dan Komposisi Dataset [28](#struktur-dan-komposisi-dataset)](#struktur-dan-komposisi-dataset)
+[2.11.3 Keunggulan XceptionNet dalam Deteksi Deepfake](#keunggulan-xceptionnet-dalam-deteksi-deepfake)
 
-[2.13.2 Karakteristik Artefak pada FaceForensics++ [29](#karakteristik-artefak-pada-faceforensics)](#karakteristik-artefak-pada-faceforensics)
+[2.12 FaceForensics](#faceforensics)
 
-[2.13.3 Alasan Pemilihan FaceForensics++ untuk Penelitian Ini [30](#alasan-pemilihan-faceforensics-untuk-penelitian-ini)](#alasan-pemilihan-faceforensics-untuk-penelitian-ini)
+[2.12.1 Struktur dan Komposisi Dataset](#struktur-dan-komposisi-dataset)
 
-[2.13.4 Peran FaceForensics++ dalam Sistem Hybrid XceptionNet--FFT [30](#peran-faceforensics-dalam-sistem-hybrid-xceptionnetfft)](#peran-faceforensics-dalam-sistem-hybrid-xceptionnetfft)
+[2.12.2 Karakteristik Artefak pada FaceForensics++](#karakteristik-artefak-pada-faceforensics)
 
-[2.14 Analisis Citra [31](#analisis-citra)](#analisis-citra)
+[2.12.3 Alasan Pemilihan FaceForensics++ untuk Penelitian Ini](#alasan-pemilihan-faceforensics-untuk-penelitian-ini)
 
-[2.15 Analisis Video [32](#analisis-video)](#analisis-video)
+[2.12.4 Peran FaceForensics++ dalam Sistem Hybrid XceptionNet--FFT](#peran-faceforensics-dalam-sistem-hybrid-xceptionnetfft)
 
-[2.16 Preprocessing [33](#preprocessing)](#preprocessing)
+[2.13 Celeb-DF](#celeb-df)
 
-[2.16.1 Tahapan dan Alur Preprocessing [33](#tahapan-dan-alur-preprocessing)](#tahapan-dan-alur-preprocessing)
+[2.13.1 Komposisi dan Karakteristik Dataset](#komposisi-dan-karakteristik-dataset)
 
-[2.16.2 Fast Fourier Transform (FFT) [35](#fast-fourier-transform-fft)](#fast-fourier-transform-fft)
+[2.13.2 Peran Celeb-DF dalam Evaluasi Cross-Dataset](#peran-celeb-df-dalam-evaluasi-cross-dataset)
 
-[2.17 Stochastic Gradient Descent (SGD) [37](#stochastic-gradient-descent-sgd)](#stochastic-gradient-descent-sgd)
+[2.14 Analisis Citra](#analisis-citra)
 
-[2.17.1 Konsep dan Persamaan Pembaruan Parameter [37](#konsep-dan-persamaan-pembaruan-parameter)](#konsep-dan-persamaan-pembaruan-parameter)
+[2.15 Analisis Video](#analisis-video)
 
-[2.17.2 Karakteristik, Kelebihan, dan Tantangan [38](#karakteristik-kelebihan-dan-tantangan)](#karakteristik-kelebihan-dan-tantangan)
+[2.16 Preprocessing](#preprocessing)
 
-[2.17.3 Varian dan Peningkatan SGD yang Umum Dipakai [38](#varian-dan-peningkatan-sgd-yang-umum-dipakai)](#varian-dan-peningkatan-sgd-yang-umum-dipakai)
+[2.16.1 Tahapan dan Alur Preprocessing](#tahapan-dan-alur-preprocessing)
 
-[2.17.4 Relevansi SGD untuk Pelatihan CNN pada Deteksi Deepfake [39](#relevansi-sgd-untuk-pelatihan-cnn-pada-deteksi-deepfake)](#relevansi-sgd-untuk-pelatihan-cnn-pada-deteksi-deepfake)
+[2.16.2 Fast Fourier Transform (FFT)](#fast-fourier-transform-fft)
 
-[2.18 Metrik Evaluasi Model [39](#metrik-evaluasi-model)](#metrik-evaluasi-model)
+[2.17 Optimasi Model](#optimasi-model)
 
-[2.18.1 Confusion Matrix [39](#confusion-matrix)](#confusion-matrix)
+[2.17.1 Stochastic Gradient Descent dan Perkembangannya](#stochastic-gradient-descent-dan-perkembangannya)
 
-[2.18.2 Accuracy [40](#accuracy)](#accuracy)
+[2.17.2 Adam (Adaptive Moment Estimation)](#adam-adaptive-moment-estimation)
 
-[2.18.3 Precision [40](#precision)](#precision)
+[2.17.3 Keunggulan Adam untuk Deteksi Deepfake](#keunggulan-adam-untuk-deteksi-deepfake)
 
-[2.18.4 Recall [40](#recall)](#recall)
+[2.17.4 Binary Cross-Entropy sebagai Fungsi Loss](#binary-cross-entropy-sebagai-fungsi-loss)
 
-[2.18.5 F1-Score [41](#f1-score)](#f1-score)
+[2.18 Metrik Evaluasi Model](#metrik-evaluasi-model)
 
-[2.18.6 Perhitungan Metrik Evaluasi [41](#perhitungan-metrik-evaluasi)](#perhitungan-metrik-evaluasi)
+[2.18.1 Confusion Matrix](#confusion-matrix)
 
-[2.18.7 Relevansi Metrik Evaluasi terhadap Penelitian Deepfake [43](#relevansi-metrik-evaluasi-terhadap-penelitian-deepfake)](#relevansi-metrik-evaluasi-terhadap-penelitian-deepfake)
+[2.18.2 Accuracy](#accuracy)
+
+[2.18.3 Precision](#precision)
+
+[2.18.4 Recall](#recall)
+
+[2.18.5 F1-Score](#f1-score)
+
+[2.18.6 AUC (Area Under the ROC Curve)](#auc-area-under-the-roc-curve)
+
+[2.18.7 Perhitungan Metrik Evaluasi](#perhitungan-metrik-evaluasi)
+
+[2.18.8 Relevansi Metrik Evaluasi terhadap Penelitian Deepfake](#relevansi-metrik-evaluasi-terhadap-penelitian-deepfake)
 
 [2.19 Cross Dataset Generalization [44](#cross-dataset-generalization)](#cross-dataset-generalization)
 
@@ -438,9 +450,15 @@ Penulis,
 
 [3. BAB III TAHAPAN PELAKSANAAN [53](#bab-iii-tahapan-pelaksanaan)](#bab-iii-tahapan-pelaksanaan)
 
-[3.1 Kerangka Umum Penelitian [53](#kerangka-umum-penelitian)](#kerangka-umum-penelitian)
+[3.1 Kerangka Umum Penelitian](#kerangka-umum-penelitian)
 
-[3.2 Dataset dan Sumber Data [53](#dataset-dan-sumber-data)](#dataset-dan-sumber-data)
+[3.1.1 Justifikasi Pendekatan Hybrid](#justifikasi-pendekatan-hybrid)
+
+[3.1.2 FFT sebagai Saluran Tambahan](#fft-sebagai-saluran-tambahan)
+
+[3.1.3 Alur Sistem](#alur-sistem)
+
+[3.2 Dataset dan Sumber Data](#dataset-dan-sumber-data)
 
 [3.2.1 Dataset yang Digunakan [53](#dataset-yang-digunakan)](#dataset-yang-digunakan)
 
@@ -492,7 +510,7 @@ Penulis,
 
 # BAB I PENDAHULUAN
 
-## Latar Belakang
+## 1.1 Latar Belakang
 
 Perkembangan teknologi kecerdasan buatan, khususnya pada bidang *Generative Adversarial Networks* (GAN), telah menghasilkan kemampuan menciptakan citra dan video sintetis yang sangat realistis. Salah satu hasil penerapannya adalah teknologi yang dikenal dengan nama *deepfake*. Teknologi ini mampu memanipulasi video atau audio untuk menampilkan adegan atau ucapan seolah-olah berasal dari orang yang sebenarnya. Meskipun tujuan awal dikembangkannya teknologi ini adalah untuk hiburan, atau penelitian, penyalahgunaan *deepfake* telah menimbulkan ancaman serius, seperti penyebaran informasi palsu (*fake news*), pelanggaran privasi, hingga memicu kerugian di tingkat individu, sosial, hingga geopolitik (P. & S., 2019).
 
@@ -510,7 +528,7 @@ Beberapa penelitian menunjukkan bahwa gabungan antara dua domain ini, dapat meni
 
 Berdasarkan uraian tersebut, terdapat *research gap* dalam penelitian deteksi *deepfake*, yaitu belum adanya pendekatan yang secara terpadu mengombinasikan analisis domain spasial dan domain frekuensi dalam satu arsitektur yang dioptimalkan untuk meningkatkan kemampuan generalisasi lintas *dataset*. Sebagian besar studi terdahulu masih berfokus pada salah satu domain secara terpisah, sehingga performanya menurun ketika diuji pada data dari sumber berbeda. Oleh karena itu, penelitian ini berupaya mengisi kesenjangan tersebut dengan mengusulkan pendekatan *Hybrid XceptionNet--FFT*, yang mengintegrasikan kekuatan analisis spasial dan frekuensi untuk menghasilkan detektor *deepfake* yang lebih akurat, *robust*, dan adaptif terhadap berbagai variasi dataset.
 
-## Rumusan Masalah
+## 1.2 Rumusan Masalah
 
 Berdasarkan latar belakang masalah yang menggarisbawahi kegagalan detektor spasial murni dan potensi yang belum dimanfaatkan dari FDA, permasalahan utama dalam penelitian ini dapat dirumuskan sebagai berikut:
 
@@ -520,7 +538,7 @@ Berdasarkan latar belakang masalah yang menggarisbawahi kegagalan detektor spasi
 
 3.  Seberapa besar peningkatan kinerja, khususnya dalam hal *cross-dataset generalization capability*, yang dicapai oleh model *hybrid* yang diusulkan dibandingkan dengan model deteksi *state-of-the-art* berbasis spasial murni?
 
-## Tujuan
+## 1.3 Tujuan
 
 Tujuan yang hendak dicapai pada penelitian ini adalah:
 
@@ -530,7 +548,7 @@ Tujuan yang hendak dicapai pada penelitian ini adalah:
 
 3.  Menganalisis dan membandingkan kinerja model *hybrid* yang diusulkan dengan model deteksi berbasis spasial murni dalam hal akurasi, presisi, dan kemampuan generalisasi lintas dataset.
 
-## Manfaat
+## 1.4 Manfaat
 
 Penelitian ini diharapkan memberikan kontribusi terhadap komunitas riset, serta diharapkan memberikan manfaat sebagai berikut:
 
@@ -544,7 +562,7 @@ Penelitian ini diharapkan memberikan kontribusi terhadap komunitas riset, serta 
 
 5.  Manfaat Praktis: Menyediakan alat forensik digital yang lebih andal dan akurat. Penegak hukum dan badan pengawas media dapat menggunakan model ini untuk melakukan verifikasi keaslian konten video.
 
-## Ruang Lingkup
+## 1.5 Ruang Lingkup
 
 Ruang lingkup penelitian ini difokuskan pada pengembangan dan evaluasi model deteksi *deepfake* berbasis *hybrid* yang menggabungkan analisis domain spasial dan domain frekuensi. Penelitian ini hanya mencakup tahap perancangan, implementasi, dan evaluasi model deteksi menggunakan dataset publik, tanpa membahas aspek produksi video *deepfake* atau sistem penyebarannya.
 
@@ -562,7 +580,7 @@ Dengan batasan ini, penelitian diarahkan untuk menjaga fokus pada validasi efekt
 
 # BAB II KAJIAN LITERATUR
 
-## Deepfake
+## 2.1 Deepfake
 
 Istilah *deepfake* berasal dari gabungan dua kata, yaitu *deep learning* dan *fake*. Istilah ini merujuk pada konten multimedia, baik berupa gambar, video maupun audio, yang telah dimodifikasi secara visual, atau auditori dengan menggunakan teknik *deep learning* hingga tampak sangat realistid dan menyerupai aslinya (Rana, Nobi, Murali, & Sung, 2022). Secara teknis, *deepfake* memanfaatkan model generatif seperti GAN atau arsitektur *encoder-decoder* untuk memodifikasi konten sintesis seperti *face swapping* atau *face reenactment*.
 
@@ -572,23 +590,23 @@ Tujuan utama dari pengembangan *deepfake* pada awalnya adalah untuk penelitian d
 
 Dalam konteks penelitian ini, istilah *deepfake* merujuk secara khusus pada manipulasi wajah pada citra dan frame video yang dihasilkan menggunakan model generatif berbasis *deep learning*, seperti GAN. Fokus penelitian ditujukan pada pendeteksian artefak visual dan *spektral* pada gambar serta frame video, bukan pada manipulasi audio atau bentuk media sintetis lainnya.
 
-### Ancaman Deepfake
+### 2.1.1 Ancaman Deepfake
 
 *Deepfake* membawa berbagai potensi penyalahgunaan yang serius, mulai dari penyebaran misinformasi, dan propaganda politik, hingga penipuan, dan perusakan reputasi individu melalui konten palsu (Rana, Nobi, Murali, & Sung, 2022). Salah satu bentuk penyalahgunaan yang paling meresahkan adalah *deepfake porn*, yakni video pornografi hasil rekayasa yang menampilkan wajah korban, seolah-olah korban terlibat dalam adegan tersebut. Studi global menunjukkan bahwa 96% dari seluruh video *deepfake* yang beredar di internet, berjenis pornografi, dan menargetkan perempuan (Andira & Susila, 2024). Kondisi ini jelas mengancam privasi, dan kehormatan korban, serta dapat menimbulkan trauma dan kerugian sosial.
 
 Selain ancaman terhadap individu, *deepfake* juga berdampak luas pada aspek sosial, politik, dan keamanan digital. Dalam konteks sosial, *deepfake* dapat menurunkan tingkat kepercayaan publik terhadap media visual, dan memperburuk fenomena *information disorder* di masyarakat (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025). Pada bidang politik, teknologi ini dapat dimanfaatkan untuk menciptakan konten manipulatif yang dapat mengubah persepsi publik terhadap tokoh, atau peristiwa, dan berpotensi digunakan sebagai alat propaganda dan disinformasi terarah (P. & S., 2019; Rana, Nobi, Murali, & Sung, 2022).
 
-### Tantangan dalam Deteksi Deepfake
+### 2.1.2 Tantangan dalam Deteksi Deepfake
 
 Seiring berkembangnya teknologi generatif seperti GAN, *deepfake* semakin sulit dibedakan dari konten asli. Kualitas manipulasi yang semakin sempurna membuat konten palsu nyaris tidak dapat dideteksi baik oleh pengamat manusia, maupun oleh sistem pendeteksi konvensional yang berbasis fitur spasial (Rana, Nobi, Murali, & Sung, 2022). Oleh karena itu, kemampuan untuk mendeteksi dan memverifikasi keaslian konten digital menjadi sangat krusial dalam menjaga integritas informasi serta melindungi keamanan dan kepercayaan publik di era media generatif.
 
 Ancaman tersebut menunjukkan bahwa teknik deteksi konvensional yang hanya mengandalkan informasi spasial tidak lagi memadai untuk menghadapi kualitas *deepfake* modern. Banyak manipulasi visual kini dibuat sangat halus sehingga artefaknya tidak tampak jelas pada domain spasial. Oleh karena itu, diperlukan pendekatan pendeteksian yang lebih komprehensif dengan memanfaatkan informasi frekuensi untuk mengidentifikasi jejak matematis proses generatif, sehingga sistem deteksi menjadi lebih *robust* terhadap berbagai jenis teknik *deepfake* yang terus berkembang.
 
-## Generative Adversarial Networks (GAN)
+## 2.2 Generative Adversarial Networks (GAN)
 
 *Generative Adversarial Networks* (GAN) adalah model *deep learning* yang diperkenalkan pada tahun 2014 yang terdiri dari dua jaringan saraf, generator dan diskriminator. Generator berfungsi untuk menghasilkan data palsu yang menyerupai data asli (misalnya, gambar wajah sintetis), sedangkan diskriminator berfungsi membedakan apakah *input* yang diberikan merupakan data asli atau hasil dari generator. Keduanya dilatih secara bersamaan, dimana generator berusaha untuk "menipu" diskriminator dengan menghasilkan output yang semakin realistis, sementara diskriminator berusaha semakin mahir dalam mendeteksi mana data yang palsu. Dalam proses pelatihan *adversarial* ini, generator secara bertahap belajar pola-pola dari data latih dan meningkatkan kualitas keluarannya hingga sedemikian rupa sehingga diskriminator tidak lagi mampu membedakan data sintetis dengan data asli. Pada saat generator dan diskriminator mencapai keseimbangan, *output* yang dihasilkan generator memiliki kemiripan statistik dan visual yang tinggi dengan data asli. Biasanya setelah proses *training* selesai, komponen diskriminator dapat diabaikan, dan generator digunakan sendiri untuk menghasilkan data baru yang realistis. Arsitektur ini yang membuat GAN sangat efektif dalam memodelkan distribusi data dan menciptakan sampel-sampel baru yang autentik (Rao & Uehara, 2025) (Aduwala, Arigala, Desai, Quan, & Eirinaki, 2021).
 
-### Peran GAN dalam Pembuatan Deepfake
+### 2.2.1 Peran GAN dalam Pembuatan Deepfake
 
 Teknologi *deepfake* umumnya mengacu pada pembuatan media sintetis terutama *swap* wajah pada gambar atau video dengan tingkat kemiripan yang tinggi terhadap aslinya. GAN telah menjadi alat utama dalam banyak metode *deepfake* modern. Dalam konteks ini, GAN dimanfaatkan untuk menghasilkan wajah hasil pertukaran (*face swap*) atau wajah sintetis lainnya yang tampak *fotorealistic* dan sulit dibedakan dari wajah asli oleh mata manusia. Pada teknik *face swapping* berbasis GAN, model generator mempelajari ciri-ciri wajah target dan mencoba menggabungkan wajah sumber ke dalam wajah target sehingga sulit terdeteksi perbedaan, sementara diskriminator berperan mengidentifikasi bagian tidak asli pada hasil gabungan tersebut. Proses *adversarial* ini memastikan hasil *deepfake* memiliki detail visual yang konsisten (misalnya pencahayaan, pose, ekspresi) dan seminimal mungkin artefak yang mencurigakan (Rao & Uehara, 2025).
 
@@ -596,7 +614,7 @@ Metode *deepfake* umumnya menggunakan arsitektur *autoencoder* pada dua wajah (s
 
 Pada proses manipulasi citra, GAN menggunakan operasi *upsampling* untuk meningkatkan resolusi dari citra berukuran kecil menjadi citra beresolusi tinggi. Proses ini sering kali dilakukan dengan metode interpolasi, yang secara matematis menyisipkan nilai nol dalam sinyal. Langkah ini menyebabkan replikasi spektrum frekuensi dari citra sumber ke area frekuensi tinggi yang baru, menghasilkan pola distorsi khas atau *spectral artifacts* (Durall, Keuper, & Keuper, 2020) (Zhang, Karaman, & Chang, 2019). Artefak ini tidak mudah dikenali secara visual di domain spasial, namun dapat diidentifikasi pada domain frekuensi menggunakan transformasi seperti FFT. Dengan demikian, artefak yang muncul akibat proses pembangkitan GAN menjadi dasar dari metode deteksi *deepfake* berbasis analisis frekuensi (Zhang, Karaman, & Chang, 2019).
 
-### Upsampling dan Interpolasi dalam Proses Generatif Deepfake
+### 2.2.2 Upsampling dan Interpolasi dalam Proses Generatif Deepfake
 
 *Upsampling* merupakan proses meningkatkan resolusi citra atau *feature map* pada generator GAN dengan menambah jumlah *pixel* baru. Teknik umum yang digunakan meliputi *nearest-neighbor upsampling*, *bilinear interpolation*, dan *transposed convolution*, yang masing-masing memiliki karakteristik dan kelemahan tersendiri (Odena, Dumoulin, & Olah, 2016; Dai, Lu, & Shen, 2021). Pada arsitektur GAN, khususnya saat menggunakan *transposed convolution*, proses *upsampling* dapat menghasilkan pola artefak periodik seperti *checkerboard patterns* karena distribusi kernel yang tidak merata (Odena, Dumoulin, & Olah, 2016). Selain itu, berbagai studi menunjukkan bahwa citra hasil GAN cenderung memiliki bias frekuensi tinggi yang tidak muncul pada citra natural, sehingga memunculkan pola anomali pada domain frekuensi (Durall, Keuper, & Keuper, 2020).
 
@@ -604,13 +622,25 @@ Interpolasi adalah teknik estimasi nilai *pixel* baru berdasarkan *pixel* di sek
 
 Berbagai studi, menunjukkan bahwa proses *upsampling* pada GAN menjadi sumber utama pola artefak *high-frequency* yang tidak muncul pada citra natural. Artefak inilah yang dapat dimanfaatkan oleh metode deteksi berbasis domain frekuensi seperti *Fast Fourier Transform* (FFT) (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019).
 
-### Artefak yang Dihasilkan Proses Generatif Deepfake
+### 2.2.3 Artefak yang Dihasilkan Proses Generatif Deepfake
 
-\[perlu isi\]
+Proses generatif pada *deepfake*, khususnya yang berbasis GAN, menghasilkan sejumlah artefak khas yang menjadi dasar bagi metode deteksi. Artefak-artefak ini muncul karena keterbatasan model generatif dalam mereplikasi seluruh karakteristik statistik citra alami, baik pada domain spasial maupun domain frekuensi (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019).
 
-## Pendekatan Deteksi Deepfake
+Secara umum, artefak yang dihasilkan proses generatif *deepfake* dapat diklasifikasikan ke dalam dua kategori utama:
 
-### Deteksi Berbasis Domain Spasial
+1.  Artefak Domain Spasial
+
+Artefak spasial merupakan anomali visual yang muncul langsung pada citra atau *frame* video hasil manipulasi. Jenis artefak ini meliputi ketidaksesuaian tekstur kulit antara wajah sintetis dan area sekitarnya, batas *blending* yang tidak halus pada tepi wajah, distorsi geometrik pada area mata, hidung, dan mulut, serta inkonsistensi pencahayaan dan bayangan akibat proses *face warping* (Afchar, Nozick, & Yamagishi, 2018; Rössler, et al., 2019). Meskipun artefak spasial dapat dideteksi oleh model CNN seperti *XceptionNet*, kualitas manipulasi yang semakin tinggi pada GAN modern membuat artefak ini semakin sulit diamati (Rana, Nobi, Murali, & Sung, 2022).
+
+2.  Artefak Domain Frekuensi
+
+Artefak frekuensi muncul akibat ketidakmampuan model generatif dalam mereproduksi distribusi spektral alami citra. Jenis artefak ini meliputi distribusi energi frekuensi tinggi yang berlebihan akibat proses *upsampling*, pola *checkerboard* yang dihasilkan oleh *transposed convolution*, *periodic noise* berupa titik-titik intensitas berulang pada spektrum FFT, serta *spectral dropoff* yang tidak konsisten dengan pola penurunan energi alami (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Odena, Dumoulin, & Olah, 2016). Artefak frekuensi bersifat algoritmik dan lebih stabil dibanding artefak spasial, sehingga menjadi dasar penting bagi metode deteksi berbasis FDA (Qian, Yin, Sheng, Chen, & Shao, 2020).
+
+Kedua kategori artefak ini bersifat komplementer: artefak spasial menangkap inkonsistensi visual yang tampak, sedangkan artefak frekuensi mengungkap jejak matematis proses generatif yang tersembunyi. Oleh karena itu, pendekatan deteksi yang menggabungkan analisis kedua domain dapat menghasilkan sistem yang lebih *robust* dan mampu mendeteksi berbagai jenis manipulasi *deepfake* (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023).
+
+## 2.3 Pendekatan Deteksi Deepfake
+
+### 2.3.1 Deteksi Berbasis Domain Spasial
 
 Pendekatan berbasis domain spasial merupakan metode deteksi *deepfake* yang berfokus pada analisis langsung terhadap *pixel* citra atau *frame* video untuk menemukan pola dan artefak anomali. Detektor spasial bekerja dengan mempelajari perbedaan visual antara konten asli dan konten hasil manipulasi, seperti ketidaksesuaian tekstur kulit, pencahayaan, tepi wajah, bayangan, maupun distorsi geometrik pada area yang telah dimodifikasi (Rana, Nobi, Murali, & Sung, 2022).
 
@@ -620,7 +650,7 @@ Beberapa penelitian mengembangkan model deteksi dengan arsitektur *Convolutional
 
 Secara umum, pendekatan spasial menawarkan performa yang baik dalam kondisi data yang serupa dengan data pelatihan, di mana model dapat mendeteksi kepalsuan ketika dihadapkan dengan data yang sama, namun ketika dihadapkan dengan data yang berbeda, model cenderung bergantung pada artefak permukaan yang spesifik terhadap proses pembuatan tertentu, sehingga akurasi dapat menurun, dan model berpotensi tidak dapat mendeteksi anomali tersebut (Rana, Nobi, Murali, & Sung, 2022). Oleh karena itu, penelitian terbaru mulai mengombinasikan pendekatan spasial dengan FDA untuk meningkatkan *robustness* dan kemampuan generalisasi terhadap berbagai jenis *deepfake* yang semakin kompleks.
 
-### Deteksi Berbasis Domain Frekuensi
+### 2.3.2 Deteksi Berbasis Domain Frekuensi
 
 Pendekatan berbasis domain frekuensi atau FDA merupakan metode deteksi *deepfake* yang terfokus pada menganalisis komponen spektral dari sebuah citra atau video. Berbeda dengan domain spasial yang bekerja secara lansung terhadap intensitas *pixel*, pendekatan dengan FDA mengubah citra ke dalam representasi frekuensi dengan menggunakan transformasi matematis seperti *Fast Fourier Transform* (FFT). Dengan representasi ini, karakteristik yang tersembunyi dan tidak terdeteksi di domain spasial, terutama artefak yang muncul akibat proses generatif seperti *upsampling* atau *interpolation*, dapat terlihat lebih jelas (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Qian, Yin, Sheng, Chen, & Shao, 2020).
 
@@ -630,17 +660,57 @@ Pendekatan berbasis frekuensi memiliki keunggulan utama dalam mendeteksi anomali
 
 Secara keseluruhan, berbagai studi tersebut mengindikasikan bahwa informasi dalam domain frekuensi dapat berfungsi sebagai pelengkap penting bagi pendekatan berbasis spasial, karena mampu menangkap karakteristik yang tidak terlihat secara langsung dalam ruang gambar. Kehadiran artefak spektral yang konsisten di berbagai jenis konten deepfake menjadikan pendekatan berbasis analisis domain frekuensi (FDA) lebih andal dalam menghadapi variasi model generatif maupun perbedaan distribusi data (baik lintas model GAN maupun antar dataset). Oleh karena itu, semakin banyak penelitian terkini yang menggabungkan analisis spasial dan frekuensi dalam satu kerangka kerja deep learning, untuk membangun sistem pendeteksi deepfake yang lebih presisi, tangguh, dan responsif terhadap teknik manipulasi yang terus berkembang.
 
-### Perbandingan Domain Spasial dengan Domain Frekuensi
+### 2.3.3 Perbandingan Domain Spasial dengan Domain Frekuensi
 
-\[perlu isi\]
+Pendekatan deteksi *deepfake* berbasis domain spasial dan domain frekuensi memiliki karakteristik, kekuatan, dan kelemahan yang berbeda. Perbandingan kedua pendekatan ini penting untuk memahami mengapa integrasi keduanya dalam satu arsitektur *hybrid* dapat menghasilkan sistem deteksi yang lebih *robust*.
 
-### Pendekatan Hybrid Domain Spasial-Frekuensi
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Aspek Perbandingan           Domain Spasial                                                            Domain Frekuensi (FDA)
+  ---------------------------- ------------------------------------------------------------------------- -----------------------------------------------------------------------
+  Jenis informasi              Intensitas *pixel*, tekstur, warna, tepi objek                            Distribusi energi frekuensi, pola spektral, amplitudo dan fase
 
-\[perlu isi\]
+  Artefak yang dideteksi       Ketidaksesuaian *blending*, distorsi geometri, inkonsistensi pencahayaan  *Spectral distortions*, *periodic noise*, *checkerboard artifacts*
 
-## Frequency Domain Analysis
+  Sensitifitas                 Tinggi terhadap artefak visual yang tampak                                Tinggi terhadap artefak algoritmik yang tersembunyi
 
-### Konsep Domain Frekuensi
+  Generalisasi lintas dataset  Terbatas, cenderung *overfit* pada tekstur spesifik dataset               Lebih baik, karena artefak frekuensi bersifat universal
+
+  Ketahanan terhadap kompresi  Menurun signifikan pada kompresi tinggi                                  Relatif stabil, pola spektral tetap terdeteksi
+
+  Kelemahan utama              Bergantung pada pola visual yang dapat disamarkan oleh GAN modern         Kehilangan informasi konteks spasial (lokasi artefak)
+
+  Contoh arsitektur            *XceptionNet*, *ResNet*, *MesoNet*                                       FFT-based classifier, DCT-based detector
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  : Tabel 2.9 Perbandingan Pendekatan Domain Spasial dan Domain Frekuensi (Rana, Nobi, Murali, & Sung, 2022; Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019)
+
+> **[INSERT TABLE HERE → `documents/table/tabel_2_9_perbandingan_spasial_frekuensi.html`]**
+
+Dari perbandingan tersebut, terlihat bahwa pendekatan spasial unggul dalam menangkap anomali visual lokal seperti tekstur dan tepi wajah, namun rentan terhadap peningkatan kualitas GAN modern yang semakin mampu menyamarkan artefak visual (Rana, Nobi, Murali, & Sung, 2022). Sebaliknya, pendekatan frekuensi mampu menangkap pola algoritmik yang bersifat universal dan stabil, tetapi kehilangan informasi mengenai lokasi spasial dari artefak tersebut (Durall, Keuper, & Keuper, 2020).
+
+Sifat komplementer kedua domain inilah yang mendorong banyak penelitian terkini untuk menggabungkan analisis spasial dan frekuensi dalam satu kerangka kerja deteksi, guna memperoleh representasi fitur yang lebih lengkap dan *robust* terhadap berbagai variasi *deepfake* (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Qian, Yin, Sheng, Chen, & Shao, 2020).
+
+### 2.3.4 Pendekatan Hybrid Domain Spasial-Frekuensi
+
+Pendekatan *hybrid* domain spasial-frekuensi merupakan strategi deteksi *deepfake* yang mengintegrasikan fitur dari kedua domain dalam satu kerangka kerja *deep learning*. Tujuan utama pendekatan ini adalah memanfaatkan sifat komplementer kedua domain: domain spasial menangkap anomali visual seperti tekstur, tepi, dan konsistensi pencahayaan, sedangkan domain frekuensi mengungkap artefak algoritmik yang tidak terlihat secara visual, seperti *spectral distortions* dan *periodic noise* (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023).
+
+Secara arsitektural, terdapat dua strategi utama dalam mengintegrasikan domain spasial dan frekuensi:
+
+1.  *Early Fusion* (Fusi Awal)
+
+Pada pendekatan *early fusion*, representasi frekuensi digabungkan dengan citra RGB sebagai kanal tambahan sebelum diproses oleh model CNN. Sebagai contoh, spektrum magnitudo FFT ditambahkan sebagai kanal keempat sehingga input model menjadi tensor 4-kanal (RGB + FFT). Dengan demikian, seluruh informasi spasial dan frekuensi diproses secara bersamaan oleh satu jaringan konvolusional. Pendekatan ini memungkinkan model mempelajari interaksi antara fitur spasial dan frekuensi sejak lapisan konvolusi pertama, namun memerlukan arsitektur yang mampu menangani input multi-kanal secara efektif.
+
+2.  *Late Fusion* (Fusi Akhir) / *Two-Branch Architecture*
+
+Pada pendekatan *late fusion*, fitur spasial dan fitur frekuensi diekstraksi secara terpisah oleh dua *branch* atau cabang jaringan yang independen. *Branch* spasial menggunakan model CNN (misalnya *XceptionNet*) untuk mengekstraksi fitur dari citra RGB, sedangkan *branch* frekuensi menggunakan CNN terpisah yang lebih ringan untuk memproses representasi FFT. Fitur-fitur dari kedua *branch* kemudian digabungkan (*concatenated*) dan diteruskan ke lapisan klasifikasi bersama. Pendekatan ini memberikan fleksibilitas dalam memilih arsitektur yang optimal untuk masing-masing domain, serta memungkinkan setiap *branch* untuk mengekstraksi fitur secara spesifik tanpa saling mengganggu (Qian, Yin, Sheng, Chen, & Shao, 2020).
+
+Beberapa penelitian terkini yang mengadopsi pendekatan *hybrid* menunjukkan peningkatan performa yang signifikan. *Alam et al.* melalui *SpecXNet* menggabungkan fitur spasial dari *XceptionNet* dengan informasi frekuensi untuk meningkatkan ketahanan deteksi terhadap berbagai jenis manipulasi (Alam, Tanvir, & Woo, 2025). *Hasanaath et al.* dengan metode FSBI memanfaatkan fitur frekuensi eksplisit untuk memperkuat kemampuan generalisasi lintas *dataset* (Hasanaath, Luqman, Katib, & Anwar, 2023). *Luo dan Wang* mengembangkan mekanisme *frequency-domain masking* yang secara adaptif mengintegrasikan informasi spasial dan frekuensi (Luo & Wang, 2025). Penelitian-penelitian ini menunjukkan bahwa pendekatan *hybrid* secara konsisten menghasilkan performa yang lebih baik dibanding model berbasis domain tunggal, terutama dalam skenario *cross-dataset* dan *cross-GAN*.
+
+Dalam penelitian ini, kedua strategi *fusion* diimplementasikan dan dievaluasi: *early fusion* melalui arsitektur *XceptionNet* 4-kanal (RGB + FFT), serta *late fusion* melalui arsitektur *two-branch* yang menggabungkan *XceptionNet* untuk fitur spasial dan CNN ringan untuk fitur frekuensi. Perbandingan kedua strategi ini bertujuan untuk mengidentifikasi pendekatan yang paling efektif dalam meningkatkan akurasi dan kemampuan generalisasi deteksi *deepfake*.
+
+## 2.4 Frequency Domain Analysis
+
+### 2.4.1 Konsep Domain Frekuensi
 
 Dalam domain spasial, setiap *pixel* merepresentasikan intensitas atau warna di posisi tertentu dalam citra. Sebaliknya, dalam domain frekuensi, citra dianggap sebagai kombinasi dari gelombang *sinusoidal* dengan berbagai frekuensi dan amplitudo yang secara bersama-sama membentuk pola keseluruhan gambar (Durall, Keuper, & Keuper, 2020).
 
@@ -664,13 +734,15 @@ Perbandingan komponen *low-frequency* dan *high-frequency* dalam citra hasil tra
 
   : Tabel 2.1 Komponen dalam Domain Frekuensi (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019)
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_1_komponen_domain_frekuensi.html`]**
+
 ![](./media/media/image3.png){width="6.102777777777778in" height="2.9569444444444444in"}Pendekatan ini menjadi penting dalam deteksi *deepfake* karena proses generatif pada *Generative Adversarial Networks* (GAN) sering kali meninggalkan artefak matematis akibat operasi *upsampling* dan *interpolation*, yang sulit diamati pada domain spasial tetapi muncul jelas pada domain frekuensi (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019).
 
 Gambar 2.2 Representasi Domain Frekuensi (Commons, 2018)
 
 Domain frekuensi menggambarkan bagaimana berbagai gelombang *sinusoidal* dengan frekuensi berbeda menyusun pola citra. Warna terang di pusat spektrum menandakan frekuensi rendah (bentuk global dan pencahayaan), sementara area terang di tepi menandakan frekuensi tinggi (tepi, tekstur, detail halus).
 
-### Transformasi Fourier (FFT)
+### 2.4.2 Transformasi Fourier (FFT)
 
 Transformasi Fourier dua dimensi mengubah citra spasial $f(x,y)$ berukuran dua dimensi$\ M \times N$ menjadi representasi frekuensi $\ F(u,v),$ yang menggambarkan distribusi energi pada berbagai tingkat frekuensi.
 
@@ -698,7 +770,7 @@ Spektrum magnitudo, yang menampilkan intensitas energi pada berbagai tingkat fre
 
 Distribusi energi yang alami pada citra nyata menurun secara bertahap dari pusat ke arah tepi, sedangkan pada citra hasil GAN, pola ini menunjukkan *anomaly* *spektral*, seperti pola radial, *spike*, atau garis periodik yang tidak wajar (Durall, Keuper, & Keuper, 2020; Qian, Yin, Sheng, Chen, & Shao, 2020).
 
-### Artefak Frekuensi pada Citra Deepfake
+### 2.4.3 Artefak Frekuensi pada Citra Deepfake
 
 Penelitian *Durall et al.* menemukan bahwa jaringan GAN gagal mereproduksi distribusi *spektral* alami dari citra nyata karena proses *upsampling* yang tidak ideal. Zhang et al. mengonfirmasi bahwa artefak frekuensi tinggi ini konsisten di berbagai jenis GAN dan dapat berfungsi sebagai "GAN *fingerprints*". (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019)
 
@@ -718,7 +790,9 @@ Selanjutnya, *Qian et al.* memperkenalkan konsep Frequency-aware Clues, yang mem
 
   : Tabel 2.2 Karakteristik Artefak Frekuensi pada Deepfake (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Qian, Yin, Sheng, Chen, & Shao, 2020; Hasanaath, Luqman, Katib, & Anwar, 2023)
 
-### Peran Frequency Domain Analysis dalam Deteksi Deepfake
+> **[INSERT TABLE HERE → `documents/table/tabel_2_2_karakteristik_artefak_frekuensi.html`]**
+
+### 2.4.4 Peran Frequency Domain Analysis dalam Deteksi Deepfake
 
 FDA memainkan peran penting dalam mendeteksi konten sintetis karena artefak yang muncul di domain frekuensi bersifat universal dan algoritmik, bukan semata-mata visual. Pendekatan ini terbukti efektif dalam:
 
@@ -738,17 +812,17 @@ Namun, FDA juga memiliki keterbatasan:
 
 Untuk itu, banyak penelitian terkini menggabungkan FDA dengan jaringan konvolusional seperti *XceptionNet* dalam model *hybrid spatial--frequency*, guna memanfaatkan kekuatan analisis struktural spasial dan deteksi artefak frekuensi secara bersamaan (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024; Luo & Wang, 2025).
 
-## Spectral Distortions dalam Deteksi Deepfake
+## 2.5 Spectral Distortions dalam Deteksi Deepfake
 
 Pendekatan deteksi berbasis domain frekuensi semakin banyak digunakan karena ditemukannya pola *spectral distortions,* yaitu penyimpangan distribusi spektral yang muncul secara sistematis pada citra dan video manipulasi. Distorsi ini muncul akibat keterbatasan model generatif seperti GAN dan *encoder--decoder* CNN dalam mereproduksi distribusi frekuensi yang alami (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019). Berbeda dengan artefak spasial yang dapat disamarkan oleh model generatif generasi baru, *spectral distortions* bersifat lebih stabil karena berakar pada proses matematis dari *up-convolution*, *interpolation*, dan *feature reconstruction* (Durall, Keuper, & Keuper, 2020; Odena, Dumoulin, & Olah, 2016).
 
-### Akar Kemunculan Spectral Distortions pada Model Generatif
+### 2.5.1 Akar Kemunculan Spectral Distortions pada Model Generatif
 
 Model generatif berbasis CNN memiliki keterbatasan dalam mempelajari struktur statistik frekuensi alami. Durall et al. menunjukkan bahwa operasi *up-convolution* sering menghasilkan pola spektral yang tidak selaras dengan citra nyata. Fenomena ini berhubungan langsung dengan *checkerboard artifacts* yang dihasilkan oleh ketidakseimbangan filter dan *stride*, sebagaimana dijelaskan Odena et al. (Durall, Keuper, & Keuper, 2020; Odena, Dumoulin, & Olah, 2016).
 
 Zhang et al. (Zhang, Karaman, & Chang, 2019) juga menemukan bahwa citra hasil sintesis GAN memiliki anomali spektral pada frekuensi menengah hingga tinggi. Pola ini muncul sebagai "sidik jari" khas citra manipulasi (GAN *fingerprints*), yang dapat dikenali tanpa bergantung pada ciri spasial. Kesulitan model generatif mereproduksi distribusi frekuensi ini merupakan penyebab utama mengapa *spectral distortions* tetap muncul bahkan pada GAN canggih seperti *Progressive Growing of GANs* (Karras, Aila, Laine, & Lehtinen, 2018).
 
-### Jenis-Jenis Spectral Distortions pada Gambar dan Video Deepfake 
+### 2.5.2 Jenis-Jenis Spectral Distortions pada Gambar dan Video Deepfake
 
 1.  Distorsi Frekuensi Tinggi
 
@@ -770,7 +844,7 @@ Penelitian FSBI (Hasanaath, Luqman, Katib, & Anwar, 2023) dan SpecXNet (Alam, Ta
 
 *Deepfake* video tidak hanya mengandung anomali frekuensi antar *pixel*, tetapi juga antar *frame*. Kim et al. (Kim, et al., 2025) menemukan bahwa manipulasi wajah menyebabkan inkonsistensi *temporal frequency*. Temuan ini sejalan dengan penelitian sebelumnya oleh Nguyen et al. dan Guera et al., yang menjelaskan bahwa video *deepfake* cenderung memiliki pola frekuensi temporal yang tidak stabil selama pergerakan wajah (Nguyen, Tran, Le, & Nguyen, 2021; Güera & Delp, 2018).
 
-### Relevansi Spectral Distortions untuk Deteksi Deepfake
+### 2.5.3 Relevansi Spectral Distortions untuk Deteksi Deepfake
 
 Analisis domain frekuensi memiliki keunggulan penting dibanding pendekatan berbasis spasial. Rao dan Uehara (Rao & Uehara, 2025) serta Rana et al. (Rana, Nobi, Murali, & Sung, 2022) menegaskan bahwa peningkatan kualitas *deepfake* modern membuat artefak spasial semakin sulit dideteksi, sedangkan *spectral distortions* tetap muncul karena berasal dari keterbatasan struktural model generatif.
 
@@ -792,7 +866,7 @@ Walaupun GAN modern seperti PGGAN atau StyleGAN meningkatkan kualitas visual, st
 
 Seiring meningkatnya video *deepfake*, distorsi spektral temporal menjadi ciri esensial yang sulit dihilangkan oleh model generatif. Pendekatan oleh Kim et al. dan Guera et al. memperkuat pentingnya analisis frekuensi dalam dimensi waktu (Kim, et al., 2025; Güera & Delp, 2018).
 
-### Pendekatan Modern yang Memanfaatkan Spectral Distortions 
+### 2.5.4 Pendekatan Modern yang Memanfaatkan Spectral Distortions
 
 1.  Frequency-Aware CNN
 
@@ -810,25 +884,25 @@ Luo dan Wang mengembangkan mekanisme *frequency-domain masking* yang meningkatka
 
 Metode berbasis frekuensi temporal, seperti yang diperkenalkan Kim et al., memberikan kemampuan untuk mendeteksi anomali antar frame yang tidak dapat ditangkap oleh CNN spasial (Kim, et al., 2025).
 
-### Relevansi Spectral Distortions terhadap Penelitian Ini
+### 2.5.5 Relevansi Spectral Distortions terhadap Penelitian Ini
 
 Integrasi FFT dalam arsitektur deteksi yang memanfaatkan *XceptionNet* memberikan akses langsung pada pola spektral yang tidak dapat ditangkap oleh CNN spasial murni. Dengan memanfaatkan *frequency-aware features*, model tidak hanya mempelajari tekstur dan pola visual, tetapi juga distribusi energi frekuensi yang menjadi ciri khas *deepfake* (Chollet, 2017).
 
 Hal ini sejalan dengan tren penelitian modern seperti SpecXNet, FSBI, dan *Frequency-Aware Deepfake Detection* yang menekankan pentingnya penggabungan domain spasial dan frekuensi untuk meningkatkan performa serta generalisasi (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024).
 
-## Spectral Dropoff
+### 2.5.6 Spectral Dropoff
 
 *Spectral dropoff* merupakan fenomena penurunan energi spektral seiring meningkatnya frekuensi pada representasi frekuensi suatu citra atau video. Pada citra alami, distribusi spektrum frekuensi umumnya mengikuti pola tertentu, di mana energi terbesar berada pada frekuensi rendah dan secara bertahap menurun pada frekuensi yang lebih tinggi. Pola ini mencerminkan karakteristik alami dari struktur visual, seperti bentuk global dan tekstur halus yang tersebar secara konsisten .
 
 Dalam konteks *deepfake*, *spectral dropoff* menjadi salah satu indikator penting karena model generatif berbasis *deep learning* sering gagal mereproduksi penurunan spektral yang alami. Ketidaksesuaian pola *spectral dropoff* ini menyebabkan distribusi frekuensi pada citra hasil manipulasi berbeda dari citra asli, sehingga dapat dimanfaatkan sebagai petunjuk forensik dalam deteksi *deepfake* (Durall, Keuper, & Keuper, 2020; Qian, Yin, Sheng, Chen, & Shao, 2020).
 
-### Spectral Dropoff pada Citra Alami
+#### 2.5.6.1 Spectral Dropoff pada Citra Alami
 
 Pada citra asli, spektrum frekuensi menunjukkan penurunan energi yang relatif halus dan konsisten dari frekuensi rendah ke frekuensi tinggi. Frekuensi rendah merepresentasikan struktur global seperti kontur wajah dan pencahayaan, sedangkan frekuensi tinggi berisi detail lokal seperti tekstur kulit dan tepi objek. Hubungan ini membentuk pola *spectral dropoff* yang stabil dan dapat dianggap sebagai ciri statistik alami dari citra dunia nyata (Gonzalez & Woods, 2018).
 
 Distribusi ini relatif konsisten antar citra alami, meskipun terdapat variasi akibat kondisi pencahayaan, resolusi, dan sensor kamera. Konsistensi inilah yang sering tidak dapat direplikasi secara sempurna oleh model generatif, khususnya pada bagian frekuensi menengah hingga tinggi (Durall, Keuper, & Keuper, 2020; Rana, Nobi, Murali, & Sung, 2022).
 
-### Anomali Spectral Dropoff pada Deepfake
+#### 2.5.6.2 Anomali Spectral Dropoff pada Deepfake
 
 Citra dan video *deepfake* umumnya menunjukkan anomali pada *spectral dropoff*, seperti penurunan energi yang terlalu cepat (*over-smoothing*) atau sebaliknya, energi frekuensi tinggi yang berlebihan dan tidak alami. Anomali ini muncul akibat proses *upsampling*, *decoder convolution*, dan *face blending* pada arsitektur GAN, yang menyebabkan distorsi distribusi spektral (Odena, Dumoulin, & Olah, 2016; Durall, Keuper, & Keuper, 2020).
 
@@ -836,17 +910,17 @@ Beberapa penelitian menemukan bahwa generator GAN cenderung menghasilkan pola sp
 
 Selain itu, *spectral dropoff* yang tidak wajar juga berkaitan dengan kegagalan model generatif dalam mempertahankan konsistensi statistik frekuensi antar *frame* pada video *deepfake*, sehingga membuka peluang deteksi berbasis analisis spektrum temporal dan spasial (Kim, et al., 2025; Rao & Uehara, 2025).
 
-## Periodic Noise dalam Domain Frekuensi
+## 2.6 Periodic Noise dalam Domain Frekuensi
 
 *Periodic noise* merupakan salah satu artefak penting dalam analisis domain frekuensi dan menjadi indikator kuat adanya proses generatif atau manipulatif dalam *deepfake*. Dalam konteks deteksi *deepfake*, *periodic noise* berperan sebagai *frequency fingerprint* yang muncul akibat operasi internal model generatif, terutama pada tahap *upsampling* atau rekonstruksi citra.
 
-### Definisi dan Karakteristik Periodic Noise
+### 2.6.1 Definisi dan Karakteristik Periodic Noise
 
 *Periodic noise* adalah pola gangguan (*noise pattern*) yang muncul secara berulang dan teratur pada citra digital. Pola ini biasanya berbentuk garis-garis atau *grid* berirama yang terlihat secara jelas pada representasi *Fourier Transform* (FFT) sebagai titik-titik (*spikes*) pada lokasi frekuensi tertentu. Gonzales dan Woods (Gonzalez & Woods, 2018) menjelaskan bahwa *noise* periodik terbentuk akibat sinyal gangguan yang terstruktur, sehingga menghasilkan pola simetris pada spektrum frekuensi.
 
 Dalam domain spasial, *periodic noise* seringkali sulit dikenali karena bercampur dengan tekstur natural pada citra. Namun, pada domain frekuensi, pola ini tampak sangat jelas karena FFT memisahkan komponen citra berdasarkan frekuensi dan mengungkapkan pola berulang yang tidak terlihat pada domain spasial (Gonzalez & Woods, 2018; Oppenheim, Schafer, & Buck, 1989).
 
-### Sumber Periodic Noise pada Citra Deepfake
+### 2.6.2 Sumber Periodic Noise pada Citra Deepfake
 
 Pada citra hasil manipulasi *deepfake*, *periodic noise* umumnya muncul sebagai efek samping dari operasi pembangkitan citra (*image synthesis*) yang dilakukan oleh model berbasis CNN generatif, seperti GAN maupun *encoder--decoder*. Sejumlah penelitian telah mengidentifikasi sumber periodic noise sebagai berikut:
 
@@ -866,7 +940,7 @@ Zhang et al. (Zhang, Karaman, & Chang, 2019) melaporkan bahwa proses *blending* 
 
 Penelitian Chadha et al. (Chadha, Kumar, Kashyap, & Gupta, 2021) dan Mejri et al. (Mejri, Papadopoulus, & Aouada, 2021) menunjukkan bahwa model *deepfake* cenderung menghasilkan komponen frekuensi tinggi yang tidak stabil dan berulang, karena generator mengoptimalkan sinyal tekstur untuk tampilan realistis tetapi tidak menangani harmonisasi frekuensi global.
 
-### Peran Periodic Noise dalam Deteksi Deepfake
+### 2.6.3 Peran Periodic Noise dalam Deteksi Deepfake
 
 Periodic noise merupakan fitur penting yang dimanfaatkan dalam banyak penelitian deteksi deepfake berbasis frekuensi. Beberapa alasan mengapa artefak ini sangat relevan:
 
@@ -886,15 +960,15 @@ Representasi FFT menampilkan *periodic noise* sebagai *spike* terlokalisasi pada
 
 Model seperti FSBI \[HASANAATH, 2023\], *Frequency-Aware Deepfake Detection* (Tan, et al., 2024) dan *Frequency-Domain Masking* (Luo & Wang, 2025) menggunakan komponen frekuensi sebagai fitur utama, termasuk artefak periodik, untuk meningkatkan performa deteksi.
 
-### Contoh Pola Periodic Noise pada Spektrum Frekuensi
+### 2.6.4 Contoh Pola Periodic Noise pada Spektrum Frekuensi
 
 *Periodic noise* pada domain frekuensi umumnya muncul sebagai titik-titik terang yang simetris terhadap pusat spektrum akibat sifat *conjugate symmetry* pada transformasi Fourier. Selain itu, noise periodik dapat membentuk garis vertikal atau horizontal pada frekuensi rendah hingga menengah, serta pola grid dua dimensi yang tidak ditemukan pada citra non-manipulatif. Pola-pola ini menunjukkan adanya struktur berulang pada domain spasial yang termanifestasi sebagai *spike* terlokalisasi pada domain frekuensi (Gonzalez & Woods, 2018; Easton Jr., 2010).
 
-## Warping dalam Domain Frekuensi
+## 2.7 Warping dalam Domain Frekuensi
 
 *Warping* merupakan bentuk distorsi geometris yang terjadi akibat proses manipulasi citra atau video, khususnya pada teknik sintesis wajah berbasis *deep learning* seperti *Generative Adversarial Networks* (GAN). Dalam konteks *deepfake*, *warping* sering muncul sebagai konsekuensi dari proses *face alignment*, *resizing*, *warping*, dan *blending* antara wajah sumber dan wajah target. Distorsi ini tidak selalu tampak jelas secara visual, namun dapat dianalisis secara efektif melalui domain frekuensi, baik pada komponen frekuensi rendah (*low-frequency*) maupun frekuensi tinggi (*high-frequency*) (Gonzalez & Woods, 2018; Durall, Keuper, & Keuper, 2020).
 
-### Low-Frequency Warping
+### 2.7.1 Low-Frequency Warping
 
 *Low-frequency warping* mengacu pada distorsi yang memengaruhi komponen frekuensi rendah dari citra, yaitu bagian yang merepresentasikan struktur global seperti bentuk wajah, proporsi objek, dan perubahan pencahayaan secara halus. Pada proses *deepfake*, *low-frequency warping* sering muncul akibat transformasi geometris global, seperti *affine transformation* atau *non-rigid warping*, yang digunakan untuk menyesuaikan pose dan ekspresi wajah sumber dengan wajah target (Rössler, et al., 2019).
 
@@ -902,7 +976,7 @@ Distorsi pada frekuensi rendah biasanya tidak menghasilkan artefak tajam, tetapi
 
 Beberapa penelitian menunjukkan bahwa model generatif cenderung gagal mereproduksi distribusi frekuensi alami secara konsisten, termasuk pada frekuensi rendah, terutama akibat proses *upsampling* dan *decoder* pada GAN (Durall, Keuper, & Keuper, 2020; Odena, Dumoulin, & Olah, 2016). Hal ini menyebabkan pola spektral global yang berbeda antara citra asli dan citra hasil manipulasi.
 
-### High-Frequency Warping
+### 2.7.2 High-Frequency Warping
 
 *High-frequency warping* berkaitan dengan distorsi pada komponen frekuensi tinggi yang merepresentasikan detail lokal seperti tekstur kulit, tepi objek, rambut, dan kerutan wajah. Pada *deepfake*, distorsi ini sering muncul akibat proses *rescaling*, *face swapping*, dan *blending* yang tidak sempurna antara wajah sintetis dan latar belakang asli (Zhang, Karaman, & Chang, 2019; Afchar, Nozick, & Yamagishi, 2018).
 
@@ -910,7 +984,7 @@ Beberapa penelitian menunjukkan bahwa model generatif cenderung gagal mereproduk
 
 Pendekatan deteksi *deepfake* modern banyak memanfaatkan anomali pada frekuensi tinggi, karena perbedaan antara citra asli dan hasil sintesis lebih menonjol pada domain ini. Metode berbasis DCT, FFT, maupun *frequency-aware CNN* menunjukkan bahwa manipulasi wajah sering meninggalkan jejak *warping* pada spektrum frekuensi tinggi yang dapat dipelajari secara efektif oleh model deteksi (Guidice, Guarnera, & Battiato; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024).
 
-## Deep Learning
+## 2.8 Deep Learning
 
 *Deep learning* merupakan cabang dari *machine learning* yang menggunakan jaringan saraf tiruan (*artificial neural networks*) banyak lapisan untuk mengekstraksi representasi fitur secara bertingkat (*feature hierarchy*) dari data mentah seperti citra, suara, atau teks. Pendekatan ini memungkinkan sistem belajar mengenali pola kompleks tanpa memerlukan rekayasa fitur manual (*manual feature engineering*) (LeCun, Bengio, & Hinton).
 
@@ -918,19 +992,19 @@ Teknologi *deep learning* inilah yang kemudian menjadi dasar dari *deepfake*. Me
 
 Salah satu bentuk implementasi paling umum dari *deep learning* adalah *Convolutional Neural Network* (CNN), yang dirancang khusus untuk mengenali pola spasial pada data visual (Chollet, 2017). CNN menggunakan operasi konvolusi untuk mengekstraksi fitur spasial dari citra dan telah menjadi tulang punggung dalam banyak penelitian deteksi *deepfake*, seperti *ResNet* (He, Zhang, Ren, & Sun, 2015) dan *XceptionNet* (Chollet, 2017) merupakan contoh arsitektur CNN yang banyak digunakan karena kemampuannya dalam mempelajari representasi visual yang efisien dan akurat untuk klasifikasi gambar atau deteksi manipulasi wajah.
 
-### Arsitektur Dasar Deep Learning
+### 2.8.1 Arsitektur Dasar Deep Learning
 
 Deep learning tersusun atas jaringan saraf tiruan berlapis banyak (*multi-layer neural networks*) yang bekerja dengan memproses data melalui neuron-neuron buatan. Setiap neuron menerima input, mengalikan bobot (*weight*), menjumlahkan bias, lalu melewatkannya melalui fungsi aktivasi seperti ReLU, *sigmoid*, atau *softmax*. Melalui pelatihan (*training*), jaringan akan melakukan pembaruan bobot (*weight update*) dengan algoritma optimisasi seperti *Stochastic Gradient Descent* (SGD) atau *Adaptive Moment Estimation* (ADAM) sehingga model dapat mempelajari pola dari data (Rössler, et al., 2019).
 
 Dalam konteks pengolahan citra, lapisan awal cenderung mempelajari fitur sederhana seperti tepi, garis, dan tekstur, sedangkan lapisan yang lebih dalam mempelajari pola kompleks seperti bentuk objek, ekspresi wajah, dan struktur wajah manusia. Hierarki pembelajaran fitur inilah yang membuat deep learning unggul pada tugas deteksi visual.
 
-### Peran Deep Learning dalam Pembuatan Deepfake
+### 2.8.2 Peran Deep Learning dalam Pembuatan Deepfake
 
 *Deep learning* merupakan fondasi utama dari teknologi *deepfake* modern. Arsitektur generatif seperti *Generative Adversarial Networks* (GAN) dan *encoder--decoder* digunakan untuk menghasilkan manipulasi wajah, ekspresi, atau gerakan bibir secara realistis. GAN bekerja dengan dua jaringan generator dan *discriminator* yang dilatih secara *adversarial* sehingga generator terus meningkatkan kualitas citra sintetis hingga sangat mirip dengan citra asli (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Chadha, Kumar, Kashyap, & Gupta, 2021).
 
 Kemampuan GAN untuk menghasilkan detail wajah dan tekstur kulit yang halus menjadikan *deepfake* berkembang pesat. Namun proses generatif ini juga meninggalkan jejak matematis seperti artefak frekuensi tinggi dan distorsi *spektral*, yang kemudian menjadi dasar bagi berbagai teknik deteksi berbasis frekuensi (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Qian, Yin, Sheng, Chen, & Shao, 2020).
 
-### Peran Deep Learning dalam Deteksi *Deepfake*
+### 2.8.3 Peran Deep Learning dalam Deteksi *Deepfake*
 
 Selain digunakan untuk menghasilkan *deepfake*, *deep learning* juga berperan penting dalam pendeteksiannya. Arsitektur CNN seperti *ResNet*, *MesoNet*, dan *XceptionNet* digunakan untuk mengekstraksi fitur spasial dan mendeteksi ketidakwajaran visual pada citra wajah palsu (Haq, 2021; Afchar, Nozick, & Yamagishi, 2018; He, Zhang, Ren, & Sun, 2015; Chollet, 2017; Rössler, et al., 2019).
 
@@ -948,7 +1022,7 @@ CNN terbukti efektif mendeteksi anomali yang merupakan artefak umum dari proses 
 
 Dalam penelitian ini, *deep learning* berperan sebagai *ekstraktor* fitur spasial melalui *XceptionNet*, dan dikombinasikan dengan analisis domain frekuensi (FFT) untuk menangkap artefak *spektral* yang tidak dapat dianalisis oleh metode spasial saja (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024; Luo & Wang, 2025).
 
-## Convolution Neural Network (CNN)
+## 2.9 Convolution Neural Network (CNN)
 
 *Convolutional Neural Network* (CNN) merupakan salah satu arsitektur utama dalam *deep learning* yang dirancang khusus untuk mengolah data berbentuk *grid*, seperti citra dua dimensi. CNN memanfaatkan operasi konvolusi untuk mengekstraksi fitur lokal secara hierarkis, sehingga mampu mengenali pola sederhana (tepi, tekstur) pada lapisan awal dan pola yang semakin kompleks (bagian wajah, objek) pada lapisan yang lebih dalam. Pendekatan ini berbeda dengan *multilayer perceptron* biasa karena CNN mengeksploitasi struktur spasial citra melalui *local receptive field* dan *weight sharing* sehingga jumlah parameter menjadi jauh lebih sedikit dan proses pelatihan lebih efisien (Gonzalez & Woods, 2018; LeCun, Bengio, & Hinton).
 
@@ -960,15 +1034,15 @@ Pada konteks deteksi *deepfake*, CNN digunakan untuk mempelajari artefak manipul
 
 Perkembangan terbaru menunjukkan bahwa CNN tidak hanya efektif di domain spasial, tetapi juga dapat digabungkan dengan analisis frekuensi untuk meningkatkan kemampuan generalisasi. Pendekatan seperti *Thinking in Frequency* memanfaatkan CNN yang dioptimalkan untuk memanfaatkan petunjuk pada domain frekuensi (misalnya melalui representasi FFT), sehingga jaringan lebih peka terhadap distorsi tinggi frekuensi yang dihasilkan oleh proses generatif (Qian, Yin, Sheng, Chen, & Shao, 2020). Model lain seperti *SpecXNet*, FSBI, serta serangkaian metode *frequency-aware deepfake detection* memodifikasi arsitektur CNN atau *input*-nya dengan memasukkan kanal-kanal frekuensi tambahan atau modul khusus untuk menonjolkan komponen frekuensi tinggi, sehingga artefak yang tidak terlihat di domain spasial dapat dimanfaatkan secara lebih efektif untuk deteksi (Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024; Luo & Wang, 2025; LeCun, Bengio, & Hinton).
 
-Selain memodelkan informasi spasial, CNN juga sering dikombinasikan dengan pemodelan temporal untuk video. Salah satu pendekatan umum adalah menggunakan CNN untuk mengekstraksi fitur per-*frame*, kemudian meneruskannya ke model sekuensial seperti LSTM atau GRU untuk menangkap dinamika temporal antar-*frame*, misalnya pada gerakan wajah dan sinkronisasi bibir. Pendekatan ini digunakan dalam berbagai karya deteksi *deepfake* berbasis *spatio-temporal*, termasuk yang mempelajari fitur pergerakan wajah dan artefak *temporal* pada video *deepfake* (Nguyen, Tran, Le, & Nguyen, 2021; Güera & Delp, 2018). Pendekatan *spatio-temporal* serupa juga diadopsi oleh Haliassos et al. yang memanfaatkan representasi CNN pada area mulut dan jaringan temporal untuk mendeteksi ketidakwajaran pola gerak bibir pada video sintetis (Haliassos, Vougioukas, Petridis, & Pantic, 2021). Di luar domain forensik media, CNN juga digunakan secara luas bersama model sekuensial untuk tugas-tugas lain seperti peramalan beban dan konsumsi energi, menunjukkan bahwa arsitektur ini bersifat serbaguna dan dapat menangani data spasial maupun *spatio-temporal* di berbagai domain aplikasi (Akinrogunde, Adelakun, Theophilus, & Thomas, 2025).
+Selain memodelkan informasi spasial pada tingkat citra tunggal, CNN juga dapat dikombinasikan dengan pemodelan temporal untuk analisis video. Pendekatan *spatio-temporal* ini menggunakan CNN untuk mengekstraksi fitur per-*frame*, kemudian meneruskannya ke model sekuensial untuk menangkap dinamika temporal antar-*frame* (Nguyen, Tran, Le, & Nguyen, 2021; Güera & Delp, 2018). Namun, dalam konteks penelitian ini, analisis dilakukan pada tingkat *frame* individual, sehingga fokus CNN adalah pada ekstraksi fitur spasial dan frekuensi per-*frame* tanpa pemodelan temporal.
 
-## Depthwise Separable Convolution
+## 2.10 Depthwise Separable Convolution
 
 Arsitektur XceptionNet merupakan salah satu model *Convolutional Neural Network* (CNN) modern yang dirancang untuk meningkatkan efisiensi ekstraksi fitur pada citra dengan memanfaatkan *depthwise separable convolution*. Pendekatan ini diperkenalkan oleh Chollet (Chollet, 2017) sebagai pengembangan dari konsep *Inception Module*, dengan asumsi bahwa korelasi spasial dan korelasi kanal dapat dipisahkan sehingga proses konvolusi dapat dilakukan secara lebih optimal.
 
 Pada penelitian deteksi *deepfake*, *XceptionNet* banyak digunakan karena kemampuannya dalam mengekstraksi pola tekstur halus yang sering muncul sebagai artefak manipulasi wajah (Afchar, Nozick, & Yamagishi, 2018; Rössler, et al., 2019). Berbeda dengan konvolusi standar yang melakukan operasi terhadap seluruh kanal masukan secara bersamaan, *depthwise separable convolution* memecah operasi tersebut menjadi dua tahap, yaitu *depthwise convolution* dan *pointwise convolution*. Pemisahan ini secara signifikan mengurangi jumlah parameter dan kompleksitas komputasi tanpa mengurangi kapasitas representasi fitur, sehingga model menjadi lebih efisien dan stabil saat digunakan pada citra wajah beresolusi tinggi.
 
-### Depthwise Convolution
+### 2.10.1 Depthwise Convolution
 
 Tahap pertama adalah *depthwise convolution*, yaitu proses konvolusi yang dilakukan secara independen pada setiap kanal masukan. Jika suatu citra masukan memiliki $M\$kanal dan kernel konvolusi berukuran $K \times K$, maka operasi depthwise akan menerapkan satu kernel per kanal secara terpisah. Secara matematis, *depthwise convolution* dapat dituliskan sebagai:
 
@@ -984,7 +1058,7 @@ dengan:
 
 Pendekatan ini memungkinkan model mengekstraksi pola tekstur lokal secara lebih rinci, terutama pada bagian wajah yang sering mengandung artefak seperti *blending* dan *warping* pada deepfake (Afchar, Nozick, & Yamagishi, 2018).
 
-### Pointwise Convolution
+### 2.10.2 Pointwise Convolution
 
 Tahap kedua adalah *pointwise convolution*, yaitu penerapan kernel berukuran $1 \times 1$ untuk menggabungkan kembali seluruh kanal hasil depthwise menjadi satu set fitur baru. Tahap ini bertujuan menangkap korelasi antarkanal yang tidak diproses pada tahap sebelumnya. Secara matematis, *pointwise convolution* dapat dituliskan sebagai:
 
@@ -998,7 +1072,7 @@ dengan:
 
 Tahap ini membentuk representasi fitur yang lebih kaya karena menggabungkan informasi dari seluruh kanal, sekaligus tetap menjaga efisiensi komputasi.
 
-### Kompleksitas Depthwise Separable Convolution
+### 2.10.3 Kompleksitas Depthwise Separable Convolution
 
 Perbedaan signifikan antara konvolusi biasa dan depthwise separable convolution terletak pada kompleksitas komputasi.
 
@@ -1022,7 +1096,7 @@ $$CDSC \ll Cstandard\ $$
 
 Efisiensi ini sangat relevan untuk penelitian deteksi *deepfake* yang menggunakan data dalam jumlah besar dan memerlukan proses pelatihan berulang-ulang.
 
-### Relevansi Depthwise Separable Convolution pada Deteksi Deepfake
+### 2.10.4 Relevansi Depthwise Separable Convolution pada Deteksi Deepfake
 
 *XceptionNet* terbukti efektif untuk pendeteksian manipulasi wajah karena:
 
@@ -1046,7 +1120,7 @@ Efisiensi ini sangat relevan untuk penelitian deteksi *deepfake* yang menggunaka
 
 > Depthwise separable convolution menghasilkan fitur berlapis-lapis yang mampu memisahkan pola alami dan pola palsu pada wajah sintetis.
 
-### Integrasi dengan FFT sebagai Channel Tambahan
+### 2.10.5 Integrasi dengan FFT sebagai Channel Tambahan
 
 Dalam penelitian ini, fitur frekuensi hasil transformasi FFT ditambahkan sebagai kanal keempat pada input *XceptionNet*. *Depthwise separable convolution* sangat cocok untuk pemrosesan data multi-kanal seperti ini, karena:
 
@@ -1054,23 +1128,73 @@ Dalam penelitian ini, fitur frekuensi hasil transformasi FFT ditambahkan sebagai
 
 2.  setiap kanal digabungkan dalam tahap *pointwise*.
 
-Hal ini memungkinkan arsitektur memahami hubungan antara pola spasial (RGB) dan pola frekuensi (FFT), sebagaimana juga dilakukan pada pendekatan *SpecXNet* (Alam, Tanvir, & Woo, 2025) dan FSBI (Hasanaath, Luqman, Katib, & Anwar, 2023).
+Hal ini memungkinkan arsitektur memahami hubungan antara pola spasial (RGB) dan pola frekuensi (FFT), sebagaimana juga dilakukan pada pendekatan *SpecXNet* (Alam, Tanvir, & Woo, 2025).
 
-## XceptionNet
+## 2.11 XceptionNet
 
-\[perlu isi\]
+*XceptionNet* (*Extreme Inception Network*) merupakan arsitektur CNN yang diperkenalkan oleh *Chollet* pada tahun 2017 sebagai pengembangan dari konsep *Inception Module*. Arsitektur ini dibangun berdasarkan hipotesis bahwa korelasi spasial (*cross-channel*) dan korelasi antarkanal (*cross-spatial*) dapat dipisahkan secara penuh melalui *depthwise separable convolution*, sehingga operasi konvolusi menjadi lebih efisien tanpa mengorbankan kapasitas representasi fitur (Chollet, 2017).
 
-### Keunggulan XceptionNet dalam Deteksi Deepfake
+### 2.11.1 Arsitektur XceptionNet
 
-\[perlu isi\]
+Arsitektur *XceptionNet* terdiri dari 36 lapisan konvolusional yang terorganisasi dalam tiga bagian utama:
 
-## FaceForensics
+1.  *Entry Flow*
+
+Bagian ini berfungsi sebagai tahap awal pemrosesan yang secara progresif mereduksi dimensi spasial citra masukan sambil meningkatkan jumlah kanal fitur. *Entry flow* terdiri dari dua lapisan konvolusi biasa di awal, diikuti oleh tiga blok *separable convolution* dengan *residual connections*. Setiap blok menggunakan *max-pooling* untuk mengurangi resolusi spasial, sehingga citra masukan berukuran 299×299 secara bertahap dikompresi menjadi *feature map* berukuran lebih kecil dengan 728 kanal (Chollet, 2017).
+
+2.  *Middle Flow*
+
+Bagian ini merupakan inti dari arsitektur yang terdiri dari delapan blok *separable convolution* yang identik, masing-masing dengan tiga lapisan *depthwise separable convolution* dan *residual connection*. Seluruh blok mempertahankan dimensi spasial dan jumlah kanal (728) yang sama, sehingga fokus pemrosesan adalah pada penyempurnaan representasi fitur tanpa mengubah dimensi. Konfigurasi ini memungkinkan model mengekstraksi pola tekstur dan detail yang sangat halus, yang relevan untuk mendeteksi artefak manipulasi wajah (Chollet, 2017).
+
+3.  *Exit Flow*
+
+Bagian terakhir terdiri dari satu blok *separable convolution* dengan *max-pooling* untuk reduksi dimensi akhir, diikuti oleh dua lapisan *separable convolution* tambahan yang meningkatkan jumlah kanal menjadi 2048. Setelah itu, *global average pooling* diterapkan untuk menghasilkan vektor fitur satu dimensi, yang kemudian diteruskan ke lapisan *fully connected* untuk klasifikasi (Chollet, 2017).
+
+Seluruh lapisan *separable convolution* dalam arsitektur ini menggunakan fungsi aktivasi ReLU dan *batch normalization*, yang membantu menstabilkan proses pelatihan dan mempercepat konvergensi model.
+
+### 2.11.2 Transfer Learning pada XceptionNet
+
+Dalam penelitian deteksi *deepfake*, *XceptionNet* umumnya digunakan dengan pendekatan *transfer learning*, yaitu memanfaatkan bobot model yang telah dilatih sebelumnya pada *dataset* berskala besar seperti ImageNet. Pendekatan ini efektif karena fitur-fitur visual dasar yang dipelajari dari ImageNet, seperti deteksi tepi, tekstur, dan pola geometris, juga relevan untuk mengenali artefak manipulasi wajah pada *deepfake* (Rössler, et al., 2019).
+
+Proses *transfer learning* dilakukan dengan menginisialisasi bobot *XceptionNet* dari model *pretrained* ImageNet, kemudian melakukan *fine-tuning* pada *dataset* deteksi *deepfake*. Strategi ini memungkinkan model untuk beradaptasi dengan pola-pola spesifik artefak manipulasi tanpa memerlukan pelatihan dari awal, sehingga lebih efisien dalam hal waktu pelatihan dan kebutuhan data (Chollet, 2017; Rössler, et al., 2019).
+
+Normalisasi *input* pada *XceptionNet* menggunakan statistik ImageNet (mean = \[0.485, 0.456, 0.406\], std = \[0.229, 0.224, 0.225\]) untuk memastikan distribusi data masukan konsisten dengan distribusi yang digunakan selama *pretraining*. Hal ini penting agar bobot *pretrained* dapat berfungsi secara optimal pada tahap awal *fine-tuning*.
+
+### 2.11.3 Keunggulan XceptionNet dalam Deteksi Deepfake
+
+*XceptionNet* memiliki sejumlah keunggulan yang menjadikannya arsitektur yang sangat sesuai untuk deteksi *deepfake*:
+
+1.  Sensitivitas terhadap Pola Tekstur Lokal
+
+*Depthwise separable convolution* memungkinkan *XceptionNet* menangkap pola tekstur halus secara independen pada setiap kanal, sehingga sangat efektif dalam mendeteksi artefak lokal seperti batas *blending*, distorsi tekstur kulit, dan ketidakwajaran pada area transisi wajah (Afchar, Nozick, & Yamagishi, 2018; Rössler, et al., 2019).
+
+2.  Efisiensi Parameter
+
+Dibandingkan dengan arsitektur konvolusi standar, *XceptionNet* memiliki jumlah parameter yang lebih sedikit untuk kapasitas representasi yang setara, karena pemisahan konvolusi spasial dan antarkanal mengurangi redundansi parameter secara signifikan (Chollet, 2017).
+
+3.  Performa Tertinggi pada Benchmark FaceForensics++
+
+Penelitian oleh *Rössler et al.* menunjukkan bahwa *XceptionNet* mencapai akurasi deteksi hingga 99,26% pada data mentah (*raw*) dan 95,73% pada kompresi ringan (*high quality*) pada *dataset* FaceForensics++, melampaui performa *ResNet-50* dan *MesoNet* (Rössler, et al., 2019; Haq, 2021). Namun, performa menurun menjadi sekitar 81% pada kompresi berat (*low quality*/c40), yang menunjukkan pentingnya fitur tambahan seperti informasi frekuensi untuk meningkatkan ketahanan terhadap kompresi (Rössler, et al., 2019).
+
+4.  Stabilitas pada Variasi Kompresi
+
+*XceptionNet* terbukti mempertahankan performa yang stabil pada video dengan berbagai tingkat kompresi, termasuk kompresi tinggi yang umum ditemui pada media sosial. Hal ini penting karena sebagian besar *deepfake* di dunia nyata mengalami kompresi berulang (Rössler, et al., 2019).
+
+5.  Kompatibilitas dengan Analisis Frekuensi
+
+Struktur *depthwise separable convolution* sangat cocok untuk memproses *input* multi-kanal yang mencakup kanal RGB dan kanal frekuensi (FFT). Setiap kanal diproses secara independen pada tahap *depthwise*, kemudian digabungkan pada tahap *pointwise*, sehingga model dapat mempelajari interaksi antara fitur spasial dan frekuensi secara efektif (Alam, Tanvir, & Woo, 2025).
+
+6.  Standar dalam Penelitian Deteksi Deepfake
+
+*XceptionNet* telah diadopsi secara luas sebagai *baseline* dan *backbone* utama dalam berbagai kompetisi dan publikasi deteksi *deepfake*, termasuk *SpecXNet* (Alam, Tanvir, & Woo, 2025), sehingga memudahkan perbandingan hasil dengan penelitian sebelumnya (Rössler, et al., 2019).
+
+## 2.12 FaceForensics
 
 Dataset FaceForensics++ merupakan salah satu *dataset* standar yang paling banyak digunakan dalam penelitian deteksi *deepfake* karena menyediakan kumpulan video manipulasi wajah dengan kualitas, metode pemalsuan, dan tingkat kompresi yang beragam. *Dataset* ini pertama kali diperkenalkan oleh *Rössler et al.* (Rössler, et al., 2019) sebagai pengembangan dari *dataset* sebelumnya, FaceForensics, dengan meningkatkan variasi teknik pemalsuan serta memperluas jumlah sampel agar lebih representatif terhadap karakteristik *deepfake* modern.
 
 Dalam konteks penelitian ini, FaceForensics++ dipilih karena menyediakan kondisi pengujian yang realistis serta mencakup berbagai teknik generatif yang umum digunakan pada sistem pemalsuan wajah berbasis GAN maupun encoder--decoder.
 
-### Struktur dan Komposisi Dataset
+### 2.12.1 Struktur dan Komposisi Dataset
 
 FaceForensics++ terdiri dari dua komponen utama, yaitu *original videos* dan *manipulated videos*. Kumpulan video asli diambil dari rekaman wawancara publik yang menampilkan variasi ekspresi, sudut pandang, dan kondisi pencahayaan. Video ini kemudian dimanipulasi menggunakan empat teknik utama:
 
@@ -1094,7 +1218,7 @@ Dataset ini juga disediakan dalam tiga tingkat kompresi:
 
 Pembagian kualitas ini membuat dataset sangat relevan untuk menguji robustnes model terhadap noise kompresi dan degradasi kualitas, yang umum ditemui pada deepfake di dunia nyata.
 
-### Karakteristik Artefak pada FaceForensics++
+### 2.12.2 Karakteristik Artefak pada FaceForensics++
 
 Setiap teknik manipulasi pada FaceForensics++ menghasilkan pola artefak yang berbeda, baik pada domain spasial maupun domain frekuensi. Hal ini membuat dataset ini sangat berguna untuk penelitian *hybrid* seperti *XceptionNet*--FFT.
 
@@ -1126,7 +1250,7 @@ Penelitian sebelumnya menunjukkan bahwa artefak ini paling jelas terlihat pada a
 
 Keberagaman artefak ini menjadikan FaceForensics++ sangat ideal untuk model *hybrid* yang menggabungkan domain spasial dan frekuensi, sebagaimana dilakukan pada penelitian ini.
 
-### Alasan Pemilihan FaceForensics++ untuk Penelitian Ini
+### 2.12.3 Alasan Pemilihan FaceForensics++ untuk Penelitian Ini
 
 Ada beberapa alasan utama mengapa dataset FaceForensics++ menjadi pilihan tepat:
 
@@ -1150,7 +1274,7 @@ FaceForensics++ merupakan *benchmark* yang digunakan oleh lebih dari ratusan pub
 
 Jumlah sampel asli dan palsu yang seimbang membantu mengurangi bias pelatihan.
 
-### Peran FaceForensics++ dalam Sistem Hybrid XceptionNet--FFT
+### 2.12.4 Peran FaceForensics++ dalam Sistem Hybrid XceptionNet--FFT
 
 Dalam penelitian ini, dataset FaceForensics++ digunakan untuk dua fungsi:
 
@@ -1170,7 +1294,29 @@ c.  anomali distribusi amplitudo.
 
 Kedua fitur ini kemudian digabungkan sebagai *channel fusion* sehingga model mampu mendeteksi baik manipulasi visual maupun statistik spektral. Dengan demikian, FaceForensics++ menjadi *backbone* penting dalam evaluasi performa sistem hybrid pada penelitian ini.
 
-## Analisis Citra
+## 2.13 Celeb-DF
+
+*Celeb-DF* (*Celebrity DeepFake*) merupakan *dataset* deteksi *deepfake* berskala besar yang dikembangkan untuk mengatasi keterbatasan *dataset* generasi sebelumnya dalam hal kualitas visual manipulasi. *Dataset* ini terdiri dari video selebriti yang dimanipulasi menggunakan teknik *face swapping* berbasis *deep learning* yang menghasilkan kualitas manipulasi yang jauh lebih tinggi dibandingkan *dataset* sebelumnya seperti FaceForensics++ (Li, Yang, Sun, & Lyu, 2020).
+
+### 2.13.1 Komposisi dan Karakteristik Dataset
+
+Celeb-DF terdiri dari dua versi, yaitu Celeb-DF (v1) dan Celeb-DF (v2), dengan versi kedua yang lebih luas digunakan dalam penelitian. Celeb-DF (v2) mencakup 590 video asli yang diambil dari wawancara selebriti di YouTube dan 5.639 video *deepfake* yang dihasilkan menggunakan model *encoder-decoder* yang telah disempurnakan. Video-video dalam *dataset* ini memiliki variasi yang tinggi dalam hal kondisi pencahayaan, resolusi, latar belakang, dan ekspresi wajah, sehingga lebih merepresentasikan kondisi *deepfake* di dunia nyata (Li, Yang, Sun, & Lyu, 2020).
+
+Dibandingkan dengan FaceForensics++, Celeb-DF memiliki beberapa perbedaan penting:
+
+1.  Kualitas manipulasi yang lebih tinggi, sehingga artefak visual seperti batas *blending* dan distorsi wajah lebih sulit diamati secara kasat mata.
+
+2.  Variasi subjek yang lebih beragam, mencakup berbagai etnis, usia, dan jenis kelamin.
+
+3.  Kondisi perekaman yang lebih bervariasi, termasuk pencahayaan alami dan buatan, serta resolusi yang berbeda-beda.
+
+### 2.13.2 Peran Celeb-DF dalam Evaluasi Cross-Dataset
+
+Dalam penelitian ini, Celeb-DF digunakan sebagai *dataset* sekunder untuk mengevaluasi kemampuan *cross-dataset generalization* dari model *hybrid* yang diusulkan. Model yang dilatih pada FaceForensics++ kemudian diuji pada Celeb-DF untuk mengukur sejauh mana model mampu mendeteksi *deepfake* dari sumber dan teknik manipulasi yang berbeda. Pengujian ini penting karena menunjukkan apakah model telah mempelajari fitur-fitur manipulasi yang bersifat universal, bukan hanya artefak spesifik dari satu *dataset* tertentu (Li, Yang, Sun, & Lyu, 2020; Rana, Nobi, Murali, & Sung, 2022).
+
+Celeb-DF menjadi *benchmark* yang menantang karena kualitas manipulasinya yang tinggi membuat artefak spasial sangat minimal. Oleh karena itu, kemampuan model untuk memanfaatkan informasi domain frekuensi menjadi sangat krusial ketika diuji pada *dataset* ini, karena artefak frekuensi yang bersifat algoritmik cenderung lebih stabil meskipun kualitas visual manipulasi meningkat (Durall, Keuper, & Keuper, 2020).
+
+## 2.14 Analisis Citra
 
 Analisis citra merupakan proses untuk memperoleh informasi dari sebuah citra digital melalui serangkaian operasi matematis, statistik, maupun transformasi domain. Analisis citra bertujuan mengekstraksi karakteristik penting seperti bentuk, tekstur, *edge*, *noise*, maupun struktur pola tertentu. Citra digital sendiri direpresentasikan sebagai fungsi dua dimensi $f(x,y)$ yang memetakan koordinat *pixel* ke intensitas cahaya, sehingga analisis citra dapat dilakukan baik dalam domain spasial (langsung pada *pixel*) maupun domain frekuensi (melalui transformasi seperti FFT) (Gonzalez & Woods, 2018).
 
@@ -1178,21 +1324,15 @@ Metode analisis citra berbasis domain spasial berfokus pada karakteristik visual
 
 Untuk mengatasi keterbatasan tersebut, analisis citra diperluas ke domain frekuensi, yang mampu mengungkap anomali spektral yang tidak terlihat secara langsung di domain spasial. Studi oleh Durall et al. menunjukkan bahwa model GAN meninggalkan pola *high-frequency artifacts* yang bersifat konsisten, terutama akibat proses *upsampling* dan manipulasi kernel konvolusi (Durall, Keuper, & Keuper, 2020). Penelitian lain oleh Zhang et al. menemukan bahwa *deepfake* memiliki distribusi frekuensi yang berbeda secara signifikan dari citra asli, sehingga analisis domain frekuensi dapat meningkatkan kemampuan generalisasi lintas *dataset* (Zhang, Karaman, & Chang, 2019). Dengan demikian, kombinasi analisis spasial dan frekuensi memberikan pendekatan yang lebih komprehensif dalam mendeteksi manipulasi visual pada citra *deepfake*.
 
-## Analisis Video
+## 2.15 Analisis Video
 
 Analisis video merupakan perluasan dari analisis citra yang mempertimbangkan tidak hanya informasi spasial dari setiap *frame*, tetapi juga hubungan temporal *antar-frame*. Video digital dapat direpresentasikan sebagai fungsi tiga dimensi *f(x,y,t)*, di mana *t* merupakan urutan waktu (Gonzalez & Woods, 2018). Dengan demikian, analisis video melibatkan pemrosesan *frame-level* dan dinamika pergerakan (*temporal cues*) seperti perubahan ekspresi, kontinuitas gerakan, serta konsistensi pola wajah dari satu *frame* ke *frame* berikutnya (Sabir, et al., 2019).
 
-Dalam konteks deteksi *deepfake*, analisis video sangat penting karena manipulasi umumnya dilakukan pada setiap *frame* secara terpisah, sehingga menghasilkan inkonsistensi temporal. Studi oleh Sabir et al. menunjukkan bahwa deepfake serin menampilkan pola-pola tidak stabil seperti *jittering*, *flickering*, dan perubahan wajah yang tidak mulus antar-frame (Sabir, et al., 2019). Selain itu, proses *face-swapping* atau *encoder-*decoder berbasis GAN dapat menghasilkan ketidaksesuaian gerakan bibir dan gestur kepala yang tidak natural (Haliassos, Vougioukas, Petridis, & Pantic, 2021).
+Dalam konteks deteksi *deepfake*, manipulasi umumnya dilakukan pada setiap *frame* secara terpisah, sehingga artefak manipulasi dapat dideteksi pada tingkat *frame* individual. Studi oleh Sabir et al. menunjukkan bahwa *deepfake* sering menampilkan pola-pola tidak stabil seperti *jittering*, *flickering*, dan perubahan wajah yang tidak mulus antar-*frame* (Sabir, et al., 2019). Artefak-artefak ini dapat diidentifikasi melalui analisis *frame-by-frame* yang mengekstraksi fitur spasial dan frekuensi dari setiap *frame* secara independen.
 
-Pendekatan analisis video modern memanfaatkan dua jenis fitur:
+Dalam penelitian ini, pendekatan yang digunakan adalah analisis pada tingkat *frame* individual (*frame-level analysis*), di mana setiap *frame* video diekstraksi dan diproses secara terpisah menggunakan CNN untuk fitur spasial dan FFT untuk fitur frekuensi. Pendekatan *frame-level* dipilih karena artefak manipulasi yang muncul akibat proses generatif, baik pada domain spasial maupun domain frekuensi, dapat dideteksi pada setiap *frame* tunggal tanpa memerlukan informasi sekuensial antar-*frame* (Haq, 2021; Rössler, et al., 2019). Selain itu, pendekatan ini lebih efisien secara komputasi dan memungkinkan integrasi yang lebih langsung dengan analisis domain frekuensi berbasis FFT.
 
-1.  Fitur spasial, diambil dari setiap *frame* menggunakan CNN seperti *XceptionNet* atau *MesoNet* (Afchar, Nozick, & Yamagishi, 2018; Rössler, et al., 2019).
-
-2.  Fitur temporal, diekstraksi menggunakan model seperti LSTM, GRU, 3D-CNN, atau *Transformer* untuk mendeteksi pola perubahan antar-*frame* (Sabir, et al., 2019; Güera & Delp, 2018; Haliassos, Vougioukas, Petridis, & Pantic, 2021).
-
-Penelitian menunjukkan bahwa metode berbasis temporal mampu meningkatkan performa deteksi *deepfake*, terutama ketika dinamika *antar-frame* dapat dianalisis secara konsisten. Namun, pendekatan temporal juga memiliki sejumlah tantangan. *Temporal cues* sering kali tidak stabil pada video berkualitas rendah karena kompresi, *noise*, *blending artifacts*, atau gangguan pada tingkat *frame* yang dapat melemahkan konsistensi gerakan (Haliassos, Vougioukas, Petridis, & Pantic, 2021; Nguyen, Tran, Le, & Nguyen, 2021). Selain itu, pemodelan temporal umumnya membutuhkan *sequence frame* yang cukup panjang untuk menangkap pola dinamis secara akurat (Güera & Delp, 2018). Proses pemrosesan *sequence* panjang ini dapat menambah kompleksitas pada model *spatio-temporal*. Beberapa arsitektur temporal modern, seperti *Transformer*, juga diketahui membutuhkan sumber daya komputasi yang sangat tinggi untuk memproses *sequence* panjang secara efektif (Akinrogunde, Adelakun, Theophilus, & Thomas, 2025), sehingga pemilihan model *temporal* harus mempertimbangkan efisiensi komputasi.
-
-## Preprocessing
+## 2.16 Preprocessing
 
 *Preprocessing* merupakan tahap fundamental dalam sistem deteksi *deepfake* karena kualitas data masukan sangat memengaruhi kemampuan model dalam mengekstraksi fitur baik pada domain spasial melalui XceptionNet maupun pada domain frekuensi melalui Fast Fourier Transform (FFT). Pada penelitian deteksi *deepfake* modern, *preprocessing* tidak hanya berfungsi sebagai proses penyiapan data, tetapi juga sebagai cara untuk menghilangkan *noise* visual, menjaga konsistensi bentuk wajah, serta menstabilkan distribusi frekuensi sebelum dilakukan transformasi (Haq, 2021; Afchar, Nozick, & Yamagishi, 2018; Durall, Keuper, & Keuper, 2020; Qian, Yin, Sheng, Chen, & Shao, 2020; Rössler, et al., 2019).
 
@@ -1200,7 +1340,7 @@ Tahap *preprocessing* yang baik sangat diperlukan karena *deepfake* sering menam
 
 Oleh karena itu, *preprocessing* pada penelitian ini dirancang untuk memastikan bahwa data masukan memiliki format yang seragam, representasi wajah yang stabil, dan struktur frekuensi yang tidak terdistorsi. Alur *preprocessing* mencakup: ekstraksi *frame*, deteksi wajah, *face alignment*, *cropping*, *resize*, normalisasi, konversi skala warna, dan transformasi FFT.
 
-### Tahapan dan Alur Preprocessing
+### 2.16.1 Tahapan dan Alur Preprocessing
 
 1.  Tahapan preprocessing spasial diawali dengan ekstraksi frame video. Video deepfake direpresentasikan sebagai rangkaian frame, dan setiap frame berpotensi mengandung tingkat manipulasi berbeda. Pendekatan frame-level digunakan karena artefak manipulasi tidak selalu muncul konsisten sepanjang video (Haq, 2021). Haq menunjukkan bahwa beberapa frame menampilkan distorsi tekstur lebih jelas sehingga pemrosesan per-frame membantu model menangkap sinyal manipulasi penting.
 
@@ -1240,9 +1380,11 @@ Ukuran 224×224 juga dipilih karena merupakan ukuran standar *feature extractor*
 
   : Tabel 2.3 Tahapan Preprocessing
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_3_tahapan_preprocessing.html`]**
+
 Tahapan 1--6 membentuk preprocessing spasial, sedangkan tahapan 7--8 menghubungkannya dengan representasi frekuensi yang digunakan sebagai fitur tambahan pada model hybrid
 
-### Fast Fourier Transform (FFT)
+### 2.16.2 Fast Fourier Transform (FFT)
 
 Fast Fourier Transform (FFT) merupakan algoritma efisien untuk menghitung Discrete Fourier Transform (DFT), yaitu proses yang mengubah citra dari domain spasial menjadi domain frekuensi. Transformasi ini memungkinkan analisis distribusi energi frekuensi pada citra sehingga pola-pola artefak halus yang tidak terlihat pada domain spasial dapat teridentifikasi. Pada penelitian deteksi *deepfake*, FFT menjadi komponen penting karena manipulasi berbasis GAN cenderung menimbulkan ketidakwajaran sinyal frekuensi, terutama pada rentang *high-frequency* akibat proses *upsampling*, *konvolusi*, dan operasi *blending* (Durall, Keuper, & Keuper, 2020; Qian, Yin, Sheng, Chen, & Shao, 2020; Hasanaath, Luqman, Katib, & Anwar, 2023).
 
@@ -1294,75 +1436,61 @@ Sabir et al. (Sabir, et al., 2019) menemukan bahwa sinyal frekuensi tinggi lebih
 
 Pemilihan FFT dalam penelitian ini didasarkan pada sifatnya yang mampu menangkap distribusi spektral global secara komprehensif dengan kompleksitas komputasi yang rendah. Dibandingkan metode frekuensi lain seperti DCT atau *Discrete Wavelet Transform* (DWT), FFT memberikan representasi frekuensi penuh yang lebih sesuai untuk mendeteksi pola artefak GAN yang bersifat global *spectral shift* seperti yang diidentifikasi oleh *Durall et al.* (Durall, Keuper, & Keuper, 2020) dan *Qian et al.* (Qian, Yin, Sheng, Chen, & Shao, 2020). Dengan demikian, FFT menjadi pilihan yang efektif dan efisien untuk dikombinasikan dengan model CNN berbasis spasial.
 
-## Stochastic Gradient Descent (SGD)
+## 2.17 Optimasi Model
 
-*Stochastic Gradient Descent* (SGD) adalah metode optimasi iteratif yang paling umum digunakan untuk melatih model *deep learning*, termasuk CNN untuk klasifikasi citra/video. Tujuan optimasi umumnya adalah meminimalkan *loss function* $L(\theta)$ terhadap parameter model $\theta\$. Pada *gradient descent* klasik, gradien dihitung menggunakan seluruh data latih (*full-batch*), sehingga mahal secara komputasi untuk *dataset* besar. SGD mengatasi hal ini dengan memperkirakan gradien menggunakan satu sampel acak atau sebagian kecil sampel (*mini-batch*), sehingga *update parameter* menjadi lebih cepat dan skalabel untuk pelatihan jaringan besar (Bottou, 2012; Goodfellow, Bengio, & Courville, 2016).
+Pelatihan model *deep learning* memerlukan algoritma optimasi yang efisien untuk meminimalkan *loss function* dan memperbarui parameter jaringan secara iteratif. Dalam konteks deteksi *deepfake*, pemilihan metode optimasi yang tepat sangat penting karena model harus dilatih pada *dataset* besar dengan variasi kualitas citra dan jenis manipulasi yang beragam (Goodfellow, Bengio, & Courville, 2016).
 
-### Konsep dan Persamaan Pembaruan Parameter
+### 2.17.1 Stochastic Gradient Descent dan Perkembangannya
 
-Misalkan *dataset* latih berisi $N\$ sampel $\left\{ \,\left( \, x_{i}\,,\, y_{i}\, \right) \right\}_{i = 1}^{N}$. Risiko empiris yang ingin diminimalkan biasanya:
+*Stochastic Gradient Descent* (SGD) merupakan metode optimasi dasar yang memperbarui parameter model menggunakan estimasi gradien dari *mini-batch* data, sehingga lebih efisien dibandingkan *full-batch gradient descent* pada *dataset* besar. Pembaruan parameter pada SGD dilakukan dengan:
 
-$$J(\theta) = \frac{1}{N}\sum_{i = 1}^{N}{\mathcal{l}\left( f\left( x_{i};\theta \right),y_{i} \right)}$$
+$$\theta_{t + 1} = \theta_{t} - \eta\nabla_{\theta}\mathcal{l}\left( f\left( x;\theta_{t} \right),y \right)$$
 
-Pada *full-batch gradient descent*, pembaruan parameter dilakukan dengan:
+di mana $\eta\$ adalah *learning rate* (Bottou, 2012; Goodfellow, Bengio, & Courville, 2016). Namun, SGD memiliki kelemahan berupa sensitivitas tinggi terhadap pemilihan *learning rate* dan kecenderungan osilasi pada permukaan *loss* yang tidak seragam. Untuk mengatasi keterbatasan tersebut, dikembangkan berbagai metode optimasi adaptif yang mengatur *learning rate* secara otomatis per parameter (Ruder, 2017).
 
-$$\theta_{t + 1} = \theta_{t} - \eta\nabla_{\theta}J\left( \theta_{t} \right)$$
+### 2.17.2 Adam (Adaptive Moment Estimation)
 
-di mana $\eta\$ adalah *learning rate*. Sementara itu, SGD menggunakan estimasi gradien berdasarkan satu sampel acak $i_{t}$,atau mini-batch $B_{t}$ :
+*Adam* (*Adaptive Moment Estimation*) merupakan metode optimasi yang menggabungkan konsep *momentum* dan *adaptive learning rate* dari RMSprop. Adam menghitung estimasi momen pertama (rata-rata gradien) dan momen kedua (rata-rata kuadrat gradien) untuk setiap parameter, kemudian menggunakan estimasi tersebut untuk menyesuaikan langkah pembaruan secara individual (Kingma & Ba, 2015).
 
-1.  SGD (1 sampel)
+Persamaan pembaruan Adam adalah:
 
-$$\theta_{t + 1} = \theta_{t} - \eta\nabla_{\theta}\mathcal{l}\left( f\left( x_{i_{t}};\theta_{t} \right),y_{i_{t}} \right)$$
+1.  Estimasi momen pertama: $m_{t} = \beta_{1}m_{t - 1} + (1 - \beta_{1})g_{t}$
 
-2.  Mini-batch SGD (ukuran batch 𝑚)
+2.  Estimasi momen kedua: $v_{t} = \beta_{2}v_{t - 1} + (1 - \beta_{2})g_{t}^{2}$
 
-$$\theta_{t + 1} = \theta_{t} - \eta\frac{1}{m}\sum_{(x,y) \in B_{t}}^{\,}{\nabla_{\theta}\mathcal{l}\left( f\left( x;\theta_{t} \right),y \right)}$$
+3.  Koreksi bias: $\hat{m_{t}} = \frac{m_{t}}{1 - \beta_{1}^{t}}$, $\hat{v_{t}} = \frac{v_{t}}{1 - \beta_{2}^{t}}$
 
-Pendekatan stokastik ini berakar dari konsep *stochastic approximation* yang menunjukkan bahwa *update* berbasis sampel acak dapat menuju solusi optimum secara probabilistik pada kondisi tertentu (Robbins & Monro, 1951). Dalam praktik *deep learning modern*, bentuk yang paling sering dipakai adalah *mini-batch* SGD karena lebih stabil daripada 1-sampel SGD, sekaligus lebih efisien daripada *full-batch* (Goodfellow, Bengio, & Courville, 2016).
+4.  Pembaruan parameter: $\theta_{t + 1} = \theta_{t} - \frac{\eta}{\sqrt{\hat{v_{t}}} + \epsilon}\hat{m_{t}}$
 
-### Karakteristik, Kelebihan, dan Tantangan
+di mana $\beta_{1}$ dan $\beta_{2}$ adalah koefisien peluruhan momen (umumnya $\beta_{1} = 0.9$, $\beta_{2} = 0.999$), dan $\epsilon$ adalah konstanta stabilitas numerik (Kingma & Ba, 2015).
 
-1.  Efisiensi komputasi dan skalabilitas
+### 2.17.3 Keunggulan Adam untuk Deteksi Deepfake
 
-Dengan hanya menghitung gradien dari *mini-batch*, SGD dapat melatih model pada *dataset* besar dengan biaya waktu dan memori yang lebih rendah per iterasi dibanding *full-batch* (Bottou, 2012).
+Adam dipilih dalam penelitian ini sebagai metode optimasi utama karena beberapa alasan:
 
-2.  Sifat "*noise*" pada gradien
+1.  *Adaptive learning rate* per parameter memungkinkan konvergensi yang lebih stabil pada arsitektur *hybrid* yang memiliki parameter dengan skala gradien yang berbeda antara *branch* spasial dan frekuensi.
 
-Karena gradien hanya perkiraan dari gradien sebenarnya, SGD memiliki variansi/*noise* yang bisa membantu keluar dari *local minima* atau *saddle points*, namun juga dapat membuat konvergensi berosilasi jika *learning rate* terlalu besar (Goodfellow, Bengio, & Courville, 2016). []{.mark}
+2.  Koreksi bias pada momen pertama dan kedua membuat Adam efektif bahkan pada tahap awal pelatihan ketika estimasi momen masih tidak akurat.
 
-3.  Sensitif terhadap hyperparameter
+3.  Adam dapat dikombinasikan dengan *weight decay* untuk regularisasi, sehingga membantu mencegah *overfitting* pada *dataset* tertentu dan meningkatkan kemampuan generalisasi lintas *dataset* (Goodfellow, Bengio, & Courville, 2016).
 
-Performa SGD sangat dipengaruhi oleh 𝜂, ukuran batch, *strategy shuffling*, dan *learning rate schedule*. Praktik umum adalah menurunkan 𝜂 secara bertahap agar stabil mendekati optimum (Goodfellow, Bengio, & Courville, 2016).
+4.  Dalam praktik pelatihan model deteksi *deepfake*, Adam telah terbukti menghasilkan konvergensi yang cepat dan stabil pada berbagai arsitektur CNN, termasuk *XceptionNet* (Rössler, et al., 2019).
 
-### Varian dan Peningkatan SGD yang Umum Dipakai
+### 2.17.4 Binary Cross-Entropy sebagai Fungsi Loss
 
-Untuk meningkatkan stabilitas dan mempercepat konvergensi, SGD sering dikombinasikan dengan teknik berikut:
+Dalam deteksi *deepfake*, tugas klasifikasi bersifat biner, yaitu membedakan citra asli (*real*) dan citra hasil manipulasi (*fake*). Fungsi *loss* yang digunakan adalah *Binary Cross-Entropy with Logits* (BCEWithLogitsLoss), yang menggabungkan fungsi *sigmoid* dan *binary cross-entropy* dalam satu operasi yang stabil secara numerik:
 
-1.  Momentum, merupakan metode menambahkan "kecepatan" akumulatif gradien untuk meredam osilasi dan mempercepat arah yang konsisten.
+$$\mathcal{L} = - \frac{1}{N}\sum_{i = 1}^{N}\left\lbrack y_{i} \cdot \log\left( \sigma\left( z_{i} \right) \right) + \left( 1 - y_{i} \right) \cdot \log\left( 1 - \sigma\left( z_{i} \right) \right) \right\rbrack$$
 
-2.  *Nesterov Accelerated Gradient* (NAG), merupakan variasi momentum yang melakukan look-ahead sebelum menghitung gradien.
+di mana $z_{i}$ adalah *logit* keluaran model, $\sigma(z)$ adalah fungsi *sigmoid*, dan $y_{i} \in \{0, 1\}$ adalah label kelas (0 untuk asli, 1 untuk palsu). Fungsi *loss* ini memastikan bahwa model dioptimalkan untuk menghasilkan probabilitas yang akurat dalam membedakan konten asli dan palsu (Goodfellow, Bengio, & Courville, 2016).
 
-3.  *Adaptive methods,* (mis. Adagrad/RMSprop/Adam) untuk mengatur langkah pembaruan per-parameter secara adaptif berdasarkan statistik gradien.
-
-Ringkasan intuitif dan perbandingan varian-varian ini banyak dibahas sebagai praktik optimasi jaringan saraf modern (Ruder, 2017). Dalam implementasi CNN populer (mis. ResNet/Xception), SGD (sering dengan momentum) tetap menjadi pilihan kuat karena generalisasi yang baik pada banyak tugas visi komputer (He, Zhang, Ren, & Sun, 2015; Chollet, 2017). []{.mark}
-
-### Relevansi SGD untuk Pelatihan CNN pada Deteksi Deepfake
-
-Dalam konteks deteksi deepfake, model berbasis CNN (misalnya MesoNet atau XceptionNet) memerlukan optimasi yang stabil pada data besar dan bervariasi (berbeda kompresi, sumber, dan jenis manipulasi) (Afchar, Nozick, & Yamagishi, 2018; Chollet, 2017; Rössler, et al., 2019). SGD/*mini-batch* SGD mendukung kebutuhan tersebut dikarenakan:
-
-1.  Mampu menangani dataset video/citra berukuran besar secara efisien,
-
-2.  Fleksibel dikombinasikan dengan regularization (mis. weight decay) dan learning rate schedule untuk meningkatkan generalisasi lintas dataset,
-
-3.  Kompatibel untuk pelatihan model hibrida (mis. fitur spasial + frekuensi) yang biasanya memiliki parameter cukup besar dan membutuhkan optimasi yang robust (Goodfellow, Bengio, & Courville, 2016; Bottou, 2012).
-
-## Metrik Evaluasi Model
+## 2.18 Metrik Evaluasi Model
 
 Evaluasi kinerja model merupakan tahap krusial dalam pengembangan sistem deteksi *deepfake*. Melalui proses evaluasi, peneliti dapat menilai sejauh mana model mampu membedakan citra asli dan citra hasil manipulasi, serta mengidentifikasi kelemahan model ketika dihadapkan pada variasi distribusi data atau skenario *cross-dataset*. Hal ini penting karena model generatif modern seperti GAN dan variannya terus menghasilkan konten dengan kualitas semakin realistis sehingga semakin sulit dibedakan secara visual (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Rana, Nobi, Murali, & Sung, 2022).
 
 Pada penelitian ini, metrik evaluasi yang digunakan meliputi *Confusion Matrix, Accuracy, Precision*, *Recall*, dan *F1-Score*. Seluruh metrik dihitung berdasarkan hubungan antara hasil prediksi model dan kelas sebenarnya pada data uji.
 
-### Confusion Matrix
+### 2.18.1 Confusion Matrix
 
 *Confusion matrix* merupakan representasi berbentuk tabel yang menggambarkan performa model klasifikasi dengan membandingkan hasil prediksi dengan kondisi aktual. Melalui matriks ini, dapat terlihat jenis kesalahan apa yang dilakukan model serta apakah model lebih cenderung melakukan *false alarm* (FP) atau justru meloloskan *deepfake* (FN), yang berpotensi menimbulkan risiko keamanan signifikan (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025).
 
@@ -1376,6 +1504,8 @@ Pada penelitian ini, metrik evaluasi yang digunakan meliputi *Confusion Matrix, 
 
   : Tabel 2.4 Struktur Confusion Matrix
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_4_confusion_matrix.html`]**
+
 Keterangan:
 
 1.  TP: Model benar mendeteksi *deepfake*.
@@ -1386,7 +1516,7 @@ Keterangan:
 
 4.  FN: *Deepfake* gagal terdeteksi (paling berbahaya).
 
-### Accuracy
+### 2.18.2 Accuracy
 
 Accuracy mengukur seberapa besar proporsi prediksi model yang benar terhadap seluruh data.
 
@@ -1394,7 +1524,7 @@ $$Accuracy\  = \frac{(TP\  + \ TN)}{(TP\  + \ TN\  + \ FP\  + \ FN)}$$
 
 Meskipun sederhana dan umum digunakan, akurasi tidak selalu memberikan gambaran yang representatif, terutama pada *dataset* yang tidak seimbang (misalnya jika jumlah citra asli lebih banyak daripada citra palsu). Pada penelitian *deepfake*, hal ini sering terjadi karena *dataset* asli umumnya memiliki distribusi lebih besar (Rana, Nobi, Murali, & Sung, 2022).
 
-### Precision
+### 2.18.3 Precision
 
 *Precision* mengukur ketepatan model dalam memberikan label "palsu". Nilai ini menunjukkan seberapa banyak prediksi *deepfake* yang benar-benar merupakan *deepfake*.
 
@@ -1402,15 +1532,15 @@ $$Precision\  = \ \frac{TP}{(TP + FP)}$$
 
 Nilai precision yang tinggi menunjukkan bahwa model jarang memberikan *false accusation* terhadap citra asli. Hal ini sangat penting pada skenario forensik digital, keamanan media, maupun investigasi yang tidak mengizinkan kesalahan dalam menandai konten asli sebagai palsu (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025).
 
-### Recall
+### 2.18.4 Recall
 
 *Recall* menunjukkan kemampuan model mendeteksi seluruh *deepfake* yang ada pada data uji.
 
-$$Recall\  = \ \frac{TP}{TP + FP}$$
+$$Recall\  = \ \frac{TP}{TP + FN}$$
 
 Nilai *recall* yang tinggi berarti model jarang meloloskan *deepfake*. Mengingat *deepfake* sering menampilkan artefak halus yang sulit dikenali secara visual (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019), recall menjadi metrik penting untuk memastikan tidak ada manipulasi berbahaya yang lolos dari pendeteksian.
 
-### F1-Score
+### 2.18.5 F1-Score
 
 F1-Score adalah rata-rata harmonik dari *Precision* dan *Recall*, dan digunakan untuk memberikan penilaian yang lebih stabil ketika terjadi ketidakseimbangan antara jumlah data asli dan palsu atau ketika *Precision* dan *Recall* tidak seimbang.
 
@@ -1418,7 +1548,31 @@ $$F1 - Score\  = \ 2\  \times \frac{Precision\  \times \ Recall}{Precision\  + \
 
 Dalam penelitian deepfake, F1-Score sering dipilih sebagai metrik utama karena lebih mencerminkan performa realistis model pada kondisi data yang kompleks dan tidak seimbang (Rana, Nobi, Murali, & Sung, 2022; Hasanaath, Luqman, Katib, & Anwar, 2023).
 
-###  Perhitungan Metrik Evaluasi
+### 2.18.6 AUC (Area Under the ROC Curve)
+
+*AUC* (*Area Under the Curve*) merupakan metrik evaluasi yang mengukur kemampuan model dalam membedakan dua kelas (asli dan palsu) secara keseluruhan, tanpa bergantung pada satu nilai *threshold* tertentu. AUC dihitung berdasarkan *ROC Curve* (*Receiver Operating Characteristic*), yaitu kurva yang menggambarkan hubungan antara *True Positive Rate* (TPR) dan *False Positive Rate* (FPR) pada berbagai nilai *threshold* klasifikasi.
+
+*True Positive Rate* (TPR), yang identik dengan *Recall*, dihitung sebagai:
+
+$$TPR = \frac{TP}{TP + FN}$$
+
+Sedangkan *False Positive Rate* (FPR) dihitung sebagai:
+
+$$FPR = \frac{FP}{FP + TN}$$
+
+ROC Curve dihasilkan dengan memplot TPR terhadap FPR pada setiap kemungkinan nilai *threshold*. Model yang sempurna menghasilkan kurva yang mendekati sudut kiri atas grafik (TPR = 1, FPR = 0), dengan nilai AUC mendekati 1.0. Sebaliknya, model acak menghasilkan garis diagonal dengan AUC = 0.5.
+
+AUC memiliki keunggulan penting dalam evaluasi deteksi *deepfake*:
+
+1.  *Threshold-independent*: AUC mengevaluasi performa model pada seluruh rentang *threshold*, sehingga memberikan gambaran yang lebih komprehensif dibanding metrik yang bergantung pada satu *threshold* tertentu seperti *accuracy* atau *precision* (Rana, Nobi, Murali, & Sung, 2022).
+
+2.  Stabil pada *dataset* tidak seimbang: AUC tidak terpengaruh oleh proporsi kelas dalam *dataset*, sehingga lebih andal ketika jumlah citra asli dan palsu tidak seimbang.
+
+3.  Standar evaluasi *cross-dataset*: Dalam skenario *cross-dataset generalization*, AUC menjadi metrik utama karena mampu menunjukkan kemampuan diskriminasi model secara keseluruhan, terlepas dari distribusi data uji yang mungkin berbeda dari data pelatihan (Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024).
+
+Dalam penelitian ini, AUC digunakan sebagai metrik utama untuk pemilihan model terbaik selama proses pelatihan, karena kemampuannya dalam memberikan evaluasi yang *robust* dan tidak bergantung pada pemilihan *threshold* tertentu.
+
+### 2.18.7 Perhitungan Metrik Evaluasi
 
 Untuk memberikan gambaran yang lebih jelas mengenai proses evaluasi model deteksi *deepfake*, berikut disajikan contoh perhitungan menggunakan nilai *True Positive* (TP), *False Positive* (FP), *True Negative* (TN), dan *False Negative* (FN). Contoh ini bersifat ilustratif dan tidak berasal dari hasil eksperimen penelitian.
 
@@ -1512,11 +1666,13 @@ Interpretasi dari contoh perhitungan *F1-Score* diatas adalah, model memiliki ni
 
   : Tabel 2.5 Ringkasan Hasil Perhitungan Metrik
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_5_ringkasan_metrik.html`]**
+
 Berdasarkan hasil perhitungan, model menunjukkan performa yang baik dengan tingkat ketelitian tinggi dalam mendeteksi deepfake (Precision = 90%). Meskipun demikian, masih terdapat deepfake yang tidak terdeteksi (Recall = 81.8%). Nilai F1-Score (85.7%) mengindikasikan bahwa model mampu mempertahankan keseimbangan antara menghindari *false positive* dan *false negative*.
 
 Dengan demikian, model berada dalam kategori performa baik, tetapi peningkatan pada aspek recall tetap diperlukan, terutama untuk mencegah deepfake lolos dari sistem deteksi, sebagaimana direkomendasikan dalam studi-studi terkini (Rana, Nobi, Murali, & Sung, 2022; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024).
 
-### Relevansi Metrik Evaluasi terhadap Penelitian Deepfake
+### 2.18.8 Relevansi Metrik Evaluasi terhadap Penelitian Deepfake
 
 Dalam konteks penelitian deteksi deepfake berbasis pendekatan hybrid *FFT + XceptionNet*, penggunaan metrik evaluasi tidak hanya menjadi alat ukur performa, tetapi juga indikator penting untuk menilai kemampuan generalisasi dan ketahanan model ketika diuji pada manipulasi generatif yang semakin kompleks. Hal ini relevan karena model *deepfake* modern berbasis GAN mampu menghasilkan konten dengan kualitas sangat realistis, sehingga membuat proses pendeteksian menjadi jauh lebih menantang (Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Rana, Nobi, Murali, & Sung, 2022).
 
@@ -1532,7 +1688,7 @@ Selain itu, *Confusion Matrix* digunakan untuk memperoleh gambaran menyeluruh 
 
 Secara keseluruhan, kombinasi metrik evaluasi tersebut memberikan pemahaman komprehensif mengenai performa pendekatan hybrid *FFT + XceptionNet*, termasuk kemampuan model untuk tetap *robust*, *stabil*, dan *adaptif* terhadap variasi jenis deepfake. Hal ini sejalan dengan berbagai penelitian yang menekankan pentingnya detektor yang mampu menangkap petunjuk spasial dan frekuensi secara bersamaan untuk meningkatkan generalisasi pada dataset dan model generatif yang berbeda (Qian, Yin, Sheng, Chen, & Shao, 2020; Hasanaath, Luqman, Katib, & Anwar, 2023; Tan, et al., 2024; Luo & Wang, 2025).
 
-## Cross Dataset Generalization
+## 2.19 Cross Dataset Generalization
 
 *Cross-dataset generalization* merupakan konsep penting dalam penelitian deteksi *deepfake* yang menggambarkan kemampuan sebuah model untuk mempertahankan performa ketika diuji pada dataset yang berbeda dari *dataset* pelatihan. Konsep ini muncul sebagai respons terhadap fakta bahwa *deepfake* di lingkungan nyata sering kali memiliki karakteristik yang sangat berbeda dengan dataset benchmark yang umum digunakan dalam penelitian akademik. *Rössler et al.* menunjukkan bahwa dataset seperti FaceForensics++ hanya mencakup jenis manipulasi wajah tertentu dengan kondisi visual yang relatif seragam (Rössler, et al., 2019). Karena itu, model yang dilatih pada *dataset* tunggal cenderung mengalami penurunan akurasi secara signifikan ketika diuji pada dataset lain yang memiliki distribusi data berbeda.
 
@@ -1546,13 +1702,13 @@ Oleh karena itu, dalam kajian literatur terkini, kemampuan *cross-dataset genera
 
 Secara keseluruhan, konsep *cross-dataset generalization* menegaskan bahwa deteksi *deepfake* tidak dapat bergantung pada pola *dataset* tertentu, tetapi harus mampu mengidentifikasi karakteristik manipulasi yang bersifat umum dan stabil. Oleh karena itu, banyak penelitian terkini mengarah pada integrasi fitur spasial dan frekuensi untuk memperoleh representasi fitur yang lebih robust terhadap perbedaan distribusi data antar dataset (Durall, Keuper, & Keuper, 2020; Alam, Tanvir, & Woo, 2025; Qian, Yin, Sheng, Chen, & Shao, 2020).
 
-## Cross-GAN pada Deteksi Deepfake 
+## 2.20 Cross-GAN pada Deteksi Deepfake
 
 Dalam konteks deteksi deepfake, Cross-GAN merujuk pada skenario ketika model deteksi dilatih menggunakan sampel *deepfake* yang dihasilkan oleh satu jenis arsitektur/model GAN tertentu, tetapi kemudian diuji pada deepfake yang dihasilkan oleh GAN/teknik generatif lain (misalnya arsitektur generator berbeda, proses upsampling berbeda, atau pipeline manipulasi berbeda). Tujuan evaluasi Cross-GAN adalah mengukur kemampuan generalisasi detektor terhadap variasi metode generatif yang tidak terlihat saat pelatihan (unseen manipulations), karena di dunia nyata jenis deepfake baru terus berkembang dan tidak selalu tersedia datanya untuk dilatih terlebih dahulu (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025; Chadha, Kumar, Kashyap, & Gupta, 2021).
 
 Secara praktis, Cross-GAN sering dibahas bersama skenario *cross-dataset*, karena perbedaan GAN biasanya juga beriringan dengan perbedaan dataset, kualitas kompresi, resolusi, serta kondisi pengambilan video. Dataset seperti FaceForensics++ banyak digunakan untuk menguji robustnes model pada variasi manipulasi dan kompresi, namun generalisasi lintas-metode generasi tetap menjadi tantangan utama (Rössler, et al., 2019).
 
-### Mengapa Cross-GAN Sulit
+### 2.20.1 Mengapa Cross-GAN Sulit
 
 Kesulitan utama Cross-GAN muncul karena banyak detektor "belajar" menangkap artefak spesifik dari metode generasi tertentu, bukan ciri manipulasi yang bersifat umum. Ketika GAN/pipeline generatif berubah, pola artefaknya juga berubah sehingga model yang terlalu "spesialis" mudah gagal. Beberapa penyebab pentingnya:
 
@@ -1568,7 +1724,7 @@ Studi menunjukkan bahwa model generatif sering gagal mereplikasi distribusi spek
 
 Detektor berbasis CNN (mis. XceptionNet atau arsitektur ringkas seperti MesoNet) dapat sangat kuat pada data pelatihan, tetapi berisiko memanfaatkan petunjuk non-semantik (kompresi, *noise* spesifik, tekstur tertentu) yang tidak stabil lintas GAN (Chollet, 2017; Afchar, Nozick, & Yamagishi, 2018; Haq, 2021; Rana, Nobi, Murali, & Sung, 2022).
 
-### Indikator Evaluasi Cross-GAN
+### 2.20.2 Indikator Evaluasi Cross-GAN
 
 Evaluasi Cross-GAN umumnya dilakukan dengan protokol:
 
@@ -1578,7 +1734,7 @@ Evaluasi Cross-GAN umumnya dilakukan dengan protokol:
 
 Lalu membandingkan metrik (akurasi, AUC, F1) untuk melihat penurunan performa akibat domain shift (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025). Jika penurunan performa besar, artinya model cenderung *overfit* pada artefak spesifik generator dan belum *robust* untuk penggunaan nyata.
 
-### Pendekatan untuk Meningkatkan Generalisasi Cross-GAN
+### 2.20.3 Pendekatan untuk Meningkatkan Generalisasi Cross-GAN
 
 Tantangan utama dalam skenario Cross-GAN adalah ketidakmampuan model deteksi untuk mempertahankan performa ketika dihadapkan pada *deepfake* yang dihasilkan oleh metode generatif yang berbeda dari data pelatihan. Hal ini terjadi karena banyak model cenderung mempelajari artefak spesifik dari satu jenis GAN, bukan karakteristik manipulasi wajah yang bersifat umum. Oleh karena itu, berbagai penelitian mengusulkan pendekatan yang berfokus pada pengurangan ketergantungan terhadap artefak generator tertentu dan peningkatan *robustness* fitur terhadap perubahan metode generasi (Rana, Nobi, Murali, & Sung, 2022; Rao & Uehara, 2025)
 
@@ -1600,11 +1756,11 @@ Sejumlah penelitian mengeksplorasi penggunaan diskriminator (atau karakteristik 
 
 Pada video *deepfake*, perbedaan antar frame (mis. inkonsistensi gerakan halus, perubahan tekstur antar *frame*) dapat menjadi petunjuk yang lebih sulit "disamarkan" oleh generator tertentu. Pendekatan berbasis *temporal* atau *temporal-frequency* mencoba menangkap pola periodik/perubahan waktu yang bisa membantu generalisasi pada *deepfake* video lintas metode (Kim, et al., 2025).
 
-### Relevansi Cross-GAN terhadap Penelitian Ini
+### 2.20.4 Relevansi Cross-GAN terhadap Penelitian Ini
 
 Pembahasan Cross-GAN penting karena sistem deteksi *deepfake* yang dipakai di dunia nyata harus mampu menghadapi metode generatif baru. Detektor yang hanya kuat pada satu jenis GAN berisiko gagal ketika penyerang mengganti arsitektur generator atau strategi *upsampling*. Oleh karena itu, banyak penelitian mengarah pada fitur yang lebih general (misalnya domain frekuensi, *dual-domain*, serta fitur temporal) untuk meningkatkan *robustness* dan generalisasi (Rao & Uehara, 2025; Rana, Nobi, Murali, & Sung, 2022; Qian, Yin, Sheng, Chen, & Shao, 2020; Alam, Tanvir, & Woo, 2025; Tan, et al., 2024).
 
-## Dasar Pemilihan Metode
+## 2.21 Dasar Pemilihan Metode
 
 Semakin canggihnya model generatif dalam menghasilkan video dan citra** ***deepfake*** **yang hampir tidak dapat dibedakan secara visual dari data asli, pemilihan metode deteksi yang tepat menjadi faktor krusial dalam penelitian ini. Pendekatan spasial umumnya berfokus pada analisis fitur visual langsung (seperti tekstur, warna, dan tepi wajah), sementara pendekatan frekuensi berfokus pada identifikasi artefak matematis yang muncul akibat proses sintesis citra oleh model** **GAN.
 
@@ -1612,7 +1768,7 @@ Dalam penelitian ini, digunakan dua metode utama, yaitu  FFT sebagai represent
 
 Berdasarkan kajian tersebut, terlihat bahwa sebagian besar penelitian terdahulu masih memisahkan pendekatan spasial dan frekuensi, atau hanya menggunakan salah satu di antaranya sebagai fitur tambahan. Penelitian ini berupaya mengisi *research* *gap* tersebut dengan merancang model *hybrid* yang secara eksplisit menggabungkan representasi frekuensi dari FFT dan fitur spasial dari *XceptionNet* dalam satu kerangka kerja deteksi *deepfake*, sehingga diharapkan mampu meningkatkan akurasi dan kemampuan generalisasi lintas *dataset*.
 
-### Pemilihan Transformasi FFT dalam Deteksi Deepfake
+### 2.21.1 Pemilihan Transformasi FFT dalam Deteksi Deepfake
 
 Pendekatan berbasis FFT dipilih karena mampu mendeteksi artefak yang tidak terlihat secara visual di domain spasial, tetapi muncul sebagai pola khas di domain frekuensi. Durall et al, menjelaskan bahwa proses *upsampling* pada model *Generative Adversarial Networks* (GAN) menghasilkan distribusi spektrum yang tidak alami akibat terjadinya replikasi spektral atau duplikasi pola frekuensi yang menciptakan *spectral* *distortion* pada citra sintetis (Durall, Keuper, & Keuper, 2020). Pola ketidaksempurnaan tersebut menghasilkan jejak digital yang dikenal sebagai GAN *fingerprints*, yaitu pola periodik khas dari proses sintesis yang tidak ditemukan pada citra asli (Zhang, Karaman, & Chang, 2019).
 
@@ -1630,9 +1786,11 @@ Metode FFT memiliki keunggulan dibanding transformasi lain seperti *Discrete Cos
 
   : Tabel 2.6 Perbandingan tiga metode transformasi frekuensi (Gonzalez & Woods, 2018)
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_6_perbandingan_transformasi_frekuensi.html`]**
+
 Penelitian oleh *Zhang et al.* menunjukkan bahwa artefak frekuensi GAN bersifat algoritmik dan universal, membuat deteksi berbasis frekuensi lebih tangguh terhadap variasi deepfake dibanding pendekatan berbasis *pixel* (Zhang, Karaman, & Chang, 2019). *Hasanaath et al*. juga membuktikan bahwa metode frekuensi seperti FFT memiliki ketahanan lebih baik pada skenario lintas dataset dibanding detektor spasial murni (Hasanaath, Luqman, Katib, & Anwar, 2023). Dengan demikian, FFT dipilih karena mampu mendeteksi artefak tersembunyi hasil sintesis GAN secara efisien, general, dan dengan kemampuan generalisasi yang lebih tinggi.
 
-### Pemilihan Arsitektur XceptionNet dalam Domain Spasial
+### 2.21.2 Pemilihan Arsitektur XceptionNet dalam Domain Spasial
 
 Arsitektur *XceptionNet* (*Extreme Inception Network*) dipilih sebagai model untuk mengekstraksi fitur spasial tingkat tinggi secara efisien dengan menggunakan mekanisme *depthwise separable convolution*, yang memisahkan konvolusi per kanal (*depthwise*) dari penggabungan kanal (*pointwise*). Desain ini membuat *XceptionNet* lebih efisien secara parameter dibandingkan arsitektur konvensional seperti *ResNet* dan *EfficientNet*, sekaligus mempertahankan sensitivitas tinggi terhadap tekstur, tepi, dan pola detail pada citra wajah hasil manipulasi (Haq, 2021; Afchar, Nozick, & Yamagishi, 2018).
 
@@ -1642,7 +1800,7 @@ Dibandingkan dengan *EfficientNet*, meskipun model tersebut unggul dalam efisien
 
 - Arsitekturnya efisien namun tetap mampu mengekstraksi fitur spasial kompleks,
 
-- Terbukti memiliki akurasi lebih tinggi dibanding *ResNet* dan *EfficientNet*,
+- Terbukti memiliki akurasi lebih tinggi dibanding *ResNet* dan *MesoNet*,
 
 - Stabil dan telah menjadi standar arsitektur dalam berbagai studi deteksi *deepfake*.
 
@@ -1658,9 +1816,11 @@ Dibandingkan dengan *EfficientNet*, meskipun model tersebut unggul dalam efisien
   EfficientNet   94--96%                     18M                Optimal parameter, tapi kurang sensitif tekstur
   ---------------------------------------------------------------------------------------------------------------
 
-  : Tabel 2.7 Perbandingan performa model CNN (Haq, 2021; Afchar, Nozick, & Yamagishi, 2018; Alam, Tanvir, & Woo, 2025; Rössler, et al., 2019)
+  : Tabel 2.7 Perbandingan performa model CNN (Haq, 2021; Afchar, Nozick, & Yamagishi, 2018; Alam, Tanvir, & Woo, 2025; Rössler, et al., 2019; Chollet, 2017)
 
-### Perbandingan Akurasi dan Ketahanan Metode FFT dan XceptionNet
+> **[INSERT TABLE HERE → `documents/table/tabel_2_7_perbandingan_model_cnn.html`]**
+
+### 2.21.3 Perbandingan Akurasi dan Ketahanan Metode FFT dan XceptionNet
 
 Berbagai penelitian menunjukkan bahwa baik metode *Fast Fourier Transform* (FFT) maupun arsitektur *XceptionNet* memiliki tingkat akurasi dan *robustness* yang tinggi dalam mendeteksi *deepfake*, terutama dibandingkan dengan pendekatan konvensional berbasis domain tunggal.
 
@@ -1686,9 +1846,11 @@ Dengan demikian, kombinasi antara FFT dan *XceptionNet* menjadi pendekatan optim
 
   : Tabel 2.8 Ringkasan Perbandingan FFT vs XceptionNet (Haq, 2021; Durall, Keuper, & Keuper, 2020; Zhang, Karaman, & Chang, 2019; Alam, Tanvir, & Woo, 2025; Hasanaath, Luqman, Katib, & Anwar, 2023; Rössler, et al., 2019)
 
+> **[INSERT TABLE HERE → `documents/table/tabel_2_8_ringkasan_fft_vs_xceptionnet.html`]**
+
 # BAB III TAHAPAN PELAKSANAAN
 
-## Kerangka Umum Penelitian
+## 3.1 Kerangka Umum Penelitian
 
 Penelitian ini merupakan penelitian eksperimental dalam bidang visi komputer dan pembelajaran mendalam (deep learning). Fokus utamanya adalah mendeteksi konten
 
@@ -1696,7 +1858,7 @@ deepfake, yaitu manipulasi video wajah menggunakan teknik generatif. Pendekatan 
 
 keampuhan metode baru dalam kondisi terkontrol, di mana variabel seperti dataset, arsitektur, dan parameter pelatihan dapat dimanipulasi dan direplikasi.
 
-### Justifikasi Pendekatan Hybrid
+### 3.1.1 Justifikasi Pendekatan Hybrid
 
 Metode deteksi deepfake tradisional sering memanfaatkan fitur spasial saja atau bergantung pada model tunggal. Pada kasus manipulasi canggih, artefak
 
@@ -1712,7 +1874,7 @@ Pendekatan hybrid menawarkan keuntungan berikut:
 
 3.  **Efisiensi komputasi**: Alih-alih menjalankan dua model terpisah, integrasi keduanya dalam satu jalur memungkinkan pelatihan end-to-end lebih efisien.
 
-### FFT sebagai Saluran Tambahan
+### 3.1.2 FFT sebagai Saluran Tambahan
 
 Transformasi Fourier cepat (FFT) diintegrasikan sebagai saluran keempat dalam input jaringan, bukan sebagai model terpisah, karena beberapa alasan:
 
@@ -1722,7 +1884,7 @@ Transformasi Fourier cepat (FFT) diintegrasikan sebagai saluran keempat dalam in
 
 - **Pengurangan overhead**: Memisahkan model memerlukan sinkronisasi dan kemungkinan menggandakan komputasi. Saluran tambahan memanfaatkan infrastruktur yang sudah ada.
 
-### Alur Sistem
+### 3.1.3 Alur Sistem
 
 Pipeline sistem dirancang sebagai berikut:
 
@@ -1771,9 +1933,9 @@ Yang bisa dijelaskan:
 
 Sertakan **diagram alur sistem** (flowchart)
 
-## Dataset dan Sumber Data
+## 3.2 Dataset dan Sumber Data
 
-### Dataset yang Digunakan
+### 3.2.1 Dataset yang Digunakan
 
 Dataset yang digunakan dalam penelitian ini adalah **FaceForensics++**, yang diperkenalkan oleh Rössler et al. dan tersedia secara publik melalui repositori resmi GitHub. Dataset ini merupakan salah satu benchmark standar dalam penelitian deteksi deepfake.
 
@@ -1805,7 +1967,7 @@ Jelaskan Alasan pemilihan dataset:
 
 3)  Cocok untuk evaluasi cross-dataset
 
-### Pembagian Dataset
+### 3.2.2 Pembagian Dataset
 
 Ini penting dan sering ditanya penguji.
 
@@ -1825,7 +1987,7 @@ Tuliskan:
 
 Tegaskan: Pembagian ini dilakukan untuk menghindari data leakage dan memastikan evaluasi yang adil.
 
-### Struktur dan Karakteristik Dataset 
+### 3.2.3 Struktur dan Karakteristik Dataset
 
 Isi yang ditulis:
 
@@ -1859,9 +2021,9 @@ Alasan Pemilihan Dataset:
 
 4)  Relevan dengan tujuan penelitian hybrid FFT--XceptionNet
 
-## Tahapan Preprocessing Data
+## 3.3 Tahapan Preprocessing Data
 
-### Normalisasi, Resize dan Labelling Citra
+### 3.3.1 Normalisasi, Resize dan Labelling Citra
 
 Karena dataset FaceForensics++ berbentuk video, tahap awal preprocessing dilakukan dengan mengekstraksi frame citra dari setiap video pada interval tertentu. Frame-frame ini kemudian digunakan sebagai input model deteksi berbasis citra.
 
@@ -1875,7 +2037,7 @@ Karena dataset FaceForensics++ berbentuk video, tahap awal preprocessing dilakuk
 
 Proses pelabelan data dilakukan secara langsung berdasarkan metadata dataset FaceForensics++, di mana frame yang berasal dari video asli diberi label *real*, sedangkan frame dari video hasil manipulasi diberi label *fake*.
 
-### Konversi Domain Frekuensi (FFT)
+### 3.3.2 Konversi Domain Frekuensi (FFT)
 
 Ini **inti skripsi**, tulis DETAIL.
 
@@ -1899,7 +2061,7 @@ Tekankan:
 
 2)  Artefak ini **tidak selalu terlihat di domain spasial**
 
-### Integrasi FFT sebagai Channel Tambahan
+### 3.3.3 Integrasi FFT sebagai Channel Tambahan
 
 Ini bagian **nilai jual skripsi**.
 
@@ -1921,9 +2083,9 @@ Jelaskan kenapa:
 
 2.  Tanpa memerlukan arsitektur multi-branch yang kompleks
 
-## Arsitektur Model yang Diusulkan
+## 3.4 Arsitektur Model yang Diusulkan
 
-### Arsitektur XceptionNet
+### 3.4.1 Arsitektur XceptionNet
 
 Isi ringkas:
 
@@ -1933,7 +2095,7 @@ Isi ringkas:
 
 3)  Terbukti kuat untuk ekstraksi fitur wajah
 
-### Channel Adapter Layer
+### 3.4.2 Channel Adapter Layer
 
 Jelaskan:
 
@@ -1947,7 +2109,7 @@ Jelaskan:
 
     b)  Bertindak sebagai linear projection
 
-### Arsitektur Lengkap Model
+### 3.4.3 Arsitektur Lengkap Model
 
 Uraikan urutan:
 
@@ -1963,9 +2125,9 @@ Uraikan urutan:
 
 6.  Output Sigmoid (binary classification)
 
-## Strategi Pelatihan Model
+## 3.5 Strategi Pelatihan Model
 
-### Transfer Learning
+### 3.5.1 Transfer Learning
 
 Tuliskan:
 
@@ -1977,7 +2139,7 @@ Tuliskan:
 
     b)  Mempercepat training
 
-### Parameter Pelatihan
+### 3.5.2 Parameter Pelatihan
 
 Dari notebook:
 
@@ -1991,7 +2153,7 @@ Dari notebook:
 
 5)  Epoch maksimum: 100
 
-### Early Stopping Kustom
+### 3.5.3 Early Stopping Kustom
 
 Jelaskan:
 
@@ -2007,7 +2169,7 @@ Jelaskan:
 
     b)  Efisiensi waktu training
 
-## Metode Evaluasi Model
+## 3.6 Metode Evaluasi Model
 
 Evaluasi model dilakukan pada frame-frame yang berasal dari dataset FaceForensics++, sehingga performa model merepresentasikan kemampuan deteksi terhadap manipulasi wajah pada level citra dari video nyata.
 
@@ -2037,11 +2199,11 @@ Jelaskan:
 
 # BAB IV HASIL DAN PEMBAHASAN
 
-## Hasil
+## 4.1 Hasil
 
 Subbab Hasil harus menyesuaikan dengan judul / topik Skripsi / Tesis yang diangkat. Subbab Hasil dapat berupa temuan-temuan sebagai bentuk implementasi penyelesaian masalah atau hasil pengujian yang dilakukan sesuai dengan ruang lingkup yang telah ditentukan. Subbab Hasil dapat dipecah menjadi beberapa sub-sub bab sesuai dengan kebutuhan, sementara hasil tersebut harus dievaluasi / dikaji / didiskusikan untuk mengisi subbab Pembahasan.
 
-## Pembahasan
+## 4.2 Pembahasan
 
 Subbab Pembahasan harus menyesuaikan dengan hasil pengujian dan dapat diuraikan dalam beberapa sub-sub bab sesuai kebutuhan. Pembahasan menjawab masalah yang diajukan pada Bab I.
 
@@ -2059,7 +2221,6 @@ Aduwala, S. A., Arigala, M., Desai, S., Quan, H. J., & Eirinaki, M. (2021). *Dee
 
 Afchar, D., Nozick, V., & Yamagishi, J. (2018). *MesoNet: a Compact Facial Video Forgery Detection Network.*
 
-Akinrogunde, O. O., Adelakun, A. A., Theophilus, E. E., & Thomas, T. G. (2025). *A systematic review of machine learning and deep learning approaches for load and energy consumption prediction in contemporary power systems.* Journal of Innovation Materials, Energy, and Sustainable Engineering.
 
 Alam, I., Tanvir, M. I., & Woo, S. S. (2025). *SpecXNet: A Dual-Domain Convolutional Network for Robust Deepfake Detection.*
 
@@ -2087,7 +2248,6 @@ Güera, D., & Delp, E. J. (2018). *Deepfake Video Detection Using Recurrent Neur
 
 Guidice, O., Guarnera, L., & Battiato, S. (t.thn.). *Fighting Deepfake by Detecting GAN DCT Anomalies.*
 
-Haliassos, A., Vougioukas, K., Petridis, S., & Pantic, M. (2021). *Lips Don't Lie: A Generalisable and Robust Approach to Face Forgery Detection.*
 
 Haq, J. A. (2021). *Klasifikasi Cepat Model XceptionNet dan ResNet-50 Pada Video Deepfake Menggunakan Local Binary Pattern.*
 
@@ -2121,7 +2281,6 @@ Rana, M. S., Nobi, M. N., Murali, B., & Sung, A. H. (2022). *Deepfake Detection:
 
 Rao, J., & Uehara, T. (2025). *A Chronological Review of Deepfake Detection: Techniques and Evolutions.* Natural Language Processing, Information Retrieval and AI Trends.
 
-Robbins, H., & Monro, S. (1951). *A Stochastic Approximation Method.* University of North Carolina.
 
 Rössler, A., Cozzoliono, D., Verdoliva, L., Riess, C., Thies, J., & Nießner, M. (2019). *FaceForensics++: Learning to Detect Manipulated Facial Images.*
 
