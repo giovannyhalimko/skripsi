@@ -198,26 +198,28 @@ Konsep berikut dijelaskan berulang di beberapa seksi berbeda dengan narasi yang 
 
 | # | Item | Prioritas |
 |---|---|---|
-| 1 | Seksi XceptionNet (arsitektur, transfer learning) | SANGAT TINGGI |
-| 2 | Celeb-DF dataset | SANGAT TINGGI |
-| 3 | AUC / ROC Curve di Metrik Evaluasi | TINGGI |
-| 4 | Pendekatan Hybrid (early fusion + late fusion / two-branch) | SANGAT TINGGI |
-| 5 | FreqCNN sebagai frequency branch | TINGGI |
-| 6 | Adam optimizer (ganti SGD) | TINGGI |
-| 7 | Transfer learning / pretrained weights | SEDANG |
-| 8 | Binary Cross-Entropy loss function | SEDANG |
-| 9 | Perbandingan Domain Spasial vs Frekuensi (yang masih kosong) | SEDANG |
-| 10 | Artefak Generatif (yang masih kosong) | SEDANG |
+| # | Item | Prioritas | Status |
+|---|---|---|---|
+| 1 | Seksi XceptionNet (arsitektur, transfer learning) | SANGAT TINGGI | DONE — filled Entry/Middle/Exit Flow, 36 layers, transfer learning |
+| 2 | Celeb-DF dataset | SANGAT TINGGI | DONE — added section 2.13 |
+| 3 | AUC / ROC Curve di Metrik Evaluasi | TINGGI | DONE — added subsection 2.18.6 |
+| 4 | Pendekatan Hybrid (early fusion + late fusion / two-branch) | SANGAT TINGGI | DONE — filled with both fusion strategies |
+| 5 | FreqCNN sebagai frequency branch | TINGGI | DONE — described in hybrid section |
+| 6 | Adam optimizer (ganti SGD) | TINGGI | DONE — renamed to "Optimasi Model", added Adam |
+| 7 | Transfer learning / pretrained weights | SEDANG | DONE — covered in XceptionNet section |
+| 8 | Binary Cross-Entropy loss function | SEDANG | DONE — added in training methodology |
+| 9 | Perbandingan Domain Spasial vs Frekuensi (yang masih kosong) | SEDANG | DONE — filled with comparative analysis + Table 2.9 |
+| 10 | Artefak Generatif (yang masih kosong) | SEDANG | DONE — filled with artifact typology |
 
 ### Harus Direvisi / Dikurangi
 
-| # | Item | Rekomendasi |
-|---|---|---|
-| 1 | Seksi SGD | Ganti dengan Adam, persingkat drastis |
-| 2 | Analisis Video (bagian temporal CNN) | Potong LSTM/GRU/Transformer, pertahankan justifikasi frame-level |
-| 3 | Referensi energy forecasting di CNN | Hapus sepenuhnya |
-| 4 | Spectral Dropoff | Pindah jadi subseksi Spectral Distortions |
-| 5 | Pengulangan narasi GAN upsampling | Konsolidasi |
+| # | Item | Rekomendasi | Status |
+|---|---|---|---|
+| 1 | Seksi SGD | Ganti dengan Adam, persingkat drastis | DONE — renamed to "Optimasi Model" |
+| 2 | Analisis Video (bagian temporal CNN) | Potong LSTM/GRU/Transformer, pertahankan justifikasi frame-level | NOT ACTIONED |
+| 3 | Referensi energy forecasting di CNN | Hapus sepenuhnya | DONE — Akinrogunde removed from Daftar Pustaka |
+| 4 | Spectral Dropoff | Pindah jadi subseksi Spectral Distortions | DONE — renumbered to 2.5.6 |
+| 5 | Pengulangan narasi GAN upsampling | Konsolidasi | NOT ACTIONED |
 
 ---
 
