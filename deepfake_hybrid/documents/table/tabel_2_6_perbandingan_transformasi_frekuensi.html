@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+</style></head><body>
+<table>
+  <thead>
+    <tr>
+      <th>Metode</th>
+      <th>Kelebihan</th>
+      <th>Kekurangan</th>
+      <th>Kompleksitas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FFT</td>
+      <td>Cepat, global, mampu tangkap pola spektrum.</td>
+      <td>Tidak lokal, sensitif rotasi.</td>
+      <td>O(n log n)</td>
+    </tr>
+    <tr>
+      <td>DCT</td>
+      <td>Efisien untuk kompresi citra (JPEG).</td>
+      <td>Tidak menangkap fase.</td>
+      <td>O(n&sup2;)</td>
+    </tr>
+    <tr>
+      <td><i>Wavelet</i></td>
+      <td>Analisis multi-resolusi, lokal.</td>
+      <td>Kompleks implementasi.</td>
+      <td>O(n&sup2; log n)</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 2.6 Perbandingan tiga metode transformasi frekuensi (Gonzalez &amp; Woods, 2018)</caption>
+</table>
+</body></html>

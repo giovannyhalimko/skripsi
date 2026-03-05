@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+</style></head><body>
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Akurasi (FaceForensics++)</th>
+      <th>Jumlah Parameter</th>
+      <th>Kelebihan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>MesoNet</i></td>
+      <td>85&ndash;90%</td>
+      <td>4M</td>
+      <td>Ringan, cepat</td>
+    </tr>
+    <tr>
+      <td><i>ResNet</i>-50</td>
+      <td>92&ndash;94%</td>
+      <td>25M</td>
+      <td>Stabil, general</td>
+    </tr>
+    <tr>
+      <td><i>XceptionNet</i></td>
+      <td>95,73&ndash;99,26% (HQ&ndash;Raw)</td>
+      <td>22M</td>
+      <td>Akurasi tertinggi, efisien</td>
+    </tr>
+    <tr>
+      <td><i>EfficientNet</i></td>
+      <td>94&ndash;96%</td>
+      <td>18M</td>
+      <td>Optimal parameter, tapi kurang sensitif tekstur</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 2.7 Perbandingan performa model CNN (Haq, 2021; Afchar, Nozick, &amp; Yamagishi, 2018; Alam, Tanvir, &amp; Woo, 2025; R&ouml;ssler, et al., 2019; Chollet, 2017)</caption>
+</table>
+</body></html>

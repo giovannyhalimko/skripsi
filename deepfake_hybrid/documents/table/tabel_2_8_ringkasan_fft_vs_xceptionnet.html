@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+</style></head><body>
+<table>
+  <thead>
+    <tr>
+      <th>Aspek Evaluasi</th>
+      <th>FFT (Domain Frekuensi)</th>
+      <th><i>XceptionNet</i> (Domain Spasial)</th>
+      <th>Kombinasi <i>Hybrid</i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Artefak yang terdeteksi</td>
+      <td>Pola spektrum, <i>noise</i> periodik</td>
+      <td>Tekstur, tepi, distorsi wajah</td>
+      <td>Gabungan keduanya</td>
+    </tr>
+    <tr>
+      <td><i>Robustness</i></td>
+      <td>Tinggi terhadap kompresi</td>
+      <td>Sedang</td>
+      <td>Sangat tinggi</td>
+    </tr>
+    <tr>
+      <td>Kebutuhan komputasi</td>
+      <td>Rendah</td>
+      <td>Sedang&ndash;Tinggi</td>
+      <td>Sedang</td>
+    </tr>
+    <tr>
+      <td>Generalisasi (<i>cross-dataset</i>)</td>
+      <td>Baik</td>
+      <td>Baik</td>
+      <td>Sangat baik</td>
+    </tr>
+    <tr>
+      <td>Akurasi (rata-rata)</td>
+      <td>90&ndash;93%</td>
+      <td>96&ndash;99%</td>
+      <td>98&ndash;99%</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 2.8 Ringkasan Perbandingan FFT vs XceptionNet (Haq, 2021; Durall, Keuper, &amp; Keuper, 2020; Zhang, Karaman, &amp; Chang, 2019; Alam, Tanvir, &amp; Woo, 2025; Hasanaath, Luqman, Katib, &amp; Anwar, 2023; R&ouml;ssler, et al., 2019)</caption>
+</table>
+</body></html>

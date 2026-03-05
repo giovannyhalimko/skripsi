@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+</style></head><body>
+<table>
+  <thead>
+    <tr>
+      <th>Tahap</th>
+      <th>Operasi</th>
+      <th>Tujuan Utama</th>
+      <th>Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Ekstraksi frame</td>
+      <td>Mengubah video menjadi deretan frame</td>
+      <td>Citra per-frame</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Deteksi wajah</td>
+      <td>Menemukan lokasi (<i>bounding box</i>) wajah</td>
+      <td>Koordinat wajah</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><i>Face alignment</i></td>
+      <td>Menyelaraskan orientasi wajah</td>
+      <td>Wajah ter-align</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><i>Cropping</i></td>
+      <td>Memotong area wajah dari background</td>
+      <td><i>Patch</i> wajah</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><i>Resize</i> 224&times;224</td>
+      <td>Menyeragamkan resolusi</td>
+      <td>Citra 224&times;224</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Normalisasi <i>pixel</i></td>
+      <td>Menstabilkan intensitas dan kontras</td>
+      <td>Citra ternormalisasi</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Transformasi FFT</td>
+      <td>Mengubah ke domain frekuensi</td>
+      <td>Spektrum frekuensi</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Channel <i>fusion</i></td>
+      <td>Menggabungkan RGB dan kanal frekuensi</td>
+      <td>Tensor 4-channel</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 2.3 Tahapan Preprocessing</caption>
+</table>
+</body></html>
