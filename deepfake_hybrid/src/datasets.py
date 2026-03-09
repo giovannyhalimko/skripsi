@@ -93,6 +93,8 @@ class DeepfakeDataset(Dataset):
             fft_tensor = torch.nn.functional.interpolate(
                 fft_tensor.unsqueeze(0), size=(self.image_size, self.image_size), mode="bilinear", align_corners=False
             ).squeeze(0)
+            # Normalize cached FFT tensor (bypasses fft_transform pipeline)
+            fft_tensor = T.normalize_fft_tensor(fft_tensor)
         else:
             fft_tensor = None
 

@@ -15,9 +15,14 @@ batch_size: 16
 num_workers: 4
 lr: 1.0e-4
 weight_decay: 1.0e-4
-epochs: 5
+epochs: 25
 fusion_mode: two_branch  # options: two_branch, early_fusion
 n_seeds: 1
+scheduler: cosine
+warmup_epochs: 2
+min_lr: 1.0e-6
+max_grad_norm: 1.0
+early_stopping_patience: 7
 
 # Dataset roots (edit these)
 datasets:
