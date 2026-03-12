@@ -132,21 +132,9 @@ def main():
 
     import pandas as pd
 
-    if unknown_count > 0:
-        print(f"[WARN] {unknown_count} videos skipped (unknown label) — check real_keywords/fake_keywords in config")
-
     df = pd.DataFrame(rows, columns=["video_id", "label", "frames_dir"])
     df.to_csv(manifest_path, index=False)
     print(f"Saved manifest to {manifest_path} with {len(rows)} videos")
-
-    if len(rows) == 0:
-        raise RuntimeError(
-            "No videos were written to the manifest.\n"
-            f"  Total videos scanned: {len(videos)}\n"
-            f"  Skipped (unknown label): {unknown_count}\n"
-            f"  Skipped (0 frames extracted / OpenCV error): {len(videos) - unknown_count}\n"
-            "Check [WARN] lines above for details."
-        )
 
 
 if __name__ == "__main__":
