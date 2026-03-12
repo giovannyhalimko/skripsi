@@ -4,9 +4,9 @@
 
 Penelitian ini menggunakan metode penelitian eksperimental dengan pendekatan kuantitatif. Pendekatan tersebut dipilih karena penelitian berfokus pada perancangan, implementasi, dan pengujian model deteksi deepfake berbasis pembelajaran mendalam dalam kondisi yang terkontrol. Melalui desain ini, setiap model dapat dibandingkan secara objektif karena menggunakan sumber data, tahapan prapemrosesan, konfigurasi pelatihan, dan metrik evaluasi yang seragam.
 
-Secara konseptual, penelitian ini tidak hanya menilai kinerja model pada data yang berasal dari distribusi yang sama dengan data pelatihan, tetapi juga menilai kemampuan generalisasi model ketika diterapkan pada dataset yang berbeda. Dengan demikian, dua aspek utama yang dievaluasi adalah performa in-dataset dan performa cross-dataset.
+Secara konseptual, penelitian ini tidak hanya menilai kinerja model pada data yang berasal dari distribusi yang sama dengan data pelatihan, tetapi juga menilai kemampuan generalisasi model ketika diterapkan pada dataset yang berbeda. Dengan demikian, dua aspek utama yang dievaluasi dalam penelitian ini adalah performa in-dataset dan performa cross-dataset.
 
-Pemilihan desain tersebut didasarkan pada kenyataan bahwa permasalahan utama dalam deteksi deepfake bukan sekadar memperoleh akurasi tinggi pada satu dataset tertentu, melainkan mempertahankan kinerja ketika pola manipulasi, distribusi visual, dan artefak digital berubah pada dataset lain. Oleh karena itu, desain penelitian diarahkan pada pembandingan sistematis terhadap tiga model utama, dua sumber dataset, dan beberapa ukuran sampel pelatihan.
+Pemilihan desain tersebut didasarkan pada kenyataan bahwa permasalahan utama dalam deteksi deepfake bukan sekadar memperoleh akurasi tinggi pada satu dataset tertentu, melainkan mempertahankan kinerja ketika pola manipulasi, distribusi visual, dan artefak digital berubah pada dataset lain. Oleh karena itu, desain penelitian diarahkan pada pembandingan sistematis terhadap tiga model utama, dua sumber dataset, dan beberapa ukuran sampel pelatihan sehingga kesimpulan yang diperoleh memiliki dasar empiris yang lebih kuat.
 
 ## 3.2 Tujuan Metodologis Penelitian
 
@@ -15,6 +15,8 @@ Secara metodologis, penelitian ini dirancang untuk mencapai tujuan-tujuan beriku
 1. Menyusun pipeline deteksi deepfake yang terstruktur mulai dari ekstraksi frame, pembentukan split data, pembangkitan representasi domain frekuensi, pelatihan model, hingga evaluasi hasil.
 2. Membandingkan kinerja tiga arsitektur, yaitu model spasial berbasis Xception, model frekuensi berbasis CNN satu kanal, dan model hybrid dua cabang yang menggabungkan fitur spasial dan frekuensi.
 3. Menguji pengaruh sumber data dan ukuran sampel pelatihan terhadap performa deteksi serta kemampuan generalisasi antardataset.
+
+Ketiga tujuan tersebut menjadi dasar dalam penyusunan tahapan implementasi, penentuan skenario eksperimen, dan penyajian hasil evaluasi pada bab pembahasan.
 
 ## 3.3 Lingkungan Implementasi
 
@@ -82,7 +84,7 @@ Untuk menjaga keadilan pembandingan, beberapa parameter dijaga tetap sama pada s
 8. Fungsi loss: Binary Cross Entropy with Logits.
 9. Ambang klasifikasi probabilitas: 0,5.
 
-Pada repositori ini, nilai konfigurasi dasar disimpan pada file config.yaml, sedangkan pada eksperimen utama beberapa parameter, seperti ukuran sampel, jumlah epoch, dan jumlah frame maksimum per video, dapat disesuaikan melalui skrip eksekusi pipeline. Pengaturan ini memungkinkan penelitian tetap konsisten secara metodologis, namun fleksibel untuk menjalankan beberapa skenario percobaan.
+Pada repositori ini, nilai konfigurasi dasar disimpan pada file config.yaml, sedangkan pada eksperimen utama beberapa parameter, seperti ukuran sampel, jumlah epoch, dan jumlah frame maksimum per video, dapat disesuaikan melalui skrip eksekusi pipeline. Pengaturan ini memungkinkan penelitian tetap konsisten secara metodologis, namun tetap fleksibel untuk menjalankan beberapa skenario percobaan.
 
 ## 3.6 Rancangan Eksperimen
 
@@ -90,9 +92,9 @@ Rancangan eksperimen pada penelitian ini disusun untuk menjawab pertanyaan penel
 
 Dengan struktur tersebut, rancangan eksperimen dalam penelitian ini tidak hanya menilai kemampuan klasifikasi model, tetapi juga menganalisis kestabilan performa ketika model dihadapkan pada distribusi data yang berbeda. Oleh sebab itu, bagian ini merupakan inti dari pengujian metodologis penelitian karena menjadi dasar pembandingan seluruh hasil pada bab berikutnya.
 
-### 3.6.1 Tujuan Design Eksperimentasi
+### 3.6.1 Tujuan Desain Eksperimentasi
 
-Design eksperimentasi pada penelitian ini disusun untuk memenuhi empat tujuan analitis.
+Desain eksperimentasi pada penelitian ini disusun untuk memenuhi empat tujuan analitis.
 
 1. Mengetahui perbedaan performa antara model berbasis domain spasial, domain frekuensi, dan model hybrid.
 2. Mengetahui pengaruh sumber dataset pelatihan terhadap kualitas model yang dihasilkan.
@@ -115,7 +117,28 @@ Eksperimen utama pada repositori ini dapat diringkas sebagaimana Tabel 3.1.
 
 Berdasarkan kombinasi tersebut, jumlah skenario evaluasi utama adalah 3 model x 2 dataset latih x 3 ukuran sampel x 2 jenis evaluasi = 36 skenario evaluasi.
 
-### 3.6.3 Struktur Perbandingan Eksperimen
+### 3.6.3 Tabel Perlakuan Eksperimen
+
+Untuk memperjelas rancangan pengujian, perlakuan eksperimen utama dapat disajikan sebagaimana Tabel 3.2.
+
+| Kode | Model | Dataset Latih | Dataset Uji | Ukuran Sampel | Tujuan Pengujian |
+| --- | --- | --- | --- | --- | --- |
+| E1 | Spatial | FFPP | FFPP | 50, 200, 400 | Mengukur performa in-dataset model spasial |
+| E2 | Freq | FFPP | FFPP | 50, 200, 400 | Mengukur performa in-dataset model frekuensi |
+| E3 | Hybrid | FFPP | FFPP | 50, 200, 400 | Mengukur performa in-dataset model hibrida |
+| E4 | Spatial | CDF | CDF | 50, 200, 400 | Mengukur performa in-dataset model spasial |
+| E5 | Freq | CDF | CDF | 50, 200, 400 | Mengukur performa in-dataset model frekuensi |
+| E6 | Hybrid | CDF | CDF | 50, 200, 400 | Mengukur performa in-dataset model hibrida |
+| E7 | Spatial | FFPP | CDF | 50, 200, 400 | Mengukur generalisasi FFPP ke CDF |
+| E8 | Freq | FFPP | CDF | 50, 200, 400 | Mengukur generalisasi FFPP ke CDF |
+| E9 | Hybrid | FFPP | CDF | 50, 200, 400 | Mengukur generalisasi FFPP ke CDF |
+| E10 | Spatial | CDF | FFPP | 50, 200, 400 | Mengukur generalisasi CDF ke FFPP |
+| E11 | Freq | CDF | FFPP | 50, 200, 400 | Mengukur generalisasi CDF ke FFPP |
+| E12 | Hybrid | CDF | FFPP | 50, 200, 400 | Mengukur generalisasi CDF ke FFPP |
+
+Tabel tersebut menunjukkan bahwa setiap arsitektur diuji pada kondisi yang simetris. Dengan desain seperti ini, hasil evaluasi dapat digunakan untuk menelaah perbedaan performa berdasarkan arsitektur, arah transfer dataset, dan ukuran data pelatihan.
+
+### 3.6.4 Struktur Perbandingan Eksperimen
 
 Agar rancangan eksperimen mudah dipahami, struktur pembandingannya dapat dijelaskan sebagai berikut.
 
@@ -126,19 +149,19 @@ Agar rancangan eksperimen mudah dipahami, struktur pembandingannya dapat dijelas
 
 Melalui struktur tersebut, setiap perubahan nilai performa dapat ditelusuri berdasarkan faktor penyebabnya, apakah berasal dari arsitektur model, sumber data, atau jumlah sampel pelatihan.
 
-### 3.6.4 Skenario In-Dataset
+### 3.6.5 Skenario In-Dataset
 
 Pada skenario in-dataset, model dilatih dan diuji pada dataset yang sama. Contohnya, model dilatih menggunakan FFPP dan diuji pada subset test FFPP, atau dilatih menggunakan CDF dan diuji pada subset test CDF. Tujuan skenario ini adalah mengukur kemampuan model mempelajari pola manipulasi pada distribusi data yang sejenis.
 
 Secara metodologis, skenario ini digunakan untuk menjawab pertanyaan apakah model mampu mengenali pola deepfake dengan baik ketika distribusi data uji masih konsisten dengan distribusi data pelatihan. Nilai performa pada skenario ini merepresentasikan kemampuan deteksi internal model.
 
-### 3.6.5 Skenario Cross-Dataset
+### 3.6.6 Skenario Cross-Dataset
 
 Pada skenario cross-dataset, model dilatih pada satu dataset dan diuji pada dataset lain. Contohnya, model dilatih pada FFPP lalu diuji pada CDF, atau dilatih pada CDF lalu diuji pada FFPP. Skenario ini sangat penting karena merepresentasikan kondisi yang lebih realistis, yaitu ketika model harus menghadapi data dari distribusi yang tidak identik dengan data pelatihan.
 
 Secara metodologis, skenario ini digunakan untuk mengukur robustness dan kemampuan transfer representasi yang dipelajari model. Apabila terjadi penurunan performa yang signifikan, maka hal tersebut menunjukkan bahwa model cenderung mempelajari karakteristik spesifik dataset, bukan ciri umum manipulasi deepfake.
 
-### 3.6.6 Pengukuran Generalization Drop
+### 3.6.7 Pengukuran Generalization Drop
 
 Selain metrik evaluasi standar, repositori ini juga menghitung penurunan generalisasi menggunakan selisih nilai F1 pada pengujian in-dataset dan cross-dataset. Secara matematis, penurunan generalisasi dihitung sebagai berikut.
 
@@ -148,7 +171,33 @@ $$
 
 Semakin besar nilai drop, semakin besar penurunan performa model ketika berpindah dari pengujian pada dataset sejenis ke pengujian pada dataset yang berbeda. Nilai ini digunakan untuk melihat apakah model benar-benar mempelajari ciri deepfake yang umum atau hanya menyesuaikan diri terhadap karakteristik dataset tertentu.
 
-### 3.6.7 Prosedur Pelaksanaan Eksperimen
+### 3.6.8 Keluaran yang Diharapkan dari Setiap Skenario
+
+Setiap skenario eksperimen menghasilkan keluaran yang sama dalam bentuk metrik evaluasi dan artefak hasil eksperimen. Keluaran tersebut dapat diringkas sebagaimana Tabel 3.3.
+
+| Komponen Keluaran | Bentuk Keluaran | Kegunaan dalam Analisis |
+| --- | --- | --- |
+| Checkpoint model | File best.pt | Menyimpan bobot model terbaik berdasarkan validation AUC |
+| Riwayat validasi | File metrics.json | Menelusuri perubahan loss, F1, dan AUC antar-epoch |
+| Log pelatihan | File train.log | Memverifikasi jalannya eksperimen |
+| Hasil in-dataset | Table1_in_dataset.csv | Membandingkan kemampuan model pada dataset sejenis |
+| Hasil cross-dataset | Table2_cross_dataset.csv | Membandingkan kemampuan generalisasi model |
+| Penurunan generalisasi | Table3_generalization_drop.csv | Mengukur gap antara performa internal dan performa lintas dataset |
+
+Penyamaan format keluaran pada setiap skenario eksperimen mempermudah proses rekapitulasi, validasi, dan interpretasi hasil penelitian.
+
+### 3.6.9 Hipotesis Eksperimen
+
+Untuk memperkuat arah analisis, desain eksperimen pada penelitian ini juga dapat dirumuskan ke dalam hipotesis kerja sebagai berikut.
+
+1. Model hibrida memiliki performa in-dataset yang lebih baik dibandingkan model spasial dan model frekuensi karena memanfaatkan dua domain fitur secara simultan.
+2. Model yang dilatih pada dataset FFPP cenderung memiliki kemampuan generalisasi yang lebih baik dibandingkan model yang dilatih pada CDF karena FFPP memiliki variasi manipulasi yang lebih beragam.
+3. Peningkatan jumlah sampel pelatihan akan meningkatkan performa in-dataset, tetapi belum tentu meningkatkan performa cross-dataset secara proporsional.
+4. Selisih performa antara pengujian in-dataset dan cross-dataset menunjukkan adanya sensitivitas model terhadap karakteristik dataset.
+
+Hipotesis tersebut tidak dimaksudkan sebagai asumsi mutlak, melainkan sebagai dasar interpretasi ketika hasil eksperimen dianalisis pada bab selanjutnya.
+
+### 3.6.10 Prosedur Pelaksanaan Eksperimen
 
 Untuk setiap kombinasi model, dataset, dan ukuran sampel, eksperimen dijalankan melalui prosedur yang sama agar hasil yang diperoleh tetap adil dan dapat dibandingkan secara langsung. Prosedur tersebut adalah sebagai berikut.
 
@@ -425,6 +474,8 @@ pip install -r requirements.txt
 2. Memastikan output_root mengarah ke folder outputs.
 3. Memastikan daftar real_keywords dan fake_keywords sesuai struktur folder dataset.
 
+Tahap konfigurasi ini bersifat penting karena kesalahan dalam penentuan path atau keyword label dapat memengaruhi proses inferensi label video, pembentukan manifest, dan seluruh jalannya eksperimen.
+
 ### 3.12.3 Menjalankan Pipeline Lengkap
 
 Repositori menyediakan skrip run_pipeline.py untuk menjalankan seluruh tahapan eksperimen secara otomatis, meliputi ekstraksi frame, pembentukan split data, pembuatan FFT cache, pelatihan model, evaluasi, dan pembuatan tabel hasil.
@@ -443,6 +494,8 @@ Makna parameter utama adalah sebagai berikut.
 2. max-frames menyatakan jumlah frame maksimum per video.
 3. epochs menyatakan jumlah putaran pelatihan.
 4. pretrained menyatakan bahwa backbone Xception menggunakan bobot awal pretrained.
+
+Dalam konteks penulisan skripsi, tiga perintah tersebut dapat disebut sebagai representasi implementasi eksperimen untuk skenario data kecil, menengah, dan besar.
 
 ### 3.12.4 Menjalankan Tahapan Secara Parsial
 
