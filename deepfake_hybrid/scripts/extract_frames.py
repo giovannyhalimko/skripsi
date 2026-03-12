@@ -52,11 +52,14 @@ def extract_video_frames(video_path: Path, out_dir: Path, fps: int, max_frames: 
 
 
 def main():
+    import random
     parser = argparse.ArgumentParser(description="Extract frames from videos")
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF"], help="Dataset name")
     parser.add_argument("--fps", type=int, default=5)
     parser.add_argument("--max-frames", type=int, default=100)
+    parser.add_argument("--n-samples", type=int, default=0,
+                        help="Limit to N randomly sampled videos (balanced real/fake). 0 = all.")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -69,36 +72,57 @@ def main():
     real_kw = ds_cfg.get("real_keywords", ["real", "original", "pristine", "actors"])
     fake_kw = ds_cfg.get("fake_keywords", ["fake", "manipulated", "synthesis", "deepfake"])
 
-    if not root.exists():
-        raise FileNotFoundError(
-            f"Dataset root not found: {root}\n"
-            "Make sure Step 3 (copy from Drive) completed successfully."
-        )
+    # Collect and label videos — only search for video extensions (not all files)
+    all_videos = []
+    early_stop = args.n_samples * 3 if args.n_samples > 0 else 0
+    real_count = 0
+    fake_count = 0
+    print(f"  Scanning for videos in {root} ...")
+    for ext in VIDEO_EXTS:
+        for p in root.rglob(f"*{ext}"):
+            label = infer_label(p.parent, real_kw, fake_kw)
+            if label is None:
+                label = infer_label(p, real_kw, fake_kw)
+            if label is None:
+                continue
+            all_videos.append((p, label))
+            if label == 0:
+                real_count += 1
+            else:
+                fake_count += 1
+            if len(all_videos) % 200 == 0:
+                print(f"    ...{len(all_videos)} videos found ({real_count} real, {fake_count} fake)")
+            # Early stop when we have enough for both classes
+            if early_stop > 0 and real_count >= early_stop and fake_count >= early_stop:
+                break
+        if early_stop > 0 and real_count >= early_stop and fake_count >= early_stop:
+            print(f"  Early stop: enough candidates ({len(all_videos)} videos)")
+            break
 
-    videos = [p for p in root.rglob("*") if p.suffix.lower() in VIDEO_EXTS]
+    print(f"Found {len(all_videos)} labeled videos ({real_count} real, {fake_count} fake)")
 
-    if not videos:
-        raise RuntimeError(
-            f"No video files ({', '.join(VIDEO_EXTS)}) found under: {root}\n"
-            "Possible causes:\n"
-            "  1. Step 3 copy failed or is still running\n"
-            "  2. Videos are in a different subfolder structure\n"
-            "     Run: find <root> -name '*.mp4' | head -10\n"
-            "  3. Files have a different extension (e.g. .avi, .mov)"
-        )
+    # Apply n-samples limit with balanced sampling
+    if args.n_samples > 0 and len(all_videos) > args.n_samples:
+        rng = random.Random(42)
+        real = [(v, l) for v, l in all_videos if l == 0]
+        fake = [(v, l) for v, l in all_videos if l == 1]
+        rng.shuffle(real)
+        rng.shuffle(fake)
+        half = args.n_samples // 2
+        real_take = min(len(real), half)
+        fake_take = min(len(fake), args.n_samples - real_take)
+        remaining = args.n_samples - real_take - fake_take
+        if remaining > 0:
+            if len(real) > real_take:
+                real_take = min(len(real), real_take + remaining)
+            elif len(fake) > fake_take:
+                fake_take = min(len(fake), fake_take + remaining)
+        all_videos = real[:real_take] + fake[:fake_take]
+        rng.shuffle(all_videos)
+        print(f"Sampled {len(all_videos)} videos ({real_take} real, {fake_take} fake)")
 
-    print(f"Found {len(videos)} video files under {root}")
     rows = []
-    unknown_count = 0
-    for v in tqdm(videos, desc="videos"):
-        label = infer_label(v.parent, real_kw, fake_kw)
-        if label is None:
-            # try using name
-            label = infer_label(v, real_kw, fake_kw)
-        if label is None:
-            print(f"[WARN] Skip (unknown label): {v}")
-            unknown_count += 1
-            continue
+    for v, label in tqdm(all_videos, desc="Extracting frames"):
         vid = v.stem
         out_dir = out_root / vid
         saved = extract_video_frames(v, out_dir, fps=args.fps, max_frames=args.max_frames)

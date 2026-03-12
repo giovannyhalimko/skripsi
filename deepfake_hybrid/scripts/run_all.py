@@ -13,7 +13,7 @@ SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
 from utils import load_config, ensure_dir, setup_logging, get_device, worker_init_fn
-from datasets import DeepfakeDataset, DatasetConfig
+from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
@@ -60,10 +60,10 @@ def eval_checkpoint(cfg, dataset_name, model_type, checkpoint_path, seed):
         for batch in loader:
             if model_type == "hybrid":
                 feats, y = batch
-                logits = model(feats["image"].to(device), feats["fft"].to(device))
+                logits = model(feats["image"].to(device), feats["fft"].to(device)).view(-1)
             else:
                 x, y = batch
-                logits = model(x.to(device))
+                logits = model(x.to(device)).view(-1)
             probs = torch.sigmoid(logits)
             all_probs.append(probs.cpu())
             all_targets.append(y.cpu())
@@ -73,14 +73,23 @@ def eval_checkpoint(cfg, dataset_name, model_type, checkpoint_path, seed):
     return metrics
 
 
+def _n_tag(n_samples: int) -> str:
+    """Return the n-samples tag used in run / table folder names."""
+    return f"_n{n_samples}" if n_samples > 0 else ""
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run full experiment matrix")
     parser.add_argument("--config", required=True)
     parser.add_argument("--pretrained", action="store_true")
+    parser.add_argument("--n-samples", type=int, default=0,
+                        help="Number of samples used (only affects output folder naming)")
     args = parser.parse_args()
 
+    n_tag = _n_tag(args.n_samples)
+
     cfg = load_config(args.config)
-    setup_logging(Path(cfg["output_root"]) / "runs" / "run_all.log")
+    setup_logging(Path(cfg["output_root"]) / "runs" / f"run_all{n_tag}.log")
     models_to_run = MODELS_CORE.copy()
     if cfg.get("fusion_mode", "two_branch") == "early_fusion":
         models_to_run.append("early_fusion")
@@ -93,12 +102,14 @@ def main():
     for seed in seeds:
         for train_ds in ["FFPP", "CDF"]:
             for model_type in models_to_run:
-                run_name = f"{model_type}_{train_ds}_seed{seed}"
+                run_name = f"{model_type}_{train_ds}{n_tag}_seed{seed}"
                 run_dir = Path(cfg["output_root"]) / "runs" / run_name
                 ckpt = run_dir / "best.pt"
                 if not ckpt.exists():
                     # train
                     cmd = [sys.executable, str(ROOT / "scripts" / "train.py"), "--config", args.config, "--dataset", train_ds, "--model", model_type, "--seed", str(seed)]
+                    if args.n_samples > 0:
+                        cmd += ["--n-samples", str(args.n_samples)]
                     if args.pretrained:
                         cmd.append("--pretrained")
                     subprocess.run(cmd, check=True)
@@ -118,7 +129,7 @@ def main():
                 metrics_cross["seed"] = seed
                 results_cross.append(metrics_cross)
 
-    tables_dir = Path(cfg["output_root"]) / "tables"
+    tables_dir = Path(cfg["output_root"]) / "tables" / (f"n{args.n_samples}" if args.n_samples > 0 else "default")
     ensure_dir(tables_dir)
     df_in = pd.DataFrame(results_in)
     df_cross = pd.DataFrame(results_cross)

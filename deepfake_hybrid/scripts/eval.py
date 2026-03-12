@@ -12,7 +12,7 @@ SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
 from utils import load_config, setup_logging, ensure_dir, get_device, worker_init_fn, save_json
-from datasets import DeepfakeDataset, DatasetConfig
+from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
@@ -34,10 +34,10 @@ def select_model(model_type: str, pretrained: bool):
 def forward_model(model_type, model, batch, device):
     if model_type == "hybrid":
         feats, y = batch
-        logits = model(feats["image"].to(device), feats["fft"].to(device))
+        logits = model(feats["image"].to(device), feats["fft"].to(device)).view(-1)
     else:
         x, y = batch
-        logits = model(x.to(device))
+        logits = model(x.to(device)).view(-1)
     return logits, y.to(device)
 
 

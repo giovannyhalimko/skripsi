@@ -1,0 +1,13 @@
+[2026-03-12 06:31:31,498] INFO: Starting training: model=early_fusion, dataset=FFPP, seed=0, device=cuda
+[2026-03-12 06:31:31,735] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-12 06:31:31,795] INFO: Converted input conv conv1 pretrained weights from 3 to 4 channel(s)
+[2026-03-12 06:31:31,830] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-12 06:35:30,087] INFO: Epoch 1: loss=0.1386, val_auc=0.6683, val_f1=0.6182
+[2026-03-12 06:38:12,713] INFO: Epoch 2: loss=0.0669, val_auc=0.6389, val_f1=0.5777
+[2026-03-12 06:41:16,543] INFO: Epoch 3: loss=0.0571, val_auc=0.6454, val_f1=0.5869
+[2026-03-12 06:44:02,469] INFO: Epoch 4: loss=0.0544, val_auc=0.6565, val_f1=0.6169
+[2026-03-12 06:47:10,839] INFO: Epoch 5: loss=0.0503, val_auc=0.6405, val_f1=0.5906
+[2026-03-12 06:49:52,235] INFO: Epoch 6: loss=0.0432, val_auc=0.6845, val_f1=0.6144
+[2026-03-12 06:52:48,086] INFO: Epoch 7: loss=0.0433, val_auc=0.6502, val_f1=0.6241
+[2026-03-12 06:55:28,557] INFO: Epoch 8: loss=0.0294, val_auc=0.5845, val_f1=0.5522
+[2026-03-12 06:58:26,773] INFO: Epoch 9: loss=0.0278, val_auc=0.6282, val_f1=0.5503

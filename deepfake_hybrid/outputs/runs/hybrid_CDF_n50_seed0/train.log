@@ -1,0 +1,13 @@
+[2026-03-11 16:50:56,731] INFO: Starting training: model=hybrid, dataset=CDF, seed=0, device=cuda
+[2026-03-11 16:50:56,876] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-11 16:51:26,417] INFO: Epoch 1: loss=0.1405, val_auc=0.9657, val_f1=0.7395
+[2026-03-11 16:51:54,640] INFO: Epoch 2: loss=0.0032, val_auc=0.9614, val_f1=0.7876
+[2026-03-11 16:52:23,096] INFO: Epoch 3: loss=0.0091, val_auc=0.7223, val_f1=0.6992
+[2026-03-11 16:52:51,422] INFO: Epoch 4: loss=0.0155, val_auc=0.9474, val_f1=0.6974
+[2026-03-11 16:53:20,573] INFO: Epoch 5: loss=0.0044, val_auc=0.9097, val_f1=0.6974
+[2026-03-11 16:53:48,998] INFO: Epoch 6: loss=0.0009, val_auc=0.9196, val_f1=0.6974
+[2026-03-11 16:54:17,097] INFO: Epoch 7: loss=0.0029, val_auc=0.9992, val_f1=0.8830
+[2026-03-11 16:54:45,393] INFO: Epoch 8: loss=0.0005, val_auc=0.9975, val_f1=0.8957
+[2026-03-11 16:55:14,158] INFO: Epoch 9: loss=0.0047, val_auc=0.9946, val_f1=0.8552
+[2026-03-11 16:55:42,155] INFO: Epoch 10: loss=0.0002, val_auc=0.9977, val_f1=0.9482
+[2026-03-11 16:55:42,155] INFO: Training complete. Best AUC=0.9992. Checkpoint at outputs\runs\hybrid_CDF_n50_seed0\best.pt
