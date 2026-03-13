@@ -7,7 +7,7 @@ num_workers: 4
 lr: 0.0001
 weight_decay: 0.0001
 epochs: 10
-fusion_mode: early_fusion
+fusion_mode: two_branch
 n_seeds: 1
 datasets:
   ffpp:

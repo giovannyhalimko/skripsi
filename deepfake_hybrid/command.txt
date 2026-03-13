@@ -19,10 +19,12 @@ python scripts\run_pipeline.py --n-samples 500 --pretrained
 python scripts\run_pipeline.py --n-samples 50 --max-frames 10 --epochs 1 --pretrained
 
 # Custom sample size with more epochs:
+python scripts\run_pipeline.py --n-samples 10 --max-frames 100 --epochs 10 --pretrained
 python scripts\run_pipeline.py --n-samples 50 --max-frames 100 --epochs 10 --pretrained
 python scripts\run_pipeline.py --n-samples 200 --max-frames 100 --epochs 10 --pretrained
 python scripts\run_pipeline.py --n-samples 400 --max-frames 100 --epochs 10 --pretrained
 python scripts\run_pipeline.py --n-samples 800 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 1600 --max-frames 100 --epochs 10 --pretrained
 
 # Full dataset (no sampling):
 python scripts\run_pipeline.py --n-samples 0 --pretrained

@@ -59,6 +59,18 @@ def hash_string(s: str) -> str:
     return hashlib.md5(s.encode("utf-8")).hexdigest()
 
 
+def make_video_id(video_path: str | Path, root: str | Path | None = None) -> str:
+    video_path = Path(video_path)
+    if root is not None:
+        try:
+            identity = video_path.resolve().relative_to(Path(root).resolve()).as_posix()
+        except ValueError:
+            identity = video_path.resolve().as_posix()
+    else:
+        identity = video_path.resolve().as_posix()
+    return f"{video_path.stem}_{hash_string(identity)[:8]}"
+
+
 def worker_init_fn(worker_id: int) -> None:
     seed = torch.initial_seed() % 2**32
     np.random.seed(seed + worker_id)

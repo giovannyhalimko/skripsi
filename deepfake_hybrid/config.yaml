@@ -12,7 +12,7 @@ num_workers: 0
 lr: 1.0e-4
 weight_decay: 1.0e-4
 epochs: 5
-fusion_mode: early_fusion
+fusion_mode: two_branch
 n_seeds: 1
 
 # Dataset roots

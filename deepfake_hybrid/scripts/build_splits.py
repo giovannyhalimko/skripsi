@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-sys.path.insert(0, str(SRC))
+sys.path.append(str(SRC))
 
 from utils import load_config, ensure_dir
 
@@ -26,6 +26,13 @@ def main():
         raise FileNotFoundError(f"Manifest not found: {manifest_path}. Run extract_frames.py first.")
 
     df = pd.read_csv(manifest_path)
+    duplicate_ids = df[df["video_id"].duplicated()]["video_id"].unique().tolist()
+    if duplicate_ids:
+        preview = ", ".join(duplicate_ids[:10])
+        raise ValueError(
+            "Duplicate video_id values found in manifest. "
+            f"Re-run extract_frames.py after updating IDs, then rebuild splits. Examples: {preview}"
+        )
     train_val, test = train_test_split(df, test_size=args.test_size, stratify=df["label"], random_state=args.seed)
     train, val = train_test_split(train_val, test_size=args.val_size / (1 - args.test_size), stratify=train_val["label"], random_state=args.seed)
 
