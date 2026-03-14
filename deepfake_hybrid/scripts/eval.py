@@ -49,6 +49,7 @@ def main():
     parser.add_argument("--checkpoint", required=True, help="Path to checkpoint .pt")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pretrained", action="store_true")
+    parser.add_argument("--threshold", type=float, default=None, help="Custom decision threshold (default: find optimal via Youden's J)")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -90,12 +91,32 @@ def main():
     y_prob = torch.cat(all_probs).numpy()
     y_true = torch.cat(all_targets).numpy()
 
-    metrics = metrics_mod.compute_metrics(y_true, y_prob)
-    print(metrics)
+    # --- Default threshold (0.5) metrics ---
+    metrics_default = metrics_mod.compute_metrics(y_true, y_prob, threshold=0.5)
+
+    # --- Optimal threshold selection ---
+    if args.threshold is not None:
+        optimal_threshold = args.threshold
+    else:
+        optimal_threshold = metrics_mod.find_optimal_threshold(y_true, y_prob)
+
+    metrics_optimal = metrics_mod.compute_metrics(y_true, y_prob, threshold=optimal_threshold)
+
+    print(f"=== Metrics @ default threshold 0.5 ===")
+    print(metrics_default)
+    print(f"\n=== Metrics @ optimal threshold {optimal_threshold:.4f} ===")
+    print(metrics_optimal)
 
     results_dir = Path(cfg["output_root"]) / "tables"
     ensure_dir(results_dir)
-    save_json(metrics, results_dir / f"eval_{args.model}_{args.dataset}.json")
+
+    combined = {
+        "threshold": 0.5,
+        **metrics_default,
+        "optimal_threshold": optimal_threshold,
+        "metrics_optimal": metrics_optimal,
+    }
+    save_json(combined, results_dir / f"eval_{args.model}_{args.dataset}.json")
 
 
 if __name__ == "__main__":

@@ -30,3 +30,10 @@ def compute_metrics(y_true: np.ndarray, y_prob: np.ndarray, threshold: float = 0
 def roc_points(y_true: np.ndarray, y_prob: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     fpr, tpr, thr = roc_curve(y_true, y_prob)
     return fpr, tpr, thr
+
+
+def find_optimal_threshold(y_true: np.ndarray, y_prob: np.ndarray) -> float:
+    fpr, tpr, thresholds = roc_curve(y_true, y_prob)
+    j_scores = tpr - fpr
+    optimal_idx = j_scores.argmax()
+    return float(thresholds[optimal_idx])
