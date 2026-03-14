@@ -41,6 +41,7 @@ deepfake_hybrid/outputs/frames/
 deepfake_hybrid/outputs/fft_cache/
 deepfake_hybrid/outputs/runs/
 deepfake_hybrid/outputs/tables/
+deepfake_hybrid/outputs/plots/
 deepfake_hybrid/outputs/sampled/
 deepfake_hybrid/outputs/dryrun*/
 
