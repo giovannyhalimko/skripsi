@@ -12,9 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 
 import sys
-sys.path.insert(0, str(SRC))
+sys.path.append(str(SRC))
 
-from utils import load_config, ensure_dir  # noqa: E402
+from utils import load_config, ensure_dir, make_video_id  # noqa: E402
 
 VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv"}
 
@@ -86,7 +86,7 @@ def copy_videos(videos: List[Tuple[Path, int]], src_root: Path, dst_root: Path) 
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
         rows.append({
-            "video_id": src.stem,
+            "video_id": make_video_id(src, src_root),
             "label": label,
             "src": str(src),
             "dst": str(dst),

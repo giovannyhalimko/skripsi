@@ -1,6 +1,0 @@
-[2026-02-06 00:20:46,473] INFO: Starting training: model=spatial, dataset=FFPP, seed=42, device=cpu
-[2026-02-06 00:20:47,874] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
-[2026-02-06 00:20:58,295] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
-[2026-02-06 00:22:11,952] INFO: Starting training: model=spatial, dataset=FFPP, seed=42, device=cpu
-[2026-02-06 00:22:13,777] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
-[2026-02-06 00:22:13,848] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.

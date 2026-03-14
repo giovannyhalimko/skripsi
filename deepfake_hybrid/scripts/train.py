@@ -14,7 +14,7 @@ SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
 from utils import load_config, seed_everything, setup_logging, ensure_dir, get_device, worker_init_fn, save_json
-from datasets import DeepfakeDataset, DatasetConfig
+from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
@@ -58,16 +58,16 @@ def select_model(model_type: str, pretrained: bool):
 def forward_model(model_type, model, batch, device):
     if model_type == "spatial":
         x, y = batch
-        logits = model(x.to(device)).squeeze(-1)
+        logits = model(x.to(device)).view(-1)
     elif model_type == "freq":
         x, y = batch
-        logits = model(x.to(device)).squeeze(-1)
+        logits = model(x.to(device)).view(-1)
     elif model_type == "early_fusion":
         x, y = batch
-        logits = model(x.to(device)).squeeze(-1)
+        logits = model(x.to(device)).view(-1)
     elif model_type == "hybrid":
         feats, y = batch
-        logits = model(feats["image"].to(device), feats["fft"].to(device))
+        logits = model(feats["image"].to(device), feats["fft"].to(device)).view(-1)
     else:
         raise ValueError
     return logits, y.to(device)
@@ -87,18 +87,20 @@ def evaluate(model, loader, model_type, device):
     return metrics_mod.compute_metrics(y_true, y_prob)
 
 
-def train_one_epoch(model, loader, model_type, device, optimizer, scaler, loss_fn):
+def train_one_epoch(model, loader, model_type, device, optimizer, scaler, loss_fn, accum_steps=1):
     model.train()
     running_loss = 0.0
-    for batch in tqdm(loader, desc="train", leave=False):
-        optimizer.zero_grad()
+    optimizer.zero_grad()
+    for i, batch in enumerate(tqdm(loader, desc="train", leave=False)):
         with torch.cuda.amp.autocast(enabled=device.type == "cuda"):
             logits, targets = forward_model(model_type, model, batch, device)
-            loss = loss_fn(logits, targets)
+            loss = loss_fn(logits, targets) / accum_steps
         scaler.scale(loss).backward()
-        scaler.step(optimizer)
-        scaler.update()
-        running_loss += loss.item() * targets.size(0)
+        if (i + 1) % accum_steps == 0 or (i + 1) == len(loader):
+            scaler.step(optimizer)
+            scaler.update()
+            optimizer.zero_grad()
+        running_loss += loss.item() * accum_steps * targets.size(0)
     return running_loss / len(loader.dataset)
 
 
@@ -109,13 +111,16 @@ def main():
     parser.add_argument("--model", choices=["spatial", "freq", "hybrid", "early_fusion"], help="Model type")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained backbones where applicable")
+    parser.add_argument("--n-samples", type=int, default=0,
+                        help="Number of samples (only affects output folder naming)")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
     seed_everything(args.seed)
     device = get_device()
 
-    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{args.dataset}_seed{args.seed}"
+    n_tag = f"_n{args.n_samples}" if args.n_samples > 0 else ""
+    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{args.dataset}{n_tag}_seed{args.seed}"
     ensure_dir(run_dir)
     setup_logging(run_dir / "train.log")
     logging.info(f"Starting training: model={args.model}, dataset={args.dataset}, seed={args.seed}, device={device}")
@@ -134,13 +139,14 @@ def main():
     model = select_model(args.model, pretrained=args.pretrained).to(device)
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=cfg.get("lr", 1e-4), weight_decay=cfg.get("weight_decay", 1e-4))
-    scaler = torch.cuda.amp.GradScaler(enabled=device.type == "cuda")
+    scaler = torch.amp.GradScaler(device=device.type, enabled=device.type == "cuda")
 
+    accum_steps = cfg.get("accum_steps", 2 if args.model in {"hybrid", "early_fusion"} else 1)
     best_auc = -1.0
     history = []
     epochs = cfg.get("epochs", 3)
     for epoch in range(1, epochs + 1):
-        train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn)
+        train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn, accum_steps=accum_steps)
         val_metrics = evaluate(model, val_loader, args.model, device)
         history.append({"epoch": epoch, "train_loss": train_loss, **val_metrics})
         logging.info(f"Epoch {epoch}: loss={train_loss:.4f}, val_auc={val_metrics['auc']:.4f}, val_f1={val_metrics['f1']:.4f}")

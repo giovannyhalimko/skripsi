@@ -1,51 +1,64 @@
-# Set up virtual environment and install dependencies
+# =============================================
+#  Deepfake Hybrid Detection — Quick Start
+# =============================================
+
+# 1. Setup (one time)
 python -m venv .venv
 .\.venv\Scripts\activate
 pip install --upgrade pip
-pip install "numpy<2"
-pip install -r requirements.txt --upgrade
+pip install -r requirements.txt
 
-# Download the FaceForensics++ dataset (c23, all manipulations, videos) and Celeb-DF dataset into the specified directories.
-- python face_forensics_dataset_download.py ./face_forensics  -d all  -c c23  -t videos --server EU2
-- python celeb_df_download.py ./celeb_df -m celeb_df_manifest.json --allow-gdrive
+# =============================================
+#  2. RUN EVERYTHING WITH ONE COMMAND
+# =============================================
 
-# Sampling (optional, for quick tests)
-- python scripts\sample_dataset.py --config config.yaml --dataset CDF --sample-size 1000 --write-config config.CDF.sampled.yaml
-- python scripts\sample_dataset.py --config config.yaml --dataset FFPP --sample-size 1000 --write-config config.FFPP.sampled.yaml
+# 500 samples per dataset (recommended for limited resources):
+python scripts\run_pipeline.py --n-samples 500 --pretrained
 
-# Extract frames from the downloaded videos
-- cd deepfake_hybrid
-- python scripts\extract_frames.py --config config.yaml --dataset FFPP --fps 5 --max-frames 100
-- python scripts\extract_frames.py --config config.yaml --dataset CDF  --fps 5 --max-frames 100
-# For sampled datasets
-- python scripts\extract_frames.py --config config.CDF.sampled.yaml --dataset CDF --fps 5 --max-frames 100
-- python scripts\extract_frames.py --config config.FFPP.sampled.yaml --dataset FFPP --fps 5 --max-frames 100
+# Quick smoke test (very fast):
+python scripts\run_pipeline.py --n-samples 50 --max-frames 10 --epochs 1 --pretrained
 
-# Build Splits
-- python scripts\build_splits.py --config config.yaml --dataset FFPP
-- python scripts\build_splits.py --config config.yaml --dataset CDF
-# For sampled datasets
-- python scripts\build_splits.py --config config.CDF.sampled.yaml --dataset CDF
-- python scripts\build_splits.py --config config.FFPP.sampled.yaml --dataset FFPP
+# Custom sample size with more epochs:
+python scripts\run_pipeline.py --n-samples 10 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 50 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 200 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 400 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 800 --max-frames 100 --epochs 10 --pretrained
+python scripts\run_pipeline.py --n-samples 1600 --max-frames 100 --epochs 10 --pretrained
 
-# Compute FFT cache
-- python scripts\compute_fft_cache.py --config config.yaml --dataset FFPP --num-workers 4
-- python scripts\compute_fft_cache.py --config config.yaml --dataset CDF  --num-workers 4
-# For sampled datasets
-- python scripts\compute_fft_cache.py --config config.CDF.sampled.yaml --dataset CDF --num-workers 4
-- python scripts\compute_fft_cache.py --config config.FFPP.sampled.yaml --dataset FFPP --num-workers 4
+# Full dataset (no sampling):
+python scripts\run_pipeline.py --n-samples 0 --pretrained
 
-# Train the hybrid model
-- (Spatial Xception) : python scripts\train.py --config config.yaml --dataset FFPP --model spatial --pretrained
-- (Frequency) : python scripts\train.py --config config.yaml --dataset FFPP --model freq
-- (Hybrid) : python scripts\train.py --config config.yaml --dataset FFPP --model hybrid --pretrained
-# For sampled datasets
-- (Spatial Xception) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model spatial --pretrained
-- (Frequency) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model freq
-- (Hybrid) : python scripts\train.py --config config.FFPP.sampled.yaml --dataset FFPP --model hybrid --pretrained
+# Skip preprocessing if already done:
+python scripts\run_pipeline.py --skip-preprocess --pretrained
 
-# Evaluate the trained model
-- (cross-dataset) python scripts\eval.py --config config.yaml --dataset CDF --model hybrid --checkpoint outputs\runs\hybrid_FFPP_seed0\best.pt
+# =============================================
+#  3. INDIVIDUAL STEPS (if needed)
+# =============================================
 
-# Full Matrix
+# Extract frames (with sampling):
+python scripts\extract_frames.py --config config.yaml --dataset FFPP --fps 5 --max-frames 50 --n-samples 500
+python scripts\extract_frames.py --config config.yaml --dataset CDF  --fps 5 --max-frames 50 --n-samples 500
+
+# Build splits:
+python scripts\build_splits.py --config config.yaml --dataset FFPP
+python scripts\build_splits.py --config config.yaml --dataset CDF
+
+# FFT cache:
+python scripts\compute_fft_cache.py --config config.yaml --dataset FFPP --num-workers 2
+python scripts\compute_fft_cache.py --config config.yaml --dataset CDF  --num-workers 2
+
+# Train individual models:
+python scripts\train.py --config config.yaml --dataset FFPP --model spatial --pretrained
+python scripts\train.py --config config.yaml --dataset FFPP --model freq
+python scripts\train.py --config config.yaml --dataset FFPP --model hybrid --pretrained
+
+# Full matrix (train + eval + tables):
 python scripts\run_all.py --config config.yaml --pretrained
+
+# =============================================
+#  Output locations
+# =============================================
+# Tables:      outputs/tables/Table1_in_dataset.csv, Table2_cross_dataset.csv, Table3_generalization_drop.csv
+# Checkpoints: outputs/runs/<model>_<dataset>_seed<N>/best.pt
+# Logs:        outputs/runs/<model>_<dataset>_seed<N>/train.log

@@ -1,0 +1,17 @@
+[2026-03-13 20:02:28,690] INFO: Starting training: model=spatial, dataset=FFPP, seed=0, device=cuda
+[2026-03-13 20:02:28,911] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-13 20:02:29,034] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-13 20:08:13,915] INFO: Starting training: model=spatial, dataset=FFPP, seed=0, device=cuda
+[2026-03-13 20:08:14,091] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-13 20:08:14,212] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-13 20:09:10,881] INFO: Epoch 1: loss=0.2219, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:10:06,512] INFO: Epoch 2: loss=0.0248, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:10:53,349] INFO: Epoch 3: loss=0.0193, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:11:46,446] INFO: Epoch 4: loss=0.0107, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:12:38,238] INFO: Epoch 5: loss=0.0085, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:13:25,431] INFO: Epoch 6: loss=0.0076, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:14:11,032] INFO: Epoch 7: loss=0.0045, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:15:03,020] INFO: Epoch 8: loss=0.0074, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:15:53,990] INFO: Epoch 9: loss=0.0090, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:16:44,035] INFO: Epoch 10: loss=0.0058, val_auc=0.0000, val_f1=0.0000
+[2026-03-13 20:16:44,069] INFO: Training complete. Best AUC=0.0000. Checkpoint at outputs\runs\spatial_FFPP_n10_seed0\best.pt

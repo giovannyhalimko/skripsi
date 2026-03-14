@@ -1,0 +1,12 @@
+[2026-03-11 16:05:44,806] INFO: Starting training: model=freq, dataset=FFPP, seed=0, device=cpu
+[2026-03-11 16:06:57,490] INFO: Epoch 1: loss=0.6430, val_auc=0.9821, val_f1=0.6277
+[2026-03-11 16:07:40,260] INFO: Epoch 2: loss=0.5576, val_auc=0.9661, val_f1=0.5210
+[2026-03-11 16:08:21,919] INFO: Epoch 3: loss=0.5218, val_auc=0.9704, val_f1=0.5976
+[2026-03-11 16:09:03,597] INFO: Epoch 4: loss=0.5109, val_auc=0.9441, val_f1=0.8388
+[2026-03-11 16:09:46,989] INFO: Epoch 5: loss=0.4891, val_auc=0.9387, val_f1=0.5168
+[2026-03-11 16:10:27,084] INFO: Epoch 6: loss=0.4662, val_auc=0.9688, val_f1=0.0870
+[2026-03-11 16:11:05,427] INFO: Epoch 7: loss=0.4543, val_auc=0.9505, val_f1=0.0225
+[2026-03-11 16:11:44,190] INFO: Epoch 8: loss=0.4438, val_auc=0.9003, val_f1=0.8000
+[2026-03-11 16:12:22,416] INFO: Epoch 9: loss=0.4279, val_auc=0.9037, val_f1=0.8060
+[2026-03-11 16:13:00,605] INFO: Epoch 10: loss=0.4123, val_auc=0.8434, val_f1=0.8012
+[2026-03-11 16:13:00,607] INFO: Training complete. Best AUC=0.9821. Checkpoint at outputs\runs\freq_FFPP_n50_seed0\best.pt

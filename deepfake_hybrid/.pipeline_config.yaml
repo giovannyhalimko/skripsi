@@ -1,0 +1,38 @@
+output_root: ./outputs
+frame_sampling_fps: 5
+max_frames_per_video: 100
+image_size: 224
+batch_size: 16
+num_workers: 4
+lr: 0.0001
+weight_decay: 0.0001
+epochs: 10
+fusion_mode: two_branch
+n_seeds: 1
+datasets:
+  ffpp:
+    root: ./dataset/face_forensics
+    real_keywords:
+    - original
+    - real
+    - pristine
+    - actors
+    - youtube
+    fake_keywords:
+    - fake
+    - manipulated
+    - deepfakes
+    - faceswap
+    - neuraltextures
+    - deepfakedetection
+    - faceshifter
+    - face2face
+  cdf:
+    root: ./dataset/celeb_df
+    real_keywords:
+    - real
+    - authentic
+    fake_keywords:
+    - fake
+    - synthesis
+    - deepfake

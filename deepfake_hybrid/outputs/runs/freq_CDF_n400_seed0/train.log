@@ -1,0 +1,12 @@
+[2026-03-12 00:41:12,146] INFO: Starting training: model=freq, dataset=CDF, seed=0, device=cuda
+[2026-03-12 00:42:44,807] INFO: Epoch 1: loss=0.6621, val_auc=0.5662, val_f1=0.5133
+[2026-03-12 00:43:26,063] INFO: Epoch 2: loss=0.6332, val_auc=0.5554, val_f1=0.6115
+[2026-03-12 00:44:06,680] INFO: Epoch 3: loss=0.6104, val_auc=0.5567, val_f1=0.5917
+[2026-03-12 00:44:47,434] INFO: Epoch 4: loss=0.5926, val_auc=0.5696, val_f1=0.4794
+[2026-03-12 00:45:28,304] INFO: Epoch 5: loss=0.5798, val_auc=0.5738, val_f1=0.6087
+[2026-03-12 00:46:09,311] INFO: Epoch 6: loss=0.5677, val_auc=0.5766, val_f1=0.6312
+[2026-03-12 00:46:50,282] INFO: Epoch 7: loss=0.5552, val_auc=0.5838, val_f1=0.6196
+[2026-03-12 00:47:31,025] INFO: Epoch 8: loss=0.5451, val_auc=0.5724, val_f1=0.1963
+[2026-03-12 00:48:11,378] INFO: Epoch 9: loss=0.5366, val_auc=0.5462, val_f1=0.1293
+[2026-03-12 00:48:51,787] INFO: Epoch 10: loss=0.5287, val_auc=0.5474, val_f1=0.2978
+[2026-03-12 00:48:51,787] INFO: Training complete. Best AUC=0.5838. Checkpoint at outputs\runs\freq_CDF_n400_seed0\best.pt
