@@ -14,12 +14,12 @@ from utils import load_config, ensure_dir
 from fft_utils import save_fft_cache
 
 
-def worker(row, fft_root: Path, image_size: int):
+def worker(row, fft_root: Path, image_size: int, force: bool = False):
     frame_path = Path(row["frame_path"])
     video_id = row["video_id"]
     out_dir = fft_root / video_id
     out_path = out_dir / (frame_path.stem + ".npy")
-    if out_path.exists():
+    if out_path.exists() and not force:
         return
     try:
         save_fft_cache(frame_path, out_path, size=image_size)
@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF"], help="Dataset name")
     parser.add_argument("--num-workers", type=int, default=4)
+    parser.add_argument("--force", action="store_true", help="Recompute even if cache exists")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -53,7 +54,7 @@ def main():
     ensure_dir(fft_root)
 
     with mp.Pool(processes=args.num_workers) as pool:
-        list(tqdm(pool.imap_unordered(partial(worker, fft_root=fft_root, image_size=cfg.get("image_size", 224)), rows), total=len(rows)))
+        list(tqdm(pool.imap_unordered(partial(worker, fft_root=fft_root, image_size=cfg.get("image_size", 224), force=args.force), rows), total=len(rows)))
 
     print(f"FFT cache saved under {fft_root}")
 

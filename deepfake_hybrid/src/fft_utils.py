@@ -15,8 +15,6 @@ def image_to_fft_logmag(img: Image.Image, size: int = 224) -> np.ndarray:
     fft_shift = np.fft.fftshift(fft)
     magnitude = np.abs(fft_shift)
     logmag = np.log1p(magnitude)
-    # Normalize to 0-1
-    logmag = (logmag - logmag.min()) / (logmag.max() - logmag.min() + 1e-8)
     return logmag.astype(np.float32)
 
 
@@ -27,8 +25,6 @@ def tensor_fft_logmag(img_tensor: torch.Tensor) -> torch.Tensor:
     fft_shift = torch.fft.fftshift(fft)
     magnitude = torch.abs(fft_shift)
     logmag = torch.log1p(magnitude)
-    logmag = logmag - logmag.min()
-    logmag = logmag / (logmag.max() + 1e-8)
     return logmag
 
 

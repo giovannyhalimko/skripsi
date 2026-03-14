@@ -80,6 +80,8 @@ def main():
                         help="Use pretrained Xception backbone")
     parser.add_argument("--skip-preprocess", action="store_true",
                         help="Skip frame extraction, splits, and FFT cache")
+    parser.add_argument("--force-fft", action="store_true",
+                        help="Recompute FFT cache even if files already exist")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
@@ -127,10 +129,12 @@ def main():
                  f"[2/3] Build splits — {ds}")
 
             # Compute FFT cache
-            step([PY, str(ROOT / "scripts" / "compute_fft_cache.py"),
-                  "--config", config_path, "--dataset", ds,
-                  "--num-workers", str(args.num_workers)],
-                 f"[3/3] FFT cache — {ds}")
+            fft_cmd = [PY, str(ROOT / "scripts" / "compute_fft_cache.py"),
+                       "--config", config_path, "--dataset", ds,
+                       "--num-workers", str(args.num_workers)]
+            if args.force_fft:
+                fft_cmd.append("--force")
+            step(fft_cmd, f"[3/3] FFT cache — {ds}")
 
     # ── PHASE 2: Train + Eval + Tables (via run_all.py) ─────
     cmd = [PY, str(ROOT / "scripts" / "run_all.py"), "--config", config_path]
