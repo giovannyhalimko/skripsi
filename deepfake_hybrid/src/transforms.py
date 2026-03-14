@@ -7,15 +7,19 @@ IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
 
-def get_spatial_transform(image_size: int = 224, train: bool = True):
+def get_spatial_transform(image_size: int = 224, train: bool = True, include_hflip: bool = True):
     if train:
-        t = transforms.Compose([
+        aug = [
             transforms.Resize((image_size + 32, image_size + 32)),
             transforms.RandomResizedCrop(image_size, scale=(0.8, 1.0)),
-            transforms.RandomHorizontalFlip(),
+        ]
+        if include_hflip:
+            aug.append(transforms.RandomHorizontalFlip())
+        aug += [
             transforms.ToTensor(),
             transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
-        ])
+        ]
+        t = transforms.Compose(aug)
     else:
         t = transforms.Compose([
             transforms.Resize((image_size, image_size)),

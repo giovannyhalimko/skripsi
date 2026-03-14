@@ -187,7 +187,11 @@ def main():
     epochs = cfg.get("epochs", 3)
 
     # --- Fix D: Cosine Annealing LR Scheduler ---
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-6)
+    # For models with frozen backbone, T_max covers only the active training period
+    # so the decay isn't wasted on frozen epochs.
+    frozen_epochs = FREEZE_EPOCHS if args.model in {"hybrid", "early_fusion"} else 0
+    t_max = max(epochs - frozen_epochs, 1)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=t_max, eta_min=1e-6)
 
     for epoch in range(1, epochs + 1):
         # --- Fix C: Unfreeze backbone after FREEZE_EPOCHS ---

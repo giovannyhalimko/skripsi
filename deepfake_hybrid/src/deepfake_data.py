@@ -14,9 +14,14 @@ from torch.utils.data import Dataset
 # Use absolute imports so the module works when src is added to sys.path
 import fft_utils
 import transforms as T
+import torchvision.transforms.functional as TF
 
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp"}
+
+# FFT normalization constants (must match get_fft_transform Normalize values)
+_FFT_MEAN = 0.5
+_FFT_STD = 0.5
 
 
 @dataclass
@@ -59,7 +64,11 @@ class DeepfakeDataset(Dataset):
         self.mode = cfg.mode
         self.image_size = cfg.image_size
         self.fft_cache_root = Path(cfg.fft_cache_root) if cfg.fft_cache_root else None
-        self.spatial_transform = T.get_spatial_transform(image_size=self.image_size, train=self.train)
+        # Hybrid mode: disable hflip here and apply it manually to both branches together
+        include_hflip = not (cfg.mode == "hybrid" and cfg.train)
+        self.spatial_transform = T.get_spatial_transform(
+            image_size=self.image_size, train=self.train, include_hflip=include_hflip
+        )
         self.fft_transform = T.get_fft_transform(image_size=self.image_size, train=self.train)
 
     def __len__(self):
@@ -90,22 +99,22 @@ class DeepfakeDataset(Dataset):
 
         if self.mode in {"freq", "hybrid", "early_fusion"}:
             fft_tensor = self._load_fft(Path(frame_path))
-            fft_tensor = torch.nn.functional.interpolate(
-                fft_tensor.unsqueeze(0), size=(self.image_size, self.image_size), mode="bilinear", align_corners=False
-            ).squeeze(0)
+            # Normalize: bring log-magnitude from ~[0, 16] to ~[-1, 1]
+            fft_tensor = (fft_tensor - _FFT_MEAN) / _FFT_STD
         else:
             fft_tensor = None
 
         if self.mode == "spatial":
             return img_tensor, torch.tensor(label, dtype=torch.float32)
         if self.mode == "freq":
-            fft_tensor = self.fft_transform(img.convert("L")) if fft_tensor is None else fft_tensor
             return fft_tensor, torch.tensor(label, dtype=torch.float32)
         if self.mode == "early_fusion":
-            fft_tensor = self.fft_transform(img.convert("L")) if fft_tensor is None else fft_tensor
             fused = T.stack_rgb_fft(img_tensor, fft_tensor)
             return fused, torch.tensor(label, dtype=torch.float32)
         if self.mode == "hybrid":
-            fft_tensor = self.fft_transform(img.convert("L")) if fft_tensor is None else fft_tensor
+            # Apply consistent random horizontal flip to both branches
+            if self.train and random.random() < 0.5:
+                img_tensor = TF.hflip(img_tensor)
+                fft_tensor = torch.flip(fft_tensor, dims=[-1])
             return {"image": img_tensor, "fft": fft_tensor}, torch.tensor(label, dtype=torch.float32)
         raise ValueError(f"Unknown mode {self.mode}")
