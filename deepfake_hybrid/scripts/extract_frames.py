@@ -122,6 +122,7 @@ def main():
         print(f"Sampled {len(all_videos)} videos ({real_take} real, {fake_take} fake)")
 
     rows = []
+    skipped = 0
     for v, label in tqdm(all_videos, desc="Extracting frames"):
         try:
             rel = v.relative_to(root)
@@ -131,8 +132,12 @@ def main():
         out_dir = out_root / vid
         saved = extract_video_frames(v, out_dir, fps=args.fps, max_frames=args.max_frames)
         if saved == 0:
+            skipped += 1
             continue
         rows.append({"video_id": vid, "label": label, "frames_dir": str(out_dir)})
+
+    if skipped > 0:
+        print(f"[WARN] {skipped} videos could not be opened and were skipped")
 
     import pandas as pd
 

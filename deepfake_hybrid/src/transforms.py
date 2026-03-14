@@ -27,16 +27,19 @@ def get_spatial_transform(image_size: int = 224, train: bool = True):
 
 def get_fft_transform(image_size: int = 224, train: bool = True):
     # For FFT magnitude inputs (1 channel)
+    # Normalize log-magnitude to roughly [-1, 1] range for balanced fusion
     if train:
         t = transforms.Compose([
             transforms.Resize((image_size + 32, image_size + 32)),
             transforms.CenterCrop(image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5], std=[0.5]),
         ])
     else:
         t = transforms.Compose([
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5], std=[0.5]),
         ])
     return t
 

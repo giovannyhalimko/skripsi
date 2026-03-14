@@ -33,6 +33,18 @@ def main():
             "Duplicate video_id values found in manifest. "
             f"Re-run extract_frames.py after updating IDs, then rebuild splits. Examples: {preview}"
         )
+
+    # Validate minimum samples per class for stratified split
+    class_counts = df["label"].value_counts()
+    min_per_class = 4  # need at least 1 per split (train/val/test) + margin
+    for label_val, count in class_counts.items():
+        if count < min_per_class:
+            raise ValueError(
+                f"Class {label_val} has only {count} samples — need at least {min_per_class} "
+                f"for a stratified 70/15/15 split. Increase --n-samples."
+            )
+    print(f"Class distribution: {dict(class_counts)}")
+
     train_val, test = train_test_split(df, test_size=args.test_size, stratify=df["label"], random_state=args.seed)
     train, val = train_test_split(train_val, test_size=args.val_size / (1 - args.test_size), stratify=train_val["label"], random_state=args.seed)
 

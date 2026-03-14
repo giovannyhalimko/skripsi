@@ -13,7 +13,7 @@ lr: 1.0e-4
 weight_decay: 1.0e-4
 epochs: 5
 fusion_mode: two_branch
-n_seeds: 1
+n_seeds: 3
 
 # Dataset roots
 datasets:

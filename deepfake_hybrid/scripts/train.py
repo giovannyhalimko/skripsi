@@ -3,6 +3,8 @@ import sys
 from pathlib import Path
 import logging
 
+from typing import Optional
+
 import torch
 from torch.utils.data import DataLoader
 from torch import nn, optim
@@ -23,7 +25,7 @@ import metrics as metrics_mod
 FREEZE_EPOCHS = 3  # number of initial epochs to freeze spatial backbone
 
 
-def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_cache_root: Path | None, seed: int):
+def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_cache_root: Optional[Path], seed: int):
     ds_cfg = DatasetConfig(
         manifest_path=manifest_path,
         fft_cache_root=fft_cache_root,
