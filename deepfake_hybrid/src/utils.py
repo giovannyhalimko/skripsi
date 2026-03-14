@@ -6,7 +6,7 @@ import logging
 import hashlib
 import socket
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Union
 
 import numpy as np
 import torch
@@ -26,7 +26,7 @@ def get_device() -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def setup_logging(log_path: Path | None = None, level: int = logging.INFO) -> None:
+def setup_logging(log_path: Optional[Path] = None, level: int = logging.INFO) -> None:
     log_format = "[%(asctime)s] %(levelname)s: %(message)s"
     logging.basicConfig(level=level, format=log_format)
     if log_path is not None:
@@ -37,19 +37,19 @@ def setup_logging(log_path: Path | None = None, level: int = logging.INFO) -> No
         logging.getLogger().addHandler(file_handler)
 
 
-def load_config(path: str | Path) -> Dict[str, Any]:
+def load_config(path: Union[str, Path]) -> Dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
-def save_json(obj: Dict[str, Any], path: str | Path) -> None:
+def save_json(obj: Dict[str, Any], path: Union[str, Path]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2)
 
 
-def ensure_dir(path: str | Path) -> Path:
+def ensure_dir(path: Union[str, Path]) -> Path:
     path = Path(path)
     path.mkdir(parents=True, exist_ok=True)
     return path
@@ -59,7 +59,7 @@ def hash_string(s: str) -> str:
     return hashlib.md5(s.encode("utf-8")).hexdigest()
 
 
-def make_video_id(video_path: str | Path, root: str | Path | None = None) -> str:
+def make_video_id(video_path: Union[str, Path], root: Optional[Union[str, Path]] = None) -> str:
     video_path = Path(video_path)
     if root is not None:
         try:

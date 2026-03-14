@@ -6,6 +6,7 @@ import json
 import tempfile
 import urllib.request
 from pathlib import Path
+from typing import Optional
 from tqdm import tqdm
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -84,7 +85,7 @@ def get_server_urls(server_key: str):
     return tos_url, base_url, deepfakes_model_url
 
 
-def download_ffpp(base_url: str, output_root: Path, datasets, compression: str, file_type: str, num_videos: int | None):
+def download_ffpp(base_url: str, output_root: Path, datasets, compression: str, file_type: str, num_videos: Optional[int]):
     if compression not in COMPRESSION:
         raise ValueError(f"compression must be in {COMPRESSION}")
     # load filelists once
