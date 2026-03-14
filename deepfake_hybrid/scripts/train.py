@@ -20,6 +20,8 @@ from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
 import metrics as metrics_mod
 
+FREEZE_EPOCHS = 3  # number of initial epochs to freeze spatial backbone
+
 
 def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_cache_root: Path | None, seed: int):
     ds_cfg = DatasetConfig(
@@ -138,18 +140,70 @@ def main():
 
     model = select_model(args.model, pretrained=args.pretrained).to(device)
     loss_fn = nn.BCEWithLogitsLoss()
-    optimizer = optim.Adam(model.parameters(), lr=cfg.get("lr", 1e-4), weight_decay=cfg.get("weight_decay", 1e-4))
+
+    # --- Fix B: Differential Learning Rates ---
+    base_lr = cfg.get("lr", 1e-4)
+    wd = cfg.get("weight_decay", 1e-4)
+    backbone_lr = base_lr / 10  # 10x lower LR for pretrained backbone
+
+    if args.model == "hybrid":
+        backbone_params = list(model.spatial.parameters())
+        head_params = (
+            list(model.freq.parameters())
+            + list(model.spatial_proj.parameters())
+            + list(model.freq_proj.parameters())
+            + list(model.classifier.parameters())
+        )
+        optimizer = optim.Adam([
+            {"params": backbone_params, "lr": backbone_lr},
+            {"params": head_params, "lr": base_lr},
+        ], weight_decay=wd)
+    elif args.model == "early_fusion":
+        backbone_params = list(model.model.parameters())
+        # early_fusion only has model.model; all params are backbone
+        optimizer = optim.Adam([
+            {"params": backbone_params, "lr": backbone_lr},
+        ], weight_decay=wd)
+    else:
+        optimizer = optim.Adam(model.parameters(), lr=base_lr, weight_decay=wd)
+
     scaler = torch.amp.GradScaler(device=device.type, enabled=device.type == "cuda")
+
+    # --- Fix C: Backbone Freezing for first FREEZE_EPOCHS epochs ---
+    if args.model == "hybrid":
+        for p in model.spatial.parameters():
+            p.requires_grad = False
+        logging.info(f"Froze spatial backbone for first {FREEZE_EPOCHS} epochs")
+    elif args.model == "early_fusion":
+        for p in model.model.parameters():
+            p.requires_grad = False
+        logging.info(f"Froze backbone for first {FREEZE_EPOCHS} epochs")
 
     accum_steps = cfg.get("accum_steps", 2 if args.model in {"hybrid", "early_fusion"} else 1)
     best_auc = -1.0
     history = []
     epochs = cfg.get("epochs", 3)
+
+    # --- Fix D: Cosine Annealing LR Scheduler ---
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-6)
+
     for epoch in range(1, epochs + 1):
+        # --- Fix C: Unfreeze backbone after FREEZE_EPOCHS ---
+        if epoch == FREEZE_EPOCHS + 1:
+            if args.model == "hybrid":
+                for p in model.spatial.parameters():
+                    p.requires_grad = True
+                logging.info(f"Epoch {epoch}: unfreezing spatial backbone")
+            elif args.model == "early_fusion":
+                for p in model.model.parameters():
+                    p.requires_grad = True
+                logging.info(f"Epoch {epoch}: unfreezing backbone")
+
         train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn, accum_steps=accum_steps)
         val_metrics = evaluate(model, val_loader, args.model, device)
         history.append({"epoch": epoch, "train_loss": train_loss, **val_metrics})
         logging.info(f"Epoch {epoch}: loss={train_loss:.4f}, val_auc={val_metrics['auc']:.4f}, val_f1={val_metrics['f1']:.4f}")
+        scheduler.step()
         if val_metrics["auc"] > best_auc:
             best_auc = val_metrics["auc"]
             torch.save({"state_dict": model.state_dict(), "epoch": epoch, "config": cfg}, run_dir / "best.pt")
