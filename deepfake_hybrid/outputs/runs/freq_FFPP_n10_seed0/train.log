@@ -1,3 +1,0 @@
-[2026-03-13 20:17:39,809] INFO: Starting training: model=freq, dataset=FFPP, seed=0, device=cuda
-[2026-03-13 20:18:35,278] INFO: Epoch 1: loss=0.6883, val_auc=0.0388, val_f1=0.6667
-[2026-03-13 20:19:24,793] INFO: Epoch 2: loss=0.6686, val_auc=0.0000, val_f1=0.0000

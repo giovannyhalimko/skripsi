@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# PyTorch / ML outputs
+*.pt
+*.pth
+*.onnx
+*.ckpt
+
+# Dataset files (large, downloaded separately)
+deepfake_hybrid/dataset/celeb_df/
+deepfake_hybrid/dataset/face_forensics/
+deepfake_hybrid/dataset/dryrun_*/
+
+# Outputs (generated, not source)
+deepfake_hybrid/outputs/frames/
+deepfake_hybrid/outputs/fft_cache/
+deepfake_hybrid/outputs/runs/
+deepfake_hybrid/outputs/tables/
+deepfake_hybrid/outputs/sampled/
+deepfake_hybrid/outputs/dryrun*/
+
+# Dry run artifacts
+deepfake_hybrid/config.dryrun.yaml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
