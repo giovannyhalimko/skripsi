@@ -123,7 +123,11 @@ def main():
 
     rows = []
     for v, label in tqdm(all_videos, desc="Extracting frames"):
-        vid = v.stem
+        try:
+            rel = v.relative_to(root)
+            vid = str(rel.with_suffix("")).replace("/", "_").replace("\\", "_")
+        except ValueError:
+            vid = v.stem
         out_dir = out_root / vid
         saved = extract_video_frames(v, out_dir, fps=args.fps, max_frames=args.max_frames)
         if saved == 0:
