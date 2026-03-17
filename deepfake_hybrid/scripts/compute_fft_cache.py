@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 import multiprocessing as mp
 from functools import partial
+import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
@@ -27,15 +28,48 @@ def worker(row, fft_root: Path, image_size: int, force: bool = False):
         print(f"[WARN] Failed on {frame_path}: {e}")
 
 
+def compute_fft_stats(fft_root: Path, max_files: int = 5000):
+    """Scan cached .npy files and compute global mean/std for normalization."""
+    npy_files = list(Path(fft_root).rglob("*.npy"))
+    if not npy_files:
+        print(f"No .npy files found under {fft_root}")
+        return
+    rng = np.random.default_rng(42)
+    if len(npy_files) > max_files:
+        indices = rng.choice(len(npy_files), size=max_files, replace=False)
+        npy_files = [npy_files[i] for i in indices]
+    print(f"Computing stats from {len(npy_files)} files...")
+    running_sum = 0.0
+    running_sq = 0.0
+    total_pixels = 0
+    for fp in tqdm(npy_files, desc="stats"):
+        arr = np.load(fp).astype(np.float64)
+        running_sum += arr.sum()
+        running_sq += (arr ** 2).sum()
+        total_pixels += arr.size
+    mean = running_sum / total_pixels
+    std = np.sqrt(running_sq / total_pixels - mean ** 2)
+    print(f"\n_FFT_MEAN = {mean:.4f}")
+    print(f"_FFT_STD  = {std:.4f}")
+    print(f"\nUpdate these values in src/deepfake_data.py")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Precompute FFT log-magnitude cache")
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF"], help="Dataset name")
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--force", action="store_true", help="Recompute even if cache exists")
+    parser.add_argument("--stats", action="store_true", help="Compute mean/std from existing cache")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+
+    if args.stats:
+        fft_root = Path(cfg["output_root"]) / "fft_cache" / args.dataset
+        compute_fft_stats(fft_root)
+        return
+
     manifest_path = Path(cfg["output_root"]) / "manifests" / args.dataset / "manifest.csv"
     if not manifest_path.exists():
         raise FileNotFoundError(f"Manifest not found: {manifest_path}")

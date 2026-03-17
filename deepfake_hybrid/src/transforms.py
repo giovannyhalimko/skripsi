@@ -29,25 +29,6 @@ def get_spatial_transform(image_size: int = 224, train: bool = True, include_hfl
     return t
 
 
-def get_fft_transform(image_size: int = 224, train: bool = True):
-    # For FFT magnitude inputs (1 channel)
-    # Normalize log-magnitude to roughly [-1, 1] range for balanced fusion
-    if train:
-        t = transforms.Compose([
-            transforms.Resize((image_size + 32, image_size + 32)),
-            transforms.CenterCrop(image_size),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.5], std=[0.5]),
-        ])
-    else:
-        t = transforms.Compose([
-            transforms.Resize((image_size, image_size)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.5], std=[0.5]),
-        ])
-    return t
-
-
 def stack_rgb_fft(rgb: torch.Tensor, fft: torch.Tensor) -> torch.Tensor:
     # rgb: (3,H,W), fft: (1,H,W)
     return torch.cat([rgb, fft], dim=0)

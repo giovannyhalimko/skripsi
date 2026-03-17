@@ -91,16 +91,20 @@ def evaluate(model, loader, model_type, device):
     return metrics_mod.compute_metrics(y_true, y_prob)
 
 
-def train_one_epoch(model, loader, model_type, device, optimizer, scaler, loss_fn, accum_steps=1):
+def train_one_epoch(model, loader, model_type, device, optimizer, scaler, loss_fn, accum_steps=1, label_smooth=0.0):
     model.train()
     running_loss = 0.0
     optimizer.zero_grad()
     for i, batch in enumerate(tqdm(loader, desc="train", leave=False)):
         with torch.cuda.amp.autocast(enabled=device.type == "cuda"):
             logits, targets = forward_model(model_type, model, batch, device)
+            if label_smooth > 0:
+                targets = targets * (1 - label_smooth) + label_smooth * 0.5
             loss = loss_fn(logits, targets) / accum_steps
         scaler.scale(loss).backward()
         if (i + 1) % accum_steps == 0 or (i + 1) == len(loader):
+            scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             scaler.step(optimizer)
             scaler.update()
             optimizer.zero_grad()
@@ -154,6 +158,7 @@ def main():
             list(model.freq.parameters())
             + list(model.spatial_proj.parameters())
             + list(model.freq_proj.parameters())
+            + list(model.se_gate.parameters())
             + list(model.classifier.parameters())
         )
         optimizer = optim.Adam([
@@ -186,12 +191,20 @@ def main():
     history = []
     epochs = cfg.get("epochs", 3)
 
-    # --- Fix D: Cosine Annealing LR Scheduler ---
-    # For models with frozen backbone, T_max covers only the active training period
-    # so the decay isn't wasted on frozen epochs.
-    frozen_epochs = FREEZE_EPOCHS if args.model in {"hybrid", "early_fusion"} else 0
-    t_max = max(epochs - frozen_epochs, 1)
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=t_max, eta_min=1e-6)
+    # --- LR Schedule: linear warmup → cosine decay ---
+    warmup_epochs = 2
+    warmup_scheduler = optim.lr_scheduler.LinearLR(
+        optimizer, start_factor=0.1, end_factor=1.0, total_iters=warmup_epochs
+    )
+    cosine_scheduler = optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=max(epochs - warmup_epochs, 1), eta_min=1e-6
+    )
+    scheduler = optim.lr_scheduler.SequentialLR(
+        optimizer, schedulers=[warmup_scheduler, cosine_scheduler],
+        milestones=[warmup_epochs]
+    )
+
+    label_smooth = cfg.get("label_smoothing", 0.05)
 
     for epoch in range(1, epochs + 1):
         # --- Fix C: Unfreeze backbone after FREEZE_EPOCHS ---
@@ -205,10 +218,11 @@ def main():
                     p.requires_grad = True
                 logging.info(f"Epoch {epoch}: unfreezing backbone")
 
-        train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn, accum_steps=accum_steps)
+        train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn, accum_steps=accum_steps, label_smooth=label_smooth)
         val_metrics = evaluate(model, val_loader, args.model, device)
         history.append({"epoch": epoch, "train_loss": train_loss, **val_metrics})
-        logging.info(f"Epoch {epoch}: loss={train_loss:.4f}, val_auc={val_metrics['auc']:.4f}, val_f1={val_metrics['f1']:.4f}")
+        current_lrs = [f"{pg['lr']:.2e}" for pg in optimizer.param_groups]
+        logging.info(f"Epoch {epoch}: lr={current_lrs}, loss={train_loss:.4f}, val_auc={val_metrics['auc']:.4f}, val_f1={val_metrics['f1']:.4f}")
         scheduler.step()
         if val_metrics["auc"] > best_auc:
             best_auc = val_metrics["auc"]

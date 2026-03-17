@@ -19,9 +19,10 @@ import torchvision.transforms.functional as TF
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp"}
 
-# FFT normalization constants (must match get_fft_transform Normalize values)
-_FFT_MEAN = 0.5
-_FFT_STD = 0.5
+# FFT normalization constants — computed from cache via compute_fft_cache.py --stats
+# log1p(FFT magnitude) of 224x224 grayscale ≈ [0, 16]; update after running stats.
+_FFT_MEAN = 5.0
+_FFT_STD = 3.0
 
 
 @dataclass
@@ -69,7 +70,7 @@ class DeepfakeDataset(Dataset):
         self.spatial_transform = T.get_spatial_transform(
             image_size=self.image_size, train=self.train, include_hflip=include_hflip
         )
-        self.fft_transform = T.get_fft_transform(image_size=self.image_size, train=self.train)
+        # Note: FFT normalization is done inline in __getitem__ using _FFT_MEAN/_FFT_STD
 
     def __len__(self):
         return len(self.items)
@@ -99,8 +100,11 @@ class DeepfakeDataset(Dataset):
 
         if self.mode in {"freq", "hybrid", "early_fusion"}:
             fft_tensor = self._load_fft(Path(frame_path))
-            # Normalize: bring log-magnitude from ~[0, 16] to ~[-1, 1]
+            # Normalize log-magnitude using dataset-level statistics
             fft_tensor = (fft_tensor - _FFT_MEAN) / _FFT_STD
+            # FFT augmentation: add Gaussian noise during training to prevent memorization
+            if self.train:
+                fft_tensor = fft_tensor + torch.randn_like(fft_tensor) * 0.1
         else:
             fft_tensor = None
 

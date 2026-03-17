@@ -8,6 +8,22 @@ from .freq_cnn import FreqCNN
 PROJ_DIM = 256
 
 
+class SEGate(nn.Module):
+    """Squeeze-and-Excitation gating on the fused feature vector."""
+
+    def __init__(self, in_dim: int, reduction: int = 4):
+        super().__init__()
+        self.gate = nn.Sequential(
+            nn.Linear(in_dim, in_dim // reduction),
+            nn.ReLU(inplace=True),
+            nn.Linear(in_dim // reduction, in_dim),
+            nn.Sigmoid(),
+        )
+
+    def forward(self, x):
+        return x * self.gate(x)
+
+
 class HybridTwoBranch(nn.Module):
     def __init__(self, pretrained: bool = True):
         super().__init__()
@@ -16,7 +32,6 @@ class HybridTwoBranch(nn.Module):
         spatial_dim = get_feature_dim()
         freq_dim = self.freq.feature_dim()
 
-        # Fix A: project both branches to the same dimension
         self.spatial_proj = nn.Sequential(
             nn.Linear(spatial_dim, PROJ_DIM),
             nn.BatchNorm1d(PROJ_DIM),
@@ -28,10 +43,11 @@ class HybridTwoBranch(nn.Module):
             nn.ReLU(inplace=True),
         )
 
-        # Fix F + Fix G: normalized fusion with increased dropout
+        fused_dim = PROJ_DIM * 2
+        self.se_gate = SEGate(fused_dim)
         self.classifier = nn.Sequential(
             nn.Dropout(0.5),
-            nn.Linear(PROJ_DIM * 2, 128),
+            nn.Linear(fused_dim, 128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.3),
             nn.Linear(128, 1),
@@ -46,6 +62,7 @@ class HybridTwoBranch(nn.Module):
         freq_feat = self.freq_proj(freq_feat)
 
         fused = torch.cat([spatial_feat, freq_feat], dim=1)
+        fused = self.se_gate(fused)
         logits = self.classifier(fused)
         return logits.squeeze(-1)
 
