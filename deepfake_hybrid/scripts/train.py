@@ -34,6 +34,7 @@ def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_
         mode=mode,
         seed=seed,
         train=train,
+        fft_noise_sigma=cfg.get("fft_noise_sigma", 0.05),
     )
     dataset = DeepfakeDataset(ds_cfg)
     n_workers = cfg.get("num_workers", 4)
@@ -51,13 +52,15 @@ def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_
     return loader
 
 
-def select_model(model_type: str, pretrained: bool):
+def select_model(model_type: str, pretrained: bool, cfg: dict):
+    freq_depth = cfg.get("freq_depth", 3)
+    freq_base_channels = cfg.get("freq_base_channels", 32)
     if model_type == "spatial":
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
-        return FreqCNN(num_classes=1)
+        return FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
     if model_type == "hybrid":
-        return HybridTwoBranch(pretrained=pretrained)
+        return HybridTwoBranch(pretrained=pretrained, freq_depth=freq_depth, freq_base_channels=freq_base_channels)
     if model_type == "early_fusion":
         return EarlyFusionXception(pretrained=pretrained)
     raise ValueError(f"Unknown model_type {model_type}")
@@ -153,7 +156,7 @@ def main():
     train_loader = make_dataloader(train_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=True, fft_cache_root=fft_cache_root, seed=args.seed)
     val_loader = make_dataloader(val_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=False, fft_cache_root=fft_cache_root, seed=args.seed)
 
-    model = select_model(args.model, pretrained=args.pretrained).to(device)
+    model = select_model(args.model, pretrained=args.pretrained, cfg=cfg).to(device)
     if cfg.get("compile_model", False) and hasattr(torch, "compile"):
         logging.info("Compiling model with torch.compile (first batch will be slow)...")
         model = torch.compile(model)
@@ -217,6 +220,8 @@ def main():
     )
 
     label_smooth = cfg.get("label_smoothing", 0.05)
+    patience = cfg.get("early_stop_patience", 5)
+    no_improve_count = 0
 
     for epoch in range(1, epochs + 1):
         # --- Fix C: Unfreeze backbone after FREEZE_EPOCHS ---
@@ -238,9 +243,15 @@ def main():
         scheduler.step()
         if val_metrics["auc"] > best_auc:
             best_auc = val_metrics["auc"]
+            no_improve_count = 0
             # Unwrap torch.compile wrapper so checkpoints load on non-compiled models
             unwrapped = getattr(model, '_orig_mod', model)
             torch.save({"state_dict": unwrapped.state_dict(), "epoch": epoch, "config": cfg}, run_dir / "best.pt")
+        else:
+            no_improve_count += 1
+            if no_improve_count >= patience:
+                logging.info(f"Early stopping at epoch {epoch}: val AUC did not improve for {patience} consecutive epochs.")
+                break
 
     save_json({"history": history}, run_dir / "metrics.json")
     logging.info(f"Training complete. Best AUC={best_auc:.4f}. Checkpoint at {run_dir/'best.pt'}")

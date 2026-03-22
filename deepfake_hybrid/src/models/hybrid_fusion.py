@@ -25,10 +25,10 @@ class SEGate(nn.Module):
 
 
 class HybridTwoBranch(nn.Module):
-    def __init__(self, pretrained: bool = True):
+    def __init__(self, pretrained: bool = True, freq_depth: int = 3, freq_base_channels: int = 32):
         super().__init__()
         self.spatial = build_feature_extractor(pretrained=pretrained)
-        self.freq = FreqCNN(num_classes=1)
+        self.freq = FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
         spatial_dim = get_feature_dim()
         freq_dim = self.freq.feature_dim()
 
