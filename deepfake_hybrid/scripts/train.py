@@ -36,12 +36,16 @@ def make_dataloader(manifest_path: Path, cfg: dict, mode: str, train: bool, fft_
         train=train,
     )
     dataset = DeepfakeDataset(ds_cfg)
+    n_workers = cfg.get("num_workers", 4)
     loader = DataLoader(
         dataset,
         batch_size=cfg.get("batch_size", 16),
         shuffle=train,
-        num_workers=cfg.get("num_workers", 4),
+        num_workers=n_workers,
         pin_memory=True,
+        drop_last=train,
+        persistent_workers=n_workers > 0,
+        prefetch_factor=4 if n_workers > 0 else None,
         worker_init_fn=worker_init_fn,
     )
     return loader
@@ -127,6 +131,11 @@ def main():
     seed_everything(args.seed)
     device = get_device()
 
+    # A100 / Ampere+ optimizations
+    if device.type == "cuda":
+        torch.backends.cuda.matmul.allow_tf32 = True   # 3x faster matmuls on A100
+        torch.backends.cudnn.allow_tf32 = True
+
     n_tag = f"_n{args.n_samples}" if args.n_samples > 0 else ""
     run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{args.dataset}{n_tag}_seed{args.seed}"
     ensure_dir(run_dir)
@@ -145,6 +154,9 @@ def main():
     val_loader = make_dataloader(val_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=False, fft_cache_root=fft_cache_root, seed=args.seed)
 
     model = select_model(args.model, pretrained=args.pretrained).to(device)
+    if cfg.get("compile_model", False) and hasattr(torch, "compile"):
+        logging.info("Compiling model with torch.compile (first batch will be slow)...")
+        model = torch.compile(model)
     loss_fn = nn.BCEWithLogitsLoss()
 
     # --- Fix B: Differential Learning Rates ---

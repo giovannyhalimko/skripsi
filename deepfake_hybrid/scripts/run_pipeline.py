@@ -118,7 +118,8 @@ def main():
             cmd = [PY, str(ROOT / "scripts" / "extract_frames.py"),
                    "--config", config_path, "--dataset", ds,
                    "--fps", str(args.fps),
-                   "--max-frames", str(args.max_frames)]
+                   "--max-frames", str(args.max_frames),
+                   "--num-workers", str(args.num_workers)]
             if args.n_samples > 0:
                 cmd += ["--n-samples", str(args.n_samples)]
             step(cmd, f"[1/3] Extract frames — {ds}")

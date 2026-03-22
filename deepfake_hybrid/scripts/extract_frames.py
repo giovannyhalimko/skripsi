@@ -2,6 +2,8 @@ import argparse
 import os
 import sys
 from pathlib import Path
+from functools import partial
+import multiprocessing as mp
 import cv2
 from tqdm import tqdm
 
@@ -24,6 +26,21 @@ def infer_label(path: Path, real_keywords, fake_keywords):
         if kw.lower() in name_parts or kw.lower() in path.name.lower():
             return 0
     return None
+
+
+def _extract_worker(item, out_root: Path, root: Path, fps: int, max_frames: int):
+    """Top-level worker function so it's picklable for multiprocessing."""
+    v, label = item
+    try:
+        rel = v.relative_to(root)
+        vid = str(rel.with_suffix("")).replace("/", "_").replace("\\", "_")
+    except ValueError:
+        vid = v.stem
+    out_dir = out_root / vid
+    saved = extract_video_frames(v, out_dir, fps=fps, max_frames=max_frames)
+    if saved == 0:
+        return None
+    return {"video_id": vid, "label": label, "frames_dir": str(out_dir)}
 
 
 def extract_video_frames(video_path: Path, out_dir: Path, fps: int, max_frames: int):
@@ -60,6 +77,8 @@ def main():
     parser.add_argument("--max-frames", type=int, default=100)
     parser.add_argument("--n-samples", type=int, default=0,
                         help="Limit to N randomly sampled videos (balanced real/fake). 0 = all.")
+    parser.add_argument("--num-workers", type=int, default=4,
+                        help="Parallel video workers (default: 4)")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -121,21 +140,18 @@ def main():
         rng.shuffle(all_videos)
         print(f"Sampled {len(all_videos)} videos ({real_take} real, {fake_take} fake)")
 
-    rows = []
-    skipped = 0
-    for v, label in tqdm(all_videos, desc="Extracting frames"):
-        try:
-            rel = v.relative_to(root)
-            vid = str(rel.with_suffix("")).replace("/", "_").replace("\\", "_")
-        except ValueError:
-            vid = v.stem
-        out_dir = out_root / vid
-        saved = extract_video_frames(v, out_dir, fps=args.fps, max_frames=args.max_frames)
-        if saved == 0:
-            skipped += 1
-            continue
-        rows.append({"video_id": vid, "label": label, "frames_dir": str(out_dir)})
+    worker_fn = partial(_extract_worker, out_root=out_root, root=root,
+                        fps=args.fps, max_frames=args.max_frames)
+    num_workers = min(args.num_workers, len(all_videos))
+    print(f"Extracting frames with {num_workers} parallel workers...")
+    with mp.Pool(num_workers) as pool:
+        results = list(tqdm(
+            pool.imap(worker_fn, all_videos),
+            total=len(all_videos), desc="Extracting frames"
+        ))
 
+    rows = [r for r in results if r is not None]
+    skipped = len(all_videos) - len(rows)
     if skipped > 0:
         print(f"[WARN] {skipped} videos could not be opened and were skipped")
 
