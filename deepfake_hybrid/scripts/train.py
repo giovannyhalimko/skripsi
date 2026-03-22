@@ -238,7 +238,9 @@ def main():
         scheduler.step()
         if val_metrics["auc"] > best_auc:
             best_auc = val_metrics["auc"]
-            torch.save({"state_dict": model.state_dict(), "epoch": epoch, "config": cfg}, run_dir / "best.pt")
+            # Unwrap torch.compile wrapper so checkpoints load on non-compiled models
+            unwrapped = getattr(model, '_orig_mod', model)
+            torch.save({"state_dict": unwrapped.state_dict(), "epoch": epoch, "config": cfg}, run_dir / "best.pt")
 
     save_json({"history": history}, run_dir / "metrics.json")
     logging.info(f"Training complete. Best AUC={best_auc:.4f}. Checkpoint at {run_dir/'best.pt'}")
