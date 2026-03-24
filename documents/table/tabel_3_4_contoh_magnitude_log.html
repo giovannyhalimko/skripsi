@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: center; vertical-align: top; }
+th { font-weight: bold; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Komponen</th>
+      <th><i>F</i>(<i>u</i>, <i>v</i>)</th>
+      <th>|<i>F</i>(<i>u</i>, <i>v</i>)|</th>
+      <th>log(1 + |<i>F</i>(<i>u</i>, <i>v</i>)|)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>F</i>(0, 0)</td>
+      <td>1600</td>
+      <td>1600</td>
+      <td>7,378</td>
+    </tr>
+    <tr>
+      <td><i>F</i>(0, 1)</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><i>F</i>(1, 0)</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><i>F</i>(1, 1)</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.4 Contoh Perhitungan <i>Magnitude</i> dan <i>Log Scaling</i></caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

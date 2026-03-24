@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th><i>Layer</i></th>
+      <th>Tipe</th>
+      <th>Dimensi Input</th>
+      <th>Dimensi Output</th>
+      <th>Parameter</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Blok Conv 1</td>
+      <td>Conv2d(1&rarr;32, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>(1, 224, 224)</td>
+      <td>(32, 112, 112)</td>
+      <td>&sim;320</td>
+    </tr>
+    <tr>
+      <td>Blok Conv 2</td>
+      <td>Conv2d(32&rarr;64, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>(32, 112, 112)</td>
+      <td>(64, 56, 56)</td>
+      <td>&sim;18.500</td>
+    </tr>
+    <tr>
+      <td>Blok Conv 3</td>
+      <td>Conv2d(64&rarr;128, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>(64, 56, 56)</td>
+      <td>(128, 28, 28)</td>
+      <td>&sim;73.900</td>
+    </tr>
+    <tr>
+      <td>Dropout2d(0,2)</td>
+      <td><i>Spatial dropout</i></td>
+      <td>(128, 28, 28)</td>
+      <td>(128, 28, 28)</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><i>AdaptiveAvgPool</i></td>
+      <td><i>Global average pooling</i></td>
+      <td>(128, 28, 28)</td>
+      <td>(128, 1, 1)</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>FC 1</td>
+      <td>Linear(128&rarr;64) + ReLU</td>
+      <td>(128)</td>
+      <td>(64)</td>
+      <td>&sim;8.300</td>
+    </tr>
+    <tr>
+      <td>Dropout(0,3)</td>
+      <td><i>Dropout</i></td>
+      <td>(64)</td>
+      <td>(64)</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>FC 2</td>
+      <td>Linear(64&rarr;1)</td>
+      <td>(64)</td>
+      <td>(1)</td>
+      <td>&sim;65</td>
+    </tr>
+    <tr>
+      <td colspan="4" style="text-align: right; font-weight: bold;">Total</td>
+      <td style="font-weight: bold;">&sim;130K</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.5 Arsitektur <i>Layer-by-Layer</i> FreqCNN (<i>depth</i> = 3, <i>base_channels</i> = 32)</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

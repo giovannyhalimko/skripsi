@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: auto; font-family: 'Times New Roman', serif; font-size: 12pt; margin: 0 auto; }
+th, td { border: 1px solid black; padding: 8px 16px; text-align: center; vertical-align: middle; }
+th { font-weight: bold; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Prediksi <i>Fake</i></th>
+      <th>Prediksi <i>Real</i></th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Aktual <i>Fake</i></th>
+      <td>TP = 42</td>
+      <td>FN = 8</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Aktual <i>Real</i></th>
+      <td>FP = 5</td>
+      <td>TN = 45</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>47</td>
+      <td>53</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.13 Contoh <i>Confusion Matrix</i></caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

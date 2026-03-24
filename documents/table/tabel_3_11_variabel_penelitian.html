@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Jenis</th>
+      <th>Variabel</th>
+      <th>Nilai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3"><b>Independen</b></td>
+      <td>Arsitektur model</td>
+      <td><i>spatial</i>, <i>freq</i>, <i>hybrid</i></td>
+    </tr>
+    <tr>
+      <td>Dataset pelatihan</td>
+      <td>FFPP, CDF</td>
+    </tr>
+    <tr>
+      <td>Ukuran sampel</td>
+      <td>100&ndash;1000 (bervariasi per dataset)</td>
+    </tr>
+    <tr>
+      <td rowspan="2"><b>Dependen</b></td>
+      <td><i>Accuracy</i>, <i>Precision</i>, <i>Recall</i>, F1-<i>Score</i>, AUC</td>
+      <td>Kontinu [0, 1]</td>
+    </tr>
+    <tr>
+      <td><i>Generalization drop</i> (&Delta;)</td>
+      <td>F1<sub>in</sub> &minus; F1<sub>cross</sub></td>
+    </tr>
+    <tr>
+      <td rowspan="4"><b>Kontrol</b></td>
+      <td><i>Hyperparameter</i> pelatihan</td>
+      <td>Tetap (Tabel 3.9)</td>
+    </tr>
+    <tr>
+      <td><i>Seed</i></td>
+      <td>42, 43, 44</td>
+    </tr>
+    <tr>
+      <td>Pembagian data</td>
+      <td>70/15/15 terstratifikasi</td>
+    </tr>
+    <tr>
+      <td>Ukuran citra</td>
+      <td>224 &times; 224</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.11 Variabel Penelitian</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

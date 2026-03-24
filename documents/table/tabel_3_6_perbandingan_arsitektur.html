@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Aspek</th>
+      <th><i>Spatial</i> (XceptionNet)</th>
+      <th><i>Frequency</i> (FreqCNN)</th>
+      <th><i>Hybrid</i> (HybridTwoBranch)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Input</td>
+      <td>RGB (3, 224, 224)</td>
+      <td>FFT (1, 224, 224)</td>
+      <td>RGB + FFT (terpisah)</td>
+    </tr>
+    <tr>
+      <td><i>Backbone</i></td>
+      <td><i>XceptionNet</i> (<i>pretrained</i>)</td>
+      <td>FreqCNN (<i>from scratch</i>)</td>
+      <td><i>XceptionNet</i> + FreqCNN</td>
+    </tr>
+    <tr>
+      <td>Dimensi fitur</td>
+      <td>2.048</td>
+      <td>128</td>
+      <td>256 + 256 = 512 (terproyeksi)</td>
+    </tr>
+    <tr>
+      <td>Mekanisme fusi</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+      <td>Konkatenasi + SE <i>Gating</i></td>
+    </tr>
+    <tr>
+      <td>Total parameter</td>
+      <td>&sim;22,8 juta</td>
+      <td>&sim;130 ribu</td>
+      <td>&sim;23,2 juta</td>
+    </tr>
+    <tr>
+      <td><i>Pretrained</i></td>
+      <td>Ya (ImageNet)</td>
+      <td>Tidak</td>
+      <td>Parsial (cabang spasial)</td>
+    </tr>
+    <tr>
+      <td>Domain</td>
+      <td>Spasial</td>
+      <td>Frekuensi</td>
+      <td>Keduanya</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.6 Perbandingan Tiga Arsitektur Model</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

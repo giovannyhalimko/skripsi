@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Kelompok Parameter</th>
+      <th><i>Learning Rate</i></th>
+      <th>Diterapkan Pada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>Backbone</i> (<i>pretrained</i>)</td>
+      <td>1 &times; 10<sup>&minus;5</sup> (<i>base</i> / 10)</td>
+      <td>Parameter <i>XceptionNet</i></td>
+    </tr>
+    <tr>
+      <td><i>Head</i> (lapisan baru)</td>
+      <td>1 &times; 10<sup>&minus;4</sup></td>
+      <td>FreqCNN, proyeksi, SE <i>gate</i>, <i>classifier</i></td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.8 <i>Learning Rate</i> per Kelompok Parameter</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>
