@@ -130,6 +130,15 @@ class DeepfakeDataset(Dataset):
             # FFT augmentation: add Gaussian noise during training to prevent memorization
             if self.train and self.cfg.fft_noise_sigma > 0:
                 fft_tensor = fft_tensor + torch.randn_like(fft_tensor) * self.cfg.fft_noise_sigma
+            # Spectral masking: randomly zero a frequency band to prevent reliance on any single band
+            if self.train and random.random() < 0.3:
+                _, h, w = fft_tensor.shape
+                band_width = random.randint(2, max(h // 8, 3))
+                start = random.randint(0, h - band_width)
+                if random.random() < 0.5:
+                    fft_tensor[:, start:start + band_width, :] = 0.0
+                else:
+                    fft_tensor[:, :, start:start + band_width] = 0.0
         else:
             fft_tensor = None
 

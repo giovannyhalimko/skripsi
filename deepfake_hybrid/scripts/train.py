@@ -167,7 +167,20 @@ def main():
     wd = cfg.get("weight_decay", 1e-4)
     backbone_lr = base_lr / 10  # 10x lower LR for pretrained backbone
 
-    if args.model == "hybrid":
+    if args.model == "spatial":
+        # Backbone = all params except the final FC head
+        backbone_params = [p for n, p in model.named_parameters() if not n.startswith("head.fc") and not n.startswith("fc")]
+        head_params = [p for n, p in model.named_parameters() if n.startswith("head.fc") or n.startswith("fc")]
+        if not head_params:
+            # timm xception uses 'head' attribute; fall back to all params as backbone
+            backbone_params = list(model.parameters())
+            optimizer = optim.AdamW(backbone_params, lr=backbone_lr, weight_decay=wd)
+        else:
+            optimizer = optim.AdamW([
+                {"params": backbone_params, "lr": backbone_lr},
+                {"params": head_params, "lr": base_lr},
+            ], weight_decay=wd)
+    elif args.model == "hybrid":
         backbone_params = list(model.spatial.parameters())
         head_params = (
             list(model.freq.parameters())
@@ -176,23 +189,30 @@ def main():
             + list(model.se_gate.parameters())
             + list(model.classifier.parameters())
         )
-        optimizer = optim.Adam([
+        optimizer = optim.AdamW([
             {"params": backbone_params, "lr": backbone_lr},
             {"params": head_params, "lr": base_lr},
         ], weight_decay=wd)
     elif args.model == "early_fusion":
         backbone_params = list(model.model.parameters())
         # early_fusion only has model.model; all params are backbone
-        optimizer = optim.Adam([
+        optimizer = optim.AdamW([
             {"params": backbone_params, "lr": backbone_lr},
         ], weight_decay=wd)
     else:
-        optimizer = optim.Adam(model.parameters(), lr=base_lr, weight_decay=wd)
+        optimizer = optim.AdamW(model.parameters(), lr=base_lr, weight_decay=wd)
 
     scaler = torch.amp.GradScaler(device=device.type, enabled=device.type == "cuda")
 
     # --- Fix C: Backbone Freezing for first FREEZE_EPOCHS epochs ---
-    if args.model == "hybrid":
+    if args.model == "spatial":
+        # Freeze all backbone params (everything except the final classification head)
+        head_param_ids = {id(p) for n, p in model.named_parameters() if n.startswith("head.fc") or n.startswith("fc")}
+        for p in model.parameters():
+            if id(p) not in head_param_ids:
+                p.requires_grad = False
+        logging.info(f"Froze spatial backbone for first {FREEZE_EPOCHS} epochs")
+    elif args.model == "hybrid":
         for p in model.spatial.parameters():
             p.requires_grad = False
         logging.info(f"Froze spatial backbone for first {FREEZE_EPOCHS} epochs")
@@ -207,7 +227,7 @@ def main():
     epochs = cfg.get("epochs", 3)
 
     # --- LR Schedule: linear warmup → cosine decay ---
-    warmup_epochs = 2
+    warmup_epochs = 3
     warmup_scheduler = optim.lr_scheduler.LinearLR(
         optimizer, start_factor=0.1, end_factor=1.0, total_iters=warmup_epochs
     )
@@ -226,7 +246,11 @@ def main():
     for epoch in range(1, epochs + 1):
         # --- Fix C: Unfreeze backbone after FREEZE_EPOCHS ---
         if epoch == FREEZE_EPOCHS + 1:
-            if args.model == "hybrid":
+            if args.model == "spatial":
+                for p in model.parameters():
+                    p.requires_grad = True
+                logging.info(f"Epoch {epoch}: unfreezing spatial backbone")
+            elif args.model == "hybrid":
                 for p in model.spatial.parameters():
                     p.requires_grad = True
                 logging.info(f"Epoch {epoch}: unfreezing spatial backbone")

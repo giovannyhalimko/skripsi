@@ -23,13 +23,15 @@ import metrics as metrics_mod
 MODELS_CORE = ["spatial", "freq", "hybrid"]
 
 
-def select_model(model_type: str, pretrained: bool):
+def select_model(model_type: str, pretrained: bool, cfg: dict):
+    freq_depth = cfg.get("freq_depth", 3)
+    freq_base_channels = cfg.get("freq_base_channels", 32)
     if model_type == "spatial":
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
-        return FreqCNN(num_classes=1)
+        return FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
     if model_type == "hybrid":
-        return HybridTwoBranch(pretrained=pretrained)
+        return HybridTwoBranch(pretrained=pretrained, freq_depth=freq_depth, freq_base_channels=freq_base_channels)
     if model_type == "early_fusion":
         return EarlyFusionXception(pretrained=pretrained)
     raise ValueError(model_type)
@@ -49,7 +51,7 @@ def eval_checkpoint(cfg, dataset_name, model_type, checkpoint_path, seed):
     )
     dataset = DeepfakeDataset(ds_cfg)
     loader = DataLoader(dataset, batch_size=cfg.get("batch_size", 16), shuffle=False, num_workers=cfg.get("num_workers", 4), pin_memory=True, worker_init_fn=worker_init_fn)
-    model = select_model(model_type, pretrained=False)
+    model = select_model(model_type, pretrained=False, cfg=cfg)
     checkpoint = torch.load(checkpoint_path, map_location=device)
     state_dict = checkpoint["state_dict"] if isinstance(checkpoint, dict) and "state_dict" in checkpoint else checkpoint
     model.load_state_dict(state_dict)
