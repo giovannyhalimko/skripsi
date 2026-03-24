@@ -64,6 +64,8 @@ def main():
     )
     parser.add_argument("--config", default="config.yaml",
                         help="Path to config YAML (default: config.yaml)")
+    parser.add_argument("--dataset", choices=["FFPP", "CDF", "both"], default="both",
+                        help="Which dataset to train on (default: both)")
     parser.add_argument("--n-samples", type=int, default=500,
                         help="Videos per dataset (default: 500, 0 = all)")
     parser.add_argument("--max-frames", type=int, default=50,
@@ -98,7 +100,7 @@ def main():
         overrides["batch_size"] = args.batch_size
     config_path = patch_config(base_config, overrides)
 
-    datasets = ["FFPP", "CDF"]
+    datasets = ["FFPP", "CDF"] if args.dataset == "both" else [args.dataset]
 
     print(f"\n{'#' * 60}")
     print(f"  Deepfake Hybrid Detection Pipeline")

@@ -19,7 +19,7 @@ fusion_mode: two_branch
 n_seeds: 3
 
 # Frequency branch
-freq_depth: 3              # FreqCNN conv blocks: 3 (~130K params) or 5 (~700K params)
+freq_depth: 5              # FreqCNN conv blocks: 3 (~130K params) or 5 (~700K params)
 freq_base_channels: 32     # Channels in first conv block
 fft_noise_sigma: 0.05      # Gaussian noise sigma for FFT augmentation (0 to disable)
 

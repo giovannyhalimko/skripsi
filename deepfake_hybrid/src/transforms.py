@@ -12,12 +12,14 @@ def get_spatial_transform(image_size: int = 224, train: bool = True, include_hfl
         aug = [
             transforms.Resize((image_size + 32, image_size + 32)),
             transforms.RandomResizedCrop(image_size, scale=(0.8, 1.0)),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.1, hue=0.05),
         ]
         if include_hflip:
             aug.append(transforms.RandomHorizontalFlip())
         aug += [
             transforms.ToTensor(),
             transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
+            transforms.RandomErasing(p=0.1, scale=(0.02, 0.15)),
         ]
         t = transforms.Compose(aug)
     else:

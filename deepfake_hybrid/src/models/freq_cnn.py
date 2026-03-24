@@ -2,8 +2,26 @@ import torch
 import torch.nn as nn
 
 
+class FreqBlock(nn.Module):
+    """Residual conv block with MaxPool downsampling for frequency feature extraction."""
+
+    def __init__(self, in_ch: int, out_ch: int):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_ch, out_ch, kernel_size=3, padding=1),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+        )
+        # 1x1 projection to match channel dims for residual add
+        self.shortcut = nn.Conv2d(in_ch, out_ch, kernel_size=1) if in_ch != out_ch else nn.Identity()
+        self.pool = nn.MaxPool2d(2)
+
+    def forward(self, x):
+        return self.pool(self.conv(x) + self.shortcut(x))
+
+
 class FreqCNN(nn.Module):
-    """CNN for single-channel FFT log-magnitude maps with configurable depth.
+    """CNN for single-channel FFT log-magnitude maps with configurable depth and residual connections.
 
     Args:
         num_classes: Number of output classes (1 for binary).
@@ -25,21 +43,17 @@ class FreqCNN(nn.Module):
             channels[3] = base_channels * 8
             channels[4] = base_channels * 8
 
-        layers = []
+        blocks = []
         in_ch = 1
-        for i, out_ch in enumerate(channels):
-            layers += [
-                nn.Conv2d(in_ch, out_ch, kernel_size=3, padding=1),
-                nn.BatchNorm2d(out_ch),
-                nn.ReLU(inplace=True),
-                nn.MaxPool2d(2),
-            ]
+        for out_ch in channels:
+            blocks.append(FreqBlock(in_ch, out_ch))
             in_ch = out_ch
 
-        # Spatial dropout for regularization before pooling
-        layers.append(nn.Dropout2d(0.2))
-        layers.append(nn.AdaptiveAvgPool2d((1, 1)))
-        self.features = nn.Sequential(*layers)
+        self.features = nn.Sequential(
+            *blocks,
+            nn.Dropout2d(0.2),
+            nn.AdaptiveAvgPool2d((1, 1)),
+        )
         self._feature_dim = channels[-1]
 
         self.classifier = nn.Sequential(
