@@ -1,0 +1,21 @@
+[2026-03-24 05:11:40,166] INFO: Starting training: model=freq, dataset=CDF, seed=0, device=cuda
+[2026-03-24 05:11:40,537] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 05:11:49,261] INFO: Epoch 1: lr=['1.00e-05'], loss=0.6873, val_auc=0.5996, val_f1=0.7019
+[2026-03-24 05:11:54,552] INFO: Epoch 2: lr=['5.50e-05'], loss=0.6819, val_auc=0.6104, val_f1=0.6583
+[2026-03-24 05:11:59,919] INFO: Epoch 3: lr=['1.00e-04'], loss=0.6793, val_auc=0.6246, val_f1=0.6606
+[2026-03-24 05:12:05,113] INFO: Epoch 4: lr=['9.97e-05'], loss=0.6735, val_auc=0.6652, val_f1=0.6776
+[2026-03-24 05:12:10,366] INFO: Epoch 5: lr=['9.88e-05'], loss=0.6687, val_auc=0.6993, val_f1=0.6992
+[2026-03-24 05:12:15,516] INFO: Epoch 6: lr=['9.72e-05'], loss=0.6602, val_auc=0.7148, val_f1=0.7084
+[2026-03-24 05:12:20,760] INFO: Epoch 7: lr=['9.51e-05'], loss=0.6495, val_auc=0.7181, val_f1=0.7184
+[2026-03-24 05:12:26,039] INFO: Epoch 8: lr=['9.24e-05'], loss=0.6391, val_auc=0.7529, val_f1=0.7177
+[2026-03-24 05:12:31,284] INFO: Epoch 9: lr=['8.92e-05'], loss=0.6311, val_auc=0.7128, val_f1=0.7055
+[2026-03-24 05:12:36,641] INFO: Epoch 10: lr=['8.55e-05'], loss=0.6237, val_auc=0.7680, val_f1=0.6768
+[2026-03-24 05:12:41,987] INFO: Epoch 11: lr=['8.14e-05'], loss=0.6163, val_auc=0.7555, val_f1=0.7697
+[2026-03-24 05:12:47,354] INFO: Epoch 12: lr=['7.68e-05'], loss=0.6121, val_auc=0.7837, val_f1=0.7192
+[2026-03-24 05:12:52,695] INFO: Epoch 13: lr=['7.20e-05'], loss=0.6035, val_auc=0.7808, val_f1=0.7296
+[2026-03-24 05:12:57,949] INFO: Epoch 14: lr=['6.68e-05'], loss=0.5996, val_auc=0.6667, val_f1=0.7031
+[2026-03-24 05:13:03,345] INFO: Epoch 15: lr=['6.15e-05'], loss=0.5946, val_auc=0.7604, val_f1=0.6033
+[2026-03-24 05:13:08,741] INFO: Epoch 16: lr=['5.60e-05'], loss=0.5897, val_auc=0.6867, val_f1=0.7502
+[2026-03-24 05:13:14,096] INFO: Epoch 17: lr=['5.05e-05'], loss=0.5830, val_auc=0.7207, val_f1=0.7966
+[2026-03-24 05:13:14,096] INFO: Early stopping at epoch 17: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 05:13:14,097] INFO: Training complete. Best AUC=0.7837. Checkpoint at /content/outputs/runs/freq_CDF_n100_seed0/best.pt

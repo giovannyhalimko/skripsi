@@ -1,0 +1,28 @@
+[2026-03-24 16:20:20,132] INFO: Starting training: model=hybrid, dataset=CDF, seed=0, device=cuda
+[2026-03-24 16:20:20,479] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 16:20:21,165] INFO: Froze spatial backbone for first 3 epochs
+[2026-03-24 16:21:45,190] INFO: Epoch 1: lr=['1.00e-06', '1.00e-05'], loss=0.6807, val_auc=0.7084, val_f1=0.6397
+[2026-03-24 16:23:03,022] INFO: Epoch 2: lr=['4.00e-06', '4.00e-05'], loss=0.6436, val_auc=0.7077, val_f1=0.6590
+[2026-03-24 16:24:19,103] INFO: Epoch 3: lr=['7.00e-06', '7.00e-05'], loss=0.5310, val_auc=0.6805, val_f1=0.6308
+[2026-03-24 16:24:19,106] INFO: Epoch 4: unfreezing spatial backbone
+[2026-03-24 16:25:48,456] INFO: Epoch 4: lr=['1.00e-05', '1.00e-04'], loss=0.2886, val_auc=0.6786, val_f1=0.7375
+[2026-03-24 16:27:10,159] INFO: Epoch 5: lr=['9.97e-06', '9.97e-05'], loss=0.1883, val_auc=0.6973, val_f1=0.7448
+[2026-03-24 16:28:30,540] INFO: Epoch 6: lr=['9.88e-06', '9.87e-05'], loss=0.1720, val_auc=0.7124, val_f1=0.7261
+[2026-03-24 16:29:54,064] INFO: Epoch 7: lr=['9.73e-06', '9.70e-05'], loss=0.1549, val_auc=0.7225, val_f1=0.7469
+[2026-03-24 16:31:21,105] INFO: Epoch 8: lr=['9.52e-06', '9.47e-05'], loss=0.1504, val_auc=0.7212, val_f1=0.7419
+[2026-03-24 16:32:44,898] INFO: Epoch 9: lr=['9.26e-06', '9.19e-05'], loss=0.1438, val_auc=0.7275, val_f1=0.7457
+[2026-03-24 16:34:07,509] INFO: Epoch 10: lr=['8.95e-06', '8.84e-05'], loss=0.1419, val_auc=0.7299, val_f1=0.7480
+[2026-03-24 16:35:30,178] INFO: Epoch 11: lr=['8.59e-06', '8.45e-05'], loss=0.1389, val_auc=0.7279, val_f1=0.7401
+[2026-03-24 16:36:52,350] INFO: Epoch 12: lr=['8.19e-06', '8.01e-05'], loss=0.1331, val_auc=0.7177, val_f1=0.7398
+[2026-03-24 16:38:16,409] INFO: Epoch 13: lr=['7.75e-06', '7.52e-05'], loss=0.1344, val_auc=0.7240, val_f1=0.7615
+[2026-03-24 16:39:38,651] INFO: Epoch 14: lr=['7.28e-06', '7.01e-05'], loss=0.1327, val_auc=0.7344, val_f1=0.7392
+[2026-03-24 16:41:00,204] INFO: Epoch 15: lr=['6.79e-06', '6.47e-05'], loss=0.1307, val_auc=0.7302, val_f1=0.7592
+[2026-03-24 16:42:21,760] INFO: Epoch 16: lr=['6.28e-06', '5.91e-05'], loss=0.1327, val_auc=0.7326, val_f1=0.7401
+[2026-03-24 16:43:41,757] INFO: Epoch 17: lr=['5.76e-06', '5.34e-05'], loss=0.1290, val_auc=0.7445, val_f1=0.7615
+[2026-03-24 16:45:01,962] INFO: Epoch 18: lr=['5.24e-06', '4.76e-05'], loss=0.1316, val_auc=0.7309, val_f1=0.7531
+[2026-03-24 16:46:25,523] INFO: Epoch 19: lr=['4.72e-06', '4.19e-05'], loss=0.1268, val_auc=0.7334, val_f1=0.7488
+[2026-03-24 16:47:46,682] INFO: Epoch 20: lr=['4.21e-06', '3.63e-05'], loss=0.1298, val_auc=0.7330, val_f1=0.7634
+[2026-03-24 16:49:07,721] INFO: Epoch 21: lr=['3.72e-06', '3.09e-05'], loss=0.1283, val_auc=0.7254, val_f1=0.7609
+[2026-03-24 16:50:29,635] INFO: Epoch 22: lr=['3.25e-06', '2.58e-05'], loss=0.1268, val_auc=0.7244, val_f1=0.7590
+[2026-03-24 16:50:29,636] INFO: Early stopping at epoch 22: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 16:50:29,637] INFO: Training complete. Best AUC=0.7445. Checkpoint at /content/outputs/runs/hybrid_CDF_n100_seed0/best.pt

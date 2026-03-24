@@ -1,0 +1,26 @@
+[2026-03-24 09:17:52,478] INFO: Starting training: model=spatial, dataset=CDF, seed=0, device=cuda
+[2026-03-24 09:17:53,229] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 09:17:53,323] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-24 09:17:53,689] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 09:20:09,847] INFO: Epoch 1: lr=['1.00e-05'], loss=0.5074, val_auc=0.7179, val_f1=0.6486
+[2026-03-24 09:21:53,509] INFO: Epoch 2: lr=['5.50e-05'], loss=0.2047, val_auc=0.7702, val_f1=0.6935
+[2026-03-24 09:23:36,864] INFO: Epoch 3: lr=['1.00e-04'], loss=0.1558, val_auc=0.7674, val_f1=0.7141
+[2026-03-24 09:25:19,571] INFO: Epoch 4: lr=['9.97e-05'], loss=0.1374, val_auc=0.7824, val_f1=0.7242
+[2026-03-24 09:27:02,747] INFO: Epoch 5: lr=['9.88e-05'], loss=0.1296, val_auc=0.7927, val_f1=0.7353
+[2026-03-24 09:28:46,900] INFO: Epoch 6: lr=['9.72e-05'], loss=0.1278, val_auc=0.7977, val_f1=0.7426
+[2026-03-24 09:30:30,722] INFO: Epoch 7: lr=['9.51e-05'], loss=0.1271, val_auc=0.8071, val_f1=0.7396
+[2026-03-24 09:32:15,296] INFO: Epoch 8: lr=['9.24e-05'], loss=0.1231, val_auc=0.8070, val_f1=0.7462
+[2026-03-24 09:33:58,868] INFO: Epoch 9: lr=['8.92e-05'], loss=0.1234, val_auc=0.7964, val_f1=0.7494
+[2026-03-24 09:35:43,237] INFO: Epoch 10: lr=['8.55e-05'], loss=0.1228, val_auc=0.7812, val_f1=0.7409
+[2026-03-24 09:37:26,758] INFO: Epoch 11: lr=['8.14e-05'], loss=0.1223, val_auc=0.8148, val_f1=0.7607
+[2026-03-24 09:39:09,680] INFO: Epoch 12: lr=['7.68e-05'], loss=0.1206, val_auc=0.8143, val_f1=0.7450
+[2026-03-24 09:40:52,808] INFO: Epoch 13: lr=['7.20e-05'], loss=0.1208, val_auc=0.8334, val_f1=0.7641
+[2026-03-24 09:42:36,782] INFO: Epoch 14: lr=['6.68e-05'], loss=0.1215, val_auc=0.7922, val_f1=0.7474
+[2026-03-24 09:44:20,014] INFO: Epoch 15: lr=['6.15e-05'], loss=0.1206, val_auc=0.8456, val_f1=0.7694
+[2026-03-24 09:46:03,387] INFO: Epoch 16: lr=['5.60e-05'], loss=0.1189, val_auc=0.8322, val_f1=0.7762
+[2026-03-24 09:47:46,980] INFO: Epoch 17: lr=['5.05e-05'], loss=0.1195, val_auc=0.8075, val_f1=0.7511
+[2026-03-24 09:49:30,980] INFO: Epoch 18: lr=['4.50e-05'], loss=0.1189, val_auc=0.8160, val_f1=0.7584
+[2026-03-24 09:51:14,470] INFO: Epoch 19: lr=['3.95e-05'], loss=0.1185, val_auc=0.8157, val_f1=0.7515
+[2026-03-24 09:52:59,043] INFO: Epoch 20: lr=['3.42e-05'], loss=0.1185, val_auc=0.7949, val_f1=0.7595
+[2026-03-24 09:52:59,043] INFO: Early stopping at epoch 20: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 09:52:59,044] INFO: Training complete. Best AUC=0.8456. Checkpoint at /content/outputs/runs/spatial_CDF_n1000_seed0/best.pt

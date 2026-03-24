@@ -1,0 +1,10 @@
+[2026-03-24 05:50:44,645] INFO: Starting training: model=freq, dataset=CDF, seed=0, device=cuda
+[2026-03-24 05:50:45,097] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 05:51:02,372] INFO: Epoch 1: lr=['1.00e-05'], loss=0.6859, val_auc=0.6184, val_f1=0.5120
+[2026-03-24 05:51:16,148] INFO: Epoch 2: lr=['5.50e-05'], loss=0.6724, val_auc=0.5694, val_f1=0.3880
+[2026-03-24 05:51:29,972] INFO: Epoch 3: lr=['1.00e-04'], loss=0.6472, val_auc=0.4962, val_f1=0.5062
+[2026-03-24 05:51:43,890] INFO: Epoch 4: lr=['9.97e-05'], loss=0.6265, val_auc=0.4948, val_f1=0.5612
+[2026-03-24 05:51:57,730] INFO: Epoch 5: lr=['9.88e-05'], loss=0.6156, val_auc=0.5104, val_f1=0.6037
+[2026-03-24 05:52:11,738] INFO: Epoch 6: lr=['9.72e-05'], loss=0.6108, val_auc=0.5417, val_f1=0.4784
+[2026-03-24 05:52:11,738] INFO: Early stopping at epoch 6: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 05:52:11,738] INFO: Training complete. Best AUC=0.6184. Checkpoint at /content/outputs/runs/freq_CDF_n300_seed0/best.pt

@@ -1,0 +1,13 @@
+[2026-03-24 06:43:29,236] INFO: Starting training: model=hybrid, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 06:43:29,848] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 06:43:30,572] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 06:43:31,649] INFO: Froze spatial backbone for first 3 epochs
+[2026-03-24 06:45:44,530] INFO: Epoch 1: lr=['1.00e-06', '1.00e-05'], loss=0.6869, val_auc=0.4881, val_f1=0.4235
+[2026-03-24 06:47:45,366] INFO: Epoch 2: lr=['5.50e-06', '5.50e-05'], loss=0.6312, val_auc=0.4303, val_f1=0.4849
+[2026-03-24 06:49:46,531] INFO: Epoch 3: lr=['1.00e-05', '1.00e-04'], loss=0.3778, val_auc=0.4489, val_f1=0.5166
+[2026-03-24 06:49:46,532] INFO: Epoch 4: unfreezing spatial backbone
+[2026-03-24 06:51:47,722] INFO: Epoch 4: lr=['9.97e-06', '9.97e-05'], loss=0.2755, val_auc=0.4359, val_f1=0.4274
+[2026-03-24 06:53:48,824] INFO: Epoch 5: lr=['9.89e-06', '9.88e-05'], loss=0.2438, val_auc=0.4280, val_f1=0.4322
+[2026-03-24 06:55:50,616] INFO: Epoch 6: lr=['9.75e-06', '9.72e-05'], loss=0.2271, val_auc=0.4416, val_f1=0.4266
+[2026-03-24 06:55:50,617] INFO: Early stopping at epoch 6: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 06:55:50,617] INFO: Training complete. Best AUC=0.4881. Checkpoint at /content/outputs/runs/hybrid_FFPP_n600_seed0/best.pt

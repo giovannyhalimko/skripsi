@@ -1,0 +1,19 @@
+[2026-03-24 05:13:25,074] INFO: Starting training: model=hybrid, dataset=CDF, seed=0, device=cuda
+[2026-03-24 05:13:25,410] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 05:13:26,151] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 05:13:27,225] INFO: Froze spatial backbone for first 3 epochs
+[2026-03-24 05:13:55,936] INFO: Epoch 1: lr=['1.00e-06', '1.00e-05'], loss=0.6864, val_auc=0.4419, val_f1=0.7015
+[2026-03-24 05:14:09,375] INFO: Epoch 2: lr=['5.50e-06', '5.50e-05'], loss=0.6594, val_auc=0.5163, val_f1=0.6778
+[2026-03-24 05:14:22,984] INFO: Epoch 3: lr=['1.00e-05', '1.00e-04'], loss=0.5887, val_auc=0.5864, val_f1=0.7008
+[2026-03-24 05:14:23,148] INFO: Epoch 4: unfreezing spatial backbone
+[2026-03-24 05:14:36,601] INFO: Epoch 4: lr=['9.97e-06', '9.97e-05'], loss=0.4693, val_auc=0.6763, val_f1=0.5923
+[2026-03-24 05:14:50,053] INFO: Epoch 5: lr=['9.89e-06', '9.88e-05'], loss=0.3384, val_auc=0.6830, val_f1=0.7452
+[2026-03-24 05:15:03,443] INFO: Epoch 6: lr=['9.75e-06', '9.72e-05'], loss=0.2611, val_auc=0.7049, val_f1=0.6495
+[2026-03-24 05:15:16,898] INFO: Epoch 7: lr=['9.55e-06', '9.51e-05'], loss=0.2357, val_auc=0.7082, val_f1=0.6577
+[2026-03-24 05:15:30,517] INFO: Epoch 8: lr=['9.31e-06', '9.24e-05'], loss=0.2281, val_auc=0.6885, val_f1=0.6383
+[2026-03-24 05:15:43,883] INFO: Epoch 9: lr=['9.02e-06', '8.92e-05'], loss=0.2232, val_auc=0.6881, val_f1=0.6418
+[2026-03-24 05:15:57,059] INFO: Epoch 10: lr=['8.68e-06', '8.55e-05'], loss=0.2236, val_auc=0.6858, val_f1=0.6381
+[2026-03-24 05:16:10,233] INFO: Epoch 11: lr=['8.31e-06', '8.14e-05'], loss=0.2182, val_auc=0.6816, val_f1=0.6576
+[2026-03-24 05:16:23,503] INFO: Epoch 12: lr=['7.89e-06', '7.68e-05'], loss=0.2192, val_auc=0.6759, val_f1=0.6651
+[2026-03-24 05:16:23,503] INFO: Early stopping at epoch 12: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 05:16:23,504] INFO: Training complete. Best AUC=0.7082. Checkpoint at /content/outputs/runs/hybrid_CDF_n100_seed0/best.pt

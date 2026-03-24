@@ -1,0 +1,10 @@
+[2026-03-24 05:34:05,050] INFO: Starting training: model=freq, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 05:34:05,538] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 05:34:40,232] INFO: Epoch 1: lr=['1.00e-05'], loss=0.6900, val_auc=0.6204, val_f1=0.6138
+[2026-03-24 05:35:13,869] INFO: Epoch 2: lr=['5.50e-05'], loss=0.6836, val_auc=0.5798, val_f1=0.5757
+[2026-03-24 05:35:46,706] INFO: Epoch 3: lr=['1.00e-04'], loss=0.6759, val_auc=0.6035, val_f1=0.2126
+[2026-03-24 05:36:19,939] INFO: Epoch 4: lr=['9.97e-05'], loss=0.6623, val_auc=0.6058, val_f1=0.3153
+[2026-03-24 05:36:53,216] INFO: Epoch 5: lr=['9.88e-05'], loss=0.6489, val_auc=0.5770, val_f1=0.5541
+[2026-03-24 05:37:26,721] INFO: Epoch 6: lr=['9.72e-05'], loss=0.6372, val_auc=0.4549, val_f1=0.5829
+[2026-03-24 05:37:26,721] INFO: Early stopping at epoch 6: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 05:37:26,721] INFO: Training complete. Best AUC=0.6204. Checkpoint at /content/outputs/runs/freq_FFPP_n300_seed0/best.pt

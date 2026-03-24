@@ -1,0 +1,15 @@
+[2026-03-24 15:31:30,945] INFO: Starting training: model=freq, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 15:32:12,772] INFO: Epoch 1: lr=['1.00e-05'], loss=0.7009, val_auc=0.6331, val_f1=0.3412
+[2026-03-24 15:32:49,403] INFO: Epoch 2: lr=['4.00e-05'], loss=0.6882, val_auc=0.6420, val_f1=0.7052
+[2026-03-24 15:33:25,925] INFO: Epoch 3: lr=['7.00e-05'], loss=0.6847, val_auc=0.6402, val_f1=0.6710
+[2026-03-24 15:34:04,031] INFO: Epoch 4: lr=['1.00e-04'], loss=0.6812, val_auc=0.7087, val_f1=0.5420
+[2026-03-24 15:34:40,140] INFO: Epoch 5: lr=['9.97e-05'], loss=0.6768, val_auc=0.7068, val_f1=0.6945
+[2026-03-24 15:35:16,907] INFO: Epoch 6: lr=['9.87e-05'], loss=0.6701, val_auc=0.7161, val_f1=0.6751
+[2026-03-24 15:35:54,174] INFO: Epoch 7: lr=['9.70e-05'], loss=0.6622, val_auc=0.7266, val_f1=0.5962
+[2026-03-24 15:36:30,773] INFO: Epoch 8: lr=['9.47e-05'], loss=0.6581, val_auc=0.6769, val_f1=0.5789
+[2026-03-24 15:37:08,808] INFO: Epoch 9: lr=['9.19e-05'], loss=0.6416, val_auc=0.7069, val_f1=0.6854
+[2026-03-24 15:37:44,934] INFO: Epoch 10: lr=['8.84e-05'], loss=0.6355, val_auc=0.7115, val_f1=0.6639
+[2026-03-24 15:38:22,075] INFO: Epoch 11: lr=['8.45e-05'], loss=0.6229, val_auc=0.7029, val_f1=0.6516
+[2026-03-24 15:38:58,925] INFO: Epoch 12: lr=['8.01e-05'], loss=0.6050, val_auc=0.7061, val_f1=0.6531
+[2026-03-24 15:38:58,925] INFO: Early stopping at epoch 12: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 15:38:58,926] INFO: Training complete. Best AUC=0.7266. Checkpoint at /content/outputs/runs/freq_FFPP_n100_seed0/best.pt
