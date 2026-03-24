@@ -1,7 +1,9 @@
 from __future__ import annotations
+import json
+import logging
 import os
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Tuple, Dict
 
@@ -19,10 +21,28 @@ import torchvision.transforms.functional as TF
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp"}
 
-# FFT normalization constants — computed from cache via compute_fft_cache.py --stats
-# log1p(FFT magnitude) of 224x224 grayscale ≈ [0, 16]; update after running stats.
-_FFT_MEAN = 5.0
-_FFT_STD = 3.0
+# Fallback FFT normalization constants used when fft_stats.json is missing.
+# Run compute_fft_cache.py to generate the correct per-dataset stats file.
+_FFT_MEAN_FALLBACK = 5.0
+_FFT_STD_FALLBACK = 3.0
+
+
+def load_fft_stats(fft_cache_root: Path) -> Tuple[float, float]:
+    """Load FFT normalization stats from fft_stats.json in the cache root.
+
+    Falls back to hardcoded defaults with a warning if the file is missing.
+    """
+    stats_path = fft_cache_root / "fft_stats.json"
+    if stats_path.exists():
+        with open(stats_path) as f:
+            stats = json.load(f)
+        return float(stats["mean"]), float(stats["std"])
+    logging.warning(
+        f"fft_stats.json not found at {stats_path}. "
+        f"Using fallback mean={_FFT_MEAN_FALLBACK}, std={_FFT_STD_FALLBACK}. "
+        "Run compute_fft_cache.py to generate correct stats."
+    )
+    return _FFT_MEAN_FALLBACK, _FFT_STD_FALLBACK
 
 
 @dataclass
@@ -34,6 +54,7 @@ class DatasetConfig:
     mode: str  # spatial, freq, hybrid, early_fusion
     seed: int = 42
     train: bool = True
+    fft_noise_sigma: float = 0.05
 
 
 class DeepfakeDataset(Dataset):
@@ -65,12 +86,16 @@ class DeepfakeDataset(Dataset):
         self.mode = cfg.mode
         self.image_size = cfg.image_size
         self.fft_cache_root = Path(cfg.fft_cache_root) if cfg.fft_cache_root else None
+        # Load per-dataset FFT normalization stats from cache
+        if self.fft_cache_root is not None and cfg.mode in {"freq", "hybrid", "early_fusion"}:
+            self.fft_mean, self.fft_std = load_fft_stats(self.fft_cache_root)
+        else:
+            self.fft_mean, self.fft_std = _FFT_MEAN_FALLBACK, _FFT_STD_FALLBACK
         # Hybrid mode: disable hflip here and apply it manually to both branches together
         include_hflip = not (cfg.mode == "hybrid" and cfg.train)
         self.spatial_transform = T.get_spatial_transform(
             image_size=self.image_size, train=self.train, include_hflip=include_hflip
         )
-        # Note: FFT normalization is done inline in __getitem__ using _FFT_MEAN/_FFT_STD
 
     def __len__(self):
         return len(self.items)
@@ -101,10 +126,10 @@ class DeepfakeDataset(Dataset):
         if self.mode in {"freq", "hybrid", "early_fusion"}:
             fft_tensor = self._load_fft(Path(frame_path))
             # Normalize log-magnitude using dataset-level statistics
-            fft_tensor = (fft_tensor - _FFT_MEAN) / _FFT_STD
+            fft_tensor = (fft_tensor - self.fft_mean) / self.fft_std
             # FFT augmentation: add Gaussian noise during training to prevent memorization
-            if self.train:
-                fft_tensor = fft_tensor + torch.randn_like(fft_tensor) * 0.1
+            if self.train and self.cfg.fft_noise_sigma > 0:
+                fft_tensor = fft_tensor + torch.randn_like(fft_tensor) * self.cfg.fft_noise_sigma
         else:
             fft_tensor = None
 

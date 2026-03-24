@@ -11,9 +11,17 @@ batch_size: 16
 num_workers: 0
 lr: 1.0e-4
 weight_decay: 1.0e-4
-epochs: 5
+epochs: 30                 # Max epochs — early stopping handles actual duration
+early_stop_patience: 5     # Stop if val AUC doesn't improve for this many consecutive epochs
+accum_steps: 2             # Gradient accumulation for all models
+label_smoothing: 0.02      # Reduced from 0.05 — less signal suppression at small n
 fusion_mode: two_branch
 n_seeds: 3
+
+# Frequency branch
+freq_depth: 3              # FreqCNN conv blocks: 3 (~130K params) or 5 (~700K params)
+freq_base_channels: 32     # Channels in first conv block
+fft_noise_sigma: 0.05      # Gaussian noise sigma for FFT augmentation (0 to disable)
 
 # Dataset roots
 datasets:

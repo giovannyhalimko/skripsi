@@ -1,4 +1,5 @@
 import argparse
+import json
 import sys
 from pathlib import Path
 import multiprocessing as mp
@@ -29,11 +30,14 @@ def worker(row, fft_root: Path, image_size: int, force: bool = False):
 
 
 def compute_fft_stats(fft_root: Path, max_files: int = 5000):
-    """Scan cached .npy files and compute global mean/std for normalization."""
+    """Scan cached .npy files and compute global mean/std for normalization.
+
+    Saves results to fft_root/fft_stats.json and returns (mean, std).
+    """
     npy_files = list(Path(fft_root).rglob("*.npy"))
     if not npy_files:
         print(f"No .npy files found under {fft_root}")
-        return
+        return None, None
     rng = np.random.default_rng(42)
     if len(npy_files) > max_files:
         indices = rng.choice(len(npy_files), size=max_files, replace=False)
@@ -51,7 +55,11 @@ def compute_fft_stats(fft_root: Path, max_files: int = 5000):
     std = np.sqrt(running_sq / total_pixels - mean ** 2)
     print(f"\n_FFT_MEAN = {mean:.4f}")
     print(f"_FFT_STD  = {std:.4f}")
-    print(f"\nUpdate these values in src/deepfake_data.py")
+    stats_path = Path(fft_root) / "fft_stats.json"
+    with open(stats_path, "w") as f:
+        json.dump({"mean": float(mean), "std": float(std)}, f)
+    print(f"Saved FFT stats to {stats_path}")
+    return mean, std
 
 
 def main():
@@ -91,6 +99,10 @@ def main():
         list(tqdm(pool.imap_unordered(partial(worker, fft_root=fft_root, image_size=cfg.get("image_size", 224), force=args.force), rows), total=len(rows)))
 
     print(f"FFT cache saved under {fft_root}")
+
+    # Auto-compute and save normalization stats after cache generation
+    print("Auto-computing FFT normalization stats...")
+    compute_fft_stats(fft_root)
 
 
 if __name__ == "__main__":
