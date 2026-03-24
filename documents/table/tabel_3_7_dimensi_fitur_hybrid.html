@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Komponen</th>
+      <th>Dimensi Input</th>
+      <th>Dimensi Output</th>
+      <th>Operasi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>XceptionNet backbone</i></td>
+      <td>(3, 224, 224)</td>
+      <td>2.048</td>
+      <td>Ekstraksi fitur + GAP</td>
+    </tr>
+    <tr>
+      <td>FreqCNN <i>backbone</i></td>
+      <td>(1, 224, 224)</td>
+      <td>128</td>
+      <td>Blok konvolusi + GAP</td>
+    </tr>
+    <tr>
+      <td>Proyeksi spasial</td>
+      <td>2.048</td>
+      <td>256</td>
+      <td>Linear + BN + ReLU</td>
+    </tr>
+    <tr>
+      <td>Proyeksi frekuensi</td>
+      <td>128</td>
+      <td>256</td>
+      <td>Linear + BN + ReLU</td>
+    </tr>
+    <tr>
+      <td>Konkatenasi</td>
+      <td>256 + 256</td>
+      <td>512</td>
+      <td><code>torch.cat</code></td>
+    </tr>
+    <tr>
+      <td>SE <i>Gate</i></td>
+      <td>512</td>
+      <td>512</td>
+      <td><i>Squeeze-Excitation</i></td>
+    </tr>
+    <tr>
+      <td><i>Classifier</i></td>
+      <td>512</td>
+      <td>1</td>
+      <td>FC + <i>Dropout</i></td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.7 Dimensi Fitur per Komponen Model <i>Hybrid</i></caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>
