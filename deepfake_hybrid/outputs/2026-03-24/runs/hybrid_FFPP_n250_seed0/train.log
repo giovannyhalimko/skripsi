@@ -1,0 +1,21 @@
+[2026-03-24 10:36:18,601] INFO: Starting training: model=hybrid, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 10:36:19,033] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 10:36:19,810] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 10:36:20,914] INFO: Froze spatial backbone for first 3 epochs
+[2026-03-24 10:37:27,685] INFO: Epoch 1: lr=['1.00e-06', '1.00e-05'], loss=0.6877, val_auc=0.4453, val_f1=0.5684
+[2026-03-24 10:38:20,938] INFO: Epoch 2: lr=['5.50e-06', '5.50e-05'], loss=0.6497, val_auc=0.5175, val_f1=0.5442
+[2026-03-24 10:39:14,653] INFO: Epoch 3: lr=['1.00e-05', '1.00e-04'], loss=0.4560, val_auc=0.5117, val_f1=0.4270
+[2026-03-24 10:39:14,654] INFO: Epoch 4: unfreezing spatial backbone
+[2026-03-24 10:40:08,167] INFO: Epoch 4: lr=['9.97e-06', '9.97e-05'], loss=0.2369, val_auc=0.5087, val_f1=0.4830
+[2026-03-24 10:41:01,890] INFO: Epoch 5: lr=['9.89e-06', '9.88e-05'], loss=0.1979, val_auc=0.5090, val_f1=0.4673
+[2026-03-24 10:41:55,468] INFO: Epoch 6: lr=['9.75e-06', '9.72e-05'], loss=0.1818, val_auc=0.5483, val_f1=0.5752
+[2026-03-24 10:42:49,123] INFO: Epoch 7: lr=['9.55e-06', '9.51e-05'], loss=0.1781, val_auc=0.5402, val_f1=0.5131
+[2026-03-24 10:43:42,485] INFO: Epoch 8: lr=['9.31e-06', '9.24e-05'], loss=0.1691, val_auc=0.5447, val_f1=0.5068
+[2026-03-24 10:44:35,792] INFO: Epoch 9: lr=['9.02e-06', '8.92e-05'], loss=0.1671, val_auc=0.5704, val_f1=0.5194
+[2026-03-24 10:45:29,755] INFO: Epoch 10: lr=['8.68e-06', '8.55e-05'], loss=0.1624, val_auc=0.5492, val_f1=0.5379
+[2026-03-24 10:46:23,285] INFO: Epoch 11: lr=['8.31e-06', '8.14e-05'], loss=0.1609, val_auc=0.5363, val_f1=0.4892
+[2026-03-24 10:47:17,278] INFO: Epoch 12: lr=['7.89e-06', '7.68e-05'], loss=0.1555, val_auc=0.5674, val_f1=0.4987
+[2026-03-24 10:48:10,495] INFO: Epoch 13: lr=['7.45e-06', '7.20e-05'], loss=0.1571, val_auc=0.5669, val_f1=0.4194
+[2026-03-24 10:49:04,171] INFO: Epoch 14: lr=['6.99e-06', '6.68e-05'], loss=0.1517, val_auc=0.5623, val_f1=0.4883
+[2026-03-24 10:49:04,171] INFO: Early stopping at epoch 14: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 10:49:04,172] INFO: Training complete. Best AUC=0.5704. Checkpoint at /content/outputs/runs/hybrid_FFPP_n250_seed0/best.pt

@@ -140,7 +140,8 @@ def main():
             step(fft_cmd, f"[3/3] FFT cache — {ds}")
 
     # ── PHASE 2: Train + Eval + Tables (via run_all.py) ─────
-    cmd = [PY, str(ROOT / "scripts" / "run_all.py"), "--config", config_path]
+    cmd = [PY, str(ROOT / "scripts" / "run_all.py"), "--config", config_path,
+           "--dataset", args.dataset]
     if args.n_samples > 0:
         cmd += ["--n-samples", str(args.n_samples)]
     if args.pretrained:

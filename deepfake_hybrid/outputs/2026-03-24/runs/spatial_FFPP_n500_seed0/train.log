@@ -1,0 +1,19 @@
+[2026-03-24 11:14:10,211] INFO: Starting training: model=spatial, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 11:14:10,770] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 11:14:10,870] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-24 11:14:11,185] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 11:16:01,258] INFO: Epoch 1: lr=['1.00e-05'], loss=0.5701, val_auc=0.4895, val_f1=0.4565
+[2026-03-24 11:17:36,308] INFO: Epoch 2: lr=['5.50e-05'], loss=0.1894, val_auc=0.5900, val_f1=0.5336
+[2026-03-24 11:19:11,514] INFO: Epoch 3: lr=['1.00e-04'], loss=0.1571, val_auc=0.5942, val_f1=0.5601
+[2026-03-24 11:20:46,530] INFO: Epoch 4: lr=['9.97e-05'], loss=0.1457, val_auc=0.5681, val_f1=0.5561
+[2026-03-24 11:22:21,268] INFO: Epoch 5: lr=['9.88e-05'], loss=0.1411, val_auc=0.5583, val_f1=0.4827
+[2026-03-24 11:23:56,544] INFO: Epoch 6: lr=['9.72e-05'], loss=0.1373, val_auc=0.5655, val_f1=0.5365
+[2026-03-24 11:25:31,708] INFO: Epoch 7: lr=['9.51e-05'], loss=0.1364, val_auc=0.5818, val_f1=0.5489
+[2026-03-24 11:27:06,478] INFO: Epoch 8: lr=['9.24e-05'], loss=0.1334, val_auc=0.6150, val_f1=0.5586
+[2026-03-24 11:28:40,782] INFO: Epoch 9: lr=['8.92e-05'], loss=0.1359, val_auc=0.5929, val_f1=0.5890
+[2026-03-24 11:30:16,222] INFO: Epoch 10: lr=['8.55e-05'], loss=0.1324, val_auc=0.5744, val_f1=0.5357
+[2026-03-24 11:31:51,516] INFO: Epoch 11: lr=['8.14e-05'], loss=0.1317, val_auc=0.5781, val_f1=0.5397
+[2026-03-24 11:33:27,013] INFO: Epoch 12: lr=['7.68e-05'], loss=0.1319, val_auc=0.6108, val_f1=0.5482
+[2026-03-24 11:35:02,097] INFO: Epoch 13: lr=['7.20e-05'], loss=0.1297, val_auc=0.6135, val_f1=0.5167
+[2026-03-24 11:35:02,097] INFO: Early stopping at epoch 13: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 11:35:02,098] INFO: Training complete. Best AUC=0.6150. Checkpoint at /content/outputs/runs/spatial_FFPP_n500_seed0/best.pt

@@ -1,0 +1,18 @@
+[2026-03-24 06:08:24,776] INFO: Starting training: model=spatial, dataset=FFPP, seed=0, device=cuda
+[2026-03-24 06:08:25,392] INFO: Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-cadene/xception-43020ad28.pth)
+[2026-03-24 06:08:25,484] INFO: Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2026-03-24 06:08:25,792] INFO: Compiling model with torch.compile (first batch will be slow)...
+[2026-03-24 06:10:32,252] INFO: Epoch 1: lr=['1.00e-05'], loss=0.5477, val_auc=0.4369, val_f1=0.4607
+[2026-03-24 06:12:24,695] INFO: Epoch 2: lr=['5.50e-05'], loss=0.1963, val_auc=0.4541, val_f1=0.4691
+[2026-03-24 06:14:17,116] INFO: Epoch 3: lr=['1.00e-04'], loss=0.1661, val_auc=0.4075, val_f1=0.4273
+[2026-03-24 06:16:08,950] INFO: Epoch 4: lr=['9.97e-05'], loss=0.1562, val_auc=0.4702, val_f1=0.4794
+[2026-03-24 06:18:00,444] INFO: Epoch 5: lr=['9.88e-05'], loss=0.1511, val_auc=0.4880, val_f1=0.4937
+[2026-03-24 06:19:51,899] INFO: Epoch 6: lr=['9.72e-05'], loss=0.1459, val_auc=0.4596, val_f1=0.4458
+[2026-03-24 06:21:43,908] INFO: Epoch 7: lr=['9.51e-05'], loss=0.1396, val_auc=0.4887, val_f1=0.4367
+[2026-03-24 06:23:34,872] INFO: Epoch 8: lr=['9.24e-05'], loss=0.1384, val_auc=0.4856, val_f1=0.4476
+[2026-03-24 06:25:26,173] INFO: Epoch 9: lr=['8.92e-05'], loss=0.1378, val_auc=0.4603, val_f1=0.4587
+[2026-03-24 06:27:17,442] INFO: Epoch 10: lr=['8.55e-05'], loss=0.1344, val_auc=0.4659, val_f1=0.4799
+[2026-03-24 06:29:08,350] INFO: Epoch 11: lr=['8.14e-05'], loss=0.1331, val_auc=0.4519, val_f1=0.4758
+[2026-03-24 06:30:59,576] INFO: Epoch 12: lr=['7.68e-05'], loss=0.1325, val_auc=0.4435, val_f1=0.4754
+[2026-03-24 06:30:59,576] INFO: Early stopping at epoch 12: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 06:30:59,577] INFO: Training complete. Best AUC=0.4887. Checkpoint at /content/outputs/runs/spatial_FFPP_n600_seed0/best.pt

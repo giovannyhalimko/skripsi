@@ -1,0 +1,9 @@
+[2026-03-24 17:56:44,119] INFO: Starting training: model=freq, dataset=CDF, seed=0, device=cuda
+[2026-03-24 17:57:07,151] INFO: Epoch 1: lr=['1.00e-05'], loss=0.7102, val_auc=0.5738, val_f1=0.0000
+[2026-03-24 17:57:25,807] INFO: Epoch 2: lr=['4.00e-05'], loss=0.6903, val_auc=0.5206, val_f1=0.7124
+[2026-03-24 17:57:45,246] INFO: Epoch 3: lr=['7.00e-05'], loss=0.6852, val_auc=0.5190, val_f1=0.6191
+[2026-03-24 17:58:03,065] INFO: Epoch 4: lr=['1.00e-04'], loss=0.6757, val_auc=0.5087, val_f1=0.6804
+[2026-03-24 17:58:20,823] INFO: Epoch 5: lr=['9.97e-05'], loss=0.6649, val_auc=0.5119, val_f1=0.6773
+[2026-03-24 17:58:39,228] INFO: Epoch 6: lr=['9.87e-05'], loss=0.6494, val_auc=0.4764, val_f1=0.3289
+[2026-03-24 17:58:39,228] INFO: Early stopping at epoch 6: val AUC did not improve for 5 consecutive epochs.
+[2026-03-24 17:58:39,229] INFO: Training complete. Best AUC=0.5738. Checkpoint at /content/outputs/runs/freq_CDF_n250_seed0/best.pt
