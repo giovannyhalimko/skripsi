@@ -125,14 +125,18 @@ def main():
                 metrics_in["model"] = model_type
                 metrics_in["seed"] = seed
                 results_in.append(metrics_in)
-                # eval cross
+                # eval cross (only if the other dataset's manifest exists)
                 other_ds = "CDF" if train_ds == "FFPP" else "FFPP"
-                metrics_cross = eval_checkpoint(cfg, other_ds, model_type, ckpt, seed)
-                metrics_cross["train_dataset"] = train_ds
-                metrics_cross["test_dataset"] = other_ds
-                metrics_cross["model"] = model_type
-                metrics_cross["seed"] = seed
-                results_cross.append(metrics_cross)
+                other_manifest = Path(cfg["output_root"]) / "manifests" / other_ds / "test.csv"
+                if other_manifest.exists():
+                    metrics_cross = eval_checkpoint(cfg, other_ds, model_type, ckpt, seed)
+                    metrics_cross["train_dataset"] = train_ds
+                    metrics_cross["test_dataset"] = other_ds
+                    metrics_cross["model"] = model_type
+                    metrics_cross["seed"] = seed
+                    results_cross.append(metrics_cross)
+                else:
+                    logging.warning(f"Skipping cross-dataset eval ({train_ds}→{other_ds}): manifest not found at {other_manifest}")
 
     tables_dir = Path(cfg["output_root"]) / "tables" / (f"n{args.n_samples}" if args.n_samples > 0 else "default")
     ensure_dir(tables_dir)
@@ -144,7 +148,7 @@ def main():
     # generalization drop
     rows = []
     for model_type in models_to_run:
-        for train_ds in ["FFPP", "CDF"]:
+        for train_ds in train_datasets:
             f1_in = df_in[(df_in.model == model_type) & (df_in.train_dataset == train_ds)]["f1"].mean()
             f1_cross = df_cross[(df_cross.model == model_type) & (df_cross.train_dataset == train_ds)]["f1"].mean()
             rows.append({"model": model_type, "train_dataset": train_ds, "f1_in": f1_in, "f1_cross": f1_cross, "drop": f1_in - f1_cross})
