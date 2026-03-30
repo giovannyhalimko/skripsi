@@ -154,13 +154,14 @@ def main():
     df_in.to_csv(tables_dir / "Table1_in_dataset.csv", index=False)
     df_cross.to_csv(tables_dir / "Table2_cross_dataset.csv", index=False)
 
-    # generalization drop
+    # generalization drop (only when cross-dataset results exist)
     rows = []
-    for model_type in models_to_run:
-        for train_ds in train_datasets:
-            f1_in = df_in[(df_in.model == model_type) & (df_in.train_dataset == train_ds)]["f1"].mean()
-            f1_cross = df_cross[(df_cross.model == model_type) & (df_cross.train_dataset == train_ds)]["f1"].mean()
-            rows.append({"model": model_type, "train_dataset": train_ds, "f1_in": f1_in, "f1_cross": f1_cross, "drop": f1_in - f1_cross})
+    if not df_cross.empty:
+        for model_type in models_to_run:
+            for train_ds in train_datasets:
+                f1_in = df_in[(df_in.model == model_type) & (df_in.train_dataset == train_ds)]["f1"].mean()
+                f1_cross = df_cross[(df_cross.model == model_type) & (df_cross.train_dataset == train_ds)]["f1"].mean()
+                rows.append({"model": model_type, "train_dataset": train_ds, "f1_in": f1_in, "f1_cross": f1_cross, "drop": f1_in - f1_cross})
     pd.DataFrame(rows).to_csv(tables_dir / "Table3_generalization_drop.csv", index=False)
 
     # summary (mean/std over seeds)
