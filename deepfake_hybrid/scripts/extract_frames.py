@@ -176,6 +176,7 @@ def main():
 
     import pandas as pd
 
+    rows = [r for r in results if r is not None]
     df = pd.DataFrame(rows, columns=["video_id", "label", "frames_dir"])
     df.to_csv(manifest_path, index=False)
     print(f"Saved manifest to {manifest_path} with {len(rows)} videos")
