@@ -9,12 +9,12 @@ image_size: 224
 # Training
 batch_size: 16
 num_workers: 2
-lr: 1.0e-4
+lr: 5.0e-4
 weight_decay: 1.0e-4
 epochs: 30                 # Max epochs — early stopping handles actual duration
-early_stop_patience: 5     # Stop if val AUC doesn't improve for this many consecutive epochs
+early_stop_patience: 10    # Increased from 5 — allow more epochs after backbone unfreeze
 accum_steps: 2             # Gradient accumulation for all models
-label_smoothing: 0.02      # Reduced from 0.05 — less signal suppression at small n
+label_smoothing: 0.0       # Disabled — maximise signal at small n
 fusion_mode: two_branch
 n_seeds: 3
 

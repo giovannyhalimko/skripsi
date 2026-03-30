@@ -111,7 +111,7 @@ def train_one_epoch(model, loader, model_type, device, optimizer, scaler, loss_f
         scaler.scale(loss).backward()
         if (i + 1) % accum_steps == 0 or (i + 1) == len(loader):
             scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
             scaler.step(optimizer)
             scaler.update()
             optimizer.zero_grad()
@@ -128,9 +128,13 @@ def main():
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained backbones where applicable")
     parser.add_argument("--n-samples", type=int, default=0,
                         help="Number of samples (only affects output folder naming)")
+    parser.add_argument("--freq-depth", type=int, default=None,
+                        help="Override config freq_depth for FreqCNN (e.g. --freq-depth 3 for CDF)")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+    if args.freq_depth is not None:
+        cfg["freq_depth"] = args.freq_depth
     seed_everything(args.seed)
     device = get_device()
 
@@ -144,6 +148,8 @@ def main():
     ensure_dir(run_dir)
     setup_logging(run_dir / "train.log")
     logging.info(f"Starting training: model={args.model}, dataset={args.dataset}, seed={args.seed}, device={device}")
+    if args.freq_depth is not None:
+        logging.info(f"freq_depth overridden to {args.freq_depth} via CLI")
 
     manifest_root = Path(cfg["output_root"]) / "manifests" / args.dataset
     train_manifest = manifest_root / "train.csv"
@@ -160,7 +166,12 @@ def main():
     if cfg.get("compile_model", False) and hasattr(torch, "compile"):
         logging.info("Compiling model with torch.compile (first batch will be slow)...")
         model = torch.compile(model)
-    loss_fn = nn.BCEWithLogitsLoss()
+    train_df = pd.read_csv(train_manifest)
+    n_pos = int((train_df["label"] == 1).sum())
+    n_neg = int((train_df["label"] == 0).sum())
+    pos_weight = torch.tensor([n_neg / max(n_pos, 1)], device=device)
+    loss_fn = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+    logging.info(f"Class balance: {n_neg} neg, {n_pos} pos, pos_weight={pos_weight.item():.3f}")
 
     # --- Fix B: Differential Learning Rates ---
     base_lr = cfg.get("lr", 1e-4)
@@ -227,7 +238,7 @@ def main():
     epochs = cfg.get("epochs", 3)
 
     # --- LR Schedule: linear warmup → cosine decay ---
-    warmup_epochs = 3
+    warmup_epochs = 1  # Shortened from 3 to avoid double-discontinuity at backbone unfreeze (epoch 4)
     warmup_scheduler = optim.lr_scheduler.LinearLR(
         optimizer, start_factor=0.1, end_factor=1.0, total_iters=warmup_epochs
     )

@@ -99,9 +99,16 @@ def diagnose(cfg: dict, dataset_name: str):
                 elif inferred != int(row["label"]):
                     mismatches.append((split_name, row["video_id"], int(row["label"]), inferred, row["frames_dir"]))
         if mismatches:
-            print(f"  [FAIL] {len(mismatches)} label mismatches:")
+            print(f"  [FAIL] {len(mismatches)} label mismatches found — this can cause inverted AUC (<0.5):")
             for split_name, vid, manifest_lbl, inferred_lbl, fdir in mismatches[:10]:
                 print(f"    {split_name} | {vid} | manifest={manifest_lbl} inferred={inferred_lbl} | {fdir}")
+            if len(mismatches) > 10:
+                print(f"    ... and {len(mismatches) - 10} more")
+            # Check if entire split is inverted (all labels flipped)
+            for split_name, df in splits.items():
+                split_mismatches = [m for m in mismatches if m[0] == split_name]
+                if len(split_mismatches) == len(df):
+                    print(f"  [CRITICAL] ALL {len(df)} labels in '{split_name}' appear inverted — likely 0/1 swap")
         else:
             print(f"  [OK]   No label mismatches detected")
         if unknown:

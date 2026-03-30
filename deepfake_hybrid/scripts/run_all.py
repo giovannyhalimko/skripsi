@@ -71,6 +71,15 @@ def eval_checkpoint(cfg, dataset_name, model_type, checkpoint_path, seed):
             all_targets.append(y.cpu())
     y_prob = torch.cat(all_probs).numpy()
     y_true = torch.cat(all_targets).numpy()
+    n0, n1 = int((y_true == 0).sum()), int((y_true == 1).sum())
+    mean0 = float(y_prob[y_true == 0].mean()) if n0 > 0 else float("nan")
+    mean1 = float(y_prob[y_true == 1].mean()) if n1 > 0 else float("nan")
+    inverted = " ← INVERTED?" if mean1 < mean0 else ""
+    logging.info(
+        f"  [DIAG] {dataset_name} test: n={len(y_true)}, "
+        f"label_0={n0}, label_1={n1}, "
+        f"mean_prob_for_real={mean0:.4f}, mean_prob_for_fake={mean1:.4f}{inverted}"
+    )
     metrics = metrics_mod.compute_metrics(y_true, y_prob)
     return metrics
 
