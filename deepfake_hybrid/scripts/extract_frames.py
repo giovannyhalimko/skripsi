@@ -120,25 +120,32 @@ def main():
 
     print(f"Found {len(all_videos)} labeled videos ({real_count} real, {fake_count} fake)")
 
-    # Apply n-samples limit with balanced sampling
+    # Apply n-samples limit with balanced sampling; keep reserve for replacements
+    rng = random.Random(42)
+    real_all = [(v, l) for v, l in all_videos if l == 0]
+    fake_all = [(v, l) for v, l in all_videos if l == 1]
+    rng.shuffle(real_all)
+    rng.shuffle(fake_all)
+
     if args.n_samples > 0 and len(all_videos) > args.n_samples:
-        rng = random.Random(42)
-        real = [(v, l) for v, l in all_videos if l == 0]
-        fake = [(v, l) for v, l in all_videos if l == 1]
-        rng.shuffle(real)
-        rng.shuffle(fake)
         half = args.n_samples // 2
-        real_take = min(len(real), half)
-        fake_take = min(len(fake), args.n_samples - real_take)
+        real_take = min(len(real_all), half)
+        fake_take = min(len(fake_all), args.n_samples - real_take)
         remaining = args.n_samples - real_take - fake_take
         if remaining > 0:
-            if len(real) > real_take:
-                real_take = min(len(real), real_take + remaining)
-            elif len(fake) > fake_take:
-                fake_take = min(len(fake), fake_take + remaining)
-        all_videos = real[:real_take] + fake[:fake_take]
-        rng.shuffle(all_videos)
-        print(f"Sampled {len(all_videos)} videos ({real_take} real, {fake_take} fake)")
+            if len(real_all) > real_take:
+                real_take = min(len(real_all), real_take + remaining)
+            elif len(fake_all) > fake_take:
+                fake_take = min(len(fake_all), fake_take + remaining)
+        selected = real_all[:real_take] + fake_all[:fake_take]
+        # Reserve = candidates not selected, used to replace broken videos
+        reserve = {0: list(real_all[real_take:]), 1: list(fake_all[fake_take:])}
+        rng.shuffle(selected)
+        all_videos = selected
+        print(f"Sampled {len(all_videos)} videos ({real_take} real, {fake_take} fake) "
+              f"| reserve: {len(reserve[0])} real, {len(reserve[1])} fake")
+    else:
+        reserve = {0: [], 1: []}
 
     worker_fn = partial(_extract_worker, out_root=out_root, root=root,
                         fps=args.fps, max_frames=args.max_frames)
@@ -150,10 +157,22 @@ def main():
             total=len(all_videos), desc="Extracting frames"
         ))
 
-    rows = [r for r in results if r is not None]
-    skipped = len(all_videos) - len(rows)
-    if skipped > 0:
-        print(f"[WARN] {skipped} videos could not be opened and were skipped")
+    # Replace failed videos by retrying from reserve pool
+    failed = [(i, all_videos[i]) for i, r in enumerate(results) if r is None]
+    if failed:
+        print(f"[WARN] {len(failed)} videos failed — retrying with reserve candidates...")
+        for i, (orig_path, label) in failed:
+            replaced = False
+            while reserve[label]:
+                replacement = reserve[label].pop(0)
+                result = worker_fn(replacement)
+                if result is not None:
+                    results[i] = result
+                    print(f"  Replaced {orig_path.name} → {replacement[0].name}")
+                    replaced = True
+                    break
+            if not replaced:
+                print(f"  [WARN] No reserve left for label={label}, skipping {orig_path.name}")
 
     import pandas as pd
 
