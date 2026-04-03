@@ -238,7 +238,7 @@ def main():
     epochs = cfg.get("epochs", 3)
 
     # --- LR Schedule: linear warmup → cosine decay ---
-    warmup_epochs = 1  # Shortened from 3 to avoid double-discontinuity at backbone unfreeze (epoch 4)
+    warmup_epochs = 2  # Gradual ramp: epoch 1 at 0.1x LR, epoch 2 at full LR, unfreeze at epoch 4
     warmup_scheduler = optim.lr_scheduler.LinearLR(
         optimizer, start_factor=0.1, end_factor=1.0, total_iters=warmup_epochs
     )

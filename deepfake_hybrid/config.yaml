@@ -9,7 +9,7 @@ image_size: 224
 # Training
 batch_size: 16
 num_workers: 2
-lr: 5.0e-4
+lr: 2.0e-4
 weight_decay: 1.0e-4
 epochs: 30                 # Max epochs — early stopping handles actual duration
 early_stop_patience: 10    # Increased from 5 — allow more epochs after backbone unfreeze
