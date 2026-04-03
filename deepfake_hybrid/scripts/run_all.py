@@ -120,6 +120,11 @@ def main():
                 run_dir = Path(cfg["output_root"]) / "runs" / run_name
                 ckpt = run_dir / "best.pt"
                 if not ckpt.exists():
+                    # Skip if manifest is missing (e.g. cross-eval pass before dataset is preprocessed)
+                    train_manifest = Path(cfg["output_root"]) / "manifests" / train_ds / "train.csv"
+                    if not train_manifest.exists():
+                        logging.warning(f"Skipping {run_name}: manifest not found at {train_manifest}")
+                        continue
                     # train
                     cmd = [sys.executable, str(ROOT / "scripts" / "train.py"), "--config", args.config, "--dataset", train_ds, "--model", model_type, "--seed", str(seed)]
                     if args.n_samples > 0:

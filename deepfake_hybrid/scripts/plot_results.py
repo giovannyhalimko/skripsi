@@ -74,7 +74,11 @@ def _read_csv_safe(path: Path) -> Optional[pd.DataFrame]:
     if not path.exists():
         log.warning("File not found, skipping: %s", path)
         return None
-    df = pd.read_csv(path)
+    try:
+        df = pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        log.warning("Empty CSV (no data), skipping: %s", path)
+        return None
     if df.empty:
         log.warning("Empty CSV, skipping: %s", path)
         return None
