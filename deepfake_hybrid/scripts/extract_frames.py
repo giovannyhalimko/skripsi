@@ -147,6 +147,14 @@ def main():
     else:
         reserve = {0: [], 1: []}
 
+    if len(all_videos) == 0:
+        print(f"[ERROR] No labeled videos found in {root}")
+        print(f"  Check dataset path and keywords in config:")
+        print(f"  real_keywords: {real_kw}")
+        print(f"  fake_keywords: {fake_kw}")
+        print(f"  Contents of root dir: {[str(p.name) for p in root.iterdir()] if root.exists() else 'PATH DOES NOT EXIST'}")
+        sys.exit(1)
+
     worker_fn = partial(_extract_worker, out_root=out_root, root=root,
                         fps=args.fps, max_frames=args.max_frames)
     num_workers = min(args.num_workers, len(all_videos))
