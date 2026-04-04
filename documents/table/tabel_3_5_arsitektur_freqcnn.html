@@ -20,67 +20,81 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
   </thead>
   <tbody>
     <tr>
-      <td>Blok Conv 1</td>
-      <td>Conv2d(1&rarr;32, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>FreqBlock 1</td>
+      <td>Conv(1&rarr;32, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
       <td>(1, 224, 224)</td>
       <td>(32, 112, 112)</td>
-      <td>&sim;320</td>
+      <td>&sim;384</td>
     </tr>
     <tr>
-      <td>Blok Conv 2</td>
-      <td>Conv2d(32&rarr;64, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>FreqBlock 2</td>
+      <td>Conv(32&rarr;64, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
       <td>(32, 112, 112)</td>
       <td>(64, 56, 56)</td>
-      <td>&sim;18.500</td>
+      <td>&sim;20.700</td>
     </tr>
     <tr>
-      <td>Blok Conv 3</td>
-      <td>Conv2d(64&rarr;128, 3&times;3) + BN + ReLU + <i>MaxPool</i></td>
+      <td>FreqBlock 3</td>
+      <td>Conv(64&rarr;128, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
       <td>(64, 56, 56)</td>
       <td>(128, 28, 28)</td>
-      <td>&sim;73.900</td>
+      <td>&sim;82.300</td>
+    </tr>
+    <tr>
+      <td>FreqBlock 4</td>
+      <td>Conv(128&rarr;256, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
+      <td>(128, 28, 28)</td>
+      <td>(256, 14, 14)</td>
+      <td>&sim;328.000</td>
+    </tr>
+    <tr>
+      <td>FreqBlock 5</td>
+      <td>Conv(256&rarr;256, 3&times;3) + BN + Identity + MaxPool</td>
+      <td>(256, 14, 14)</td>
+      <td>(256, 7, 7)</td>
+      <td>&sim;590.000</td>
     </tr>
     <tr>
       <td>Dropout2d(0,2)</td>
       <td><i>Spatial dropout</i></td>
-      <td>(128, 28, 28)</td>
-      <td>(128, 28, 28)</td>
+      <td>(256, 7, 7)</td>
+      <td>(256, 7, 7)</td>
       <td>0</td>
     </tr>
     <tr>
-      <td><i>AdaptiveAvgPool</i></td>
+      <td>AdaptiveAvgPool</td>
       <td><i>Global average pooling</i></td>
-      <td>(128, 28, 28)</td>
-      <td>(128, 1, 1)</td>
+      <td>(256, 7, 7)</td>
+      <td>(256, 1, 1)</td>
       <td>0</td>
     </tr>
     <tr>
       <td>FC 1</td>
-      <td>Linear(128&rarr;64) + ReLU</td>
+      <td>Linear(256&rarr;128) + ReLU</td>
+      <td>(256)</td>
       <td>(128)</td>
-      <td>(64)</td>
-      <td>&sim;8.300</td>
+      <td>&sim;33.000</td>
     </tr>
     <tr>
       <td>Dropout(0,3)</td>
       <td><i>Dropout</i></td>
-      <td>(64)</td>
-      <td>(64)</td>
+      <td>(128)</td>
+      <td>(128)</td>
       <td>0</td>
     </tr>
     <tr>
       <td>FC 2</td>
-      <td>Linear(64&rarr;1)</td>
-      <td>(64)</td>
+      <td>Linear(128&rarr;1)</td>
+      <td>(128)</td>
       <td>(1)</td>
-      <td>&sim;65</td>
+      <td>&sim;129</td>
     </tr>
     <tr>
       <td colspan="4" style="text-align: right; font-weight: bold;">Total</td>
-      <td style="font-weight: bold;">&sim;130K</td>
+      <td style="font-weight: bold;">&sim;700K</td>
     </tr>
   </tbody>
-  <caption>Tabel 3.5 Arsitektur <i>Layer-by-Layer</i> FreqCNN (<i>depth</i> = 3, <i>base_channels</i> = 32)</caption>
+  <caption>Tabel 3.5 Arsitektur <i>Layer-by-Layer</i> FreqCNN (<i>depth</i> = 5, <i>base_channels</i> = 32)</caption>
 </table>
 </div>
 <button class="copy-btn" onclick="copyTable()">Copy Table</button>

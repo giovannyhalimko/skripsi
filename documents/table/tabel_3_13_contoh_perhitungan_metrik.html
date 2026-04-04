@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Metrik</th>
+      <th>Perhitungan</th>
+      <th>Hasil</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>Accuracy</i></td>
+      <td>(42 + 45) / (42 + 45 + 5 + 8) = 87/100</td>
+      <td>0,870</td>
+    </tr>
+    <tr>
+      <td><i>Precision</i></td>
+      <td>42 / (42 + 5) = 42/47</td>
+      <td>0,894</td>
+    </tr>
+    <tr>
+      <td><i>Recall</i></td>
+      <td>42 / (42 + 8) = 42/50</td>
+      <td>0,840</td>
+    </tr>
+    <tr>
+      <td>F1-<i>Score</i></td>
+      <td>2 &times; 0,894 &times; 0,840 / (0,894 + 0,840)</td>
+      <td>0,866</td>
+    </tr>
+    <tr>
+      <td>AUC</td>
+      <td>(dihitung dari kurva ROC)</td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.13 Perhitungan Metrik Evaluasi</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

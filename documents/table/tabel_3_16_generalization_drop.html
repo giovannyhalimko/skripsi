@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: center; vertical-align: top; }
+th { font-weight: bold; }
+td:first-child { text-align: left; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Dataset Pelatihan</th>
+      <th>F1 <i>In-Dataset</i></th>
+      <th>F1 <i>Cross-Dataset</i></th>
+      <th>&Delta;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>Spatial</i></td>
+      <td>FFPP</td>
+      <td>0,558</td>
+      <td>0,174</td>
+      <td>+0,384</td>
+    </tr>
+    <tr>
+      <td><i>Spatial</i></td>
+      <td>CDF</td>
+      <td>0,754</td>
+      <td>0,583</td>
+      <td>+0,171</td>
+    </tr>
+    <tr>
+      <td><i>Freq</i></td>
+      <td>FFPP</td>
+      <td>0,219</td>
+      <td>0,253</td>
+      <td>&minus;0,035</td>
+    </tr>
+    <tr>
+      <td><i>Freq</i></td>
+      <td>CDF</td>
+      <td>0,652</td>
+      <td>0,349</td>
+      <td>+0,303</td>
+    </tr>
+    <tr>
+      <td><i>Hybrid</i></td>
+      <td>FFPP</td>
+      <td>0,379</td>
+      <td>0,628</td>
+      <td><b>&minus;0,249</b></td>
+    </tr>
+    <tr>
+      <td><b><i>Hybrid</i></b></td>
+      <td><b>CDF</b></td>
+      <td><b>0,780</b></td>
+      <td><b>0,631</b></td>
+      <td><b>+0,149</b></td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.16 <i>Generalization Drop</i> F1-<i>Score</i> (<i>n</i> = 100, <i>seed</i> = 0)</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

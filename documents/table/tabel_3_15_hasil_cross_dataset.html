@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: center; vertical-align: top; }
+th { font-weight: bold; }
+td:first-child { text-align: left; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Pelatihan &rarr; Pengujian</th>
+      <th><i>Spatial</i> F1</th>
+      <th><i>Freq</i> F1</th>
+      <th><i>Hybrid</i> F1</th>
+      <th><i>Hybrid</i> AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FFPP &rarr; CDF</td>
+      <td>0,174</td>
+      <td>0,253</td>
+      <td><b>0,628</b></td>
+      <td>0,642</td>
+    </tr>
+    <tr>
+      <td>CDF &rarr; FFPP</td>
+      <td>0,583</td>
+      <td>0,349</td>
+      <td><b>0,631</b></td>
+      <td>0,720</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.15 Hasil Evaluasi <i>Cross-Dataset</i> (<i>n</i> = 100, <i>seed</i> = 0)</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

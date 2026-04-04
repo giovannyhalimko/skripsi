@@ -1,7 +1,7 @@
 # Thesis Reference Index
 
 > Quick-reference index for all papers in `/thesis_reference/`. Organized by topic with keywords for fast lookup.
-> Total: **40 references** (39 PDFs + 1 HTML)
+> Total: **41 references** (39 PDFs + 1 HTML + 1 daftar pustaka only)
 
 ---
 
@@ -18,7 +18,7 @@
 | **FaceForensics++ dataset** | Rossler, Sabir, Guera |
 | **Celeb-DF dataset** | (not directly — use Rossler for cross-dataset context) |
 | **transfer learning** | Chollet, He (ResNet), Rossler |
-| **CNN architecture** | Chollet (Xception), He (ResNet), Howard (MobileNet), Lecun |
+| **CNN architecture** | Chollet (Xception), He (ResNet), Howard (MobileNet), Hu (SE-Net), Lecun |
 | **RNN / temporal** | Guera, Nguyen, Sabir |
 | **image processing fundamentals** | Easton, Gonzalez & Woods |
 | **signal processing / Fourier** | Oppenheim, Easton, Gonzalez & Woods |
@@ -31,7 +31,7 @@
 | **legal / societal** | Andira |
 | **binary cross-entropy / loss** | Goodfellow (ML basics) |
 | **label smoothing** | (general DL — Goodfellow, Lecun) |
-| **attention / SE mechanism** | (not directly — Qian uses frequency attention) |
+| **attention / SE mechanism** | Hu (SE-Net), Qian (frequency attention) |
 | **self-blended images** | Hasanaath (FSBI) |
 | **face forgery / face swap** | Chadha, Korshunov, Rossler |
 
@@ -272,6 +272,14 @@
 - **Relevance:** Popularized depthwise separable convolutions (used in XceptionNet). Reference for efficient CNN design.
 - **Use in thesis:** BAB II (depthwise separable convolution explanation, efficient architectures)
 
+### Hu et al — Squeeze-and-Excitation Networks (SE-Net)
+- **File:** *(tidak tersedia di folder — referensi dari daftar pustaka)*
+- **Full title:** Squeeze-and-Excitation Networks
+- **Authors:** Jie Hu, Li Shen, Gang Sun (Momenta / University of Oxford)
+- **Keywords:** Squeeze-and-Excitation, SE block, channel attention, adaptive recalibration, feature reweighting, gating mechanism
+- **Relevance:** **Core architecture component** — SE gating mechanism used in HybridTwoBranch model to adaptively weight fused spatial-frequency features.
+- **Use in thesis:** BAB III (SE gating in hybrid fusion architecture)
+
 ### Sifre & Mallat 2014 — Rigid-Motion Scattering
 - **File:** `Sifre 2014.pdf`
 - **Full title:** Rigid-Motion Scattering for Texture Classification
@@ -398,6 +406,7 @@
 | XceptionNet architecture | Chollet |
 | Depthwise separable conv | Chollet, Howard, Sifre |
 | Frequency artifacts justification | Durall, Odena, Zhang |
+| SE gating mechanism | Hu (SE-Net) |
 | Optimizer choice | Ruder |
 | Evaluation metrics | Goodfellow |
 
@@ -431,26 +440,27 @@
 | 15 | `Haq - KLASIFIKASI CEPAT MODEL XCEPTIONNET...pdf` | Haq |
 | 16 | `Hasanaath - FSBI_ Deepfakes Detection with Frequency Enhanced Self-Blended Images.pdf` | Hasanaath (FSBI) |
 | 17 | `He et al - Deep Residual Learning for Image Recognition.pdf` | He (ResNet) |
-| 18 | `Howard 2017.pdf` | Howard (MobileNet) |
-| 19 | `Karras et al - Progressive Growing of GANs...pdf` | Karras (ProGAN) |
-| 20 | `Kim et al - Beyond Spatial Frequency...pdf` | Kim |
-| 21 | `Korshunov - DeepFakes_ a New Threat to Face Recognition...pdf` | Korshunov |
-| 22 | `Lecun et al - Deep learning.pdf` | LeCun |
-| 23 | `Luo et al - Frequency-Domain Masking and Spatial Interaction...pdf` | Luo |
-| 24 | `Ma et al - From Specificity to Generality...pdf` | Ma |
-| 25 | `Mejri et al - Leveraging High-Frequency Components for Deepfake Detection.pdf` | Mejri |
-| 26 | `Nguyen et al - Learning Spatio-temporal features...pdf` | Nguyen |
-| 27 | `Odena et al - Deconvolution and Checkerboard Artifacts.pdf` | Odena |
-| 28 | `Oppenheim et al - Discrete-Time Signal Processing.pdf` | Oppenheim |
-| 29 | `Qian et al - Thinking in Frequency...pdf` | Qian |
-| 30 | `Rana et al - Deepfake Detection_ A Systematic Literature Review.pdf` | Rana |
-| 31 | `Rao et al - A Chronological Review of Deepfake Detection...pdf` | Rao |
-| 32 | `Rossler et al - FaceForensics++...pdf` | Rossler (FF++) |
-| 33 | `Ruder et al - An overview of gradient descent optimization.pdf` | Ruder |
-| 34 | `Sabir 2019.pdf` | Sabir |
-| 35 | `Sifre 2014.pdf` | Sifre |
-| 36 | `Tan et al - Frequency-Aware Deepfake Detection...pdf` | Tan |
-| 37 | `Zhang et al - Detecting and Simulating Artifacts in GAN Fake Images...pdf` | Zhang |
-| 38 | `bottou et al - stochastic gradient descent tricks.pdf` | Bottou |
-| 39 | `goodfellow et al - machine learning basics.html` | Goodfellow |
-| 40 | `robbins et al - a stochastic approximation method.pdf` | Robbins |
+| 18 | *(daftar pustaka only)* | Hu (SE-Net) |
+| 19 | `Howard 2017.pdf` | Howard (MobileNet) |
+| 20 | `Karras et al - Progressive Growing of GANs...pdf` | Karras (ProGAN) |
+| 21 | `Kim et al - Beyond Spatial Frequency...pdf` | Kim |
+| 22 | `Korshunov - DeepFakes_ a New Threat to Face Recognition...pdf` | Korshunov |
+| 23 | `Lecun et al - Deep learning.pdf` | LeCun |
+| 24 | `Luo et al - Frequency-Domain Masking and Spatial Interaction...pdf` | Luo |
+| 25 | `Ma et al - From Specificity to Generality...pdf` | Ma |
+| 26 | `Mejri et al - Leveraging High-Frequency Components for Deepfake Detection.pdf` | Mejri |
+| 27 | `Nguyen et al - Learning Spatio-temporal features...pdf` | Nguyen |
+| 28 | `Odena et al - Deconvolution and Checkerboard Artifacts.pdf` | Odena |
+| 29 | `Oppenheim et al - Discrete-Time Signal Processing.pdf` | Oppenheim |
+| 30 | `Qian et al - Thinking in Frequency...pdf` | Qian |
+| 31 | `Rana et al - Deepfake Detection_ A Systematic Literature Review.pdf` | Rana |
+| 32 | `Rao et al - A Chronological Review of Deepfake Detection...pdf` | Rao |
+| 33 | `Rossler et al - FaceForensics++...pdf` | Rossler (FF++) |
+| 34 | `Ruder et al - An overview of gradient descent optimization.pdf` | Ruder |
+| 35 | `Sabir 2019.pdf` | Sabir |
+| 36 | `Sifre 2014.pdf` | Sifre |
+| 37 | `Tan et al - Frequency-Aware Deepfake Detection...pdf` | Tan |
+| 38 | `Zhang et al - Detecting and Simulating Artifacts in GAN Fake Images...pdf` | Zhang |
+| 39 | `bottou et al - stochastic gradient descent tricks.pdf` | Bottou |
+| 40 | `goodfellow et al - machine learning basics.html` | Goodfellow |
+| 41 | `robbins et al - a stochastic approximation method.pdf` | Robbins |

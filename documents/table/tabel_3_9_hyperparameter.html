@@ -19,23 +19,23 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
   <tbody>
     <tr>
       <td><i>Optimizer</i></td>
-      <td>Adam</td>
-      <td><i>Adaptive learning rate</i></td>
+      <td>AdamW</td>
+      <td><i>Decoupled weight decay</i> (Loshchilov &amp; Hutter, 2019)</td>
     </tr>
     <tr>
       <td><i>Learning rate</i> (<i>base</i>)</td>
-      <td>1 &times; 10<sup>&minus;4</sup></td>
+      <td>2 &times; 10<sup>&minus;4</sup></td>
       <td>Lapisan baru</td>
     </tr>
     <tr>
       <td><i>Learning rate</i> (<i>backbone</i>)</td>
-      <td>1 &times; 10<sup>&minus;5</sup></td>
-      <td><i>XceptionNet pretrained</i></td>
+      <td>2 &times; 10<sup>&minus;5</sup></td>
+      <td><i>XceptionNet pretrained</i> (<i>base</i>/10)</td>
     </tr>
     <tr>
       <td><i>Weight decay</i></td>
       <td>1 &times; 10<sup>&minus;4</sup></td>
-      <td>Regularisasi L2</td>
+      <td><i>Decoupled weight decay</i></td>
     </tr>
     <tr>
       <td><i>Batch size</i></td>
@@ -45,7 +45,7 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
     <tr>
       <td><i>Gradient accumulation</i></td>
       <td>2 langkah</td>
-      <td><i>Batch</i> efektif = 32</td>
+      <td>Semua model; <i>batch</i> efektif = 32</td>
     </tr>
     <tr>
       <td><i>Epoch</i> maksimum</td>
@@ -54,33 +54,38 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
     </tr>
     <tr>
       <td><i>Early stopping patience</i></td>
-      <td>5</td>
+      <td>10</td>
       <td>Tanpa peningkatan AUC</td>
     </tr>
     <tr>
       <td><i>Label smoothing</i></td>
-      <td>0,02</td>
-      <td>Target: 0 &rarr; 0,01; 1 &rarr; 0,99</td>
+      <td>0,0 (nonaktif)</td>
+      <td>Dinonaktifkan untuk dataset kecil</td>
+    </tr>
+    <tr>
+      <td><i>Pos weight</i></td>
+      <td><i>n</i><sub>neg</sub> / <i>n</i><sub>pos</sub></td>
+      <td>Penyeimbangan kelas</td>
     </tr>
     <tr>
       <td><i>Gradient clipping</i></td>
-      <td>max_norm = 1,0</td>
+      <td>max_norm = 5,0</td>
       <td>Norma L2</td>
     </tr>
     <tr>
-      <td>LR <i>warmup</i></td>
+      <td><i>LR warmup</i></td>
       <td>2 <i>epoch</i></td>
       <td>10% &rarr; 100% linear</td>
     </tr>
     <tr>
-      <td>LR <i>schedule</i></td>
+      <td><i>LR schedule</i></td>
       <td><i>Cosine annealing</i></td>
       <td><i>Decay</i> ke 1 &times; 10<sup>&minus;6</sup></td>
     </tr>
     <tr>
       <td><i>Backbone freeze</i></td>
       <td>3 <i>epoch</i></td>
-      <td><i>Hybrid</i> saja</td>
+      <td>Semua model <i>pretrained</i></td>
     </tr>
     <tr>
       <td><i>Mixed precision</i></td>
@@ -88,9 +93,14 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
       <td>CUDA saja</td>
     </tr>
     <tr>
+      <td>FreqCNN <i>depth</i></td>
+      <td>5</td>
+      <td>&sim;700K parameter</td>
+    </tr>
+    <tr>
       <td><i>Seed</i></td>
-      <td>42</td>
-      <td>Reproduktibilitas</td>
+      <td>0, 1, 2</td>
+      <td>Reproduktibilitas (3 <i>seed</i>)</td>
     </tr>
     <tr>
       <td><i>Framework</i></td>
