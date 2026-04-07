@@ -18,18 +18,18 @@
 | Parameter | Value | Purpose |
 |---|---|---|
 | `batch_size` | `16` | Training batch size |
-| `lr` | `1e-4` | Adam learning rate |
-| `weight_decay` | `1e-4` | L2 regularization |
+| `lr` | `2e-4` | AdamW learning rate |
+| `weight_decay` | `1e-4` | Decoupled weight decay (AdamW) |
 | `epochs` | `30` | Maximum training epochs |
-| `early_stop_patience` | `5` | Epochs without AUC improvement before stopping |
+| `early_stop_patience` | `10` | Epochs without AUC improvement before stopping |
 | `accum_steps` | `2` | Gradient accumulation (effective batch = 32) |
-| `label_smoothing` | `0.02` | Soft labels: 0→0.01, 1→0.99 |
+| `label_smoothing` | `0.0` | Disabled (hard labels) |
 | `n_seeds` | `3` | Number of random seeds for multi-run experiments |
 
 ### Frequency Branch Config
 | Parameter | Value | Purpose |
 |---|---|---|
-| `freq_depth` | `3` | FreqCNN convolutional blocks (3 or 5) |
+| `freq_depth` | `5` | FreqCNN residual blocks (~700K params) |
 | `freq_base_channels` | `32` | Initial channels (doubled per block, capped at 256) |
 | `fft_noise_sigma` | `0.05` | Gaussian noise σ for FFT augmentation during training |
 
