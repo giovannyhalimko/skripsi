@@ -118,8 +118,29 @@ def diagnose(cfg: dict, dataset_name: str):
     else:
         print("\n[3] Label Consistency: skipped (no keywords in config)")
 
-    # 4. Frames directory existence
-    print("\n[4] Frames Directory Existence")
+    # 4. Manipulation method breakdown (FFPP-specific)
+    if dataset_name.upper() == "FFPP":
+        print("\n[4] Manipulation Method Distribution")
+        methods = ["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"]
+        for split_name, df in splits.items():
+            fake_df = df[df["label"] == 1]
+            real_df = df[df["label"] == 0]
+            method_counts = {}
+            for method in methods:
+                count = fake_df["video_id"].str.contains(method, case=False).sum()
+                if count > 0:
+                    method_counts[method] = int(count)
+            total_fake = len(fake_df)
+            print(f"  {split_name:5s}: {len(real_df)} real, {total_fake} fake → {method_counts}")
+            if total_fake > 0 and len(method_counts) == 1:
+                print(f"    [WARN] Only 1 manipulation method in {split_name} fakes!")
+            if total_fake > 0:
+                unaccounted = total_fake - sum(method_counts.values())
+                if unaccounted > 0:
+                    print(f"    [WARN] {unaccounted} fake videos don't match any known method name")
+
+    # 5. Frames directory existence
+    print("\n[5] Frames Directory Existence")
     missing_dirs = []
     empty_dirs = []
     for split_name, df in splits.items():
@@ -140,8 +161,8 @@ def diagnose(cfg: dict, dataset_name: str):
     else:
         print(f"  [OK]   All frame directories exist and are non-empty")
 
-    # 5. Summary
-    print("\n[5] Summary")
+    # 6. Summary
+    print("\n[6] Summary")
     total_videos = sum(len(df) for df in splits.values())
     total_frames = 0
     for df in splits.values():
