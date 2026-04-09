@@ -44,11 +44,36 @@ def _extract_worker(item, out_root: Path, root: Path, fps: int, max_frames: int)
 
 
 def extract_video_frames(video_path: Path, out_dir: Path, fps: int, max_frames: int):
+    import numpy as np
     out_dir.mkdir(parents=True, exist_ok=True)
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
         print(f"[WARN] Could not open {video_path}")
         return 0
+    # Reject videos with no resolution or no duration
+    w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if w == 0 or h == 0:
+        print(f"[WARN] Video has 0x0 resolution, skipping: {video_path.name}")
+        cap.release()
+        return 0
+    if total == 0:
+        print(f"[WARN] Video has 0 frames (empty/corrupt), skipping: {video_path.name}")
+        cap.release()
+        return 0
+    # Sanity check: read first frame and reject black/empty videos
+    ret, first_frame = cap.read()
+    if not ret or first_frame is None:
+        print(f"[WARN] Could not read first frame: {video_path}")
+        cap.release()
+        return 0
+    if np.mean(first_frame) < 3:
+        print(f"[WARN] First frame is black (mean={np.mean(first_frame):.1f}), skipping: {video_path.name}")
+        cap.release()
+        return 0
+    # Reset to start so first frame is included
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
     vfps = cap.get(cv2.CAP_PROP_FPS)
     frame_interval = max(int(round(vfps / fps)) if vfps > 0 else 1, 1)
     count = 0
