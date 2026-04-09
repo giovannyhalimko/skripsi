@@ -85,6 +85,9 @@ def main():
     parser.add_argument("--force-fft", action="store_true",
                         help="Recompute FFT cache even if files already exist")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: train on a single manipulation method")
     args = parser.parse_args()
 
     total_start = time.time()
@@ -113,35 +116,39 @@ def main():
         print(f"  Epochs:      {args.epochs}")
     print(f"{'#' * 60}")
 
+    # Method args (FFPP only)
+    method_args = ["--method", args.method] if args.method else []
+
     # ── PHASE 1: Preprocessing ──────────────────────────────
     if not args.skip_preprocess:
         for ds in datasets:
+            ds_method = method_args if ds == "FFPP" else []
             # Extract frames
             cmd = [PY, str(ROOT / "scripts" / "extract_frames.py"),
                    "--config", config_path, "--dataset", ds,
                    "--fps", str(args.fps),
                    "--max-frames", str(args.max_frames),
-                   "--num-workers", str(args.num_workers)]
+                   "--num-workers", str(args.num_workers)] + ds_method
             if args.n_samples > 0:
                 cmd += ["--n-samples", str(args.n_samples)]
-            step(cmd, f"[1/3] Extract frames — {ds}")
+            step(cmd, f"[1/3] Extract frames — {ds}" + (f" ({args.method})" if ds == "FFPP" and args.method else ""))
 
             # Build train/val/test splits
             step([PY, str(ROOT / "scripts" / "build_splits.py"),
-                  "--config", config_path, "--dataset", ds],
+                  "--config", config_path, "--dataset", ds] + ds_method,
                  f"[2/3] Build splits — {ds}")
 
             # Compute FFT cache
             fft_cmd = [PY, str(ROOT / "scripts" / "compute_fft_cache.py"),
                        "--config", config_path, "--dataset", ds,
-                       "--num-workers", str(args.num_workers)]
+                       "--num-workers", str(args.num_workers)] + ds_method
             if args.force_fft:
                 fft_cmd.append("--force")
             step(fft_cmd, f"[3/3] FFT cache — {ds}")
 
     # ── PHASE 2: Train + Eval + Tables (via run_all.py) ─────
     cmd = [PY, str(ROOT / "scripts" / "run_all.py"), "--config", config_path,
-           "--dataset", args.dataset]
+           "--dataset", args.dataset] + method_args
     if args.n_samples > 0:
         cmd += ["--n-samples", str(args.n_samples)]
     if args.pretrained:

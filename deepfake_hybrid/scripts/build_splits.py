@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.append(str(SRC))
 
-from utils import load_config, ensure_dir
+from utils import load_config, ensure_dir, effective_name
 
 
 def main():
@@ -18,10 +18,14 @@ def main():
     parser.add_argument("--val-size", type=float, default=0.15)
     parser.add_argument("--test-size", type=float, default=0.15)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: use method-specific manifest")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
-    manifest_path = Path(cfg["output_root"]) / "manifests" / args.dataset / "manifest.csv"
+    eff_name = effective_name(args.dataset, args.method)
+    manifest_path = Path(cfg["output_root"]) / "manifests" / eff_name / "manifest.csv"
     if not manifest_path.exists():
         raise FileNotFoundError(f"Manifest not found: {manifest_path}. Run extract_frames.py first.")
 
@@ -48,7 +52,7 @@ def main():
     train_val, test = train_test_split(df, test_size=args.test_size, stratify=df["label"], random_state=args.seed)
     train, val = train_test_split(train_val, test_size=args.val_size / (1 - args.test_size), stratify=train_val["label"], random_state=args.seed)
 
-    out_dir = Path(cfg["output_root"]) / "manifests" / args.dataset
+    out_dir = Path(cfg["output_root"]) / "manifests" / eff_name
     ensure_dir(out_dir)
     train.to_csv(out_dir / "train.csv", index=False)
     val.to_csv(out_dir / "val.csv", index=False)

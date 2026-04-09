@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config, ensure_dir, setup_logging, get_device, worker_init_fn
+from utils import load_config, ensure_dir, setup_logging, get_device, worker_init_fn, effective_name
 from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
@@ -97,6 +97,9 @@ def main():
                         help="Number of samples used (only affects output folder naming)")
     parser.add_argument("--dataset", choices=["FFPP", "CDF", "both"], default="both",
                         help="Which training dataset to run (default: both)")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: train/eval on a single manipulation method")
     args = parser.parse_args()
 
     n_tag = _n_tag(args.n_samples)
@@ -115,44 +118,53 @@ def main():
 
     for seed in seeds:
         for train_ds in train_datasets:
+            # Apply method only to FFPP
+            method_for_ds = args.method if train_ds == "FFPP" else None
+            eff_train = effective_name(train_ds, method_for_ds)
+
             for model_type in models_to_run:
-                run_name = f"{model_type}_{train_ds}{n_tag}_seed{seed}"
+                run_name = f"{model_type}_{eff_train}{n_tag}_seed{seed}"
                 run_dir = Path(cfg["output_root"]) / "runs" / run_name
                 ckpt = run_dir / "best.pt"
                 if not ckpt.exists():
                     # Skip if manifest is missing (e.g. cross-eval pass before dataset is preprocessed)
-                    train_manifest = Path(cfg["output_root"]) / "manifests" / train_ds / "train.csv"
+                    train_manifest = Path(cfg["output_root"]) / "manifests" / eff_train / "train.csv"
                     if not train_manifest.exists():
                         logging.warning(f"Skipping {run_name}: manifest not found at {train_manifest}")
                         continue
                     # train
                     cmd = [sys.executable, str(ROOT / "scripts" / "train.py"), "--config", args.config, "--dataset", train_ds, "--model", model_type, "--seed", str(seed)]
+                    if method_for_ds:
+                        cmd += ["--method", method_for_ds]
                     if args.n_samples > 0:
                         cmd += ["--n-samples", str(args.n_samples)]
                     if args.pretrained:
                         cmd.append("--pretrained")
                     subprocess.run(cmd, check=True)
                 # eval in-dataset
-                metrics_in = eval_checkpoint(cfg, train_ds, model_type, ckpt, seed)
-                metrics_in["train_dataset"] = train_ds
-                metrics_in["test_dataset"] = train_ds
+                metrics_in = eval_checkpoint(cfg, eff_train, model_type, ckpt, seed)
+                metrics_in["train_dataset"] = eff_train
+                metrics_in["test_dataset"] = eff_train
                 metrics_in["model"] = model_type
                 metrics_in["seed"] = seed
                 results_in.append(metrics_in)
                 # eval cross (only if the other dataset's manifest exists)
                 other_ds = "CDF" if train_ds == "FFPP" else "FFPP"
-                other_manifest = Path(cfg["output_root"]) / "manifests" / other_ds / "test.csv"
+                other_method = args.method if other_ds == "FFPP" else None
+                eff_other = effective_name(other_ds, other_method)
+                other_manifest = Path(cfg["output_root"]) / "manifests" / eff_other / "test.csv"
                 if other_manifest.exists():
-                    metrics_cross = eval_checkpoint(cfg, other_ds, model_type, ckpt, seed)
-                    metrics_cross["train_dataset"] = train_ds
-                    metrics_cross["test_dataset"] = other_ds
+                    metrics_cross = eval_checkpoint(cfg, eff_other, model_type, ckpt, seed)
+                    metrics_cross["train_dataset"] = eff_train
+                    metrics_cross["test_dataset"] = eff_other
                     metrics_cross["model"] = model_type
                     metrics_cross["seed"] = seed
                     results_cross.append(metrics_cross)
                 else:
-                    logging.warning(f"Skipping cross-dataset eval ({train_ds}→{other_ds}): manifest not found at {other_manifest}")
+                    logging.warning(f"Skipping cross-dataset eval ({eff_train}→{eff_other}): manifest not found at {other_manifest}")
 
-    tables_dir = Path(cfg["output_root"]) / "tables" / (f"n{args.n_samples}" if args.n_samples > 0 else "default")
+    method_suffix = f"_{args.method}" if args.method else ""
+    tables_dir = Path(cfg["output_root"]) / "tables" / (f"n{args.n_samples}{method_suffix}" if args.n_samples > 0 else f"default{method_suffix}")
     ensure_dir(tables_dir)
     df_in = pd.DataFrame(results_in)
     df_cross = pd.DataFrame(results_cross)
@@ -164,9 +176,11 @@ def main():
     if not df_cross.empty:
         for model_type in models_to_run:
             for train_ds in train_datasets:
-                f1_in = df_in[(df_in.model == model_type) & (df_in.train_dataset == train_ds)]["f1"].mean()
-                f1_cross = df_cross[(df_cross.model == model_type) & (df_cross.train_dataset == train_ds)]["f1"].mean()
-                rows.append({"model": model_type, "train_dataset": train_ds, "f1_in": f1_in, "f1_cross": f1_cross, "drop": f1_in - f1_cross})
+                method_for_ds = args.method if train_ds == "FFPP" else None
+                eff_ds = effective_name(train_ds, method_for_ds)
+                f1_in = df_in[(df_in.model == model_type) & (df_in.train_dataset == eff_ds)]["f1"].mean()
+                f1_cross = df_cross[(df_cross.model == model_type) & (df_cross.train_dataset == eff_ds)]["f1"].mean()
+                rows.append({"model": model_type, "train_dataset": eff_ds, "f1_in": f1_in, "f1_cross": f1_cross, "drop": f1_in - f1_cross})
     pd.DataFrame(rows).to_csv(tables_dir / "Table3_generalization_drop.csv", index=False)
 
     # summary (mean/std over seeds)

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config, setup_logging, ensure_dir, get_device, worker_init_fn, save_json
+from utils import load_config, setup_logging, ensure_dir, get_device, worker_init_fn, save_json, effective_name
 from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
@@ -50,6 +50,9 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pretrained", action="store_true")
     parser.add_argument("--threshold", type=float, default=None, help="Custom decision threshold (default: find optimal via Youden's J)")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: use method-specific test manifest and cache")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -58,11 +61,12 @@ def main():
     run_dir = Path(cfg["output_root"]) / "runs"
     setup_logging(run_dir / "eval.log")
 
-    test_manifest = Path(cfg["output_root"]) / "manifests" / args.dataset / "test.csv"
+    eff_name = effective_name(args.dataset, args.method)
+    test_manifest = Path(cfg["output_root"]) / "manifests" / eff_name / "test.csv"
     if not test_manifest.exists():
         raise FileNotFoundError(f"Test manifest missing at {test_manifest}. Run build_splits.py")
 
-    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / args.dataset) if args.model in {"freq", "hybrid", "early_fusion"} else None
+    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion"} else None
     ds_cfg = DatasetConfig(
         manifest_path=test_manifest,
         fft_cache_root=fft_cache_root,

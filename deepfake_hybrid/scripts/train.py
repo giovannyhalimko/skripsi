@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config, seed_everything, setup_logging, ensure_dir, get_device, worker_init_fn, save_json
+from utils import load_config, seed_everything, setup_logging, ensure_dir, get_device, worker_init_fn, save_json, effective_name
 from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
@@ -130,6 +130,9 @@ def main():
                         help="Number of samples (only affects output folder naming)")
     parser.add_argument("--freq-depth", type=int, default=None,
                         help="Override config freq_depth for FreqCNN (e.g. --freq-depth 3 for CDF)")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: use method-specific manifests and cache")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -143,21 +146,22 @@ def main():
         torch.backends.cuda.matmul.allow_tf32 = True   # 3x faster matmuls on A100
         torch.backends.cudnn.allow_tf32 = True
 
+    eff_name = effective_name(args.dataset, args.method)
     n_tag = f"_n{args.n_samples}" if args.n_samples > 0 else ""
-    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{args.dataset}{n_tag}_seed{args.seed}"
+    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{eff_name}{n_tag}_seed{args.seed}"
     ensure_dir(run_dir)
     setup_logging(run_dir / "train.log")
-    logging.info(f"Starting training: model={args.model}, dataset={args.dataset}, seed={args.seed}, device={device}")
+    logging.info(f"Starting training: model={args.model}, dataset={eff_name}, seed={args.seed}, device={device}")
     if args.freq_depth is not None:
         logging.info(f"freq_depth overridden to {args.freq_depth} via CLI")
 
-    manifest_root = Path(cfg["output_root"]) / "manifests" / args.dataset
+    manifest_root = Path(cfg["output_root"]) / "manifests" / eff_name
     train_manifest = manifest_root / "train.csv"
     val_manifest = manifest_root / "val.csv"
     if not train_manifest.exists():
         raise FileNotFoundError(f"Train manifest missing at {train_manifest}. Run build_splits.py")
 
-    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / args.dataset) if args.model in {"freq", "hybrid", "early_fusion"} else None
+    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion"} else None
 
     train_loader = make_dataloader(train_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=True, fft_cache_root=fft_cache_root, seed=args.seed)
     val_loader = make_dataloader(val_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=False, fft_cache_root=fft_cache_root, seed=args.seed)

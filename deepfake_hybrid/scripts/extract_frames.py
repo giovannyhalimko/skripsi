@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config, ensure_dir
+from utils import load_config, ensure_dir, effective_name
 
 
 VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv"}
@@ -79,13 +79,17 @@ def main():
                         help="Limit to N randomly sampled videos (balanced real/fake). 0 = all.")
     parser.add_argument("--num-workers", type=int, default=4,
                         help="Parallel video workers (default: 4)")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: restrict to a single manipulation method")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
     ds_cfg = cfg["datasets"][args.dataset.lower()]
     root = Path(ds_cfg["root"])
-    out_root = Path(cfg["output_root"]) / "frames" / args.dataset
-    manifest_path = Path(cfg["output_root"]) / "manifests" / args.dataset / "manifest.csv"
+    eff_name = effective_name(args.dataset, args.method)
+    out_root = Path(cfg["output_root"]) / "frames" / eff_name
+    manifest_path = Path(cfg["output_root"]) / "manifests" / eff_name / "manifest.csv"
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
 
     real_kw = ds_cfg.get("real_keywords", ["real", "original", "pristine", "actors"])
@@ -119,6 +123,16 @@ def main():
             break
 
     print(f"Found {len(all_videos)} labeled videos ({real_count} real, {fake_count} fake)")
+
+    # Filter to a single manipulation method (FFPP only)
+    if args.method:
+        before = len(all_videos)
+        all_videos = [(v, l) for v, l in all_videos
+                      if l == 0 or args.method.lower() in str(v).lower()]
+        real_count = sum(1 for _, l in all_videos if l == 0)
+        fake_count = sum(1 for _, l in all_videos if l == 1)
+        print(f"Filtered to method '{args.method}': {before} → {len(all_videos)} "
+              f"({real_count} real, {fake_count} fake)")
 
     # Apply n-samples limit with balanced sampling; keep reserve for replacements
     rng = random.Random(42)
