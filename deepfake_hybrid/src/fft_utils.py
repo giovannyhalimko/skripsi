@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 
 
-def _highpass_mask(size: int, cutoff: float = 0.05) -> np.ndarray:
+def _highpass_mask(size: int, cutoff: float = 0.15) -> np.ndarray:
     """Gaussian high-pass mask to attenuate low-frequency center of FFT.
 
     cutoff is fraction of image size (0.05 = 5% radius suppressed).
@@ -33,7 +33,7 @@ def image_to_fft_logmag(img: Image.Image, size: int = 224, highpass: bool = True
     return logmag.astype(np.float32)
 
 
-def _highpass_mask_torch(size: int, cutoff: float = 0.05, device=None) -> torch.Tensor:
+def _highpass_mask_torch(size: int, cutoff: float = 0.15, device=None) -> torch.Tensor:
     """Torch version of Gaussian high-pass mask."""
     cy, cx = size // 2, size // 2
     y = torch.arange(size, device=device).float()
