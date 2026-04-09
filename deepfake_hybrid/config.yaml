@@ -19,8 +19,8 @@ fusion_mode: two_branch
 n_seeds: 3
 
 # Frequency branch
-freq_depth: 5              # FreqCNN conv blocks: 3 (~130K params) or 5 (~700K params)
-freq_base_channels: 32     # Channels in first conv block
+freq_depth: 5              # FreqCNN conv blocks: 3 (~130K params) or 5 (~2.8M params with base=64)
+freq_base_channels: 64     # Channels in first conv block (64 for face crops, 32 for full scenes)
 fft_noise_sigma: 0.05      # Gaussian noise sigma for FFT augmentation (0 to disable)
 
 # Dataset roots
