@@ -88,6 +88,10 @@ def main():
     parser.add_argument("--method", type=str, default=None,
                         choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
                         help="FFPP only: train on a single manipulation method")
+    parser.add_argument("--face-crop", action="store_true",
+                        help="Detect and crop face region from each frame using MTCNN")
+    parser.add_argument("--face-margin", type=float, default=0.3,
+                        help="Margin around face bbox (default: 0.3)")
     args = parser.parse_args()
 
     total_start = time.time()
@@ -118,6 +122,8 @@ def main():
 
     # Method args (FFPP only)
     method_args = ["--method", args.method] if args.method else []
+    # Face crop args
+    face_crop_args = ["--face-crop", "--face-margin", str(args.face_margin)] if args.face_crop else []
 
     # ── PHASE 1: Preprocessing ──────────────────────────────
     if not args.skip_preprocess:
@@ -128,7 +134,7 @@ def main():
                    "--config", config_path, "--dataset", ds,
                    "--fps", str(args.fps),
                    "--max-frames", str(args.max_frames),
-                   "--num-workers", str(args.num_workers)] + ds_method
+                   "--num-workers", str(args.num_workers)] + ds_method + face_crop_args
             if args.n_samples > 0:
                 cmd += ["--n-samples", str(args.n_samples)]
             step(cmd, f"[1/3] Extract frames — {ds}" + (f" ({args.method})" if ds == "FFPP" and args.method else ""))
