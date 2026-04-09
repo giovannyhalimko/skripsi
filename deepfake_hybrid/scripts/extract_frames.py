@@ -108,6 +108,9 @@ def main():
                 label = infer_label(p, real_kw, fake_kw)
             if label is None:
                 continue
+            # Skip fakes that don't match the requested method
+            if args.method and label == 1 and args.method.lower() not in str(p).lower():
+                continue
             all_videos.append((p, label))
             if label == 0:
                 real_count += 1
@@ -123,16 +126,6 @@ def main():
             break
 
     print(f"Found {len(all_videos)} labeled videos ({real_count} real, {fake_count} fake)")
-
-    # Filter to a single manipulation method (FFPP only)
-    if args.method:
-        before = len(all_videos)
-        all_videos = [(v, l) for v, l in all_videos
-                      if l == 0 or args.method.lower() in str(v).lower()]
-        real_count = sum(1 for _, l in all_videos if l == 0)
-        fake_count = sum(1 for _, l in all_videos if l == 1)
-        print(f"Filtered to method '{args.method}': {before} → {len(all_videos)} "
-              f"({real_count} real, {fake_count} fake)")
 
     # Apply n-samples limit with balanced sampling; keep reserve for replacements
     rng = random.Random(42)
