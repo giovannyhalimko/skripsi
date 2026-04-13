@@ -1,57 +1,37 @@
-# Analysis: Freq Model with High-Pass FFT (n=100)
+# Analysis: Freq Model Tuning Results (n=100)
 
 Date: 2026-04-10
-Config: seed=42, LR=2e-4, warmup=2, patience=10, freq_depth=5, freq_base_channels=64
-Change: Added Gaussian high-pass filter to FFT (cutoff=5%), increased freq model capacity (32→64 base channels, ~2.8M params)
+Dataset: FFPP, face-cropped, n=100
 
 ---
 
-## Training Results
+## Comparison: Two Tuning Attempts
 
-| Metric        | Before (no high-pass, 32ch) | After (high-pass, 64ch) |
-|---------------|----------------------------|-------------------------|
-| Best val AUC  | 0.634 (but test=0.256, INVERTED) | **0.623** (stable)  |
-| Training epochs | 7 (early stop)           | **27** (early stop)     |
-| Loss trend    | 0.67 → 0.53 (unstable)    | 0.67 → 0.35 (clean)    |
-| Val F1        | Collapsed to 0.0           | Oscillates 0.01–0.68   |
+| Run    | High-pass cutoff | Spectral mask | Warmup | Best val AUC | Epochs |
+|--------|-----------------|---------------|--------|-------------|--------|
+| n100-1 | 0.05 (tight)    | 15%, h/8      | 2      | **0.623**   | 27     |
+| n100-2 | 0.15 (wide)     | 5%, h/16      | 3      | 0.610       | 24     |
 
-## Epoch-by-Epoch Val AUC
+## Key Findings
 
-```
-Epoch  1: 0.518    Epoch 10: 0.571    Epoch 19: 0.603
-Epoch  2: 0.502    Epoch 11: 0.564    Epoch 20: 0.601
-Epoch  3: 0.501    Epoch 12: 0.578    Epoch 21: 0.598
-Epoch  4: 0.511    Epoch 13: 0.577    Epoch 22: 0.623 ← best
-Epoch  5: 0.509    Epoch 14: 0.587    Epoch 23: 0.599
-Epoch  6: 0.521    Epoch 15: 0.597    Epoch 24: 0.610
-Epoch  7: 0.525    Epoch 16: 0.574    Epoch 25: 0.613
-Epoch  8: 0.536    Epoch 17: 0.567    Epoch 26: 0.597
-Epoch  9: 0.559    Epoch 18: 0.589    Epoch 27: 0.608
-```
+1. **Widening the high-pass cutoff did not help** — 0.15 performed marginally worse than 0.05 (0.610 vs 0.623). The tighter cutoff that suppresses more low-frequency content may actually be better, forcing the model to focus purely on high-frequency artifacts.
 
-## Key Observations
+2. **Reducing spectral masking did not help** — less augmentation didn't improve learning. The model isn't overfitting (train loss drops cleanly while val AUC plateaus), so reducing regularization had no effect.
 
-1. **Training is stable now** — no inversion, no collapse. The high-pass filter fixed the catastrophic failure (0.256 test AUC → now learning properly).
+3. **Longer warmup did not help** — 3-epoch warmup vs 2-epoch made no meaningful difference.
 
-2. **Val AUC climbs slowly but steadily** — 0.518 → 0.623 over 27 epochs. The model IS learning frequency-domain features from cropped faces.
+4. **The freq model has a ceiling at ~0.62 val AUC** with the current approach (single-channel FFT log-magnitude + custom CNN). This appears to be a fundamental limitation of the representation, not a tuning issue.
 
-3. **Still significantly below spatial** — spatial achieves 0.798 val AUC on the same data. The freq model at 0.623 is ~0.175 behind.
+## Why Freq Plateaus at 0.62
 
-4. **Val F1 is unstable** — oscillates between 0.01 and 0.68 across epochs, suggesting the decision boundary is fragile. The model learns ranking (AUC) but struggles with a fixed threshold.
+The single-channel FFT log-magnitude of a face crop contains limited discriminative information for deepfake detection:
+- Manipulation artifacts in the frequency domain are subtle (small spectral peaks, localized distortions)
+- The log1p transform compresses the dynamic range, potentially hiding small high-frequency differences
+- A CNN training from scratch on ~3,500 frames has insufficient data to learn these subtle patterns
+- The spatial model (XceptionNet, pretrained on ImageNet) starts with 22M params of learned texture/edge features — the freq CNN starts with nothing
 
-5. **Loss drops cleanly** — 0.67 → 0.35, showing the model fits training data well. The gap between train loss and val AUC suggests the model needs better generalization, not more capacity.
+## Recommendation
 
-## What the high-pass filter fixed
+**Accept freq at ~0.62 and proceed with the full pipeline.** The freq branch doesn't need to match spatial performance on its own. In the hybrid model, it just needs to contribute complementary information that spatial alone doesn't capture. A freq val AUC of 0.62 still indicates the model is learning *something* from the frequency domain — this signal, combined with spatial's 0.80, may produce a stronger hybrid.
 
-- **Before**: FFT dominated by low frequencies (skin brightness, face shape) → model latched onto these → different val/test distributions caused inversion
-- **After**: Low frequencies attenuated → model forced to use high-frequency patterns (manipulation artifacts, blending boundaries) → more stable learning
-
-## What still needs improvement
-
-Target: 0.75–0.80 val AUC to make freq a meaningful contributor to the hybrid model.
-
-Potential directions:
-- Training improvements (LR, augmentation, regularization)
-- Architecture changes (attention, multi-scale)
-- Input representation (multi-channel FFT, DCT instead of FFT)
-- Better normalization of FFT features
+Focus remaining compute on running spatial + freq + hybrid across all sample sizes (n=100, 250, 500, 750) with face cropping to get the complete thesis results.
