@@ -197,16 +197,19 @@ def main():
             ], weight_decay=wd)
     elif args.model == "hybrid":
         backbone_params = list(model.spatial.parameters())
-        head_params = (
-            list(model.freq.parameters())
-            + list(model.spatial_proj.parameters())
+        freq_branch_params = list(model.freq.parameters())
+        fusion_head_params = (
+            list(model.spatial_proj.parameters())
             + list(model.freq_proj.parameters())
             + list(model.se_gate.parameters())
             + list(model.classifier.parameters())
         )
+        # 3-group LR: spatial backbone (lowest) < freq branch (mid) < fusion head (highest)
+        # Prevents randomly-initialized freq branch from overpowering gradients early
         optimizer = optim.AdamW([
             {"params": backbone_params, "lr": backbone_lr},
-            {"params": head_params, "lr": base_lr},
+            {"params": freq_branch_params, "lr": base_lr * 0.25},
+            {"params": fusion_head_params, "lr": base_lr},
         ], weight_decay=wd)
     elif args.model == "early_fusion":
         backbone_params = list(model.model.parameters())
@@ -273,6 +276,8 @@ def main():
                 for p in model.model.parameters():
                     p.requires_grad = True
                 logging.info(f"Epoch {epoch}: unfreezing backbone")
+            # Reset patience counter so fine-tuning gets a full window to converge
+            no_improve_count = 0
 
         train_loss = train_one_epoch(model, train_loader, args.model, device, optimizer, scaler, loss_fn, accum_steps=accum_steps, label_smooth=label_smooth)
         val_metrics = evaluate(model, val_loader, args.model, device)

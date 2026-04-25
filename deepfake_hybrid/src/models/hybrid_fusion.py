@@ -46,10 +46,10 @@ class HybridTwoBranch(nn.Module):
         fused_dim = PROJ_DIM * 2
         self.se_gate = SEGate(fused_dim)
         self.classifier = nn.Sequential(
-            nn.Dropout(0.3),
+            nn.Dropout(0.5),
             nn.Linear(fused_dim, 128),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.3),
+            nn.Dropout(0.5),
             nn.Linear(128, 1),
         )
 
