@@ -12,6 +12,15 @@ import numpy as np
 import torch
 
 
+def effective_name(dataset: str, method: Optional[str]) -> str:
+    """Combine dataset and method into an effective name for output paths.
+
+    Examples: effective_name("FFPP", "Deepfakes") -> "FFPP_Deepfakes"
+              effective_name("CDF", None) -> "CDF"
+    """
+    return f"{dataset}_{method}" if method else dataset
+
+
 def seed_everything(seed: int = 42, deterministic: bool = True) -> None:
     random.seed(seed)
     np.random.seed(seed)

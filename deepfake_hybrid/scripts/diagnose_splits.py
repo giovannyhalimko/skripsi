@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config
+from utils import load_config, effective_name
 
 
 def infer_label(frames_dir: str, real_keywords: list, fake_keywords: list) -> int | None:
@@ -182,12 +182,17 @@ def main():
     parser = argparse.ArgumentParser(description="Diagnose dataset splits")
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF", "all"], default="all")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: diagnose method-specific splits")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
     datasets = ["FFPP", "CDF"] if args.dataset == "all" else [args.dataset]
     for ds in datasets:
-        diagnose(cfg, ds)
+        method_for_ds = args.method if ds == "FFPP" else None
+        eff_name_ds = effective_name(ds, method_for_ds)
+        diagnose(cfg, eff_name_ds)
 
 
 if __name__ == "__main__":

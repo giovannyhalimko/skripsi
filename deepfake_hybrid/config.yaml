@@ -12,15 +12,15 @@ num_workers: 2
 lr: 2.0e-4
 weight_decay: 1.0e-4
 epochs: 30                 # Max epochs — early stopping handles actual duration
-early_stop_patience: 10    # Increased from 5 — allow more epochs after backbone unfreeze
+early_stop_patience: 12    # Extra buffer around backbone unfreeze boundary
 accum_steps: 2             # Gradient accumulation for all models
-label_smoothing: 0.0       # Disabled — maximise signal at small n
+label_smoothing: 0.05      # Light smoothing — prevents overconfidence on small training sets
 fusion_mode: two_branch
 n_seeds: 3
 
 # Frequency branch
-freq_depth: 5              # FreqCNN conv blocks: 3 (~130K params) or 5 (~700K params)
-freq_base_channels: 32     # Channels in first conv block
+freq_depth: 5              # FreqCNN conv blocks: 3 (~130K params) or 5 (~2.8M params with base=64)
+freq_base_channels: 64     # Channels in first conv block (64 for face crops, 32 for full scenes)
 fft_noise_sigma: 0.05      # Gaussian noise sigma for FFT augmentation (0 to disable)
 
 # Dataset roots

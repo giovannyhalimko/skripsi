@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from utils import load_config, ensure_dir
+from utils import load_config, ensure_dir, effective_name
 from fft_utils import save_fft_cache
 
 
@@ -69,16 +69,20 @@ def main():
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--force", action="store_true", help="Recompute even if cache exists")
     parser.add_argument("--stats", action="store_true", help="Compute mean/std from existing cache")
+    parser.add_argument("--method", type=str, default=None,
+                        choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
+                        help="FFPP only: use method-specific manifest/cache")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+    eff_name = effective_name(args.dataset, args.method)
 
     if args.stats:
-        fft_root = Path(cfg["output_root"]) / "fft_cache" / args.dataset
+        fft_root = Path(cfg["output_root"]) / "fft_cache" / eff_name
         compute_fft_stats(fft_root)
         return
 
-    manifest_path = Path(cfg["output_root"]) / "manifests" / args.dataset / "manifest.csv"
+    manifest_path = Path(cfg["output_root"]) / "manifests" / eff_name / "manifest.csv"
     if not manifest_path.exists():
         raise FileNotFoundError(f"Manifest not found: {manifest_path}")
     df = pd.read_csv(manifest_path)
@@ -92,7 +96,7 @@ def main():
                 continue
             rows.append({"video_id": row["video_id"], "frame_path": str(fp)})
 
-    fft_root = Path(cfg["output_root"]) / "fft_cache" / args.dataset
+    fft_root = Path(cfg["output_root"]) / "fft_cache" / eff_name
     ensure_dir(fft_root)
 
     with mp.Pool(processes=args.num_workers) as pool:
