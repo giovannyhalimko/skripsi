@@ -3,7 +3,8 @@
 **Tanggal:** 2026-05-18
 **Sumber feedback:** Pembanding 1 (nilai 70), Pembanding 2 (nilai 78)
 **Sumber teks lama:** `documents/Metode Peningkatan ... _v2.md` (commit d90dbcc) — saat ini hanya ada di git history
-**Sumber referensi:** `thesis_reference/INDEX.md` + Daftar Pustaka v2 (`[1]–[32]`)
+**Sumber referensi:** `thesis_reference/INDEX.md` dan Daftar Pustaka v2 (entri (Korshunov & Marcel, 2019) hingga (Robbins & Monro, 1951))
+**Format sitasi yang dipakai:** (Penulis, Tahun) konsisten dengan `documents/BAB_III_Tahapan_Pelaksanaan_v3.md`, bukan gaya IEEE bernomor.
 
 ---
 
@@ -41,32 +42,32 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 > Di tingkat individu, *Deepfake* memiliki potensi besar untuk merusak citra, dan reputasi seseorang, terutama melalui pembuatan konten palsu yang merusak, seperti kasus *deepfake porn*. Secara global, studi menunjukkan mayoritas video *deepfake* adalah pornografi yang menargetkan perempuan, menciptakan konsekuensi serius terhadap privasi dan persepsi masyarakat [2].
 
 **Baru (satu paragraf 5–7 kalimat):**
-> Perkembangan *Generative Adversarial Networks* (GAN) telah memungkinkan terciptanya citra dan video sintetis yang sulit dibedakan dari rekaman asli, dan teknologi inilah yang melahirkan istilah *deepfake* — konten visual atau audio yang dimanipulasi sedemikian rupa sehingga menampilkan adegan atau ucapan yang tidak pernah terjadi. Meskipun awalnya dikembangkan untuk hiburan dan riset sintesis media, *deepfake* kini menjadi ancaman serius pada beberapa tingkatan: ditingkat geopolitik, ia dipakai sebagai instrumen disinformasi dan propaganda [1]; ditingkat individual, 96% video *deepfake* yang beredar global berbentuk pornografi non-konsensual yang sebagian besar menargetkan perempuan, menimbulkan kerugian reputasi, psikologis, dan hukum yang nyata [2]. Skala dan kecepatan distribusi konten ini menjadikan deteksi otomatis *deepfake* bukan sekadar tantangan riset, melainkan kebutuhan forensik digital yang mendesak.
+> Perkembangan *Generative Adversarial Networks* (GAN) telah memungkinkan terciptanya citra dan video sintetis yang sulit dibedakan dari rekaman asli, dan teknologi inilah yang melahirkan istilah *deepfake*, yaitu konten visual atau audio yang dimanipulasi sedemikian rupa sehingga menampilkan adegan atau ucapan yang tidak pernah terjadi. Meskipun awalnya dikembangkan untuk hiburan dan riset sintesis media, *deepfake* kini menjadi ancaman serius pada beberapa tingkatan. Pada tingkat geopolitik, teknologi ini dipakai sebagai instrumen disinformasi dan propaganda (Korshunov & Marcel, 2019). Pada tingkat individual, 96% video *deepfake* yang beredar global berbentuk pornografi non-konsensual yang sebagian besar menargetkan perempuan, menimbulkan kerugian reputasi, psikologis, dan hukum yang nyata (Andira & Susila, 2024). Skala dan kecepatan distribusi konten ini menjadikan deteksi otomatis *deepfake* bukan sekadar tantangan riset, melainkan kebutuhan forensik digital yang mendesak.
 
-*Catatan referensi:* [1] = Korshunov 2019 ✓, [2] = Andira & Susila 2024 ✓. Klaim 96% **wajib di-source ke [2]** (sudah konsisten). Jika klaim ingin diperkuat, tambahkan sitasi sekunder ke Sensity AI 2019 report (tidak wajib).
+*Catatan referensi:* (Korshunov & Marcel, 2019) ✓, (Andira & Susila, 2024) ✓. Klaim 96% **wajib di-source ke (Andira & Susila, 2024)** (sudah konsisten). Jika klaim ingin diperkuat, tambahkan sitasi sekunder ke Sensity AI 2019 report (tidak wajib).
 
 ---
 
 ### B.2 Latar Belakang — Paragraf 3 (XceptionNet baseline) — perketat dan tambahkan klaim cross-dataset
 
-**Lama (baris 541):** … "*XceptionNet* … menonjol karena efisiensinya dalam mengekstraksi fitur spasial tingkat tinggi menggunakan *depthwise separable convolution* [6]."
+**Lama (baris 541):** … "*XceptionNet* … menonjol karena efisiensinya dalam mengekstraksi fitur spasial tingkat tinggi menggunakan *depthwise separable convolution* (Chollet, 2017)."
 
 **Baru (tambahkan satu kalimat penutup; sisanya tetap):**
-> *MesoNet* dirancang untuk mendeteksi artefak lokal seperti batas *blending* dan perbedaan warna pada wajah hasil manipulasi, namun memiliki keterbatasan pada citra resolusi tinggi [4]. *ResNet-50* memperkenalkan *residual learning* untuk merepresentasikan fitur spasial yang lebih dalam, dan dilaporkan mencapai akurasi >90% pada FaceForensics++ namun turun signifikan ketika diuji lintas dataset [3, 5]. *XceptionNet* (*Extreme Inception Net*) menjadi *baseline* domain spasial yang paling banyak dipakai karena *depthwise separable convolution* memberikan efisiensi komputasi tanpa mengorbankan akurasi, dan dilaporkan mencapai 99,26% AUC pada FaceForensics++ tanpa kompresi [6, 19]. **Namun, akurasi tinggi ini tidak konsisten pada pengujian lintas dataset, yang mengindikasikan ketergantungan model terhadap artefak visual khas dataset pelatihan.**
+> *MesoNet* dirancang untuk mendeteksi artefak lokal seperti batas *blending* dan perbedaan warna pada wajah hasil manipulasi, namun memiliki keterbatasan pada citra resolusi tinggi (Afchar et al., 2018). *ResNet-50* memperkenalkan *residual learning* untuk merepresentasikan fitur spasial yang lebih dalam, dan dilaporkan mencapai akurasi di atas 90% pada FaceForensics++ namun turun signifikan ketika diuji lintas dataset (Haq, 2021; He et al., 2015). *XceptionNet* (*Extreme Inception Net*) menjadi *baseline* domain spasial yang paling banyak dipakai karena *depthwise separable convolution* memberikan efisiensi komputasi tanpa mengorbankan akurasi, dan dilaporkan mencapai 99,26% AUC pada FaceForensics++ tanpa kompresi (Chollet, 2017; Rössler et al., 2019). **Namun, akurasi tinggi ini tidak konsisten pada pengujian lintas dataset, yang mengindikasikan ketergantungan model terhadap artefak visual khas dataset pelatihan.**
 
-*Catatan referensi:* [3] Haq 2021 ✓, [4] Afchar (MesoNet) ✓, [5] He (ResNet) ✓, [6] Chollet (Xception) ✓, [19] Rossler (FF++) ✓. **Kalimat tambahan bold di atas menjawab P1 (kinerja XceptionNet) sekaligus P2-LB-2 (urgensi cross-dataset).**
+*Catatan referensi:* (Haq, 2021) ✓, (Afchar et al., 2018) ✓, (He et al., 2015) ✓, (Chollet, 2017) ✓, (Rössler et al., 2019) ✓. **Kalimat tambahan bold di atas menjawab P1 (kinerja XceptionNet) sekaligus P2-LB-2 (urgensi cross-dataset).**
 
 ---
 
 ### B.3 Latar Belakang — Paragraf 5 (sejumlah penelitian) — perpanjang dengan 3 sitasi (P2-LB-3)
 
 **Lama (baris 545):**
-> Untuk mengatasi keterbatasan tersebut, sejumlah penelitian telah mengusulkan pendekatan berbasis *frequency*, seperti *Frequency Domain Analysis (FDA)*, dengan metode *Fast Fourier Transform* (FFT), *Discrete Cosine Transform* (DCT), atau *Wavelet Transform*. Pendekatan ini berupaya mengekstraksi pola artefak frekuensi yang muncul akibat proses *upsampling*, *interpolation*, dan *compression* pada citra hasil sintesis [7].
+> Untuk mengatasi keterbatasan tersebut, sejumlah penelitian telah mengusulkan pendekatan berbasis *frequency*, seperti *Frequency Domain Analysis (FDA)*, dengan metode *Fast Fourier Transform* (FFT), *Discrete Cosine Transform* (DCT), atau *Wavelet Transform*. Pendekatan ini berupaya mengekstraksi pola artefak frekuensi yang muncul akibat proses *upsampling*, *interpolation*, dan *compression* pada citra hasil sintesis (Durall et al., 2020).
 
 **Baru (5–6 kalimat, 4 sitasi):**
-> Untuk mengatasi keterbatasan tersebut, riset deteksi *deepfake* bergeser ke domain frekuensi. Pendekatan berbasis *Fast Fourier Transform* (FFT) memanfaatkan asimetri spektral pada citra GAN dan terbukti dapat membedakan citra sintetis dari citra natural meski manipulasi visualnya tidak terlihat di domain spasial [7]. Pendekatan berbasis *Discrete Cosine Transform* (DCT) bekerja pada koefisien blok dan menyingkapkan anomali pada band frekuensi menengah yang konsisten antar-arsitektur GAN [25]. Sementara itu, pembelajaran adaptif pada representasi frekuensi seperti *Frequency-aware Clues* [13] dan *Frequency-Aware Deepfake Detection* berbasis spektrum [22] meningkatkan kemampuan generalisasi terhadap teknik sintesis baru dan citra terkompresi. Konvergensi ketiga pendekatan ini menunjukkan bahwa jejak generatif paling stabil bukan pada piksel, melainkan pada distribusi spektralnya.
+> Untuk mengatasi keterbatasan tersebut, riset deteksi *deepfake* bergeser ke domain frekuensi. Pendekatan berbasis *Fast Fourier Transform* (FFT) memanfaatkan asimetri spektral pada citra GAN dan terbukti dapat membedakan citra sintetis dari citra natural meski manipulasi visualnya tidak terlihat di domain spasial (Durall et al., 2020). Pendekatan berbasis *Discrete Cosine Transform* (DCT) bekerja pada koefisien blok dan menyingkapkan anomali pada band frekuensi menengah yang konsisten antar-arsitektur GAN (Giudice et al., 2021). Sementara itu, pembelajaran adaptif pada representasi frekuensi seperti *Frequency-aware Clues* (Qian et al., 2020) dan *Frequency-Aware Deepfake Detection* berbasis spektrum (Tan et al., 2024) meningkatkan kemampuan generalisasi terhadap teknik sintesis baru dan citra terkompresi. Konvergensi ketiga pendekatan ini menunjukkan bahwa jejak generatif paling stabil bukan pada piksel, melainkan pada distribusi spektralnya.
 
-*Catatan referensi:* [7] Durall ✓, [13] Qian ✓, [22] Tan ✓, [25] Giudice ✓. Semua sudah ada di daftar pustaka v2.
+*Catatan referensi:* (Durall et al., 2020) ✓, (Qian et al., 2020) ✓, (Tan et al., 2024) ✓, (Giudice et al., 2021) ✓. Semua sudah ada di daftar pustaka v2.
 
 ---
 
@@ -74,27 +75,27 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 
 **Tambahkan setelah paragraf 5 baru (sebelum paragraf 7 lama):**
 
-> Di luar laboratorium, detektor *deepfake* harus menghadapi distribusi data yang sangat berbeda dari data pelatihan: generator baru bermunculan setiap tahun, kompresi platform sosial bervariasi, dan teknik pasca-pemrosesan adversarial dipakai untuk menyamarkan jejak. Studi sistematis melaporkan penurunan AUC 10–20 poin ketika detektor berbasis CNN spasial dipindahkan dari satu dataset ke dataset lain [10, 11]. Karena itu, kemampuan **generalisasi lintas dataset** — bukan akurasi *in-domain* — adalah metrik yang paling relevan untuk menilai kelayakan deteksi *deepfake* di dunia nyata, dan menjadi fokus utama penelitian ini.
+> Di luar laboratorium, detektor *deepfake* harus menghadapi distribusi data yang sangat berbeda dari data pelatihan: generator baru bermunculan setiap tahun, kompresi platform sosial bervariasi, dan teknik pasca-pemrosesan adversarial dipakai untuk menyamarkan jejak. Studi sistematis melaporkan penurunan AUC 10 hingga 20 poin ketika detektor berbasis CNN spasial dipindahkan dari satu dataset ke dataset lain (Rana et al., 2022; Rao & Uehara, 2025). Karena itu, kemampuan **generalisasi lintas dataset**, bukan akurasi *in-domain*, adalah metrik yang paling relevan untuk menilai kelayakan deteksi *deepfake* di dunia nyata, dan menjadi fokus utama penelitian ini.
 
-*Catatan referensi:* [10] Rana et al. 2022 (systematic review, eksplisit melaporkan drop cross-dataset) ✓, [11] Rao & Uehara 2025 (chronological review) ✓. **Klaim "10–20 poin AUC drop" perlu dicocokkan dengan angka di paper [10] atau [11]; jika tidak presisi, ganti jadi "penurunan AUC yang signifikan" tanpa angka.**
+*Catatan referensi:* (Rana et al., 2022) (systematic review, eksplisit melaporkan drop cross-dataset) ✓, (Rao & Uehara, 2025) (chronological review) ✓. **Klaim "10 hingga 20 poin AUC drop" perlu dicocokkan dengan angka di paper Rana atau Rao; jika tidak presisi, ganti jadi "penurunan AUC yang signifikan" tanpa angka.**
 
 ---
 
 ### B.5 Latar Belakang — Paragraf 7 & 8 (kontradiksi) — reframe (P2-LB-LB-4)
 
 **Lama paragraf 7 (baris 549):**
-> Beberapa penelitian menunjukkan bahwa gabungan antara dua domain ini, dapat meningkatkan kemampuan generalisasi model terhadap *deepfake* lawas maupun baru, sekaligus menekan *overfitting* terhadap dataset tertentu [10, 11, 12]. …
+> Beberapa penelitian menunjukkan bahwa gabungan antara dua domain ini, dapat meningkatkan kemampuan generalisasi model terhadap *deepfake* lawas maupun baru, sekaligus menekan *overfitting* terhadap dataset tertentu (Rana et al., 2022; Rao & Uehara, 2025; Kim et al., 2025). …
 
 **Lama paragraf 8 (baris 551):**
 > Berdasarkan uraian tersebut, terdapat *research gap* dalam penelitian deteksi *deepfake*, yaitu belum adanya pendekatan yang secara terpadu mengombinasikan analisis domain spasial dan domain frekuensi dalam satu arsitektur yang dioptimalkan untuk meningkatkan kemampuan generalisasi lintas *dataset*. …
 
 **Baru paragraf 7 (reframe potensi, bukan absen):**
-> Studi awal hibridisasi domain spasial dan frekuensi telah menunjukkan **potensi** peningkatan generalisasi. *SpecXNet* menggabungkan cabang spasial *XceptionNet* dengan cabang frekuensi untuk meningkatkan ketahanan deteksi terhadap berbagai manipulasi [9]; *FSBI* memanfaatkan *self-blended image* yang ditingkatkan frekuensi untuk memperkuat generalisasi lintas dataset [18]; *Frequency-Domain Masking* mengintegrasikan informasi spasial dan frekuensi melalui mekanisme adaptif [20]. Studi-studi ini berhasil membuktikan bahwa fusi dua domain bermanfaat, tetapi sebagian besar masih dioptimalkan untuk performa *in-domain* pada FaceForensics++, dan belum mengevaluasi secara sistematis fusi *late* + *gating* sebagai mekanisme spesifik untuk meningkatkan robustness lintas dataset.
+> Studi awal hibridisasi domain spasial dan frekuensi telah menunjukkan **potensi** peningkatan generalisasi. *SpecXNet* menggabungkan cabang spasial *XceptionNet* dengan cabang frekuensi untuk meningkatkan ketahanan deteksi terhadap berbagai manipulasi (Alam et al., 2025). *FSBI* memanfaatkan *self-blended image* yang ditingkatkan frekuensi untuk memperkuat generalisasi lintas dataset (Hasanaath et al., 2023). *Frequency-Domain Masking* mengintegrasikan informasi spasial dan frekuensi melalui mekanisme adaptif (Luo & Wang, 2025). Studi-studi ini berhasil membuktikan bahwa fusi dua domain bermanfaat, tetapi sebagian besar masih dioptimalkan untuk performa *in-domain* pada FaceForensics++, dan belum mengevaluasi secara sistematis fusi *late* dan *gating* sebagai mekanisme spesifik untuk meningkatkan robustness lintas dataset.
 
 **Baru paragraf 8 (gap spesifik, bukan absen):**
-> Penelitian ini mengisi celah tersebut dengan mengusulkan **arsitektur hybrid XceptionNet–FFT dengan *late fusion* dan *Squeeze-and-Excitation gating*** yang dioptimalkan untuk generalisasi lintas dataset. Berbeda dari pekerjaan sebelumnya yang berfokus pada *in-domain accuracy*, penelitian ini secara eksplisit mengevaluasi skenario FFPP→CDF dan CDF→FFPP untuk mengukur seberapa besar fitur frekuensi mampu menahan *performance drop* yang lazim terjadi pada detektor spasial murni.
+> Penelitian ini mengisi celah tersebut dengan mengusulkan **arsitektur hybrid XceptionNet dan FFT dengan *late fusion* dan *Squeeze-and-Excitation gating*** yang dioptimalkan untuk generalisasi lintas dataset. Berbeda dari pekerjaan sebelumnya yang berfokus pada *in-domain accuracy*, penelitian ini secara eksplisit mengevaluasi skenario FFPP ke CDF dan CDF ke FFPP untuk mengukur seberapa besar fitur frekuensi mampu menahan *performance drop* yang lazim terjadi pada detektor spasial murni.
 
-*Catatan referensi:* [9] Alam SpecXNet ✓, [18] Hasanaath FSBI ✓, [20] Luo ✓. **Menghapus klaim "belum ada hybrid" yang kontradiktif.**
+*Catatan referensi:* (Alam et al., 2025) SpecXNet ✓, (Hasanaath et al., 2023) FSBI ✓, (Luo & Wang, 2025) ✓. **Menghapus klaim "belum ada hybrid" yang kontradiktif.**
 
 ---
 
@@ -144,18 +145,18 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 **Tambahkan ke Ruang Lingkup poin 1:**
 
 > 1. Cakupan Data: Penelitian menggunakan **video** dari dua dataset publik yang kemudian diekstraksi menjadi **frame citra** untuk diproses model:
->    a. **FaceForensics++** [19] (repositori: `https://github.com/ondyari/FaceForensics`), kompresi *high-quality* (c23), dengan empat metode manipulasi (*Deepfakes, Face2Face, FaceSwap, NeuralTextures*).
->    b. **Celeb-DF v2** [33] (repositori: `https://github.com/yuezunli/celeb-deepfakeforensics`), kategori *celebrity face-swap*.
->    Pengambilan sampel dilakukan dengan rasio 50:50 antara kelas asli dan kelas manipulasi, dan pemisahan *train/val/test* dilakukan pada level video untuk menghindari kebocoran *frame*. Penelitian tidak mencakup deteksi manipulasi audio atau *text-based deepfake*.
+>    a. **FaceForensics++** (Rössler et al., 2019), repositori `https://github.com/ondyari/FaceForensics`, kompresi *high-quality* (c23), dengan empat metode manipulasi (*Deepfakes*, *Face2Face*, *FaceSwap*, *NeuralTextures*).
+>    b. **Celeb-DF v2** (Li et al., 2020), repositori `https://github.com/yuezunli/celeb-deepfakeforensics`, kategori *celebrity face-swap*.
+>    Pengambilan sampel dilakukan dengan rasio 50:50 antara kelas asli dan kelas manipulasi, dan pemisahan *train, val, test* dilakukan pada level video untuk menghindari kebocoran *frame*. Penelitian tidak mencakup deteksi manipulasi audio atau *text-based deepfake*.
 
 **Tabel total dataset (sisipkan setelah daftar Ruang Lingkup):**
 
 | Dataset | Real videos | Fake videos | Total frame (~) | Sumber |
 |---|---|---|---|---|
-| FaceForensics++ (n=1000, c23) | 500 | 500 | ~50.000 | [19] |
-| Celeb-DF v2 (n=750) | 375 | 375 | ~37.500 | [33] (baru) |
+| FaceForensics++ (n=1000, c23) | 500 | 500 | ~50.000 | (Rössler et al., 2019) |
+| Celeb-DF v2 (n=750) | 375 | 375 | ~37.500 | (Li et al., 2020) |
 
-*Catatan referensi:* **[33] Li et al. 2020 "Celeb-DF: A Large-scale Challenging Dataset for DeepFake Forensics" CVPR — BELUM ADA di Daftar Pustaka v2** (terakhir [32]). Wajib ditambahkan. Atau jika nomor lain dipakai, sesuaikan.
+*Catatan referensi:* Li et al. 2020 "Celeb-DF: A Large-scale Challenging Dataset for DeepFake Forensics" CVPR sudah ada di Daftar Pustaka v2 sebagai entri Celeb-DF; gunakan format (Li et al., 2020).
 
 ---
 
@@ -163,42 +164,42 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 
 ### C.1 Subbab 2.3.4 — Pendekatan Hybrid: tambah sitasi pada "dua strategi utama" (P2-2.3.4)
 
-Tambahkan sitasi `[9, 18, 30]` segera setelah frasa "dua strategi utama" dan tulis ulang paragraf pembuka strategi:
+Tambahkan sitasi (Alam et al., 2025; Hasanaath et al., 2023; Qian et al., 2020) segera setelah frasa "dua strategi utama" dan tulis ulang paragraf pembuka strategi:
 
-> Integrasi domain spasial dan domain frekuensi pada satu arsitektur deteksi *deepfake* umumnya mengikuti dua strategi utama, yaitu *early fusion* dan *late fusion* [9, 18, 30]. Pada *early fusion*, representasi frekuensi (misalnya peta magnitude FFT) digabungkan dengan citra RGB sebagai kanal tambahan sebelum masuk ke *backbone* sehingga jaringan mempelajari fitur dari kedua domain secara bersamaan; pendekatan ini dianut antara lain oleh *Frequency-aware Clues* yang menyisipkan jalur frekuensi langsung pada tahap *input* [30]. Pada *late fusion*, masing-masing domain memiliki *backbone* sendiri yang fitur outputnya digabungkan pada tahap klasifikasi; pendekatan ini diadopsi oleh *SpecXNet* [9] dan *FSBI* [18], dan memberikan fleksibilitas dalam menambah modul fusi adaptif seperti *channel attention* atau *gating*.
+> Integrasi domain spasial dan domain frekuensi pada satu arsitektur deteksi *deepfake* umumnya mengikuti dua strategi utama, yaitu *early fusion* dan *late fusion* (Alam et al., 2025; Hasanaath et al., 2023; Qian et al., 2020). Pada *early fusion*, representasi frekuensi (misalnya peta magnitude FFT) digabungkan dengan citra RGB sebagai kanal tambahan sebelum masuk ke *backbone* sehingga jaringan mempelajari fitur dari kedua domain secara bersamaan. Pendekatan ini dianut antara lain oleh *Frequency-aware Clues* yang menyisipkan jalur frekuensi langsung pada tahap *input* (Qian et al., 2020). Pada *late fusion*, masing-masing domain memiliki *backbone* sendiri yang fitur outputnya digabungkan pada tahap klasifikasi. Pendekatan ini diadopsi oleh *SpecXNet* (Alam et al., 2025) dan *FSBI* (Hasanaath et al., 2023), dan memberikan fleksibilitas dalam menambah modul fusi adaptif seperti *channel attention* atau *gating*.
 
-*Catatan referensi:* [9] Alam ✓, [18] Hasanaath ✓, [30] Stack Overflow — **salah!** sebaiknya pakai [13] Qian "Thinking in Frequency" ✓ untuk strategi *early-style*.
+*Catatan referensi:* (Alam et al., 2025) ✓, (Hasanaath et al., 2023) ✓. Sumber Stack Overflow di v2 sebaiknya diganti dengan (Qian et al., 2020) "Thinking in Frequency" untuk strategi *early-style*.
 
 ---
 
 ### C.2 Subbab 2.9.4 — Depthwise Separable Convolution (P2-2.9.4)
 
-Pastikan sitasi `[6]` (Chollet) muncul tepat pada **definisi** *depthwise separable convolution* dan pada persamaan (2.5)/(2.6):
+Pastikan sitasi (Chollet, 2017) muncul tepat pada **definisi** *depthwise separable convolution* dan pada persamaan (2.5) atau (2.6):
 
-> *Depthwise separable convolution* adalah dekomposisi konvolusi standar menjadi dua tahap berurutan — *depthwise convolution* yang mengoperasikan kernel terpisah pada tiap kanal *input*, dan *pointwise convolution* (1×1) yang menggabungkan kanal — yang diformulasikan oleh Chollet [6] sebagai dasar arsitektur *Xception*. Dekomposisi ini secara signifikan menurunkan kompleksitas komputasi dari `K² × M × N` (standar) menjadi `K² × M + M × N` (DSC), seperti yang dijelaskan pada persamaan (2.5)–(2.9).
+> *Depthwise separable convolution* adalah dekomposisi konvolusi standar menjadi dua tahap berurutan, yaitu *depthwise convolution* yang mengoperasikan kernel terpisah pada tiap kanal *input*, dan *pointwise convolution* (1×1) yang menggabungkan kanal. Dekomposisi ini diformulasikan oleh Chollet (2017) sebagai dasar arsitektur *Xception*. Operasi ini secara signifikan menurunkan kompleksitas komputasi dari `K² × M × N` (standar) menjadi `K² × M + M × N` (DSC), seperti yang dijelaskan pada persamaan (2.5) hingga (2.9).
 
-Sitasi [6] sudah benar — Chollet 2017.
+Sitasi (Chollet, 2017) sudah benar.
 
 ---
 
 ### C.3 Subbab 2.10.1 — XceptionNet (P2-2.10.1)
 
-**Tindakan:** sisipkan gambar arsitektur XceptionNet (Entry flow → Middle flow × 8 → Exit flow) dari Chollet [6]. Caption: "Gambar 2.X Arsitektur XceptionNet [6]".
+**Tindakan:** sisipkan gambar arsitektur XceptionNet (Entry flow, Middle flow × 8, Exit flow) dari Chollet (2017). Caption: "Gambar 2.X Arsitektur XceptionNet (Chollet, 2017)".
 
 **Rewrite paragraf pembuka 2.10.1** (lebih faktual, bukan kutipan):
 
 **Lama (baris 1193 lingkungan):** "Penelitian oleh *Rössler et al.* menunjukkan bahwa *XceptionNet* mencapai akurasi deteksi hingga 99,26% pada data mentah …"
 
 **Baru (faktual, bukan "menurut"):**
-> Pada *benchmark* FaceForensics++ tanpa kompresi, *XceptionNet* mencapai 99,26% AUC dan melampaui *ResNet-50* maupun *MesoNet*; namun akurasi turun ke 81,00% pada kompresi berat (c40), menunjukkan ketergantungan model pada artefak visual berfrekuensi tinggi yang rusak oleh kompresi [19, 3].
+> Pada *benchmark* FaceForensics++ tanpa kompresi, *XceptionNet* mencapai 99,26% AUC dan melampaui *ResNet-50* maupun *MesoNet*. Namun, akurasi turun ke 81,00% pada kompresi berat (c40), menunjukkan ketergantungan model pada artefak visual berfrekuensi tinggi yang rusak oleh kompresi (Rössler et al., 2019; Haq, 2021).
 
 ---
 
 ### C.4 Subbab 2.11.1 & 2.11.2 — Squeeze-and-Excitation (P2-2.11)
 
-**Tambahkan referensi baru** ke daftar pustaka: **Hu, J., Shen, L., & Sun, G. (2018). Squeeze-and-Excitation Networks. CVPR.** — diusulkan sebagai **[34]**.
+**Tambahkan referensi baru** ke daftar pustaka: **Hu, J., Shen, L., & Sun, G. (2018). Squeeze-and-Excitation Networks. CVPR.**
 
-Sisipkan sitasi `[34]` pada definisi *channel attention*, rumus *squeeze* + *excitation*, dan deskripsi blok SE.
+Sisipkan sitasi (Hu et al., 2018) pada definisi *channel attention*, rumus *squeeze* dan *excitation*, dan deskripsi blok SE.
 
 ---
 
@@ -208,31 +209,31 @@ Sisipkan sitasi `[34]` pada definisi *channel attention*, rumus *squeeze* + *exc
 
 ---
 
-### C.6 Ubah pola "Menurut / X et al. menunjukkan" → kalimat faktual (permintaan utama Anda)
+### C.6 Ubah pola "Menurut / X et al. menunjukkan" menjadi kalimat faktual (permintaan utama Anda)
 
 Identifikasi terdapat **17+ kalimat** dengan pola `*X et al*. menunjukkan/menemukan/mengusulkan …`. Pola ini terbaca seperti rangkuman kutipan, bukan pembuktian. Rumus penggantinya:
 
-> **Lama:** *X et al.* menunjukkan bahwa *Y* [N].
-> **Baru:** *Y* — secara teknis disebabkan oleh *mekanisme M*, dengan bukti pada *dataset/benchmark Z* [N].
+> **Lama:** *X et al.* menunjukkan bahwa *Y* (Penulis, Tahun).
+> **Baru:** *Y*, secara teknis disebabkan oleh *mekanisme M*, dengan bukti pada *dataset atau benchmark Z* (Penulis, Tahun).
 
 Contoh konkret yang harus diubah:
 
 | Lokasi (baris) | Lama | Baru |
 |---|---|---|
-| 547 | "*Durall et al*. menunjukkan bahwa sebagian besar *deepfake* generator gagal dalam mereplikasi spektrum frekuensi alami citra manusia …" | "Sebagian besar generator *deepfake* gagal mereplikasi distribusi spektral citra natural pada frekuensi tinggi: pengukuran *azimuthal frequency profile* memperlihatkan kelebihan energi konsisten pada *frame* sintetis di lima arsitektur GAN yang diuji [7]." |
-| 793 | "Penelitian *Durall et al.* menemukan bahwa jaringan GAN gagal mereproduksi distribusi spektral …" | "Jaringan GAN dengan operasi *upsampling* transposed-convolution secara sistematis menghasilkan distribusi spektral yang lebih landai (*spectral fall-off*) dibanding citra natural, sehingga rasio energi *high-band* terhadap *low-band* dapat dijadikan ciri pembeda [7]." |
-| 837 | "*Durall et al*. menunjukkan bahwa operasi *up-convolution* sering menghasilkan pola spektral …" | "Operasi *up-convolution* dengan *stride* > 1 menghasilkan pola periodik di domain frekuensi karena *kernel overlap* yang tidak seragam — fenomena yang dikenal sebagai *checkerboard artifact* [7, 16]." |
-| 1007 | "Menurut *Chadha et al*, istilah *deepfake* berasal dari …" | "Istilah *deepfake* terbentuk dari gabungan *deep learning* dan *fake*, merujuk pada konten visual atau audio yang dimodifikasi dengan jaringan saraf dalam hingga menyerupai rekaman asli [14]." |
-| 1193 | "Penelitian oleh *Rössler et al.* menunjukkan bahwa *XceptionNet* mencapai akurasi …" | "Pada FaceForensics++ *raw*, XceptionNet mencapai 99,26% AUC; pada c40 turun ke 81,00%, menunjukkan dependensi pada artefak *high-frequency* yang rusak oleh kompresi [19, 3]." |
-| 1255 | "*Durall et al.* menunjukkan bahwa citra GAN menghasilkan pola energi frekuensi tinggi yang berlebihan …" | "Pengukuran energi spektral azimuth pada citra GAN menunjukkan kelebihan energi pada band frekuensi tinggi dibanding citra natural, beserta penguatan harmonik akibat *upsampling* yang tidak ideal [7]." |
-| 1341 | "Studi oleh Durall et al. menunjukkan bahwa model GAN meninggalkan pola *high-frequency artifacts* …" | "Model GAN meninggalkan pola *high-frequency artifacts* yang konsisten lintas arsitektur, terutama akibat operasi *upsampling* dan ketidakseimbangan kernel konvolusi [7], dan distribusi frekuensi yang berbeda secara signifikan dari citra asli menjadi dasar metode deteksi domain frekuensi [8]." |
-| 1347 | "Studi oleh Sabir et al. menunjukkan bahwa *deepfake* sering menampilkan pola-pola tidak stabil …" | "Manipulasi *frame-by-frame* tanpa konsistensi temporal menghasilkan *jittering* dan *flickering* yang dapat dideteksi dengan analisis spasial-frekuensi per-*frame* [35]." (sitasi Sabir perlu diverifikasi — di v2.md disitasi `[37]` namun daftar pustaka v2 berhenti di [32]; **wajib cek**) |
-| 1443 | "Penelitian *Durall et al*. menunjukkan bahwa citra sintetis memiliki distribusi frekuensi global yang berbeda secara konsisten …" → diperkuat *Qian et al.* … | "Distribusi frekuensi global citra sintetis berbeda secara konsisten dari citra natural [7], dan generator *deepfake* gagal mereplikasi *natural image statistics* pada frekuensi tinggi karena bias *upsampling* [13]." |
+| 547 | "*Durall et al*. menunjukkan bahwa sebagian besar *deepfake* generator gagal dalam mereplikasi spektrum frekuensi alami citra manusia …" | "Sebagian besar generator *deepfake* gagal mereplikasi distribusi spektral citra natural pada frekuensi tinggi. Pengukuran *azimuthal frequency profile* memperlihatkan kelebihan energi konsisten pada *frame* sintetis di lima arsitektur GAN yang diuji (Durall et al., 2020)." |
+| 793 | "Penelitian *Durall et al.* menemukan bahwa jaringan GAN gagal mereproduksi distribusi spektral …" | "Jaringan GAN dengan operasi *upsampling* transposed-convolution secara sistematis menghasilkan distribusi spektral yang lebih landai (*spectral fall-off*) dibanding citra natural, sehingga rasio energi *high-band* terhadap *low-band* dapat dijadikan ciri pembeda (Durall et al., 2020)." |
+| 837 | "*Durall et al*. menunjukkan bahwa operasi *up-convolution* sering menghasilkan pola spektral …" | "Operasi *up-convolution* dengan *stride* lebih dari 1 menghasilkan pola periodik di domain frekuensi karena *kernel overlap* yang tidak seragam. Fenomena ini dikenal sebagai *checkerboard artifact* (Durall et al., 2020; Odena et al., 2016)." |
+| 1007 | "Menurut *Chadha et al*, istilah *deepfake* berasal dari …" | "Istilah *deepfake* terbentuk dari gabungan *deep learning* dan *fake*, merujuk pada konten visual atau audio yang dimodifikasi dengan jaringan saraf dalam hingga menyerupai rekaman asli (Chadha et al., 2021)." |
+| 1193 | "Penelitian oleh *Rössler et al.* menunjukkan bahwa *XceptionNet* mencapai akurasi …" | "Pada FaceForensics++ *raw*, XceptionNet mencapai 99,26% AUC. Pada c40 nilai tersebut turun ke 81,00%, menunjukkan dependensi pada artefak *high-frequency* yang rusak oleh kompresi (Rössler et al., 2019; Haq, 2021)." |
+| 1255 | "*Durall et al.* menunjukkan bahwa citra GAN menghasilkan pola energi frekuensi tinggi yang berlebihan …" | "Pengukuran energi spektral azimuth pada citra GAN menunjukkan kelebihan energi pada band frekuensi tinggi dibanding citra natural, beserta penguatan harmonik akibat *upsampling* yang tidak ideal (Durall et al., 2020)." |
+| 1341 | "Studi oleh Durall et al. menunjukkan bahwa model GAN meninggalkan pola *high-frequency artifacts* …" | "Model GAN meninggalkan pola *high-frequency artifacts* yang konsisten lintas arsitektur, terutama akibat operasi *upsampling* dan ketidakseimbangan kernel konvolusi (Durall et al., 2020). Distribusi frekuensi yang berbeda secara signifikan dari citra asli menjadi dasar metode deteksi domain frekuensi (Zhang et al., 2019)." |
+| 1347 | "Studi oleh Sabir et al. menunjukkan bahwa *deepfake* sering menampilkan pola-pola tidak stabil …" | "Manipulasi *frame-by-frame* tanpa konsistensi temporal menghasilkan *jittering* dan *flickering* yang dapat dideteksi dengan analisis spasial-frekuensi per-*frame* (Sabir et al., 2019)." (sitasi Sabir perlu diverifikasi keberadaannya pada daftar pustaka final) |
+| 1443 | "Penelitian *Durall et al*. menunjukkan bahwa citra sintetis memiliki distribusi frekuensi global yang berbeda secara konsisten …" diperkuat *Qian et al.* … | "Distribusi frekuensi global citra sintetis berbeda secara konsisten dari citra natural (Durall et al., 2020). Generator *deepfake* gagal mereplikasi *natural image statistics* pada frekuensi tinggi karena bias *upsampling* (Qian et al., 2020)." |
 
 **Pola umum:**
-- Hapus subjek "*X et al*. menunjukkan/menemukan" — pindahkan klaim faktual menjadi kalimat utama.
+- Hapus subjek "*X et al*. menunjukkan atau menemukan", pindahkan klaim faktual menjadi kalimat utama.
 - Tambahkan mekanisme teknis (mengapa fenomena itu terjadi) di antara klaim dan sitasi.
-- Pertahankan sitasi `[N]` di akhir kalimat untuk attribution.
+- Pertahankan sitasi (Penulis, Tahun) di akhir kalimat untuk attribution.
 
 ---
 
@@ -244,8 +245,8 @@ Sisipkan **sebelum** Tabel 3.1 (Variabel Penelitian) tabel berikut dengan captio
 
 | Dataset | Versi | Real videos | Fake videos | Total videos | Frame rate ekstraksi | Total frame (~) | Sumber |
 |---|---|---|---|---|---|---|---|
-| FaceForensics++ | c23 (HQ) | 500 | 500 (125 per metode × 4 metode) | 1.000 | 5 fps, max 50 *frame*/video | 50.000 | [19] |
-| Celeb-DF | v2 | 375 | 375 | 750 | 5 fps, max 50 *frame*/video | 37.500 | [33] |
+| FaceForensics++ | c23 (HQ) | 500 | 500 (125 per metode × 4 metode) | 1.000 | 5 fps, max 50 *frame*/video | 50.000 | (Rössler et al., 2019) |
+| Celeb-DF | v2 | 375 | 375 | 750 | 5 fps, max 50 *frame*/video | 37.500 | (Li et al., 2020) |
 
 ---
 
@@ -271,7 +272,7 @@ output : frame yang tersimpan sebagai .jpg
 ```
 
 **Tambahkan justifikasi:**
-> Pemilihan 5 fps dan maksimum 50 *frame*/video merupakan kompromi antara cakupan temporal dan ukuran *dataset*. Pada 30 fps native, 5 fps memberikan satu sampel setiap 200 ms — cukup untuk menangkap variasi ekspresi tanpa redundansi *frame*. Batas 50 *frame*/video membatasi total *frame* FFPP n=1000 ke ~50.000, ukuran yang dapat dilatih pada satu sesi Colab Pro tanpa mengorbankan keberagaman video.
+> Pemilihan 5 fps dan maksimum 50 *frame*/video merupakan kompromi antara cakupan temporal dan ukuran *dataset*. Pada 30 fps native, 5 fps memberikan satu sampel setiap 200 ms, yang cukup untuk menangkap variasi ekspresi tanpa redundansi *frame*. Batas 50 *frame*/video membatasi total *frame* FFPP n=1000 ke ~50.000, ukuran yang dapat dilatih pada satu sesi Colab Pro tanpa mengorbankan keberagaman video.
 
 ---
 
@@ -295,7 +296,7 @@ Pindahkan Gambar 3.8 (diagram HybridTwoBranch) dari akhir 3.4.4 ke **awal** subb
 Tambahkan dua *figure*:
 
 - **Gambar 3.X**: grid 5 kolom × 2 baris menunjukkan output dari masing-masing transformasi (Resize → RandomResizedCrop → ColorJitter → HorizontalFlip → RandomErasing).
-- **Gambar 3.Y**: pasangan citra FFT — kiri tanpa augmentasi, kanan dengan Gaussian noise injection + spectral band masking.
+- **Gambar 3.Y**: pasangan citra FFT, sisi kiri tanpa augmentasi, sisi kanan dengan Gaussian noise injection dan spectral band masking.
 
 ---
 
@@ -317,60 +318,66 @@ Tambahkan subbab akhir BAB III:
 
 ## E. Verifikasi sitasi vs Daftar Pustaka v2
 
-| Sitasi yang dirujuk plan/dokumen | Nomor di Daftar Pustaka v2 | Status |
-|---|---|---|
-| Korshunov 2019 | [1] | ✓ ada |
-| Andira & Susila 2024 | [2] | ✓ ada |
-| Haq 2021 (Xception+ResNet) | [3] | ✓ ada |
-| Afchar (MesoNet) | [4] | ✓ ada |
-| He (ResNet) | [5] | ✓ ada |
-| Chollet (Xception) | [6] | ✓ ada |
-| Durall (Watch your Up-Convolution) | [7] | ✓ ada |
-| Zhang (GAN artifacts) | [8] | ✓ ada |
-| Alam (SpecXNet) | [9] | ✓ ada |
-| Rana (Systematic Review) | [10] | ✓ ada |
-| Rao (Chronological Review) | [11] | ✓ ada |
-| Kim (Beyond Spatial Frequency) | [12] | ✓ ada |
-| Qian (Thinking in Frequency) | [13] | ✓ ada |
-| Chadha (Overview) | [14] | ✓ ada |
-| Aduwala | [15] | ✓ ada |
-| Odena (Checkerboard) | [16] | ✓ ada |
-| Dai (Affinity-aware upsampling) | [17] | ✓ ada |
-| Hasanaath (FSBI) | [18] | ✓ ada |
-| Rossler (FF++) | [19] | ✓ ada |
-| Luo (Frequency-Domain Masking) | [20] | ✓ ada |
-| Wikimedia (2D Fourier) | [21] | ✓ ada |
-| Tan (Frequency-Aware) | [22] | ✓ ada |
-| Karras (ProGAN) | [23] | ✓ ada |
-| Mejri (High-Frequency) | [24] | ✓ ada |
-| Giudice (DCT anomalies) | [25] | ✓ ada |
-| Nguyen (Spatio-temporal) | [26] | ✓ ada |
-| Guera (RNN) | [27] | ✓ ada |
-| Gonzalez & Woods (DIP) | [28] | ✓ ada |
-| Oppenheim (DSP) | [29] | ✓ ada |
-| Stack Overflow (FFT image) | [30] | ✓ ada (tetapi sumber lemah — ganti dengan Gonzalez/Easton jika memungkinkan) |
-| Easton (Fundamentals) | [31] | ✓ ada |
-| LeCun (Deep Learning) | [32] | ✓ ada |
-| **Li et al. 2020 (Celeb-DF)** | **Tidak ada** | **WAJIB TAMBAH** sebagai [33] |
-| **Hu et al. 2018 (SE-Net)** | **Tidak ada** | **WAJIB TAMBAH** sebagai [34] |
-| Sabir 2019 | Tidak ada (terkutip di baris 1347 sebagai [37]) | **WAJIB CEK** — nomor [37] tidak ada di daftar v2. Tambahkan atau hapus klaim. |
+> Format sitasi yang digunakan pada hasil revisi adalah **(Penulis, Tahun)** mengikuti gaya pada `documents/BAB_III_Tahapan_Pelaksanaan_v3.md`. Tabel berikut memetakan nama penulis ke status keberadaan di Daftar Pustaka v2.
 
-**Catatan tentang [33] Celeb-DF:**
-> Y. Li, X. Yang, P. Sun, H. Qi, dan S. Lyu, "Celeb-DF: A Large-Scale Challenging Dataset for DeepFake Forensics," in *Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2020, hlm. 3207–3216. doi: 10.1109/CVPR42600.2020.00327.
+| Sitasi (Penulis, Tahun) | Status di Daftar Pustaka v2 |
+|---|---|
+| (Korshunov & Marcel, 2019) | ✓ ada |
+| (Andira & Susila, 2024) | ✓ ada |
+| (Haq, 2021) | ✓ ada |
+| (Afchar et al., 2018) | ✓ ada |
+| (He et al., 2015) | ✓ ada |
+| (Chollet, 2017) | ✓ ada |
+| (Durall et al., 2020) | ✓ ada |
+| (Zhang et al., 2019) | ✓ ada |
+| (Alam et al., 2025) | ✓ ada |
+| (Rana et al., 2022) | ✓ ada |
+| (Rao & Uehara, 2025) | ✓ ada |
+| (Kim et al., 2025) | ✓ ada |
+| (Qian et al., 2020) | ✓ ada |
+| (Chadha et al., 2021) | ✓ ada |
+| (Aduwala et al., 2021) | ✓ ada |
+| (Odena et al., 2016) | ✓ ada |
+| (Dai et al., 2021) | ✓ ada |
+| (Hasanaath et al., 2023) | ✓ ada |
+| (Rössler et al., 2019) | ✓ ada |
+| (Luo & Wang, 2025) | ✓ ada |
+| (Wikimedia Commons, 2018) | ✓ ada |
+| (Tan et al., 2024) | ✓ ada |
+| (Karras et al., 2018) | ✓ ada |
+| (Mejri et al., 2021) | ✓ ada |
+| (Giudice et al., 2021) | ✓ ada |
+| (Nguyen et al., 2021) | ✓ ada |
+| (Güera & Delp, 2018) | ✓ ada |
+| (Gonzalez & Woods, 2018) | ✓ ada |
+| (Oppenheim et al., 1989) | ✓ ada |
+| (Stack Overflow, n.d.) | ✓ ada (sumber lemah, sebaiknya diganti Gonzalez & Woods atau Easton bila memungkinkan) |
+| (Easton, 2010) | ✓ ada |
+| (LeCun et al., 2015) | ✓ ada |
+| (Haliassos et al., 2021) | ✓ ada |
+| (Akinrogunde et al., 2025) | ✓ ada |
+| (Li et al., 2020) Celeb-DF | ✓ ada |
+| (Ma et al., 2025) | ✓ ada |
+| (Sabir et al., 2019) | ✓ ada |
+| **(Hu et al., 2018) SE-Net** | **Belum ada, WAJIB TAMBAH** ke Daftar Pustaka. |
 
-**Catatan tentang [34] SE-Net:**
-> J. Hu, L. Shen, dan G. Sun, "Squeeze-and-Excitation Networks," in *Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2018, hlm. 7132–7141. doi: 10.1109/CVPR.2018.00745.
+**Catatan tentang (Li et al., 2020) Celeb-DF:**
+> Y. Li, X. Yang, P. Sun, H. Qi, dan S. Lyu, "Celeb-DF: A Large-Scale Challenging Dataset for DeepFake Forensics," dalam *Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2020, hlm. 3207 hingga 3216. doi: 10.1109/CVPR42600.2020.00327.
+
+**Catatan tentang (Hu et al., 2018) SE-Net:**
+> J. Hu, L. Shen, dan G. Sun, "Squeeze-and-Excitation Networks," dalam *Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2018, hlm. 7132 hingga 7141. doi: 10.1109/CVPR.2018.00745.
 
 ---
 
 ## F. Ringkasan eksekusi
 
-1. **Mulai dari BAB I.** Apply rewrite B.1–B.9 di atas ke dokumen sumber (Google Docs / `.docx`).
-2. **Tambah dua entri** Daftar Pustaka ([33] Celeb-DF, [34] SE-Net) sebelum memakai nomor itu di tubuh dokumen.
-3. **BAB II:** apply C.1–C.6. Untuk C.6 (penghilangan pola "X et al. menunjukkan") — gunakan tabel di C.6 sebagai *find-and-replace* checklist.
-4. **BAB III:** apply D.1–D.6.
-5. **Setelah selesai**: re-render PDF dan cross-check checklist di `documentation/thesis_improvements_2026-04-25.md` baris 215–229.
-6. **Catatan**: dokumen sumber BAB I/II ada di Google Docs / `.docx`, bukan di markdown. Markdown v2 terakhir di commit `d90dbcc`. Setelah revisi, pertimbangkan re-konversi ke markdown agar perubahan terlacak di git.
+1. **Mulai dari BAB I.** Apply rewrite B.1 hingga B.9 di atas ke dokumen sumber (Google Docs atau `.docx`).
+2. **Tambahkan entri** (Hu et al., 2018) untuk SE-Net ke Daftar Pustaka. Entri Celeb-DF (Li et al., 2020) sudah ada di Daftar Pustaka v2.
+3. **BAB II:** apply C.1 hingga C.6. Untuk C.6 (penghilangan pola "X et al. menunjukkan"), gunakan tabel di C.6 sebagai *find-and-replace* checklist.
+4. **BAB III:** apply D.1 hingga D.6.
+5. **Setelah selesai**: re-render PDF dan cross-check checklist di `documentation/thesis_improvements_2026-04-25.md` baris 215 hingga 229.
+6. **Catatan format sitasi**: seluruh hasil revisi memakai gaya (Penulis, Tahun) konsisten dengan `documents/BAB_III_Tahapan_Pelaksanaan_v3.md`, bukan gaya IEEE bernomor `[N]`.
+7. **Catatan sumber**: dokumen sumber BAB I dan BAB II ada di Google Docs atau `.docx`, bukan di markdown. Markdown v2 terakhir di commit `d90dbcc`. Setelah revisi, pertimbangkan re-konversi ke markdown agar perubahan terlacak di git.
 
 ---
 
