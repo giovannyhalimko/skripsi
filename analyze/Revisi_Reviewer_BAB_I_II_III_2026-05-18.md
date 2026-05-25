@@ -33,6 +33,23 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 
 > Format: **Lama** (kalimat persis dari `thesis_v2.md` baris 537–601) → **Baru** (usulan revisi) → *Catatan*.
 
+> **PENTING — penomoran paragraf bergeser.** Karena B.1 menggabungkan paragraf 1+2 lama menjadi satu, semua nomor paragraf sesudahnya turun satu. Untuk menghindari kebingungan saat menyunting linear (atas → bawah), gunakan **peta urutan final** di bawah ini dan acu **kalimat penutup ("titik") tiap paragraf**, bukan nomornya.
+
+#### Peta urutan final Latar Belakang (linear, atas → bawah)
+
+| Urutan baru | Sumber | Isi singkat | Diakhiri kalimat ("titik" anchor) |
+|---|---|---|---|
+| **¶1** | B.1 (gabung P1+P2 lama) | GAN/deepfake → porn → geopolitik | "…menjadikan deteksi otomatis *deepfake* bukan sekadar tantangan riset, melainkan kebutuhan forensik digital yang mendesak." |
+| **¶2** | B.2 (P3 lama) | MesoNet/ResNet/XceptionNet baseline | "…mengindikasikan ketergantungan model terhadap artefak visual khas dataset pelatihan." |
+| **¶3** | **P4 lama — TIDAK diubah** | kelemahan spasial / GAN fingerprints | "…yang tidak terlihat jelas dalam *spatial domain* [8]." |
+| **¶4** | B.3 (P5 lama) | pendekatan frekuensi FFT/DCT | "…melainkan pada distribusi spektralnya." |
+| **¶5** | P6 lama + perbaikan C.6 (baris 547) | Durall et al. + Alam et al. | "…memperkuat pentingnya integrasi dua domain analisis untuk menciptakan detektor *deepfake* yang lebih *robust*." |
+| **¶6 ← SISIPAN B.4** | B.4 (paragraf BARU) | urgensi generalisasi cross-dataset | "…dan menjadi fokus utama penelitian ini." |
+| **¶7** | B.5 paragraf 7 (reframe P7 lama) | SpecXNet/FSBI/FDM — potensi | "…sebagai mekanisme spesifik untuk meningkatkan robustness lintas dataset." |
+| **¶8** | B.5 paragraf 8 (reframe P8 lama) | gap spesifik + skenario FFPP↔CDF | "…yang lazim terjadi pada detektor spasial murni." |
+
+> Catatan: **P4 lama** (kelemahan spasial / GAN fingerprints) tidak punya bagian B sendiri — sengaja **dipertahankan apa adanya** sebagai ¶3. Jangan kaget paragraf itu "lewat" tanpa instruksi rewrite.
+
 ### B.1 Latar Belakang — Paragraf 1+2 digabung (menjawab P2-LB-1)
 
 **Lama (paragraf 1, baris 537):**
@@ -73,7 +90,11 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 
 ### B.4 Latar Belakang — Sisipkan paragraf baru: urgensi generalisasi cross-dataset (P2-LB-4 + P1)
 
-**Tambahkan setelah paragraf 5 baru (sebelum paragraf 7 lama):**
+**Titik sisipan (jadi ¶6 pada peta urutan final):**
+- **Setelah** paragraf (¶5) yang berakhir: *"…memperkuat pentingnya integrasi dua domain analisis untuk menciptakan detektor* deepfake *yang lebih* robust*."* (paragraf Durall et al. + Alam et al.)
+- **Sebelum** paragraf B.5 (¶7) yang dimulai: *"Studi awal hibridisasi domain spasial dan frekuensi telah menunjukkan **potensi** peningkatan generalisasi. SpecXNet…"*
+
+**Teks paragraf baru:**
 
 > Di luar laboratorium, detektor *deepfake* harus menghadapi distribusi data yang sangat berbeda dari data pelatihan: generator baru bermunculan setiap tahun, kompresi platform sosial bervariasi, dan teknik pasca-pemrosesan adversarial dipakai untuk menyamarkan jejak. Studi sistematis melaporkan penurunan AUC 10 hingga 20 poin ketika detektor berbasis CNN spasial dipindahkan dari satu dataset ke dataset lain (Rana et al., 2022; Rao & Uehara, 2025). Karena itu, kemampuan **generalisasi lintas dataset**, bukan akurasi *in-domain*, adalah metrik yang paling relevan untuk menilai kelayakan deteksi *deepfake* di dunia nyata, dan menjadi fokus utama penelitian ini.
 
@@ -82,6 +103,8 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 ---
 
 ### B.5 Latar Belakang — Paragraf 7 & 8 (kontradiksi) — reframe (P2-LB-LB-4)
+
+**Titik (jadi ¶7 dan ¶8, dua paragraf terakhir Latar Belakang):** kedua paragraf ini **menggantikan** dua paragraf lama terakhir, dan diletakkan **tepat setelah** paragraf sisipan B.4 (¶6) yang berakhir *"…dan menjadi fokus utama penelitian ini."* ¶8 adalah paragraf penutup Latar Belakang, langsung sebelum subbab **Rumusan Masalah**.
 
 **Lama paragraf 7 (baris 549):**
 > Beberapa penelitian menunjukkan bahwa gabungan antara dua domain ini, dapat meningkatkan kemampuan generalisasi model terhadap *deepfake* lawas maupun baru, sekaligus menekan *overfitting* terhadap dataset tertentu (Rana et al., 2022; Rao & Uehara, 2025; Kim et al., 2025). …
@@ -149,7 +172,11 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 >    b. **Celeb-DF v2** (Li et al., 2020), repositori `https://github.com/yuezunli/celeb-deepfakeforensics`, kategori *celebrity face-swap*.
 >    Pengambilan sampel dilakukan dengan rasio 50:50 antara kelas asli dan kelas manipulasi, dan pemisahan *train, val, test* dilakukan pada level video untuk menghindari kebocoran *frame*. Penelitian tidak mencakup deteksi manipulasi audio atau *text-based deepfake*.
 
-**Tabel total dataset (sisipkan setelah daftar Ruang Lingkup):**
+**Titik:** ganti isi poin 1 "Cakupan Data" yang lama (*"Data diuji dan dilatih menggunakan dataset … FaceForensics++ dan Celeb-DF …"*) dengan teks di atas. Poin 2–4 (Cakupan Metode, Evaluasi, Sistem) tetap.
+
+**Tabel total dataset (sisipkan setelah seluruh daftar Ruang Lingkup poin 1–4, sebelum paragraf penutup *"Dengan batasan ini…"*):**
+
+> **Versi HTML siap-paste:** [`documents/table/tabel_1_1_komposisi_dataset.html`](../documents/table/tabel_1_1_komposisi_dataset.html) — caption "Tabel 1.1 Komposisi total *dataset* yang digunakan" (tabel pertama di BAB I).
 
 | Dataset | Real videos | Fake videos | Total frame (~) | Sumber |
 |---|---|---|---|---|
@@ -241,7 +268,10 @@ Contoh konkret yang harus diubah:
 
 ### D.1 Subbab 3.2 — Tambahkan tabel total dataset (P2-BAB3-1)
 
-Sisipkan **sebelum** Tabel 3.1 (Variabel Penelitian) tabel berikut dengan caption "Tabel 3.X Komposisi total *dataset* yang digunakan":
+Sisipkan **sebelum** Tabel 3.1 lama tabel berikut dengan caption "Tabel 3.1 Komposisi total *dataset* yang digunakan":
+
+> **Versi HTML siap-paste:** [`documents/table/tabel_3_1_komposisi_total_dataset.html`](../documents/table/tabel_3_1_komposisi_total_dataset.html).
+> **Catatan penomoran:** tabel ini disisipkan sebagai **Tabel 3.1**, sehingga tabel-tabel BAB III yang sudah ada bergeser satu nomor (lama `tabel_3_1_pembagian_dataset` → 3.2, dst.). Penomoran ulang file HTML lama belum dilakukan — putuskan apakah ingin di-renumber massal atau menempatkan tabel baru ini sebagai nomor lain.
 
 | Dataset | Versi | Real videos | Fake videos | Total videos | Frame rate ekstraksi | Total frame (~) | Sumber |
 |---|---|---|---|---|---|---|---|
