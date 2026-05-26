@@ -191,11 +191,25 @@ Satu hal yang **dua-duanya lupa eksplisit**: keduanya menyebut nomor sitasi sepe
 
 ### C.1 Subbab 2.3.4 — Pendekatan Hybrid: tambah sitasi pada "dua strategi utama" (P2-2.3.4)
 
-Tambahkan sitasi (Alam et al., 2025; Hasanaath et al., 2023; Qian et al., 2020) segera setelah frasa "dua strategi utama" dan tulis ulang paragraf pembuka strategi:
+**Permintaan penguji (Pembanding 2):** *"Pada bab 2.3.4 bagian penjelasan 2 strategi Utama ini mengacu pada referensi mana? tidak ditemukan sitasi pada penjelasannya."* — ini **murni keluhan sitasi yang hilang**, bukan permintaan menulis ulang. Sejalan dengan kesimpulan penguji (*"cukup tuliskan yang akan penelitian ini kerjakan saja … fokus"* dan *"anak subab 1 paragraf cukup dibuat dalam bentuk point a, b / 1, 2"*), struktur bernomor 1./2. yang sudah ada **dipertahankan**. Cukup **sisipkan sitasi**, jangan diubah jadi paragraf mengalir.
 
-> Integrasi domain spasial dan domain frekuensi pada satu arsitektur deteksi *deepfake* umumnya mengikuti dua strategi utama, yaitu *early fusion* dan *late fusion* (Alam et al., 2025; Hasanaath et al., 2023; Qian et al., 2020). Pada *early fusion*, representasi frekuensi (misalnya peta magnitude FFT) digabungkan dengan citra RGB sebagai kanal tambahan sebelum masuk ke *backbone* sehingga jaringan mempelajari fitur dari kedua domain secara bersamaan. Pendekatan ini dianut antara lain oleh *Frequency-aware Clues* yang menyisipkan jalur frekuensi langsung pada tahap *input* (Qian et al., 2020). Pada *late fusion*, masing-masing domain memiliki *backbone* sendiri yang fitur outputnya digabungkan pada tahap klasifikasi. Pendekatan ini diadopsi oleh *SpecXNet* (Alam et al., 2025) dan *FSBI* (Hasanaath et al., 2023), dan memberikan fleksibilitas dalam menambah modul fusi adaptif seperti *channel attention* atau *gating*.
+**Tindakan (minimal — pertahankan struktur, injeksi sitasi):**
 
-*Catatan referensi:* (Alam et al., 2025) ✓, (Hasanaath et al., 2023) ✓. Sumber Stack Overflow di v2 sebaiknya diganti dengan (Qian et al., 2020) "Thinking in Frequency" untuk strategi *early-style*.
+1. Kalimat pembuka — tambahkan sitasi setelah "dua strategi utama":
+   > **Lama:** "Secara arsitektural, terdapat dua strategi utama dalam mengintegrasikan domain spasial dan frekuensi:"
+   > **Baru:** "Secara arsitektural, terdapat dua strategi utama dalam mengintegrasikan domain spasial dan frekuensi (Alam et al., 2025; Hasanaath et al., 2023; Qian et al., 2020):"
+
+2. Poin **1. *Early Fusion*** — tambahkan sitasi di akhir paragraf:
+   > … "memungkinkan model mempelajari interaksi antara fitur spasial dan frekuensi sejak lapisan konvolusi pertama, namun memerlukan arsitektur yang mampu menangani *input* multi-kanal secara efektif **(Qian et al., 2020)**."
+
+3. Poin **2. *Late Fusion* / *Two-Branch*** — ganti sitasi `[13]` lama dengan attribution yang benar:
+   > … "memungkinkan setiap *branch* untuk mengekstraksi fitur secara spesifik tanpa saling mengganggu **(Alam et al., 2025; Hasanaath et al., 2023)**."
+
+Paragraf penutup ("Dalam penelitian ini, kedua strategi *fusion* diimplementasikan…") **tetap, tidak diubah**.
+
+*Catatan referensi:* (Alam et al., 2025) SpecXNet ✓ (late fusion), (Hasanaath et al., 2023) FSBI ✓ (late fusion), (Qian et al., 2020) "Thinking in Frequency" ✓ (early-style). Sitasi `[13]` lama yang merujuk Stack Overflow sebaiknya **dihapus/diganti** dengan tiga sitasi di atas.
+
+> *Catatan:* versi tulis-ulang menjadi satu paragraf mengalir (draf sebelumnya) **tidak dipakai** karena menambah cakupan dan menghapus struktur bernomor — bertentangan dengan arahan "fokus" dan "gunakan point" dari penguji.
 
 ---
 
