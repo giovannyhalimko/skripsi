@@ -19,13 +19,13 @@ from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
 import metrics as metrics_mod
 
 
-def select_model(model_type: str, pretrained: bool):
+def select_model(model_type: str, pretrained: bool, freq_depth: int = 3, freq_base_channels: int = 32):
     if model_type == "spatial":
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
-        return FreqCNN(num_classes=1)
+        return FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
     if model_type == "hybrid":
-        return HybridTwoBranch(pretrained=pretrained)
+        return HybridTwoBranch(pretrained=pretrained, freq_depth=freq_depth, freq_base_channels=freq_base_channels)
     if model_type == "early_fusion":
         return EarlyFusionXception(pretrained=pretrained)
     raise ValueError(f"Unknown model_type {model_type}")
@@ -79,7 +79,12 @@ def main():
     dataset = DeepfakeDataset(ds_cfg)
     loader = DataLoader(dataset, batch_size=cfg.get("batch_size", 16), shuffle=False, num_workers=cfg.get("num_workers", 4), pin_memory=True, worker_init_fn=worker_init_fn)
 
-    model = select_model(args.model, pretrained=args.pretrained)
+    model = select_model(
+        args.model,
+        pretrained=args.pretrained,
+        freq_depth=cfg.get("freq_depth", 3),
+        freq_base_channels=cfg.get("freq_base_channels", 32),
+    )
     checkpoint = torch.load(args.checkpoint, map_location=device)
     model.load_state_dict(checkpoint["state_dict"] if isinstance(checkpoint, dict) and "state_dict" in checkpoint else checkpoint)
     model.to(device)
