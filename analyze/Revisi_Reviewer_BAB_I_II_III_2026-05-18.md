@@ -219,7 +219,20 @@ Pastikan sitasi (Chollet, 2017) muncul tepat pada **definisi** *depthwise separa
 
 > *Depthwise separable convolution* adalah dekomposisi konvolusi standar menjadi dua tahap berurutan, yaitu *depthwise convolution* yang mengoperasikan kernel terpisah pada tiap kanal *input*, dan *pointwise convolution* (1×1) yang menggabungkan kanal. Dekomposisi ini diformulasikan oleh Chollet (2017) sebagai dasar arsitektur *Xception*. Operasi ini secara signifikan menurunkan kompleksitas komputasi dari `K² × M × N` (standar) menjadi `K² × M + M × N` (DSC), seperti yang dijelaskan pada persamaan (2.5) hingga (2.9).
 
-Sitasi (Chollet, 2017) sudah benar.
+Sitasi (Chollet, 2017) sudah benar pada **definisi** ("Pendekatan ini diperkenalkan oleh Chollet [6]...").
+
+**Verifikasi dokumen terupdate (.docx OneDrive, 25 Mei) — 2 temuan:**
+
+1. **Penomoran persamaan:** di dokumen aktual, persamaan kompleksitas DSC ada di **(2.7)–(2.9)**, bukan (2.5)/(2.6) seperti tertulis di atas. Acuan nomor di poin C.2 ini dikoreksi menjadi (2.7) hingga (2.9):
+   - `C_standard = K²×M×N` → (2.7)
+   - `C_DSC = K²×M + M×N` → (2.8)
+   - `C_DSC ≪ C_standard` → (2.9)
+
+2. **Sitasi hilang di blok kompleksitas:** subbab "Kompleksitas Depthwise Separable Convolution" belum memuat (Chollet, 2017). Tambahkan pada kalimat pembuka blok tersebut:
+
+   > *Perbedaan signifikan antara konvolusi biasa dan depthwise separable convolution terletak pada kompleksitas komputasi, sebagaimana diformulasikan oleh Chollet (2017) [6].*
+
+   ( Subbab definisi sudah benar; perubahan ini hanya untuk blok persamaan (2.7)–(2.9).)
 
 ---
 
@@ -241,6 +254,26 @@ Sitasi (Chollet, 2017) sudah benar.
 **Tambahkan referensi baru** ke daftar pustaka: **Hu, J., Shen, L., & Sun, G. (2018). Squeeze-and-Excitation Networks. CVPR.**
 
 Sisipkan sitasi (Hu et al., 2018) pada definisi *channel attention*, rumus *squeeze* dan *excitation*, dan deskripsi blok SE.
+
+> **STATUS per 28 Mei (.docx tersimpan):** ✅ Sitasi di paragraf "Konsep Channel Attention" & seluruh rumus SE Block sudah ditambah; nomor sitasi sudah konsisten **[36]** di semua tempat (BAB II & III). ❗ **SISA SATU:** entri Daftar Pustaka masih 5 penulis + venue CVPR 2018 (lihat temuan #1 di bawah) — belum diperbaiki.
+
+**Verifikasi dokumen terupdate — 3 temuan:**
+
+**1. Referensi sudah ada tetapi TIDAK akurat.** Entri Daftar Pustaka saat ini:
+> "J. Hu, L. Shen, S. Albanie, G. Sun dan E. Wu, *Squeeze-and-Excitation Networks*, IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2018."
+
+Paper **CVPR 2018** SENet hanya memiliki **3 penulis**: Jie Hu, Li Shen, Gang Sun. Daftar 5 penulis (+ S. Albanie, E. Wu) adalah versi *extended* di **IEEE TPAMI 2020**, bukan CVPR 2018 — saat ini venue dan daftar penulis tercampur. Pilih salah satu bentuk yang konsisten:
+   - **CVPR 2018 (sesuai rencana C.4):** J. Hu, L. Shen, G. Sun, "Squeeze-and-Excitation Networks," *IEEE/CVF CVPR*, 2018, hlm. 7132–7141. — **hapus S. Albanie dan E. Wu.**
+   - **TPAMI 2020 (versi extended):** J. Hu, L. Shen, S. Albanie, G. Sun, E. Wu, "Squeeze-and-Excitation Networks," *IEEE TPAMI*, vol. 42, no. 8, hlm. 2011–2023, 2020. — ubah venue & tahun.
+
+**2. Nomor sitasi tidak konsisten:** sumber yang sama (`HuJ18`) ter-render `[35]` di BAB II tetapi `[42]` di BAB III. Lakukan **Update All Fields (Ctrl+A → F9)** di Word; jika tetap berbeda, periksa apakah ada entri bibliografi duplikat untuk SENet.
+
+**3. Penempatan sitasi — yang sudah ada vs perlu ditambah:**
+   - ✅ Kalimat pembuka subbab 2.11 ("SE-Net yang diperkenalkan oleh Hu et al. [35]")
+   - ✅ Paragraf "Relevansi SE Block untuk Fusi Multi-Domain" ([35])
+   - ✅ BAB III "Squeeze-and-Excitation (SE) Gating" ([42])
+   - ❌ **Paragraf "Konsep Channel Attention"** — tambahkan (Hu et al., 2018) di akhir kalimat definisi *channel attention*.
+   - ❌ **Blok "Arsitektur SE Block" + rumus (2.10) squeeze, (2.11) excitation, (2.12) scale** — tambahkan (Hu et al., 2018) pada kalimat pengantar blok atau setelah deskripsi rumus (2.12).
 
 ---
 
@@ -296,14 +329,19 @@ Sisipkan **sebelum** Tabel 3.1 lama tabel berikut dengan caption "Tabel 3.1 Komp
 
 ### D.2 Subbab 3.3.1 — Ekstraksi Frame (P1-BAB3 detail algoritma)
 
-**Tambahkan pseudocode setelah paragraf narasi yang sudah ada:**
+**Lokasi tepat (verifikasi .docx OneDrive, 25 Mei):** subbab 3.3.1 berisi paragraf pembuka + **daftar 6 langkah** (buka video → native FPS, hitung interval, ambil frame, simpan JPEG, infer label, multiprocessing + manifes CSV), lalu langsung ke subbab "Konversi Domain Frekuensi (FFT)".
+- **Pseudocode** (oleh penulis ditambahkan sebagai gambar/codesnap): sisipkan **setelah daftar 6 langkah** ("...referensi untuk tahap selanjutnya.") dan **sebelum** heading "Konversi Domain Frekuensi (FFT)". Beri caption **"Gambar 3.X Pseudocode ekstraksi frame dari video"** dan rujuk di teks (mis. akhir langkah ke-6: "...algoritma selengkapnya ditunjukkan pada Gambar 3.X.").
+- **Justifikasi** (paragraf di bawah): letakkan **tepat setelah gambar pseudocode**, masih dalam 3.3.1, sebelum subbab FFT.
+- **Konsistensi rumus:** teks dokumen memakai `interval = max(FPS_asli/FPS_target, 1)`, sedangkan pseudocode di bawah memakai `round(...)`. Samakan menjadi `interval ← max(round(native_fps / target_fps), 1)` agar tidak kontradiksi.
+
+**Pseudocode (untuk codesnap):**
 
 ```
 input  : path_video, target_fps = 5, max_frame = 50
 output : frame yang tersimpan sebagai .jpg
 
 1. buka video dengan OpenCV → ambil native_fps
-2. interval ← round(native_fps / target_fps)
+2. interval ← max(round(native_fps / target_fps), 1)
 3. frame_idx ← 0, saved ← 0
 4. selama saved < max_frame:
        baca frame ke-frame_idx
@@ -337,26 +375,80 @@ Pindahkan Gambar 3.8 (diagram HybridTwoBranch) dari akhir 3.4.4 ke **awal** subb
 
 ### D.5 Subbab 3.3.3 — Augmentasi visual (P2-augmentasi)
 
-Tambahkan dua *figure*:
+**Verifikasi dokumen + kode (.docx OneDrive 25 Mei vs `src/`):**
 
-- **Gambar 3.X**: grid 5 kolom × 2 baris menunjukkan output dari masing-masing transformasi (Resize → RandomResizedCrop → ColorJitter → HorizontalFlip → RandomErasing).
-- **Gambar 3.Y**: pasangan citra FFT, sisi kiri tanpa augmentasi, sisi kanan dengan Gaussian noise injection dan spectral band masking.
+Subbab "Augmentasi Data" sudah memuat tiga bagian: "Augmentasi Domain Spasial", "Augmentasi Domain Frekuensi" (pers. 3.10 Gaussian noise, pers. 3.11–3.12 *spectral band masking*), dan "Konsistensi Augmentasi pada Mode Hybrid". Figur untuk domain frekuensi **sudah ada** di `documents/media_v2/`: `gambar_3_3_spectral_band_masking.png` (band masking) dan `gambar_3_5_fft_real_vs_fake.png` (FFT real vs fake). Yang **belum ada hanyalah figur untuk "Augmentasi Domain Spasial" (RGB)**.
+
+**Koreksi penting (kode vs dokumen) — parameter band masking tidak cocok:**
+
+| Parameter | Dokumen (pers. 3.11–3.12) | Kode (`deepfake_data.py:135`) |
+|---|---|---|
+| Probabilitas band masking | **15%** | **5%** (`random.random() < 0.05`) |
+| Lebar pita | 2 s/d ⌊H/8⌋ | 1 s/d max(⌊H/16⌋, 2) |
+
+→ Samakan: ubah dokumen menjadi **probabilitas 5%** dan **lebar 1 s/d ⌊H/16⌋**, atau ubah kode agar sesuai dokumen. (Augmentasi RGB lain — Resize 256, RandomResizedCrop 224 scale 0.8–1.0, ColorJitter b/c=0.2 s=0.1 h=0.05, HFlip 50%, Normalize ImageNet, RandomErasing p=0.1 scale 0.02–0.15 — **sudah cocok** dengan `transforms.py`.)
+
+**Gambar yang dibuat** (script: `deepfake_hybrid/scripts/make_augmentation_figure.py` — menerapkan pipeline augmentasi *asli* dari kode, memakai frame **asli** `media_v2/media/ffpp_original.png`):
+
+- **`documents/media_v2/gambar_3_x_augmentasi_rgb.png`** — grid 2×3: Frame asli → Resize 256 → RandomResizedCrop 224 → ColorJitter → HorizontalFlip → RandomErasing (Normalize diterapkan sebelum RandomErasing, sesuai kode). **Tempatkan di akhir bagian "Augmentasi Domain Spasial"** (setelah poin RandomErasing, sebelum kalimat "Pada tahap validasi dan pengujian..."). Caption disarankan: "Gambar 3.X Tahapan augmentasi visual pada cabang spasial (RGB)" — beri nomor sesuai urutan (mis. masuk sebagai Gambar 3.3, geser figur frekuensi setelahnya).
+
+  ![Augmentasi RGB](../documents/media_v2/gambar_3_x_augmentasi_rgb.png)
+
+> **Catatan:** figur untuk cabang frekuensi (Gaussian noise + spectral band masking) **tidak perlu dibuat baru** — sudah tersedia `gambar_3_3_spectral_band_masking.png` dan `gambar_3_5_fft_real_vs_fake.png` di `media_v2/`.
+>
+> Untuk mengganti frame contoh dengan frame lain:
+> ```bash
+> python scripts/make_augmentation_figure.py --frame documents/media_v2/media/cdf_original.png
+> ```
 
 ---
 
 ### D.6 Subbab BARU 3.8 — Analisis Sistem (P1-BAB3 sistem)
 
+> **Status:** subbab "Analisis Sistem" **belum ada** di `.docx`. Versi di bawah adalah versi **lengkap** (menggantikan stub 5-poin sebelumnya). Daftar pustaka harus mencantumkan **semua** teknologi yang dipakai (lihat juga **Section G** untuk teknologi yang belum dibahas — terutama MTCNN).
+>
+> **PENEMPATAN PERSIS (.docx):** Sisipkan sebagai subbab **paling akhir BAB III**, yaitu **setelah** subbab 3.7 "Metode Evaluasi Model" selesai (setelah sub-subbab terakhir "Contoh Perhitungan Metrik") dan **sebelum** heading **"BAB IV HASIL DAN PEMBAHASAN"**. Beri heading "3.8 Analisis Sistem" (level subbab yang sama dengan 3.7).
+
 Tambahkan subbab akhir BAB III:
 
 > ### 3.8 Analisis Sistem
 >
-> Implementasi penelitian ini menggunakan perangkat lunak dan perangkat keras berikut:
+> Subbab ini menjabarkan kebutuhan perangkat keras dan perangkat lunak yang digunakan untuk mengimplementasikan dan menjalankan seluruh *pipeline* penelitian, dari *preprocessing* hingga evaluasi.
 >
-> 1. **Bahasa & framework**: Python 3.9, PyTorch (≥2.0), `timm` untuk *XceptionNet* yang sudah *pretrained* pada *ImageNet*.
-> 2. **Library pendukung**: OpenCV (I/O video), NumPy (perhitungan FFT), scikit-learn (*train/val/test split*), pandas (*manifest*), matplotlib (visualisasi).
-> 3. **Hardware**: GPU NVIDIA dengan dukungan CUDA dan *Automatic Mixed Precision* (AMP)/TF32 untuk arsitektur Ampere ke atas; pengembangan dilakukan pada Google Colab Pro (T4/V100); *fallback* CPU disediakan untuk eksperimen kecil.
-> 4. **Orkestrasi pipeline**: skrip terpadu `run_pipeline.py` yang menjalankan ekstraksi *frame* (`extract_frames.py`), pembangunan *split* (`build_splits.py`), *cache* FFT (`compute_fft_cache.py`), pelatihan (`train.py`), dan evaluasi (`eval.py`).
-> 5. **Output**: *checkpoint* terbaik (`best.pt`) dipilih berdasarkan AUC validasi tertinggi; tabel hasil disimpan sebagai `Table1_in_dataset.csv`, `Table2_cross_dataset.csv`, `Table3_generalization_drop.csv` di direktori `outputs/tables/`.
+> #### 3.8.1 Kebutuhan Perangkat Keras
+>
+> | Komponen | Spesifikasi | Peran |
+> |---|---|---|
+> | GPU | NVIDIA berdukungan CUDA (Google Colab Pro: Tesla T4 15 GB / V100) | Pelatihan & inferensi; AMP/TF32 untuk Ampere ke atas |
+> | RAM | ≥ 12 GB | Pemuatan *batch* citra + *cache* FFT |
+> | Penyimpanan | ~ beberapa GB | *Frame* hasil ekstraksi, *cache* FFT (`.npy`), *checkpoint* |
+> | CPU | — | *Fallback* untuk eksperimen kecil; ekstraksi *frame* paralel |
+>
+> #### 3.8.2 Kebutuhan Perangkat Lunak
+>
+> | Pustaka / Alat | Versi | Peran dalam penelitian | Justifikasi |
+> |---|---|---|---|
+> | Python | 3.9 | Bahasa implementasi | Ekosistem *deep learning* matang |
+> | PyTorch (`torch`) | ≥ 2.0 | *Framework* utama: definisi model, *autograd*, *training loop*, AMP, AdamW, `BCEWithLogitsLoss`, *scheduler* | Dukungan GPU & fleksibilitas riset |
+> | `torchvision` | — | Transformasi citra (augmentasi spasial), utilitas visi | Terintegrasi dengan PyTorch |
+> | `timm` | — | Menyediakan **XceptionNet** *pretrained* ImageNet (`create_model("xception", pretrained=True)`) | Implementasi *backbone* teruji + bobot transfer |
+> | `facenet-pytorch` | — | **MTCNN** untuk deteksi & *cropping* wajah saat ekstraksi *frame* | Detektor wajah ringan & akurat (lihat 3.3.2) |
+> | OpenCV (`opencv-python`) | — | Baca video, ekstraksi *frame*, konversi warna (BGR→RGB, *grayscale*) | Standar I/O video & citra |
+> | NumPy | — | Transformasi Fourier 2D (`np.fft.fft2`, `fftshift`), operasi numerik | Komputasi FFT & *array* |
+> | scikit-learn | — | Pembagian *train/val/test* terstratifikasi (`train_test_split`), metrik (AUC) | Standar evaluasi & *split* reproducible |
+> | pandas | — | Manifes CSV (`video_id`, `label`, `frames_dir`), tabel hasil | Pengelolaan data tabular |
+> | Pillow (PIL) | — | Pemuatan & manipulasi citra untuk *pipeline* augmentasi | Backend transformasi `torchvision` |
+> | PyYAML | — | Membaca konfigurasi `config.yaml` | Konfigurasi terpusat |
+> | tqdm | — | *Progress bar* proses panjang | Pemantauan eksekusi |
+> | matplotlib | — | Visualisasi hasil (kurva ROC, *learning curve*) pada BAB IV | Pembuatan grafik |
+>
+> #### 3.8.3 Orkestrasi Pipeline
+>
+> Seluruh tahap dijalankan melalui skrip terpadu `run_pipeline.py` yang memanggil secara berurutan: ekstraksi *frame* + *cropping* wajah (`extract_frames.py`), pembangunan *split* (`build_splits.py`), prakomputasi *cache* FFT (`compute_fft_cache.py`), pelatihan (`train.py`), dan evaluasi (`eval.py`). Konfigurasi terpusat pada `config.yaml`.
+>
+> #### 3.8.4 Keluaran Sistem
+>
+> *Checkpoint* terbaik (`best.pt`) dipilih berdasarkan AUC validasi tertinggi. Tabel hasil disimpan sebagai `Table1_in_dataset.csv`, `Table2_cross_dataset.csv`, dan `Table3_generalization_drop.csv` di direktori `outputs/tables/`.
 
 ---
 
@@ -413,12 +505,65 @@ Tambahkan subbab akhir BAB III:
 
 ---
 
+## G. Teknologi yang Belum Dibahas / Belum Lengkap (Cek Kelengkapan Teknologi)
+
+> Bagian ini membahas teknologi yang **dipakai di kode tetapi belum (atau salah) dijelaskan** di BAB III, sesuai permintaan agar setiap teknologi — termasuk sub-komponennya (pustaka A memakai B, C, D) — dijabarkan. Detail penuh: `analyze/BABIII_v4_Review_dan_Cek_Teknologi_2026-05-28_1400.md`.
+
+### G.1 Deteksi Wajah dan Cropping (MTCNN) — GAP TERBESAR, WAJIB DITAMBAH
+
+Pipeline memakai **MTCNN** (`facenet-pytorch`, `src/face_utils.py`) untuk mendeteksi & memotong wajah saat ekstraksi *frame*. Ini **langkah inti** — semua hasil BAB IV diproduksi dengan `face_crop=True` (*face crop* menaikkan AUC spatial FFPP **0,696 → 0,901**; `config.yaml: freq_base_channels: 64` = "for face crops"; `colab_run.ipynb: FACE_CROP=True`).
+
+**Kondisi `.docx` saat ini (penting):**
+- **BAB II** sudah punya pembahasan **konseptual** "Deteksi wajah dan cropping" (di subbab "Tahapan dan Alur Preprocessing", + Tabel 2.4) — tetapi **tanpa menyebut MTCNN/`facenet-pytorch`** dan **dengan klaim "Face Alignment" yang salah** (lihat G.2).
+- **BAB III (metodologi)** — subbab 3.3.1 "Ekstraksi Frame dari Video" langsung melompat ke "Konversi Domain Frekuensi (FFT)". **Langkah cropping wajah TIDAK ada di metodologi.** Inilah yang wajib ditambah.
+
+**PENEMPATAN PERSIS (.docx, BAB III):** Sisipkan subbab **baru 3.3.2 "Deteksi Wajah dan Cropping"** di antara dua heading berikut:
+- **setelah** akhir subbab 3.3.1 "Ekstraksi Frame dari Video" — yaitu setelah paragraf "*Proses ekstraksi dilakukan secara paralel menggunakan multiprocessing pool ... manifes CSV ...*" dan setelah "Gambar 3.3 Pseudocode ekstraksi frame dari video";
+- **sebelum** heading "**Konversi Domain Frekuensi (FFT)**".
+
+Akibatnya: subbab FFT yang sekarang **bergeser** menjadi 3.3.3, dan seluruh sub-subbab di bawahnya (3.3.2.x → 3.3.3.x) ikut bergeser. (Catatan gambar: jika ditambahkan ilustrasi cropping, ia akan menggeser nomor Gambar 3.4/3.5 dst.)
+
+Draf isi subbab 3.3.2:
+
+> Setelah *frame* diekstraksi, setiap *frame* melewati deteksi wajah menggunakan **MTCNN** (*Multi-task Cascaded Convolutional Networks*) dari pustaka `facenet-pytorch`. MTCNN bekerja melalui tiga jaringan bertingkat (*cascade*): **P-Net** (*Proposal Network*) menghasilkan kandidat *bounding box* wajah secara cepat; **R-Net** (*Refine Network*) menyaring kandidat palsu; dan **O-Net** (*Output Network*) memfinalisasi posisi *bounding box* (dan *landmark*). Detektor dikonfigurasi dengan `min_face_size = 60` piksel dan ambang deteksi tiap tahap `[0,6; 0,7; 0,7]`. Apabila terdeteksi lebih dari satu wajah, dipilih wajah dengan area terbesar. *Bounding box* terpilih diperluas dengan margin 30% lalu *frame* dipotong, sehingga analisis terfokus pada region wajah dan meminimalkan *noise* latar yang tidak relevan. *Frame* hasil *crop* di-*resize* ke 224×224 sebelum tahap konversi domain frekuensi.
+
+**Sitasi:** tambahkan **(Zhang et al., 2016)** — paper asli MTCNN — ke Daftar Pustaka:
+> K. Zhang, Z. Zhang, Z. Li, dan Y. Qiao, "Joint Face Detection and Alignment Using Multitask Cascaded Convolutional Networks," *IEEE Signal Processing Letters*, vol. 23, no. 10, hlm. 1499–1503, 2016. doi: 10.1109/LSP.2016.2603342.
+
+### G.2 KOREKSI: Klaim "Face Alignment" yang TIDAK ada di kode
+
+**Kode tidak melakukan alignment** — `face_utils.py` hanya deteksi *bbox* + ekspansi margin + *crop* (tidak ada penyelarasan *landmark*). Tetapi `.docx` mengklaim langkah *Face Alignment* di **dua tempat di BAB II** (subbab "Tahapan dan Alur Preprocessing"):
+
+1. **Sub-paragraf "Face Alignment"** — paragraf berbunyi "*Penyelarasan orientasi wajah berdasarkan landmark (posisi mata/hidung) agar rotasi dan kemiringan antar-frame lebih konsisten...*". → **Hapus seluruh sub-paragraf "Face Alignment" ini** (letaknya antara sub-paragraf "Deteksi wajah dan cropping" dan "Resize").
+2. **Tabel 2.4 "Tahapan Preprocessing"** — **baris tahap 3** = "*Face alignment | Menyelaraskan orientasi wajah | Wajah ter-align*". → **Hapus baris ini** dan **nomori ulang** tahap 4–8 menjadi 3–7 (sehingga total 7 tahap, bukan 8).
+
+Setelah penghapusan, urutan preprocessing menjadi: Ekstraksi frame → Deteksi wajah → Cropping → Resize 224×224 → Normalisasi pixel → FFT → Channel fusion. **Jangan** memunculkan kembali alignment di BAB III (G.1).
+
+### G.3 Penjabaran sub-dependensi pustaka (yang sudah cukup vs perlu)
+
+| Pustaka | Sub-komponen yang dipakai | Sudah dijelaskan? |
+|---|---|---|
+| `facenet-pytorch` | MTCNN (kaskade P-Net/R-Net/O-Net) | ❌ → lihat G.1 |
+| `timm` | XceptionNet pretrained ImageNet | ✅ (3.4.1.2) |
+| `torch` | AMP, AdamW, BCEWithLogitsLoss, cosine+warmup *scheduler*, *gradient accumulation/clipping* | ✅ (3.5) |
+| OpenCV | baca video, `cvtColor` (BGR→RGB, *grayscale*) | ✅ (3.3.1, 3.3.2.1) |
+| NumPy | `fft2`, `fftshift` | ✅ (3.3.2.2) |
+| scikit-learn | `train_test_split(stratify)`, AUC | ✅ singkat (3.2.3, 3.7) |
+
+➡️ Hanya **MTCNN (G.1)** yang merupakan gap substansial. Pustaka utilitas (Pillow, pandas, PyYAML, tqdm, matplotlib) cukup didaftar di **3.8 Analisis Sistem** (D.6).
+
+### G.4 Konsistensi metodologi ↔ hasil
+
+Karena seluruh tabel BAB IV memakai `face_crop=True`, metodologi (BAB III) **wajib** mencantumkan langkah *cropping* MTCNN. Tanpa itu, hasil tidak dapat direproduksi dari narasi.
+
+---
+
 ## F. Ringkasan eksekusi
 
 1. **Mulai dari BAB I.** Apply rewrite B.1 hingga B.9 di atas ke dokumen sumber (Google Docs atau `.docx`).
 2. **Tambahkan entri** (Hu et al., 2018) untuk SE-Net ke Daftar Pustaka. Entri Celeb-DF (Li et al., 2020) sudah ada di Daftar Pustaka v2.
 3. **BAB II:** apply C.1 hingga C.6. Untuk C.6 (penghilangan pola "X et al. menunjukkan"), gunakan tabel di C.6 sebagai *find-and-replace* checklist.
-4. **BAB III:** apply D.1 hingga D.6.
+4. **BAB III:** apply D.1 hingga D.6, **dan Section G** (tambah subbab 3.3.2 Deteksi Wajah/Cropping MTCNN, hapus klaim Face Alignment, tambah sitasi Zhang et al., 2016).
 5. **Setelah selesai**: re-render PDF dan cross-check checklist di `documentation/thesis_improvements_2026-04-25.md` baris 215 hingga 229.
 6. **Catatan format sitasi**: seluruh hasil revisi memakai gaya (Penulis, Tahun) konsisten dengan `documents/BAB_III_Tahapan_Pelaksanaan_v3.md`, bukan gaya IEEE bernomor `[N]`.
 7. **Catatan sumber**: dokumen sumber BAB I dan BAB II ada di Google Docs atau `.docx`, bukan di markdown. Markdown v2 terakhir di commit `d90dbcc`. Setelah revisi, pertimbangkan re-konversi ke markdown agar perubahan terlacak di git.

@@ -21,80 +21,80 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
   <tbody>
     <tr>
       <td>FreqBlock 1</td>
-      <td>Conv(1&rarr;32, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
+      <td>Conv(1&rarr;64, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
       <td>(1, 224, 224)</td>
-      <td>(32, 112, 112)</td>
-      <td>&sim;384</td>
+      <td>(64, 112, 112)</td>
+      <td>&sim;900</td>
     </tr>
     <tr>
       <td>FreqBlock 2</td>
-      <td>Conv(32&rarr;64, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
-      <td>(32, 112, 112)</td>
-      <td>(64, 56, 56)</td>
-      <td>&sim;20.700</td>
+      <td>Conv(64&rarr;128, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
+      <td>(64, 112, 112)</td>
+      <td>(128, 56, 56)</td>
+      <td>&sim;82.400</td>
     </tr>
     <tr>
       <td>FreqBlock 3</td>
-      <td>Conv(64&rarr;128, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
-      <td>(64, 56, 56)</td>
-      <td>(128, 28, 28)</td>
-      <td>&sim;82.300</td>
+      <td>Conv(128&rarr;256, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
+      <td>(128, 56, 56)</td>
+      <td>(256, 28, 28)</td>
+      <td>&sim;329.000</td>
     </tr>
     <tr>
       <td>FreqBlock 4</td>
-      <td>Conv(128&rarr;256, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
-      <td>(128, 28, 28)</td>
-      <td>(256, 14, 14)</td>
-      <td>&sim;328.000</td>
+      <td>Conv(256&rarr;512, 3&times;3) + BN + Shortcut(1&times;1) + MaxPool</td>
+      <td>(256, 28, 28)</td>
+      <td>(512, 14, 14)</td>
+      <td>&sim;1.313.000</td>
     </tr>
     <tr>
       <td>FreqBlock 5</td>
-      <td>Conv(256&rarr;256, 3&times;3) + BN + Identity + MaxPool</td>
-      <td>(256, 14, 14)</td>
-      <td>(256, 7, 7)</td>
-      <td>&sim;590.000</td>
+      <td>Conv(512&rarr;512, 3&times;3) + BN + Identity + MaxPool</td>
+      <td>(512, 14, 14)</td>
+      <td>(512, 7, 7)</td>
+      <td>&sim;2.361.000</td>
     </tr>
     <tr>
       <td>Dropout2d(0,2)</td>
       <td><i>Spatial dropout</i></td>
-      <td>(256, 7, 7)</td>
-      <td>(256, 7, 7)</td>
+      <td>(512, 7, 7)</td>
+      <td>(512, 7, 7)</td>
       <td>0</td>
     </tr>
     <tr>
       <td>AdaptiveAvgPool</td>
       <td><i>Global average pooling</i></td>
-      <td>(256, 7, 7)</td>
-      <td>(256, 1, 1)</td>
+      <td>(512, 7, 7)</td>
+      <td>(512, 1, 1)</td>
       <td>0</td>
     </tr>
     <tr>
       <td>FC 1</td>
-      <td>Linear(256&rarr;128) + ReLU</td>
+      <td>Linear(512&rarr;256) + ReLU</td>
+      <td>(512)</td>
       <td>(256)</td>
-      <td>(128)</td>
-      <td>&sim;33.000</td>
+      <td>&sim;131.000</td>
     </tr>
     <tr>
       <td>Dropout(0,3)</td>
       <td><i>Dropout</i></td>
-      <td>(128)</td>
-      <td>(128)</td>
+      <td>(256)</td>
+      <td>(256)</td>
       <td>0</td>
     </tr>
     <tr>
       <td>FC 2</td>
-      <td>Linear(128&rarr;1)</td>
-      <td>(128)</td>
+      <td>Linear(256&rarr;1)</td>
+      <td>(256)</td>
       <td>(1)</td>
-      <td>&sim;129</td>
+      <td>&sim;257</td>
     </tr>
     <tr>
       <td colspan="4" style="text-align: right; font-weight: bold;">Total</td>
-      <td style="font-weight: bold;">&sim;700K</td>
+      <td style="font-weight: bold;">&sim;4,2 juta</td>
     </tr>
   </tbody>
-  <caption>Tabel 3.5 Arsitektur <i>Layer-by-Layer</i> FreqCNN (<i>depth</i> = 5, <i>base_channels</i> = 32)</caption>
+  <caption>Tabel 3.5 Arsitektur <i>Layer-by-Layer</i> FreqCNN (<i>depth</i> = 5, <i>base_channels</i> = 64)</caption>
 </table>
 </div>
 <button class="copy-btn" onclick="copyTable()">Copy Table</button>

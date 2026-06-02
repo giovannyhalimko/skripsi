@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Pustaka / Alat</th>
+      <th>Peran dalam penelitian</th>
+      <th>Justifikasi pemilihan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PyTorch (<code>torch</code>)</td>
+      <td><i>Framework</i> utama: definisi model, <i>autograd</i>, <i>training loop</i>, <i>mixed precision</i> (AMP), optimisasi (AdamW), fungsi <i>loss</i> (<code>BCEWithLogitsLoss</code>), dan penjadwalan <i>learning rate</i></td>
+      <td>Dukungan GPU penuh dan fleksibilitas tinggi untuk riset arsitektur kustom</td>
+    </tr>
+    <tr>
+      <td><code>torchvision</code></td>
+      <td>Transformasi dan augmentasi citra pada cabang spasial</td>
+      <td>Terintegrasi erat dengan PyTorch</td>
+    </tr>
+    <tr>
+      <td><code>timm</code> (<i>PyTorch Image Models</i>)</td>
+      <td>Menyediakan arsitektur XceptionNet beserta bobot <i>pretrained</i> ImageNet</td>
+      <td>Implementasi <i>backbone</i> yang teruji dan akses langsung ke bobot <i>transfer learning</i></td>
+    </tr>
+    <tr>
+      <td><code>facenet-pytorch</code></td>
+      <td>Menyediakan MTCNN untuk deteksi dan <i>cropping</i> wajah pada tahap <i>preprocessing</i> (subbab 3.3.2)</td>
+      <td>Detektor wajah ringan, akurat, dan mudah diintegrasikan</td>
+    </tr>
+    <tr>
+      <td>OpenCV (<code>opencv-python</code>)</td>
+      <td>Membaca video, mengekstraksi <i>frame</i>, dan konversi ruang warna (BGR&rarr;RGB, <i>grayscale</i>)</td>
+      <td>Pustaka standar untuk I/O video dan operasi citra</td>
+    </tr>
+    <tr>
+      <td>NumPy</td>
+      <td>Komputasi Transformasi Fourier 2D (<code>fft2</code>, <code>fftshift</code>) dan operasi numerik berbasis <i>array</i></td>
+      <td>Fondasi komputasi numerik Python</td>
+    </tr>
+    <tr>
+      <td>scikit-learn</td>
+      <td>Pembagian <i>train/validation/test</i> terstratifikasi (<code>train_test_split</code>) dan perhitungan metrik (AUC)</td>
+      <td>Standar evaluasi dan pembagian data yang <i>reproducible</i></td>
+    </tr>
+    <tr>
+      <td>pandas</td>
+      <td>Pengelolaan berkas manifes CSV (<code>video_id</code>, <code>label</code>, <code>frames_dir</code>) dan tabel hasil</td>
+      <td>Manipulasi data tabular yang efisien</td>
+    </tr>
+    <tr>
+      <td>Pillow (PIL)</td>
+      <td>Pemuatan dan manipulasi citra sebagai <i>backend</i> transformasi torchvision</td>
+      <td>Format citra standar di ekosistem Python</td>
+    </tr>
+    <tr>
+      <td>PyYAML</td>
+      <td>Membaca berkas konfigurasi terpusat <code>config.yaml</code></td>
+      <td>Konfigurasi eksperimen yang ringkas dan mudah dibaca</td>
+    </tr>
+    <tr>
+      <td>tqdm</td>
+      <td>Menampilkan <i>progress bar</i> pada proses berdurasi panjang</td>
+      <td>Pemantauan eksekusi pipeline</td>
+    </tr>
+    <tr>
+      <td>matplotlib</td>
+      <td>Visualisasi hasil (kurva ROC, <i>learning curve</i>) pada BAB IV</td>
+      <td>Pembuatan grafik publikasi</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 3.18 Kebutuhan Perangkat Lunak</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

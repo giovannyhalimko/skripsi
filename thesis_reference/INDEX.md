@@ -1,7 +1,7 @@
 # Thesis Reference Index
 
 > Quick-reference index for all papers in `/thesis_reference/`. Organized by topic with keywords for fast lookup.
-> Total: **41 references** (39 PDFs + 1 HTML + 1 daftar pustaka only)
+> Total: **42 references** (40 PDFs + 1 HTML + 1 daftar pustaka only). Updated 2026-06-02: added Zhang MTCNN (face detection); see also "Cited but NOT in folder" section for bibliography entries without a local PDF.
 
 ---
 
@@ -34,6 +34,8 @@
 | **attention / SE mechanism** | Hu (SE-Net), Qian (frequency attention) |
 | **self-blended images** | Hasanaath (FSBI) |
 | **face forgery / face swap** | Chadha, Korshunov, Rossler |
+| **face detection / cropping / MTCNN** | Zhang (MTCNN) |
+| **optimizer (Adam/AdamW)** | Kingma (Adam, no PDF), Loshchilov (AdamW, no PDF), Ruder, Bottou |
 
 ---
 
@@ -367,6 +369,29 @@
 - **Keywords:** systematic review, CNN, LSTM, Transformer, energy forecasting, power systems, ML comparison
 - **Relevance:** Tangential — general ML/DL survey. May be cited for CNN/LSTM architecture overview in non-vision context.
 - **Use in thesis:** BAB II (general DL method comparison, if needed)
+
+---
+
+## K. Face Detection / Preprocessing
+
+### Zhang et al — MTCNN (Joint Face Detection and Alignment)
+- **File:** `Zhang et al - Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks.pdf`
+- **Full title:** Joint Face Detection and Alignment Using Multitask Cascaded Convolutional Networks
+- **Authors:** Kaipeng Zhang, Zhanpeng Zhang, Zhifeng Li, Yu Qiao (2016, IEEE Signal Processing Letters, vol. 23, no. 10, pp. 1499–1503)
+- **Keywords:** MTCNN, face detection, face alignment, cascade CNN, P-Net, R-Net, O-Net, bounding box, facial landmark, multi-task learning
+- **Relevance:** Source for the **face detection + cropping** preprocessing step. Three-stage cascade (P-Net → R-Net → O-Net) used via `facenet-pytorch` to crop face regions before FFT/spatial analysis.
+- **Use in thesis:** BAB III (subbab 3.3.2 Deteksi Wajah dan Cropping). Bibliography entry [44].
+- **Note:** Added 2026-06-02 — was previously in the folder but missing from this index.
+
+---
+
+## Cited but NOT in folder (no local PDF — verify externally)
+These bibliography entries are cited in the thesis but have no PDF in `/thesis_reference/`. All are real, well-known papers; listed here so they are not mistaken for fabricated sources:
+- **[18] Li et al., Celeb-DF** (CVPR 2020) — dataset paper; numbers (590 real / 5,639 fake videos) match the published v2 spec.
+- **[36] Hu, Shen & Sun, Squeeze-and-Excitation Networks** (CVPR 2018) — SE-Net (already has an INDEX entry under F, but no PDF locally).
+- **[42] Kingma & Ba, Adam** (ICLR 2015) — optimizer.
+- **[43] Loshchilov & Hutter, Decoupled Weight Decay / AdamW** (ICLR 2019) — optimizer actually used by the code.
+- **[30] Wikimedia Commons** and **[31] Stack Overflow** — web sources (expected, no PDF).
 
 ---
 
