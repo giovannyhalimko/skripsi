@@ -12,20 +12,23 @@ All scripts run from inside `deepfake_hybrid/`. Config is `config.yaml`.
 
 ```bash
 # Full end-to-end pipeline (recommended entry point)
-python scripts/run_pipeline.py --n-samples 300 --pretrained
+# --face-crop matches colab_run.ipynb (FACE_CROP=True); omit it to train on full frames
+python scripts/run_pipeline.py --n-samples 300 --pretrained --face-crop --face-margin 0.3
 
 # Quick smoke test
-python scripts/run_pipeline.py --n-samples 100 --max-frames 10 --epochs 3 --pretrained
+python scripts/run_pipeline.py --n-samples 100 --max-frames 10 --epochs 3 --pretrained --face-crop
 
 # Skip preprocessing if frames/splits/FFT already exist
 python scripts/run_pipeline.py --skip-preprocess --pretrained
 ```
 
+> **Face cropping:** the canonical results run (`colab_run.ipynb`) sets `FACE_CROP=True`, so frames are MTCNN-cropped (margin 0.3) before analysis. The CLI flag defaults OFF, so pass `--face-crop` on `run_pipeline.py`/`extract_frames.py` to reproduce those results. `run_all.py` does not re-extract — it reuses whatever frames are already on disk.
+
 ### Individual pipeline steps
 
 ```bash
-# 1. Extract frames from videos
-python scripts/extract_frames.py --config config.yaml --dataset FFPP --fps 5 --max-frames 100
+# 1. Extract frames from videos (add --face-crop --face-margin 0.3 to match colab_run.ipynb)
+python scripts/extract_frames.py --config config.yaml --dataset FFPP --fps 5 --max-frames 100 --face-crop --face-margin 0.3
 
 # 2. Build train/val/test splits (stratified by video)
 python scripts/build_splits.py --config config.yaml --dataset FFPP
