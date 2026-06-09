@@ -227,8 +227,10 @@ def main():
             })
             summary.columns = ["_".join(col).strip("_") for col in summary.columns.values]
             return summary.reset_index()
-        summarize(df_in).to_csv(tables_dir / "Table1_in_dataset_summary.csv", index=False)
-        summarize(df_cross).to_csv(tables_dir / "Table2_cross_dataset_summary.csv", index=False)
+        if not df_in.empty:
+            summarize(df_in).to_csv(tables_dir / "Table1_in_dataset_summary.csv", index=False)
+        if not df_cross.empty:
+            summarize(df_cross).to_csv(tables_dir / "Table2_cross_dataset_summary.csv", index=False)
         pd.DataFrame(rows).to_csv(tables_dir / "Table3_drop_summary.csv", index=False)
 
 
