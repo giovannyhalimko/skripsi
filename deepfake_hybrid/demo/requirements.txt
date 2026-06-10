@@ -1,0 +1,9 @@
+# Python deps for the HuggingFace Space (free CPU tier).
+# gradio is provided by the Space's Gradio SDK; for local dev run: pip install gradio
+torch
+torchvision
+timm>=1.0.0
+facenet-pytorch
+opencv-python-headless
+Pillow
+numpy<2
