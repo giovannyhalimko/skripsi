@@ -4,6 +4,8 @@ emoji: 🕵️
 colorFrom: indigo
 colorTo: purple
 sdk: gradio
+sdk_version: 5.49.1
+python_version: "3.10"
 app_file: app.py
 pinned: false
 ---
@@ -11,7 +13,10 @@ pinned: false
 # Deepfake Detection — Model Comparison Demo
 
 A thesis demo that runs three deepfake-detection models on an uploaded face video and
-shows their verdicts side-by-side:
+shows their verdicts side-by-side as per-model **cards** (REAL/FAKE badge + a
+fake-probability confidence bar with the decision threshold marked), plus a
+**"what the models see"** panel — the sampled face crops (spatial input) and their
+FFT spectra (frequency input):
 
 - **Spatial** — XceptionNet on RGB pixels (the baseline)
 - **Hybrid** — the proposed two-branch model (RGB + FFT frequency map, fused)
@@ -35,8 +40,9 @@ All preprocessing is reused verbatim from the repo's `src/` (`face_utils`,
 ## Files
 
 ```
-app.py            Gradio UI (entrypoint)
-inference.py      model loading + video pipeline (no gradio dependency)
+app.py            Gradio UI (entrypoint): cards + "what the models see" galleries
+cards.py          verdict-card HTML/CSS renderer (pure stdlib, no gradio/torch)
+inference.py      model loading + video pipeline + visuals (no gradio dependency)
 requirements.txt  pip deps   |   packages.txt  apt deps (ffmpeg, libgl1)
 src/              copied from ../src at deploy time (models/, transforms, fft_utils, face_utils, utils)
 checkpoints/      spatial.pt hybrid.pt freq.pt + *_threshold.json + fft_stats.json
@@ -85,10 +91,14 @@ From the repo `outputs/runs/`:
 
 ### FFT stats note
 
-`fft_stats.json` (the FFPP FFT mean/std used at train time) is **not** in the local repo —
-it lives in `outputs/fft_cache/FFPP/` on the training machine (vast.ai / Colab Drive). Fetch
-it and place it in `checkpoints/`. Without it the app falls back to mean=5.0/std=3.0 and the
-**freq/hybrid** branches may be miscalibrated. **Spatial is unaffected** (RGB-only).
+`fft_stats.json` (the FFPP FFT mean/std used at train time) holds the normalization the
+**freq/hybrid** branches expect. It was **recomputed locally** from the FFPP videos under
+`dataset/face_forensics/` using the exact training preprocessing (MTCNN crop margin 0.3 →
+`image_to_fft_logmag(224, highpass)`) over ~2.5k face-cropped frames →
+`{"mean": 5.78, "std": 1.28}`, and is staged in `checkpoints/`. Real-only vs fake-only
+samples matched, so it's proportion-insensitive and faithful to the training cache.
+If it's ever missing the app falls back to mean=5.0/std=3.0 (and the freq/hybrid cards show
+a "calibration estimated" flag). **Spatial is unaffected** (RGB-only).
 
 ## Caveat
 

@@ -1,10 +1,12 @@
 """Gradio demo: deepfake detection — spatial vs. hybrid vs. frequency.
 
 Reviewers upload a short video; we sample frames, MTCNN-crop faces, and show one
-verdict per model side-by-side. The comparison is the point: it makes the thesis's
-core finding visible — the proposed hybrid does NOT beat the spatial baseline.
+verdict *card* per model side-by-side (badge + confidence bar), plus a "what the
+models see" panel (sampled face crops and their FFT spectra). The comparison is the
+point: it makes the thesis's core finding visible — the proposed hybrid does NOT beat
+the spatial baseline.
 
-Run locally:   python demo/app.py
+Run locally:   python demo/app.py   (needs a Python >=3.10 venv with gradio; see README)
 On HF Spaces:  this file is the entrypoint (sdk: gradio); the platform sets the port.
 """
 from pathlib import Path
@@ -12,6 +14,7 @@ from pathlib import Path
 import gradio as gr
 
 import inference as inf
+from cards import CARDS_CSS, render_cards
 
 HERE = Path(__file__).resolve().parent
 CKPT_DIR = HERE / "checkpoints"
@@ -53,16 +56,23 @@ def _startup_warnings() -> str:
             "Install `facenet-pytorch` to enable cropping."
         )
     if not LM.fft_stats_from_file:
-        msgs.append("⚠️ " + LM.notes[-1] if LM.notes else "⚠️ FFT stats fallback in use.")
+        msgs.append("⚠️ " + (LM.notes[-1] if LM.notes else "FFT stats fallback in use."))
     return "\n\n".join(msgs)
 
 
 def analyze(video_path):
+    """video -> (cards HTML, face-crop gallery, FFT-spectrum gallery, info markdown)."""
+    placeholder = render_cards([], LM.fft_stats_from_file)
     if not video_path:
-        return [], "Please upload a video first."
+        return placeholder, [], [], "Please upload a video first."
     out = inf.predict_video(video_path, LM, DETECTOR)
     if not out["ok"]:
-        return [], f"❌ {out['error']}"
+        return placeholder, [], [], f"❌ {out['error']}"
+
+    vis = out.get("visuals", {"frames": [], "spectra": []})
+    faces = [(f, f"frame {i + 1}") for i, f in enumerate(vis["frames"])]
+    spectra = [(s, f"frame {i + 1}") for i, s in enumerate(vis["spectra"])]
+
     crop_note = (
         f"{out['faces_found']}/{out['frames']} frames had a detected face (cropped); "
         "the rest used the full frame."
@@ -70,10 +80,11 @@ def analyze(video_path):
         else f"{out['frames']} frames analyzed (face cropping OFF — full frames)."
     )
     info = f"**Analyzed {out['frames']} frames.** {crop_note}"
-    return out["rows"], info
+    cards_html = render_cards(out["results"], out.get("fft_calibrated", True))
+    return cards_html, faces, spectra, info
 
 
-with gr.Blocks(title="Deepfake Detection Demo") as demo:
+with gr.Blocks(title="Deepfake Detection Demo", css=CARDS_CSS) as demo:
     gr.Markdown(INTRO)
     warn = _startup_warnings()
     if warn:
@@ -84,19 +95,25 @@ with gr.Blocks(title="Deepfake Detection Demo") as demo:
             video_in = gr.Video(label="Upload a face video", sources=["upload"])
             run_btn = gr.Button("Analyze", variant="primary")
         with gr.Column(scale=2):
-            results = gr.Dataframe(
-                headers=["Model", "Verdict", "Fake probability", "Decision threshold"],
-                datatype=["str", "str", "str", "str"],
-                label="Per-model verdicts",
-                wrap=True,
-                interactive=False,
-            )
+            cards = gr.HTML(value=render_cards([], LM.fft_stats_from_file))
             info_md = gr.Markdown()
+
+    with gr.Accordion("What the models see (sampled frames)", open=True):
+        with gr.Row():
+            face_gallery = gr.Gallery(
+                label="Face crops — SPATIAL input (RGB)",
+                columns=4, height="auto", object_fit="contain",
+            )
+            fft_gallery = gr.Gallery(
+                label="FFT spectra — FREQ / HYBRID input",
+                columns=4, height="auto", object_fit="contain",
+            )
 
     gr.Markdown("---\n" + CAVEAT)
 
-    run_btn.click(analyze, inputs=video_in, outputs=[results, info_md])
-    video_in.upload(analyze, inputs=video_in, outputs=[results, info_md])
+    outputs = [cards, face_gallery, fft_gallery, info_md]
+    run_btn.click(analyze, inputs=video_in, outputs=outputs)
+    video_in.upload(analyze, inputs=video_in, outputs=outputs)
 
 
 if __name__ == "__main__":

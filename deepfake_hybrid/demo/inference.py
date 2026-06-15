@@ -197,6 +197,39 @@ def _preprocess(frame_bgr: np.ndarray, lm: LoadedModels) -> Tuple[torch.Tensor, 
     return rgb_t, fft_t.float()
 
 
+def _spectrum_to_rgb(logmag: np.ndarray) -> np.ndarray:
+    """Colormap a raw FFT log-magnitude map to an RGB image for display.
+
+    This is exactly the freq/hybrid branch input (pre per-dataset normalization),
+    min-max scaled per-image and MAGMA-colored so reviewers can *see* the spectrum.
+    """
+    x = logmag.astype(np.float32)
+    lo, hi = float(x.min()), float(x.max())
+    x = (x - lo) / (hi - lo + 1e-8)
+    u8 = (x * 255.0).astype(np.uint8)
+    bgr = cv2.applyColorMap(u8, cv2.COLORMAP_MAGMA)
+    return cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+
+
+def _build_visuals(frames: List[np.ndarray], lm: LoadedModels, k: int = 4) -> dict:
+    """Pick up to k evenly-spaced frames; return what each branch sees.
+
+    frames: RGB crop resized to model input (what SPATIAL sees).
+    spectra: MAGMA-colored FFT log-magnitude (what FREQ/HYBRID see).
+    """
+    n = len(frames)
+    if n == 0:
+        return {"frames": [], "spectra": []}
+    k = min(k, n)
+    idxs = [round(i * (n - 1) / (k - 1)) for i in range(k)] if k > 1 else [0]
+    disp_frames, spectra = [], []
+    for j in idxs:
+        pil = Image.fromarray(cv2.cvtColor(frames[j], cv2.COLOR_BGR2RGB))
+        disp_frames.append(np.asarray(pil.resize((lm.image_size, lm.image_size))))
+        spectra.append(_spectrum_to_rgb(image_to_fft_logmag(pil, size=lm.image_size, highpass=True)))
+    return {"frames": disp_frames, "spectra": spectra}
+
+
 @torch.no_grad()
 def predict_video(video_path: str, lm: LoadedModels, detector) -> dict:
     """Run all three models on a video. Returns rows + diagnostic info."""
@@ -208,7 +241,7 @@ def predict_video(video_path: str, lm: LoadedModels, detector) -> dict:
     rgb_batch = torch.stack(rgb_list).to(DEVICE)
     fft_batch = torch.stack(fft_list).to(DEVICE)
 
-    rows = []
+    rows, results = [], []
     for key, label in MODELS_SPEC:
         model = lm.models[key]
         if key == "spatial":
@@ -219,13 +252,19 @@ def predict_video(video_path: str, lm: LoadedModels, detector) -> dict:
             logits = model(rgb_batch, fft_batch).view(-1)
         prob = float(torch.sigmoid(logits).mean().cpu())
         thr = lm.thresholds[key]
-        verdict = "🔴 FAKE" if prob >= thr else "🟢 REAL"
-        rows.append([label, verdict, f"{prob:.3f}", f"{thr:.3f}"])
+        is_fake = prob >= thr
+        results.append(
+            {"key": key, "label": label, "prob": prob, "threshold": thr, "is_fake": is_fake}
+        )
+        rows.append([label, "🔴 FAKE" if is_fake else "🟢 REAL", f"{prob:.3f}", f"{thr:.3f}"])
 
     return {
         "ok": True,
-        "rows": rows,
+        "rows": rows,                       # legacy table format (back-compat)
+        "results": results,                 # structured, for the verdict cards
+        "visuals": _build_visuals(frames, lm),  # face crops + FFT spectra
         "frames": sampled,
         "faces_found": faces_found,
         "cropping": detector is not None,
+        "fft_calibrated": lm.fft_stats_from_file,
     }
