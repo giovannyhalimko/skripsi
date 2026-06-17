@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: center; vertical-align: top; }
+th { font-weight: bold; }
+td:first-child { text-align: left; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Arah</th>
+      <th>Model</th>
+      <th>Akurasi</th>
+      <th>Presisi</th>
+      <th><i>Recall</i></th>
+      <th>F1-<i>Score</i></th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FFPP&rarr;CDF</td>
+      <td><i>spatial</i></td>
+      <td>0,608 &plusmn; 0,006</td>
+      <td>0,571 &plusmn; 0,007</td>
+      <td>0,618 &plusmn; 0,012</td>
+      <td>0,594 &plusmn; 0,008</td>
+      <td>0,648 &plusmn; 0,013</td>
+    </tr>
+    <tr>
+      <td>FFPP&rarr;CDF</td>
+      <td><i>hybrid</i></td>
+      <td>0,611 &plusmn; 0,025</td>
+      <td>0,584 &plusmn; 0,036</td>
+      <td>0,570 &plusmn; 0,016</td>
+      <td>0,576 &plusmn; 0,009</td>
+      <td>0,648 &plusmn; 0,031</td>
+    </tr>
+    <tr>
+      <td>FFPP&rarr;CDF</td>
+      <td><i>freq</i></td>
+      <td>0,550 &plusmn; 0,005</td>
+      <td>0,621 &plusmn; 0,027</td>
+      <td>0,069 &plusmn; 0,017</td>
+      <td>0,124 &plusmn; 0,027</td>
+      <td>0,655 &plusmn; 0,007</td>
+    </tr>
+    <tr>
+      <td>CDF&rarr;FFPP</td>
+      <td><i>spatial</i></td>
+      <td>0,558 &plusmn; 0,003</td>
+      <td>0,932 &plusmn; 0,026</td>
+      <td>0,083 &plusmn; 0,009</td>
+      <td>0,153 &plusmn; 0,015</td>
+      <td>0,629 &plusmn; 0,001</td>
+    </tr>
+    <tr>
+      <td>CDF&rarr;FFPP</td>
+      <td><i>hybrid</i></td>
+      <td>0,569 &plusmn; 0,012</td>
+      <td>0,789 &plusmn; 0,082</td>
+      <td>0,143 &plusmn; 0,056</td>
+      <td>0,237 &plusmn; 0,073</td>
+      <td>0,563 &plusmn; 0,011</td>
+    </tr>
+    <tr>
+      <td>CDF&rarr;FFPP</td>
+      <td><i>freq</i></td>
+      <td>0,571 &plusmn; 0,007</td>
+      <td>0,549 &plusmn; 0,012</td>
+      <td>0,596 &plusmn; 0,072</td>
+      <td>0,570 &plusmn; 0,026</td>
+      <td>0,591 &plusmn; 0,002</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 4.3 Hasil Evaluasi <i>Cross-Dataset</i> (<i>n</i> = 750, rata-rata &plusmn; simpangan baku atas 3 <i>seed</i>)</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

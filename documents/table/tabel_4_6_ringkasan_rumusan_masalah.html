@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Rumusan Masalah</th>
+      <th>Temuan</th>
+      <th>Bukti</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RM1 &mdash; penurunan performa <i>spatial</i> lintas dataset</td>
+      <td>Terjadi penurunan substansial; AUC turun ke 0,629&ndash;0,648 dan <i>recall</i> runtuh hingga 0,083 (terparah pada arah CDF&rarr;FFPP)</td>
+      <td>Tabel 4.3, Tabel 4.4</td>
+    </tr>
+    <tr>
+      <td>RM2 &mdash; pengaruh FFT terhadap penurunan</td>
+      <td>Memperkecil <i>generalization drop</i> pada arah FFPP&rarr;CDF (&Delta; <i>hybrid</i> +0,027 vs <i>spatial</i> +0,116), tetapi tidak konsisten dan tanpa peningkatan AUC menyeluruh, serta mengorbankan performa <i>in-dataset</i></td>
+      <td>Tabel 4.3, Tabel 4.4</td>
+    </tr>
+    <tr>
+      <td>RM3 &mdash; kontribusi <i>spatial</i> vs <i>freq</i></td>
+      <td><i>Spatial</i> penyumbang utama (AUC s.d. 0,969); <i>freq</i> nyaris acak (0,55&ndash;0,59) sehingga fusi <i>hybrid</i> tidak mengungguli <i>spatial</i> murni</td>
+      <td>Tabel 4.2, Gambar 4.4</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 4.6 Ringkasan Jawaban atas Rumusan Masalah</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

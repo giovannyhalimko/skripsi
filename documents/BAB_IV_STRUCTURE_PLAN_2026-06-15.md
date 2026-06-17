@@ -117,12 +117,13 @@
 
 **4.1.6 Pengaruh Ukuran Sampel terhadap Performa (Scaling)**  → mendukung RM3 (rezim data)
 - Isi: tren AUC/F1 in-dataset & cross-dataset terhadap n (100→750). Spatial naik paling tajam; freq stagnan rendah. Beri peringatan n100 (noise).
-- Gambar: **Gambar 4.6** `scaling_auc.png`, **Gambar 4.7** `scaling_auc_cross.png` (opsional + `scaling_f1*`).
+- Gambar: **Gambar 4.6** `scaling_auc.png` (in-dataset), **Gambar 4.7** `scaling_auc_cross.png` (cross-dataset). Kurva F1 (`scaling_f1.png`, `scaling_f1_cross.png`) → **Lampiran** (atau gabung bila ruang cukup).
 - Tabel (opsional): **Tabel 4.6** ringkasan AUC per tier.
 
 **4.1.7 Dinamika Pelatihan dan Konvergensi Model**  → mendukung 4.2.4
-- Isi: kurva pelatihan menunjukkan cabang **freq tidak benar-benar belajar** (loss/AUC val stagnan) vs spatial/hybrid konvergen. Pilih beberapa kurva representatif.
-- Gambar: **Gambar 4.8** `training_curves_freq_FFPP_n750.png` vs **Gambar 4.9** `training_curves_spatial_FFPP_n750.png` (atau hybrid).
+- Isi: kurva pelatihan menunjukkan cabang **freq tidak benar-benar belajar** (loss/AUC val stagnan) vs spatial/hybrid konvergen. Tampilkan **kurva representatif** di badan; selebihnya ke Lampiran.
+- Gambar (badan): **Gambar 4.8** `training_curves_freq_FFPP_n750.png` vs **Gambar 4.9** `training_curves_spatial_FFPP_n750.png`; **Gambar 4.9b** `training_curves_hybrid_FFPP_n750.png` (untuk lengkapi 3 model di tier yang sama).
+- **24 training curve** total (3 model × 2 dataset × 4 tier). **3 di badan** (FFPP n750); **21 sisanya → Lampiran** (semua hybrid/freq/spatial untuk CDF, dan tier n100/250/500). Tidak ada yang dibuang.
 - *(Opsional bila sempat dibuat: ROC curve & confusion matrix — perlu di-generate dari prediksi; lihat §6.)*
 
 ### 4.2 Pembahasan (wajib menjawab RM)
@@ -172,8 +173,21 @@
 | Gambar 4.11 | Kurva ROC In-Dataset CDF (3 model) | CDF_in_n750_roc.png |
 | Gambar 4.12 | Kurva ROC Cross-Dataset (FFPP↔CDF) | FFPP2CDF / CDF2FFPP _roc.png |
 | Gambar 4.13 | Confusion Matrix per model (in-dataset n750) | `{tag}_cm_{model}.png` |
+| Gambar 4.9b | Kurva Pelatihan Model Hybrid (lengkapi 3 model) | training_curves_hybrid_FFPP_n750.png |
 | (Lampiran) | Tabel in/cross/drop untuk n100, n250, n500 | per tier |
+| (Lampiran) | Bar comparison & generalization_drop tier n100/250/500 | comparison_*_{n100,n250,n500}, generalization_drop_{…} |
+| (Lampiran) | Scaling F1 (in & cross) | scaling_f1.png, scaling_f1_cross.png |
+| (Lampiran) | 21 training curve sisa (semua CDF + hybrid + tier n100/250/500) | training_curves_*_{CDF,FFPP}_n* |
 | (Lampiran) | Confusion matrix cross-dataset + ROC tier lain | make_roc_cm.py |
+
+> **Catatan cakupan (audit 2026-06-17):** seluruh 42 PNG `plots/` + semua CSV `tables/` `d28efae` sudah dirutekan — **8 plot di badan** (comparison in/cross n750, generalization_drop n750, scaling_auc & auc_cross, 3 training curve FFPP n750), **sisanya di Lampiran**. Tidak ada artefak yang terbuang. ROC/CM = satu-satunya yang belum ada artefaknya (perlu di-generate via `make_roc_cm.py`).
+
+> **Status generate gambar (2026-06-17):** dibuat ulang berlabel Indonesia via `scripts/make_bab4_figures.py` → tersimpan di `documents/media_v2/`:
+> - ✅ `gambar_4_3_perbandingan_in_dataset.png` (= Gambar 4.3)
+> - ✅ `gambar_4_5_perbandingan_cross_dataset.png` (= Gambar 4.5)
+> - ✅ `gambar_4_7_generalization_drop.png` (= Gambar 4.7)
+> - ✅ `gambar_4_8_scaling_auc.png` (= Gambar 4.8, panel In-Dataset + Cross-Dataset)
+> Belum bisa lokal: **Gambar 4.4 & 4.6 (ROC), 4.9 (confusion matrix)** → `make_roc_cm.py` di vast (butuh checkpoint n750); **Gambar 4.1 & 4.2** → tangkapan layar demo HF Spaces; **Gambar 4.10** → kurva pelatihan (PNG `d28efae/plots/` berbahasa Inggris; perlu disalin/diregenerasi dari histori epoch).
 
 *(Tabel hasil dibuat sebagai HTML siap-paste mengikuti `skills/create-table-html.md`.)*
 
