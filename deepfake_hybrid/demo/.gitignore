@@ -1,0 +1,6 @@
+# Deploy artifacts assembled from canonical sources (see README.md):
+#   src/         -> cp -r ../src ./src   (app.py also falls back to ../src locally)
+#   checkpoints/ -> copied from ../outputs/runs + fft_cache (and *.pt is gitignored repo-wide)
+# Kept out of the main repo to stay DRY; reconstruct before pushing to the HF Space.
+src/
+checkpoints/

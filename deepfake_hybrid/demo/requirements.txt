@@ -1,0 +1,11 @@
+# Python deps for the HuggingFace Space (free CPU tier).
+# gradio is provided by the Space's Gradio SDK (pinned via README sdk_version).
+# CPU-only torch keeps the build small and avoids pulling multi-GB CUDA wheels.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+timm>=1.0.0
+facenet-pytorch
+opencv-python-headless
+Pillow
+numpy<2
