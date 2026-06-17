@@ -1,7 +1,7 @@
 # Thesis Reference Index
 
 > Quick-reference index for all papers in `/thesis_reference/`. Organized by topic with keywords for fast lookup.
-> Total: **42 references** (40 PDFs + 1 HTML + 1 daftar pustaka only). Updated 2026-06-02: added Zhang MTCNN (face detection); see also "Cited but NOT in folder" section for bibliography entries without a local PDF.
+> Total: **45 references** (44 PDFs + 1 HTML). Updated 2026-06-17: **added 6 theory references** (phase spectrum, CNN frequency/texture bias, domain adaptation) and **removed 3 orphans** no longer cited in the docx (Oppenheim — *Discrete-Time Signal Processing*; Easton; Robbins). Earlier (2026-06-02): added Zhang MTCNN. See "Cited but NOT in folder" for bibliography entries without a local PDF.
 
 ---
 
@@ -11,6 +11,7 @@
 |---|---|
 | **deepfake detection** | Aduwala, Afchar (MesoNet), Alam (SpecXNet), Guera, Haliassos, Haq, Hasanaath (FSBI), Kim, Korshunov, Luo, Ma, Mejri, Nguyen, Qian, Rossler (FF++), Sabir, Tan |
 | **frequency domain / FFT / DCT** | Alam (SpecXNet), Durall, Giudice (DCT), Kim, Luo, Mejri, Qian, Tan, Zhang |
+| **phase spectrum / FFT phase** | Oppenheim & Lim, Liu (SPSL), Gonzalez & Woods |
 | **XceptionNet / Xception** | Chollet, Haq, Rossler (FF++) |
 | **depthwise separable convolution** | Chollet (Xception), Howard (MobileNet), Sifre |
 | **GAN / generative** | Aduwala, Karras (ProGAN), Zhang |
@@ -19,12 +20,14 @@
 | **Celeb-DF dataset** | (not directly — use Rossler for cross-dataset context) |
 | **transfer learning** | Chollet, He (ResNet), Rossler |
 | **CNN architecture** | Chollet (Xception), He (ResNet), Howard (MobileNet), Hu (SE-Net), Lecun |
+| **CNN frequency / texture / spectral bias** | Geirhos (texture), Wang (high-freq), Rahaman (spectral) |
 | **RNN / temporal** | Guera, Nguyen, Sabir |
-| **image processing fundamentals** | Easton, Gonzalez & Woods |
-| **signal processing / Fourier** | Oppenheim, Easton, Gonzalez & Woods |
-| **optimizer / gradient descent** | Ruder, Bottou, Robbins |
+| **image processing fundamentals** | Gonzalez & Woods |
+| **signal processing / Fourier** | Gonzalez & Woods, Oppenheim & Lim (phase) |
+| **optimizer / gradient descent** | Ruder, Bottou |
 | **hybrid / multi-domain** | Alam (SpecXNet), Luo, Qian, Tan |
 | **generalization / cross-dataset** | Ma, Tan, Luo, Haliassos |
+| **domain adaptation / generalization** | Ben-David (theory), Ma, Tan, Haliassos |
 | **upsampling artifacts** | Dai, Durall, Odena |
 | **face manipulation methods** | Chadha (overview), Rana (survey), Rao (survey) |
 | **survey / review** | Akinrogunde, Chadha, Rana, Rao |
@@ -149,6 +152,14 @@
 - **Keywords:** self-blended images, frequency enhancement, data augmentation, SBI, training strategy, blending artifacts
 - **Relevance:** Uses frequency-enhanced training data to improve detection. Novel augmentation approach.
 - **Use in thesis:** BAB II (frequency-enhanced training strategies)
+
+### Liu et al — Spatial-Phase Shallow Learning (SPSL)
+- **File:** `Liu et al - Spatial-Phase Shallow Learning SPSL.pdf`
+- **Full title:** Spatial-Phase Shallow Learning: Rethinking Face Forgery Detection in Frequency Domain
+- **Venue:** CVPR 2021 (arXiv:2103.01856)
+- **Keywords:** phase spectrum, FFT phase, up-sampling artifacts, face forgery, frequency domain, cumulative artifacts, shallow network
+- **Relevance:** **Phase-based detection** — exploits the FFT *phase* spectrum (not just magnitude) to surface accumulated up-sampling artifacts. Key support for the argument that this thesis' magnitude-only frequency branch discards informative phase cues.
+- **Use in thesis:** BAB II (Spektrum Magnitudo dan Fase), BAB IV (root-cause cabang frekuensi — faktor fase), BAB V (Saran)
 
 ---
 
@@ -275,7 +286,7 @@
 - **Use in thesis:** BAB II (depthwise separable convolution explanation, efficient architectures)
 
 ### Hu et al — Squeeze-and-Excitation Networks (SE-Net)
-- **File:** *(tidak tersedia di folder — referensi dari daftar pustaka)*
+- **File:** `Hu et al - Squeeze-and-Excitation Networks.pdf`
 - **Full title:** Squeeze-and-Excitation Networks
 - **Authors:** Jie Hu, Li Shen, Gang Sun (Momenta / University of Oxford)
 - **Keywords:** Squeeze-and-Excitation, SE block, channel attention, adaptive recalibration, feature reweighting, gating mechanism
@@ -326,12 +337,7 @@
 - **Relevance:** Practical SGD guidance. Reference for learning rate scheduling concepts.
 - **Use in thesis:** BAB II (optimization theory, learning rate scheduling)
 
-### Robbins et al — Stochastic Approximation
-- **File:** `robbins et al - a stochastic approximation method.pdf`
-- **Full title:** A Stochastic Approximation Method
-- **Keywords:** stochastic approximation, Robbins-Monro, convergence theory, iterative optimization, foundational statistics
-- **Relevance:** Foundational paper for stochastic optimization. Historical citation for SGD theory.
-- **Use in thesis:** BAB II (historical reference for optimization theory)
+*(Robbins et al — A Stochastic Approximation Method: **removed 2026-06-17** — orphan, never cited in the docx; PDF deleted.)*
 
 ---
 
@@ -344,19 +350,14 @@
 - **Relevance:** **Key textbook** — reference for FFT theory, 2D Fourier transform, frequency domain concepts, magnitude spectrum, log scaling.
 - **Use in thesis:** BAB II (Fourier transform theory, frequency domain fundamentals), BAB III (FFT computation methodology)
 
-### Easton Jr — Fundamentals of Image Processing
-- **File:** `Easton Jr - Fundamentals of Image Processing.pdf`
-- **Full title:** Fundamentals of Image Processing
-- **Keywords:** image processing fundamentals, spatial domain, frequency domain, filtering, transforms, image analysis basics
-- **Relevance:** Supplementary image processing reference. Covers spatial and frequency domain basics.
-- **Use in thesis:** BAB II (image processing fundamentals)
-
-### Oppenheim et al — Discrete-Time Signal Processing
-- **File:** `Oppenheim et al - Discrete-Time Signal Processing.pdf`
-- **Full title:** Discrete-Time Signal Processing
-- **Keywords:** DFT, FFT, discrete Fourier transform, signal processing, spectral analysis, windowing, sampling theorem, z-transform, filter design
-- **Relevance:** **Key textbook** — authoritative reference for DFT/FFT algorithms, spectral analysis theory, discrete-time signal processing.
-- **Use in thesis:** BAB II (FFT algorithm theory, DFT formula derivation)
+### Oppenheim & Lim — The Importance of Phase in Signals
+- **File:** `Oppenheim & Lim - The Importance of Phase in Signals.pdf`
+- **Full title:** The Importance of Phase in Signals
+- **Venue:** Proceedings of the IEEE, vol. 69, no. 5, pp. 529–541, May 1981
+- **Keywords:** phase spectrum, magnitude spectrum, signal reconstruction, Fourier phase, structural information, phase-only reconstruction
+- **Relevance:** **Foundational phase reference** — demonstrates that phase carries most of a signal's structural information (phase-only reconstruction preserves edges/shape; magnitude-only does not). Justifies why a magnitude-only FFT branch loses discriminative structure.
+- **Use in thesis:** BAB II (Spektrum Magnitudo dan Fase), BAB IV (root-cause cabang frekuensi — faktor fase)
+- **Note:** Added 2026-06-17. Different paper from the removed Oppenheim *Discrete-Time Signal Processing* (that one was an orphan and was deleted).
 
 ---
 
@@ -385,10 +386,47 @@
 
 ---
 
+## L. CNN Bias & Domain Generalization Theory (added 2026-06-17)
+
+> Theoretical grounding for the negative result (why the frequency branch underperforms / why cross-dataset is hard). Each lands in BAB IV *Pembahasan* and/or BAB V *Saran*.
+
+### Geirhos et al — Texture Bias of CNNs
+- **File:** `Geirhos et al - ImageNet-trained CNNs are biased towards texture.pdf`
+- **Full title:** ImageNet-trained CNNs are biased towards texture; increasing shape bias improves accuracy and robustness
+- **Venue:** ICLR 2019 (arXiv:1811.12231)
+- **Keywords:** texture bias, shape bias, inductive bias, CNN behavior, robustness, ImageNet
+- **Relevance:** CNNs decide by local texture rather than global shape — explains why the spatial XceptionNet branch is effective (its bias aligns with texture artifacts) and why a frequency branch fights the architecture's grain.
+- **Use in thesis:** BAB II (Bias Frekuensi dan Tekstur pada CNN), BAB IV (root-cause faktor keempat), BAB V (Saran)
+
+### Wang et al — High-Frequency Component & CNN Generalization
+- **File:** `Wang et al - High-Frequency Component Helps Explain the Generalization of CNN.pdf`
+- **Full title:** High-Frequency Component Helps Explain the Generalization of Convolutional Neural Networks
+- **Venue:** CVPR 2020 (arXiv:1905.13545)
+- **Keywords:** high-frequency component, generalization, CNN, frequency analysis, spectral perspective, accuracy-robustness trade-off
+- **Relevance:** Links CNN generalization to how the network exploits high-frequency image components — supports the claim that a shallow FreqCNN struggles to learn the right frequency selectivity.
+- **Use in thesis:** BAB II (Bias Frekuensi dan Tekstur pada CNN), BAB IV (root-cause faktor keempat)
+
+### Rahaman et al — Spectral Bias of Neural Networks
+- **File:** `Rahaman et al - On the Spectral Bias of Neural Networks.pdf`
+- **Full title:** On the Spectral Bias of Neural Networks
+- **Venue:** ICML 2019 (arXiv:1806.08734)
+- **Keywords:** spectral bias, frequency principle, low-frequency first, learning dynamics, Fourier analysis of NNs
+- **Relevance:** Networks learn low-frequency components first; high-frequency selectivity is harder to acquire — theoretical basis for why the frequency branch fails to learn discriminative patterns.
+- **Use in thesis:** BAB II (Bias Frekuensi dan Tekstur pada CNN), BAB IV (root-cause faktor keempat)
+
+### Ben-David et al — A Theory of Learning from Different Domains
+- **File:** `Ben-David et al - A Theory of Learning from Different Domains.pdf`
+- **Full title:** A theory of learning from different domains
+- **Venue:** Machine Learning, vol. 79, no. 1–2, pp. 151–175, 2010 (Springer, open access)
+- **Keywords:** domain adaptation, domain generalization, domain shift, source/target risk bound, H-divergence, distribution distance
+- **Relevance:** Foundational theory — target-domain error is bounded by source error plus a divergence between domains. Frames the cross-dataset generalization drop (Δ) as domain shift and positions this study as *domain generalization* (no target data), not adaptation.
+- **Use in thesis:** BAB II (Cross Dataset Generalization — domain adaptation/generalization), BAB IV (4.2.2 penurunan spasial), BAB V (Saran adaptasi domain)
+
+---
+
 ## Cited but NOT in folder (no local PDF — verify externally)
 These bibliography entries are cited in the thesis but have no PDF in `/thesis_reference/`. All are real, well-known papers; listed here so they are not mistaken for fabricated sources:
 - **[18] Li et al., Celeb-DF** (CVPR 2020) — dataset paper; numbers (590 real / 5,639 fake videos) match the published v2 spec.
-- **[36] Hu, Shen & Sun, Squeeze-and-Excitation Networks** (CVPR 2018) — SE-Net (already has an INDEX entry under F, but no PDF locally).
 - **[42] Kingma & Ba, Adam** (ICLR 2015) — optimizer.
 - **[43] Loshchilov & Hutter, Decoupled Weight Decay / AdamW** (ICLR 2019) — optimizer actually used by the code.
 - **[30] Wikimedia Commons** and **[31] Stack Overflow** — web sources (expected, no PDF).
@@ -413,13 +451,16 @@ These bibliography entries are cited in the thesis but have no PDF in `/thesis_r
 | CNN fundamentals | LeCun (deep learning), He (ResNet) |
 | XceptionNet architecture | Chollet (Xception) |
 | Depthwise separable convolution | Chollet, Howard (MobileNet), Sifre (origin paper) |
-| Fourier transform / FFT | Gonzalez & Woods, Oppenheim, Easton |
+| Fourier transform / FFT | Gonzalez & Woods |
+| Phase spectrum (magnitude vs phase) | Oppenheim & Lim, Liu (SPSL), Gonzalez & Woods |
+| CNN frequency/texture bias | Geirhos, Wang, Rahaman |
 | Deepfake detection — spatial | Rossler (FF++), Afchar (MesoNet), Haq (XceptionNet+LBP) |
 | Deepfake detection — frequency | Qian, Tan, Mejri, Giudice (DCT), Kim (temporal freq) |
 | Deepfake detection — hybrid/dual | Alam (SpecXNet), Luo, Hasanaath (FSBI) |
 | Deepfake detection — temporal | Guera (RNN), Nguyen, Sabir |
 | Generalization / cross-dataset | Ma, Haliassos, Tan, Luo |
-| Optimizer (Adam) | Ruder (overview), Bottou (SGD tricks), Robbins (stochastic approx) |
+| Domain adaptation/generalization | Ben-David, Ma, Tan, Haliassos |
+| Optimizer (Adam) | Ruder (overview), Bottou (SGD tricks) |
 | Loss function (BCE) | Goodfellow (ML basics) |
 | Prior surveys | Rana, Rao, Chadha, Akinrogunde |
 
@@ -427,7 +468,7 @@ These bibliography entries are cited in the thesis but have no PDF in `/thesis_r
 | Topic | References |
 |---|---|
 | Dataset (FaceForensics++) | Rossler |
-| FFT methodology | Gonzalez & Woods, Oppenheim |
+| FFT methodology | Gonzalez & Woods |
 | XceptionNet architecture | Chollet |
 | Depthwise separable conv | Chollet, Howard, Sifre |
 | Frequency artifacts justification | Durall, Odena, Zhang |
@@ -439,8 +480,9 @@ These bibliography entries are cited in the thesis but have no PDF in `/thesis_r
 | Topic | References |
 |---|---|
 | Result comparison | Rossler (FF++ baselines), Alam (SpecXNet), Qian, Tan |
-| Generalization analysis | Ma, Haliassos, Tan, Durall |
+| Generalization analysis | Ma, Haliassos, Tan, Durall, Ben-David |
 | Frequency artifact discussion | Durall, Odena, Mejri, Zhang |
+| Frequency-branch root-cause | Oppenheim & Lim (phase), Liu (SPSL), Geirhos, Wang, Rahaman |
 
 ---
 
@@ -453,39 +495,45 @@ These bibliography entries are cited in the thesis but have no PDF in `/thesis_r
 | 3 | `Akinrogunde et al - A systematic review of machine learning and deep_learning approaches...pdf` | Akinrogunde |
 | 4 | `Alam et al - SpecXNet_ A Dual-Domain Convolutional Network...pdf` | Alam (SpecXNet) |
 | 5 | `Andira et al - Overcoming Deepfake Porn Crimes In Indonesia.pdf` | Andira |
-| 6 | `Chadha et al - Deepfake_ An Overview (page 559).pdf` | Chadha |
-| 7 | `Chollet - Xception_ Deep Learning with Depthwise Separable Convolutions.pdf` | Chollet (Xception) |
-| 8 | `Dai et al - Learning Affinity-Aware Upsampling for Deep Image Matting.pdf` | Dai |
-| 9 | `Durall et al - Watch your Up-Convolution...pdf` | Durall |
-| 10 | `Easton Jr - Fundamentals of Image Processing.pdf` | Easton |
-| 11 | `Giudice et al - Fighting Deepfakes by Detecting GAN DCT Anomalies.pdf` | Giudice |
-| 12 | `Gonzalez,Woods-Digital.Image.Processing.4th.Edition.pdf` | Gonzalez & Woods |
-| 13 | `Guera et al - Deepfake Video Detection Using Recurrent Neural Networks.pdf` | Guera |
-| 14 | `Haliassos et al - Lips Don_t Lie...pdf` | Haliassos |
-| 15 | `Haq - KLASIFIKASI CEPAT MODEL XCEPTIONNET...pdf` | Haq |
-| 16 | `Hasanaath - FSBI_ Deepfakes Detection with Frequency Enhanced Self-Blended Images.pdf` | Hasanaath (FSBI) |
-| 17 | `He et al - Deep Residual Learning for Image Recognition.pdf` | He (ResNet) |
-| 18 | *(daftar pustaka only)* | Hu (SE-Net) |
-| 19 | `Howard 2017.pdf` | Howard (MobileNet) |
-| 20 | `Karras et al - Progressive Growing of GANs...pdf` | Karras (ProGAN) |
-| 21 | `Kim et al - Beyond Spatial Frequency...pdf` | Kim |
-| 22 | `Korshunov - DeepFakes_ a New Threat to Face Recognition...pdf` | Korshunov |
-| 23 | `Lecun et al - Deep learning.pdf` | LeCun |
-| 24 | `Luo et al - Frequency-Domain Masking and Spatial Interaction...pdf` | Luo |
-| 25 | `Ma et al - From Specificity to Generality...pdf` | Ma |
-| 26 | `Mejri et al - Leveraging High-Frequency Components for Deepfake Detection.pdf` | Mejri |
-| 27 | `Nguyen et al - Learning Spatio-temporal features...pdf` | Nguyen |
-| 28 | `Odena et al - Deconvolution and Checkerboard Artifacts.pdf` | Odena |
-| 29 | `Oppenheim et al - Discrete-Time Signal Processing.pdf` | Oppenheim |
-| 30 | `Qian et al - Thinking in Frequency...pdf` | Qian |
-| 31 | `Rana et al - Deepfake Detection_ A Systematic Literature Review.pdf` | Rana |
-| 32 | `Rao et al - A Chronological Review of Deepfake Detection...pdf` | Rao |
-| 33 | `Rossler et al - FaceForensics++...pdf` | Rossler (FF++) |
-| 34 | `Ruder et al - An overview of gradient descent optimization.pdf` | Ruder |
-| 35 | `Sabir 2019.pdf` | Sabir |
-| 36 | `Sifre 2014.pdf` | Sifre |
-| 37 | `Tan et al - Frequency-Aware Deepfake Detection...pdf` | Tan |
-| 38 | `Zhang et al - Detecting and Simulating Artifacts in GAN Fake Images...pdf` | Zhang |
-| 39 | `bottou et al - stochastic gradient descent tricks.pdf` | Bottou |
-| 40 | `goodfellow et al - machine learning basics.html` | Goodfellow |
-| 41 | `robbins et al - a stochastic approximation method.pdf` | Robbins |
+| 6 | `Ben-David et al - A Theory of Learning from Different Domains.pdf` ⭐ | Ben-David |
+| 7 | `bottou et al - stochastic gradient descent tricks.pdf` | Bottou |
+| 8 | `Chadha et al - Deepfake_ An Overview (page 559).pdf` | Chadha |
+| 9 | `Chollet - Xception_ Deep Learning with Depthwise Separable Convolutions.pdf` | Chollet (Xception) |
+| 10 | `Dai et al - Learning Affinity-Aware Upsampling for Deep Image Matting.pdf` | Dai |
+| 11 | `Durall et al - Watch your Up-Convolution...pdf` | Durall |
+| 12 | `Geirhos et al - ImageNet-trained CNNs are biased towards texture.pdf` ⭐ | Geirhos |
+| 13 | `Giudice et al - Fighting Deepfakes by Detecting GAN DCT Anomalies.pdf` | Giudice |
+| 14 | `Gonzalez,Woods-Digital.Image.Processing.4th.Edition.pdf` | Gonzalez & Woods |
+| 15 | `goodfellow et al - machine learning basics.html` | Goodfellow |
+| 16 | `Guera et al - Deepfake Video Detection Using Recurrent Neural Networks.pdf` | Guera |
+| 17 | `Haliassos et al - Lips Don_t Lie...pdf` | Haliassos |
+| 18 | `Haq - KLASIFIKASI CEPAT MODEL XCEPTIONNET...pdf` | Haq |
+| 19 | `Hasanaath - FSBI_ Deepfakes Detection with Frequency Enhanced Self-Blended Images.pdf` | Hasanaath (FSBI) |
+| 20 | `He et al - Deep Residual Learning for Image Recognition.pdf` | He (ResNet) |
+| 21 | `Howard 2017.pdf` | Howard (MobileNet) |
+| 22 | `Hu et al - Squeeze-and-Excitation Networks.pdf` | Hu (SE-Net) |
+| 23 | `Karras et al - Progressive Growing of GANs...pdf` | Karras (ProGAN) |
+| 24 | `Kim et al - Beyond Spatial Frequency...pdf` | Kim |
+| 25 | `Korshunov - DeepFakes_ a New Threat to Face Recognition...pdf` | Korshunov |
+| 26 | `Lecun et al - Deep learning.pdf` | LeCun |
+| 27 | `Liu et al - Spatial-Phase Shallow Learning SPSL.pdf` ⭐ | Liu (SPSL) |
+| 28 | `Luo et al - Frequency-Domain Masking and Spatial Interaction...pdf` | Luo |
+| 29 | `Ma et al - From Specificity to Generality...pdf` | Ma |
+| 30 | `Mejri et al - Leveraging High-Frequency Components for Deepfake Detection.pdf` | Mejri |
+| 31 | `Nguyen et al - Learning Spatio-temporal features...pdf` | Nguyen |
+| 32 | `Odena et al - Deconvolution and Checkerboard Artifacts.pdf` | Odena |
+| 33 | `Oppenheim & Lim - The Importance of Phase in Signals.pdf` ⭐ | Oppenheim & Lim (phase) |
+| 34 | `Qian et al - Thinking in Frequency...pdf` | Qian |
+| 35 | `Rahaman et al - On the Spectral Bias of Neural Networks.pdf` ⭐ | Rahaman |
+| 36 | `Rana et al - Deepfake Detection_ A Systematic Literature Review.pdf` | Rana |
+| 37 | `Rao et al - A Chronological Review of Deepfake Detection...pdf` | Rao |
+| 38 | `Rossler et al - FaceForensics++...pdf` | Rossler (FF++) |
+| 39 | `Ruder et al - An overview of gradient descent optimization.pdf` | Ruder |
+| 40 | `Sabir 2019.pdf` | Sabir |
+| 41 | `Sifre 2014.pdf` | Sifre |
+| 42 | `Tan et al - Frequency-Aware Deepfake Detection...pdf` | Tan |
+| 43 | `Wang et al - High-Frequency Component Helps Explain the Generalization of CNN.pdf` ⭐ | Wang |
+| 44 | `Zhang et al - Detecting and Simulating Artifacts in GAN Fake Images...pdf` | Zhang (GAN artifacts) |
+| 45 | `Zhang et al - Joint Face Detection and Alignment...pdf` (MTCNN) | Zhang (MTCNN) |
+
+> ⭐ = added 2026-06-17 (theory references). Removed 2026-06-17: Easton, Oppenheim (*Discrete-Time Signal Processing*), Robbins — orphans, no longer cited.
