@@ -36,7 +36,7 @@ MTCNN-crops the face, and averages its per-frame fake-probability into one verdi
 | **Frequency-only** | FFT log-magnitude map only |
 
 A clip is judged **FAKE** when its mean fake-probability is at or above that model's
-decision threshold (tuned on the FaceForensics++ test set). The raw probability is
+decision threshold (tuned on the FaceForensics++ validation split). The raw probability is
 shown so you can read the model's confidence directly.
 """.format(maxf=inf.MAX_FRAMES, fps=inf.TARGET_FPS)
 

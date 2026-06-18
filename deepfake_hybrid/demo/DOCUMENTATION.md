@@ -155,7 +155,8 @@ demo/
 │   ├── spatial.pt  hybrid.pt  freq.pt          trained weights (FFPP n750 seed0)
 │   ├── {key}_threshold.json                    per-model decision thresholds
 │   └── fft_stats.json                          FFT mean/std for normalization
-└── src/               Deploy artifact (gitignored). Copied verbatim from ../src:
+└── src/               Deploy artifact (gitignored). `cp -r ../src ./src` copies it
+    │                    whole; the files the demo actually imports are:
     ├── face_utils.py    MTCNN detector + bbox + crop
     ├── transforms.py    get_spatial_transform (RGB resize/ToTensor/ImageNet norm)
     ├── fft_utils.py     image_to_fft_logmag (FFT log-magnitude + high-pass)
@@ -182,7 +183,7 @@ demo/
   `config.yaml`.
 - **Hybrid** — `HybridTwoBranch`: Xception features and FreqCNN features each projected to
   256-d, concatenated (512-d), passed through a **Squeeze-and-Excitation gate**, then a
-  dropout→FC classifier.
+  two-layer MLP head (`Dropout→Linear(512,128)→ReLU→Dropout→Linear(128,1)`).
 
 At load time models are built with `pretrained=False` — the checkpoint overwrites every
 weight anyway, so this skips the timm ImageNet download (offline-safe, faster boot).
@@ -195,7 +196,8 @@ All three come from the **same** training tier for a fair comparison:
 Approximate sizes: spatial ~80 MB, hybrid ~99 MB, freq ~16 MB.
 
 ### Decision thresholds (`checkpoints/{key}_threshold.json`)
-Tuned on the FFPP test set (not 0.5). Current values:
+Tuned on the FFPP **validation split** via Youden's J (`run_all.py:compute_val_threshold`),
+not on the test set and not fixed at 0.5. Current values:
 
 | Model | Threshold |
 |---|---|
