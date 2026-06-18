@@ -12,6 +12,7 @@
 > - Naskah BAB IV: `documents/BAB_IV_Hasil_dan_Pembahasan_2026-06-17.md`
 > - Status revisi & item value: `analyze/REVISI_V1_Status_dan_TODO_2026-06-17.md`
 > - Analisis value lengkap: `analyze/REVISI_V1_Full_Analysis_and_RUMUS_Relokasi_2026-06-11_1600.md`
+> - **Handoff presentasi (deck sidang) — repo terpisah:** `../skripsi-presentation/HANDOFF.md` → lihat **§11** (berbagi data; update bersama-sama)
 
 ---
 
@@ -283,3 +284,25 @@ Detail di `analyze/REVISI_V1_Full_Analysis_…_2026-06-11_1600.md` & PLAN. Yang 
 - [x] Gaya sitasi → (Nama, Tahun), Update All Fields
 - [x] Update DAFTAR TABEL & DAFTAR GAMBAR
 - [x] Framing BAB I selaras judul komparatif
+
+---
+
+## 11. Handoff Presentasi (deck sidang) — repo terpisah `skripsi-presentation`
+
+> Deck presentasi sidang dibuat di repo terpisah **`../skripsi-presentation`**. Handoff lengkapnya: **`../skripsi-presentation/HANDOFF.md`**. Deck **mengambil data dari repo thesis ini** (skrip, Tabel 4.x, gambar `media_v2`), jadi **kedua handoff harus diperbarui bersamaan** saat data berubah.
+
+**Yang sudah selesai di deck (bisa dipakai balik untuk thesis):**
+
+- **Screenshot demo Gambar 4.1 & 4.2 SUDAH TERSEDIA** (memenuhi §2B di atas). Ada di `../skripsi-presentation/public/figures/fig-demo-ui.png` (= **4.1** antarmuka demo) dan `fig-what-models-see.png` (= **4.2** what-the-models-see). Untuk thesis, salin & rename ke `documents/media_v2/gambar_4_1_antarmuka_demo.png` & `gambar_4_2_what_models_see.png`, lalu sisipkan menggantikan penanda `[MASUKKAN GAMBAR 4.1/4.2]` (§3).
+- Komposisi Celeb-DF di deck memakai **375/375 (n=750)** sesuai Tabel 1.1/3.1 (Opsi A/B perlu dipastikan konsisten — lihat §0b.C).
+
+**Titik sinkronisasi (bila salah satu berubah, update keduanya):**
+
+| Berubah di thesis | Update di deck |
+|---|---|
+| Angka hasil (Tabel 4.2–4.6) | `src/data/results.ts` |
+| **Penomoran gambar BAB IV final** (§0b.A — masih cair) | `src/data/figures.ts` (`figureNo`) — deck kini pakai 4.3/4.5/4.7/4.8; selaraskan ke skema final |
+| Komposisi dataset (Tabel 1.1/3.1) | slide `dataset` di `src/data/slides.ts` |
+| Gambar baru CM/ROC/kurva (§2A/§2C) | drop PNG ke `public/figures/` + un-placeholder di `figures.ts` |
+
+**Catatan untuk deck (info, bukan tugas thesis):** deck sudah memakai nilai **v4** (label smoothing 0,05; FreqCNN ~4 jt) — konsisten dengan keputusan §0b.C. Tabel HTML `tabel_3_9`/`tabel_3_6` yang masih pra-v4 sebaiknya diregenerasi agar tidak bentrok dengan deck/docx.
