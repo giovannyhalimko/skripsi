@@ -1,16 +1,13 @@
 # Code Walkthrough — Deepfake Hybrid Detection
 
 Detailed rundown of the whole codebase, following the exact flow the **canonical run**
-triggers. The models were most recently (re)trained on a rented GPU box via
-`vast_run.sh`; the equivalent Colab notebook `colab_run.ipynb` runs the same pipeline.
-Both are thin orchestrators that shell out to the `scripts/*.py` files, so every default
-and override here reflects "what was actually run", not just the library defaults.
+triggers. The models were trained on a rented GPU box via `vast_run.sh`, a thin
+orchestrator that shells out to the `scripts/*.py` files, so every default and override
+here reflects "what was actually run", not just the library defaults.
 
-> **What changed in the vast run vs. the earlier Colab run:** `vast_run.sh` uses
-> **`N_SEEDS=3`** (statistical validity) instead of the notebook's 1, and adds a
-> **ROC + confusion-matrix step** (`make_roc_cm.py`). A separate `freq_benchmark.sh`
-> adds a fourth model (`freq_resnet18`) as a frequency-branch ablation. These are the
-> three substantive additions since the previous walkthrough.
+> **What `vast_run.sh` covers:** it trains with **`N_SEEDS=3`** (statistical validity)
+> and includes a **ROC + confusion-matrix step** (`make_roc_cm.py`). A separate
+> `freq_benchmark.sh` adds a fourth model (`freq_resnet18`) as a frequency-branch ablation.
 
 ---
 
@@ -36,11 +33,10 @@ on each dataset at several sample-size tiers, then evaluated **in-dataset** (tes
 of the same dataset) and **cross-dataset** (test split of the *other* dataset) to measure
 generalization.
 
-> **Headline result (2026-06-09 Colab run, seed 0):** spatial > hybrid > freq at every
-> reliable tier. The proposed hybrid *loses* to the plain XceptionNet baseline — a negative
-> result for the thesis hypothesis. The vast run re-runs this with **3 seeds** for
-> statistical validity; read the final numbers from the `*_summary.csv` tables (mean/std
-> over seeds), not a single seed. (Small n=100 tiers are sampling noise; trust tiers ≥250.)
+> **Headline result:** spatial > hybrid > freq at every reliable tier. The proposed hybrid
+> *loses* to the plain XceptionNet baseline — a negative result for the thesis hypothesis.
+> Read the final numbers from the `*_summary.csv` tables (mean/std over the **3 seeds**),
+> not a single seed. (Small n=100 tiers are sampling noise; trust tiers ≥250.)
 
 ### One-line data flow
 
@@ -83,27 +79,24 @@ so that frames from one video never leak across train/val/test.
 
 ---
 
-## 1. The orchestrators (`vast_run.sh` / `colab_run.ipynb`)
+## 1. The orchestrator (`vast_run.sh`)
 
-Both are glue + config; they shell out to the `scripts/*.py` files. `vast_run.sh` is the
-script actually used for the most recent run; `colab_run.ipynb` is the Colab-equivalent.
-
-### `vast_run.sh` — the canonical training script
+`vast_run.sh` is the canonical training script — glue + config that shells out to the
+`scripts/*.py` files.
 
 Top-of-file **knobs** (the only lines normally edited):
-- `N_SEEDS=3` — matches `config.yaml` (statistical validity). **This is the key difference
-  from the notebook's `N_SEEDS=1`.**
+- `N_SEEDS=3` — matches `config.yaml` (statistical validity).
 - `TIERS="100 250 500 750"` — sample-size tiers, same list for both datasets
 - `MAX_FRAMES=100`, `EPOCHS=30`, `FACE_MARGIN=0.3`
 - `ROC_SEED=0` — which seed's checkpoints to plot ROC/CM for (representative)
 
 **Config build.** An inline Python block loads `config.yaml`, **auto-tunes** batch/workers
-from the detected GPU, applies the notebook-style overrides, and writes `vast_config.yaml`:
+from the detected GPU, applies the overrides, and writes `vast_config.yaml`:
 - `A100`/`H100`/`vram≥35 GB` → batch 128, workers 8, `compile=True`
 - `vram≥14 GB` (4090/3090/A5000/V100/T4…) → batch 64, workers 4, `compile=False`
 - otherwise → batch 32, workers 2, `compile=False`
 - aborts hard if **no CUDA GPU** is present (refuses to train on CPU).
-- Same **fail-fast `assert`** as the notebook for the science-critical keys
+- A **fail-fast `assert`** for the science-critical keys
   (`freq_depth`, `freq_base_channels`, `early_stop_patience`, `label_smoothing`,
   `fft_noise_sigma`) so `train.py` can't silently fall back to its own defaults.
 
@@ -123,23 +116,12 @@ from the detected GPU, applies the notebook-style overrides, and writes `vast_co
 > correct-tier test split only exists on disk *now*. (Checkpoints and tables *are*
 > tier-tagged with `_n<N>`; the manifests are not.)
 
-After all tiers, `plot_results.py` runs over the full tier list. Steps 5/6 of the notebook
-(save to Drive) have no analogue — vast outputs stay under `outputs/`.
+After all tiers, `plot_results.py` runs over the full tier list. All outputs stay under
+`outputs/`.
 
-### `colab_run.ipynb` — the Colab equivalent
-
-Same pipeline, with these differences from `vast_run.sh`:
-- `N_SEEDS=1` (seed 0 only) — the earlier canonical results came from here.
-- GPU auto-tune covers only T4 (batch 64, workers 2) and A100 (batch 128, workers 8,
-  `torch.compile` on); no H100/24 GB/small tiers.
-- Writes `colab_config.yaml` instead of `vast_config.yaml`; its assert list also includes
-  `accum_steps`.
-- No ROC/CM step ([D]); it `cp`s tables/runs to `/content/drive/MyDrive/skripsi_outputs/`
-  after each step and zips results at the end.
-
-> ⚠️ **Config drift caveat (see memory):** both orchestrators override `config.yaml`.
-> When reproducing, trust the orchestrator's effective config (`vast_config.yaml` /
-> `colab_config.yaml`), not the committed `config.yaml`.
+> ⚠️ **Config drift caveat (see memory):** the orchestrator overrides `config.yaml`. When
+> reproducing, trust the effective config (`vast_config.yaml`), not the committed
+> `config.yaml`.
 
 ---
 
@@ -148,7 +130,7 @@ Same pipeline, with these differences from `vast_run.sh`:
 `config.yaml` is the single source of truth, but it gets cloned/patched on the way to a run:
 
 ```
-config.yaml  ──(orchestrator: base + GPU-tune + overrides)──▶  vast_config.yaml / colab_config.yaml  ← run uses this
+config.yaml  ──(orchestrator: base + GPU-tune + overrides)──▶  vast_config.yaml  ← run uses this
 run_pipeline.py ──(patch_config: copies + applies CLI overrides)──▶ .pipeline_config.yaml
 ```
 
@@ -162,7 +144,7 @@ Canonical config values that matter for the science (from `config.yaml`, carried
   feature_dim **512**), not the tiny committed default. (The inline comment in
   `config.yaml` that says "~2.8M" is stale — see §7 for the actual count.)
 - `early_stop_patience: 12`, `label_smoothing: 0.05`, `accum_steps: 2`, `fft_noise_sigma: 0.05`
-- `n_seeds: 3` → matches the vast run; `run_all.py` now emits `*_summary.csv`
+- `n_seeds: 3`; `run_all.py` emits `*_summary.csv` (mean/std over seeds)
 - `image_size: 224`, `lr: 2e-4`, `weight_decay: 1e-4`, `epochs: 30`
 
 `src/utils.py` provides the shared plumbing: `load_config`, `seed_everything`
@@ -213,8 +195,8 @@ of the same label, so the final count stays balanced.
 (one row per *video*).
 
 > ⚠️ **Manifest portability (see memory):** `frames_dir` stores raw paths with the host
-> OS separator. A manifest built on Windows breaks on Linux/Colab. Never copy `outputs/`
-> between machines — re-extract.
+> OS separator. A manifest built on Windows breaks on the Linux GPU box. Never copy
+> `outputs/` between machines — re-extract.
 
 ---
 
@@ -265,8 +247,8 @@ back to hardcoded `mean=5.0, std=3.0` with a warning. **Stats are per-dataset** 
 CDF each get their own. (Recomputed locally 2026-06-13: mean≈5.78, std≈1.28 — the fallback
 std of 3.0 was ~2.3× too large.)
 
-`vast_run.sh` passes `--force-fft` (= the notebook's `RECOMPUTE_FFT=True`), regenerating the
-cache every tier (needed whenever `fft_utils.py` changes, e.g. the high-pass cutoff).
+`vast_run.sh` passes `--force-fft`, regenerating the cache every tier (needed whenever
+`fft_utils.py` changes, e.g. the high-pass cutoff).
 
 ---
 
@@ -333,7 +315,7 @@ A small from-scratch CNN over the 1-channel FFT map.
 - `.features` exposes the conv stack (the hybrid branch calls this and flattens, bypassing
   the standalone classifier).
 
-### `freq_resnet18.py` *(new — ablation backbone, see §11)*
+### `freq_resnet18.py` *(ablation backbone, see §11)*
 `build_freq_resnet18` = `timm.create_model("resnet18", in_chans=1, num_classes=1,
 pretrained=True, global_pool="avg")`. With `in_chans=1`, timm adapts the ImageNet `conv1`
 weights by averaging across the RGB channels. **~11.2M params** (≈2.7× the FreqCNN). It
@@ -412,9 +394,9 @@ Output: `runs/<model>_<eff_name>_n<N>_seed<S>/{best.pt, train.log, metrics.json}
 The model set is `MODELS_CORE = ["spatial", "freq", "hybrid"]` (+`early_fusion` only if
 `fusion_mode=early_fusion`). **`freq_resnet18` is not here** — it never enters the matrix.
 
-For every `seed × train_dataset × model` (seeds = `range(n_seeds)` = **0,1,2** for the vast run):
+For every `seed × train_dataset × model` (seeds = `range(n_seeds)` = **0,1,2**):
 1. **Train if needed.** If `best.pt` doesn't exist (and the train manifest does), shell out
-   to `train.py`. If the checkpoint already exists, **reuse it** — this is why notebook/script
+   to `train.py`. If the checkpoint already exists, **reuse it** — this is why script
    step [C] can re-run `run_all` cheaply just to fill cross-dataset cells.
 2. **Pick a decision threshold** once per (model, train-dataset): run inference on that
    dataset's **val** split and choose the threshold maximizing **Youden's J** (`tpr−fpr`),
@@ -441,10 +423,9 @@ and `find_optimal_threshold` (Youden) are also defined here and reused by `make_
 - `Table2_cross_dataset.csv` — train-on-A, test-on-B metrics.
 - `Table3_generalization_drop.csv` — `f1_in − f1_cross` per (model, train-dataset): the core
   "how much does each model degrade out-of-domain" number.
-- **`*_summary.csv`** — because `n_seeds=3 (>1)`, `run_all.py` now also writes
+- **`*_summary.csv`** — because `n_seeds=3 (>1)`, `run_all.py` also writes
   `Table1_in_dataset_summary.csv`, `Table2_cross_dataset_summary.csv`, and
-  `Table3_drop_summary.csv` with **mean/std over seeds**. (The earlier 1-seed Colab run had
-  none of these — this is new in the vast run, and these summaries are the numbers to cite.)
+  `Table3_drop_summary.csv` with **mean/std over seeds**. These summaries are the numbers to cite.
 
 `scripts/eval.py` is a **standalone** single-checkpoint evaluator (reports metrics at both
 0.5 and Youden-optimal thresholds; also supports `freq_resnet18`). It is *not* on the
@@ -454,9 +435,9 @@ orchestrator path — `run_all.py` does its own eval — but is handy for ad-hoc
 
 ## 10. Phase D — ROC curves & confusion matrices (`scripts/make_roc_cm.py`)
 
-**New in the vast run.** Pure **inference** over trained checkpoints — no training. Step [D]
-of `vast_run.sh` calls it four times per tier (in-dataset FFPP, in-dataset CDF, FFPP→CDF,
-CDF→FFPP) for `seed=ROC_SEED=0` only.
+Pure **inference** over trained checkpoints — no training. Step [D] of `vast_run.sh` calls
+it four times per tier (in-dataset FFPP, in-dataset CDF, FFPP→CDF, CDF→FFPP) for
+`seed=ROC_SEED=0` only.
 
 **What it does.** Takes one or more `modeltype:checkpoint.pt` specs plus a `--test-manifest`
 and `--fft-cache-root`, then for each model:
@@ -505,6 +486,11 @@ Outputs: `runs/freq_resnet18_{FFPP,CDF}_n750_seed0/best.pt` and
 `MODELS_CORE`, it never appears in `Table1/2/3` — this benchmark is the only place its numbers
 live.
 
+> **Results (2026-06-19 run):** see `FREQ_BENCHMARK_RESULTS.md`. Short version — the
+> from-scratch arm cleanly favors FreqCNN (wins all 4 conditions at 2.6× fewer params), but the
+> *pretrained* arm is a 2–2 split, so it does **not** support a clean "ResNet18 loses both
+> ways" claim. Lead with AUC; all values sit in a near-chance 0.51–0.63 band (single seed).
+
 ---
 
 ## 12. Phase 7 — Plots (`scripts/plot_results.py`)
@@ -546,8 +532,8 @@ outputs/
 - **Frame-level samples, video-level splits.** Training operates on frames; the split is on
   videos to prevent leakage. A "sample tier" N counts *videos* (balanced real/fake), not frames.
 - **Seeds.** Extraction & splitting always use a fixed `Random(42)` / `random_state=42`.
-  The *training* seed comes from the matrix loop (`n_seeds`); **vast run = seeds 0,1,2**, so
-  cite the `*_summary.csv` (mean±std). The earlier Colab run was seed 0 only.
+  The *training* seed comes from the matrix loop (`n_seeds` = seeds 0,1,2), so cite the
+  `*_summary.csv` (mean±std).
 - **ROC/CM is seed 0 only.** `make_roc_cm.py` plots `ROC_SEED=0` as the representative seed,
   even though the tables average 3 seeds.
 - **Manifests/test splits aren't tier-tagged.** They're overwritten every tier — which is why
