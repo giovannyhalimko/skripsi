@@ -21,6 +21,7 @@ TIERS="100 250 500 750"         # sample-size tiers, both datasets — matches n
 MAX_FRAMES=100                  # frames per video (notebook value; config.yaml default is 50)
 EPOCHS=30
 FACE_MARGIN=0.3                 # MTCNN face-crop margin (notebook: FACE_CROP=True, margin 0.3)
+ROC_SEED=0                      # which seed's checkpoints to plot ROC/CM for (representative)
 # =============================================================================
 
 cd "$PROJECT"
@@ -98,6 +99,50 @@ for n in $TIERS; do
   echo "--- [C] Cross-dataset eval + tables n=$n ---"
   python scripts/run_all.py --config "$CFG" --dataset both \
       --n-samples "$n" --pretrained
+
+  # ── [D] ROC curves + confusion matrices (inference only, seed $ROC_SEED) ────
+  #   Must run HERE (inside the loop): manifests/FFPP|CDF/test.csv are NOT
+  #   tier-tagged and get overwritten next tier, so the correct-tier test split
+  #   is only on disk now. CM thresholds are auto-loaded from each run's
+  #   threshold.json (written by [C]); cross-dataset uses the train-set threshold.
+  #   Non-fatal: a plotting hiccup must not abort training of later tiers.
+  echo "--- [D] ROC + confusion matrices n=$n (seed $ROC_SEED, inference only) ---"
+  FFPP_CKPTS="spatial:outputs/runs/spatial_FFPP_n${n}_seed${ROC_SEED}/best.pt \
+              hybrid:outputs/runs/hybrid_FFPP_n${n}_seed${ROC_SEED}/best.pt \
+              freq:outputs/runs/freq_FFPP_n${n}_seed${ROC_SEED}/best.pt"
+  CDF_CKPTS="spatial:outputs/runs/spatial_CDF_n${n}_seed${ROC_SEED}/best.pt \
+             hybrid:outputs/runs/hybrid_CDF_n${n}_seed${ROC_SEED}/best.pt \
+             freq:outputs/runs/freq_CDF_n${n}_seed${ROC_SEED}/best.pt"
+
+  # In-dataset: FFPP-trained -> FFPP test, CDF-trained -> CDF test
+  python scripts/make_roc_cm.py --models $FFPP_CKPTS \
+      --test-manifest outputs/manifests/FFPP/test.csv \
+      --fft-cache-root outputs/fft_cache/FFPP \
+      --batch-size "$BATCH" --num-workers "$WORKERS" \
+      --tag "FFPP_in_n${n}" --title "In-Dataset FFPP (n=${n})" \
+      || echo "  !! [D] FFPP_in_n${n} failed — continuing"
+
+  python scripts/make_roc_cm.py --models $CDF_CKPTS \
+      --test-manifest outputs/manifests/CDF/test.csv \
+      --fft-cache-root outputs/fft_cache/CDF \
+      --batch-size "$BATCH" --num-workers "$WORKERS" \
+      --tag "CDF_in_n${n}" --title "In-Dataset CDF (n=${n})" \
+      || echo "  !! [D] CDF_in_n${n} failed — continuing"
+
+  # Cross-dataset: FFPP-trained -> CDF test, CDF-trained -> FFPP test
+  python scripts/make_roc_cm.py --models $FFPP_CKPTS \
+      --test-manifest outputs/manifests/CDF/test.csv \
+      --fft-cache-root outputs/fft_cache/CDF \
+      --batch-size "$BATCH" --num-workers "$WORKERS" \
+      --tag "FFPP2CDF_n${n}" --title "Cross-Dataset FFPP->CDF (n=${n})" \
+      || echo "  !! [D] FFPP2CDF_n${n} failed — continuing"
+
+  python scripts/make_roc_cm.py --models $CDF_CKPTS \
+      --test-manifest outputs/manifests/FFPP/test.csv \
+      --fft-cache-root outputs/fft_cache/FFPP \
+      --batch-size "$BATCH" --num-workers "$WORKERS" \
+      --tag "CDF2FFPP_n${n}" --title "Cross-Dataset CDF->FFPP (n=${n})" \
+      || echo "  !! [D] CDF2FFPP_n${n} failed — continuing"
 done
 
 # ── Plots for the results chapter ───────────────────────────────────────────
@@ -110,4 +155,5 @@ echo "#  ALL DONE — seeds=$N_SEEDS tiers=[$TIERS]"
 echo "#  Tables:      outputs/tables/n*/{Table1,Table2,Table3}*.csv"
 echo "#  Checkpoints: outputs/runs/<model>_<dataset>_n<N>_seed<S>/best.pt"
 echo "#  Plots:       outputs/plots/"
+echo "#  ROC/CM:      outputs/roc_cm/{FFPP_in,CDF_in,FFPP2CDF,CDF2FFPP}_n<N>_*.png (seed $ROC_SEED)"
 echo "############################################################"

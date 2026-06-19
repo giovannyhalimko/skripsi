@@ -47,6 +47,7 @@ from deepfake_data import DeepfakeDataset, DatasetConfig  # noqa: E402
 from models.spatial_xception import build_xception  # noqa: E402
 from models.freq_cnn import FreqCNN  # noqa: E402
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception  # noqa: E402
+from models.freq_resnet18 import build_freq_resnet18  # noqa: E402
 import metrics as metrics_mod  # noqa: E402
 
 CLASS_NAMES = ["Real", "Fake"]
@@ -60,6 +61,8 @@ def build_model(model_type, ckpt_cfg, pretrained=False):
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
         return FreqCNN(num_classes=1, depth=depth, base_channels=base)
+    if model_type == "freq_resnet18":
+        return build_freq_resnet18(num_classes=1, pretrained=pretrained)
     if model_type == "hybrid":
         return HybridTwoBranch(pretrained=pretrained, freq_depth=depth, freq_base_channels=base)
     if model_type == "early_fusion":
@@ -84,13 +87,15 @@ def infer(model_type, ckpt_path, test_manifest, fft_cache_root, device, batch_si
     image_size = int(ckpt_cfg.get("image_size", 224))
     max_frames = int(ckpt_cfg.get("max_frames_per_video", 100))
 
-    needs_fft = model_type in {"freq", "hybrid", "early_fusion"}
+    needs_fft = model_type in {"freq", "hybrid", "early_fusion", "freq_resnet18"}
+    _DATA_MODE = {"freq_resnet18": "freq"}
+    ds_mode = _DATA_MODE.get(model_type, model_type)
     ds_cfg = DatasetConfig(
         manifest_path=Path(test_manifest),
         fft_cache_root=Path(fft_cache_root) if (needs_fft and fft_cache_root) else None,
         image_size=image_size,
         max_frames_per_video=max_frames,
-        mode=model_type,
+        mode=ds_mode,
         seed=0,
         train=False,
     )
@@ -173,6 +178,10 @@ def main():
     ap = argparse.ArgumentParser(description="ROC + confusion matrix from trained checkpoints (inference only)")
     ap.add_argument("--models", nargs="+", required=True,
                     help="One or more 'modeltype:checkpoint.pt' (e.g. spatial:.../best.pt)")
+    ap.add_argument("--labels", nargs="*", default=None,
+                    help="Optional display labels parallel to --models (legend + output filenames). "
+                         "Required to distinguish two checkpoints of the same modeltype. "
+                         "Must match the number of --models if given.")
     ap.add_argument("--test-manifest", required=True)
     ap.add_argument("--fft-cache-root", default=None, help="Needed for freq/hybrid/early_fusion")
     ap.add_argument("--tag", required=True, help="Filename prefix, e.g. FFPP_in_n750")
@@ -190,30 +199,39 @@ def main():
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    if args.labels is not None and len(args.labels) != len(args.models):
+        ap.error(f"--labels has {len(args.labels)} entries but --models has {len(args.models)}")
+
+    def _slug(s):
+        return "".join(c if c.isalnum() else "_" for c in s).strip("_")
+
     per_model, metrics_out, failures = [], {}, []
-    for spec in args.models:
+    for idx, spec in enumerate(args.models):
         model_type, ckpt = spec.split(":", 1)
-        print(f"[{model_type}] loading {ckpt} …", flush=True)
+        # label = legend text; slug = unique key for filenames/metrics (lets two
+        # checkpoints of the same modeltype, e.g. ResNet18 pretrained vs scratch, coexist).
+        label = args.labels[idx] if args.labels else model_type.capitalize()
+        slug = _slug(args.labels[idx]) if args.labels else model_type
+        print(f"[{label}] loading {ckpt} …", flush=True)
         try:
             y_true, y_prob = infer(model_type, ckpt, args.test_manifest, args.fft_cache_root,
                                    device, args.batch_size, args.num_workers)
         except Exception as e:  # one bad/mismatched checkpoint shouldn't kill the rest
             msg = f"{type(e).__name__}: {str(e).splitlines()[0]}"
             print(f"    !! SKIPPED ({msg})", flush=True)
-            failures.append({"model": model_type, "checkpoint": ckpt, "error": msg})
-            metrics_out[model_type] = {"checkpoint": ckpt, "error": msg}
+            failures.append({"model": slug, "checkpoint": ckpt, "error": msg})
+            metrics_out[slug] = {"checkpoint": ckpt, "error": msg}
             continue
         thr, thr_src = resolve_threshold(model_type, ckpt, y_true, y_prob, args.threshold)
         auc = metrics_mod.compute_metrics(y_true, y_prob, threshold=thr)["auc"]
-        label = model_type.capitalize()
         # save predictions
-        pred_path = out_dir / f"{args.tag}_preds_{model_type}.csv"
+        pred_path = out_dir / f"{args.tag}_preds_{slug}.csv"
         np.savetxt(pred_path, np.column_stack([y_true, y_prob]),
                    delimiter=",", header="y_true,y_prob", comments="", fmt=["%d", "%.6f"])
-        m = dict(model=model_type, label=label, y_true=y_true, y_prob=y_prob,
+        m = dict(model=slug, label=label, y_true=y_true, y_prob=y_prob,
                  threshold=thr, thr_src=thr_src, auc=auc)
         per_model.append(m)
-        metrics_out[model_type] = {
+        metrics_out[slug] = {
             "checkpoint": ckpt, "n_frames": int(len(y_true)),
             "auc": auc, "threshold": thr, "threshold_source": thr_src,
             **metrics_mod.compute_metrics(y_true, y_prob, threshold=thr),

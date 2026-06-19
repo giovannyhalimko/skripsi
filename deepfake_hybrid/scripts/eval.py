@@ -16,6 +16,7 @@ from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
+from models.freq_resnet18 import build_freq_resnet18
 import metrics as metrics_mod
 
 
@@ -24,6 +25,8 @@ def select_model(model_type: str, pretrained: bool, freq_depth: int = 3, freq_ba
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
         return FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
+    if model_type == "freq_resnet18":
+        return build_freq_resnet18(num_classes=1, pretrained=pretrained)
     if model_type == "hybrid":
         return HybridTwoBranch(pretrained=pretrained, freq_depth=freq_depth, freq_base_channels=freq_base_channels)
     if model_type == "early_fusion":
@@ -45,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate checkpoint")
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF"], help="Test dataset")
-    parser.add_argument("--model", choices=["spatial", "freq", "hybrid", "early_fusion"], help="Model type")
+    parser.add_argument("--model", choices=["spatial", "freq", "hybrid", "early_fusion", "freq_resnet18"], help="Model type")
     parser.add_argument("--checkpoint", required=True, help="Path to checkpoint .pt")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pretrained", action="store_true")
@@ -66,13 +69,15 @@ def main():
     if not test_manifest.exists():
         raise FileNotFoundError(f"Test manifest missing at {test_manifest}. Run build_splits.py")
 
-    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion"} else None
+    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion", "freq_resnet18"} else None
+    _DATA_MODE = {"freq_resnet18": "freq"}
+    data_mode = _DATA_MODE.get(args.model, args.model if args.model != "hybrid" else "hybrid")
     ds_cfg = DatasetConfig(
         manifest_path=test_manifest,
         fft_cache_root=fft_cache_root,
         image_size=cfg.get("image_size", 224),
         max_frames_per_video=cfg.get("max_frames_per_video", 100),
-        mode=args.model if args.model != "hybrid" else "hybrid",
+        mode=data_mode,
         seed=args.seed,
         train=False,
     )

@@ -20,6 +20,7 @@ from deepfake_data import DeepfakeDataset, DatasetConfig
 from models.spatial_xception import build_xception
 from models.freq_cnn import FreqCNN
 from models.hybrid_fusion import HybridTwoBranch, EarlyFusionXception
+from models.freq_resnet18 import build_freq_resnet18
 import metrics as metrics_mod
 
 FREEZE_EPOCHS = 3  # number of initial epochs to freeze spatial backbone
@@ -59,6 +60,8 @@ def select_model(model_type: str, pretrained: bool, cfg: dict):
         return build_xception(num_classes=1, in_chans=3, pretrained=pretrained)
     if model_type == "freq":
         return FreqCNN(num_classes=1, depth=freq_depth, base_channels=freq_base_channels)
+    if model_type == "freq_resnet18":
+        return build_freq_resnet18(num_classes=1, pretrained=pretrained)
     if model_type == "hybrid":
         return HybridTwoBranch(pretrained=pretrained, freq_depth=freq_depth, freq_base_channels=freq_base_channels)
     if model_type == "early_fusion":
@@ -70,7 +73,7 @@ def forward_model(model_type, model, batch, device):
     if model_type == "spatial":
         x, y = batch
         logits = model(x.to(device)).view(-1)
-    elif model_type == "freq":
+    elif model_type in ("freq", "freq_resnet18"):
         x, y = batch
         logits = model(x.to(device)).view(-1)
     elif model_type == "early_fusion":
@@ -123,7 +126,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train deepfake models")
     parser.add_argument("--config", required=True)
     parser.add_argument("--dataset", choices=["FFPP", "CDF"], help="Training dataset")
-    parser.add_argument("--model", choices=["spatial", "freq", "hybrid", "early_fusion"], help="Model type")
+    parser.add_argument("--model", choices=["spatial", "freq", "hybrid", "early_fusion", "freq_resnet18"], help="Model type")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained backbones where applicable")
     parser.add_argument("--n-samples", type=int, default=0,
@@ -133,6 +136,9 @@ def main():
     parser.add_argument("--method", type=str, default=None,
                         choices=["Deepfakes", "Face2Face", "FaceSwap", "NeuralTextures"],
                         help="FFPP only: use method-specific manifests and cache")
+    parser.add_argument("--run-suffix", type=str, default="",
+                        help="Optional suffix appended to the run directory name (e.g. _scratch) "
+                             "to keep otherwise-identical runs from colliding")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -148,7 +154,7 @@ def main():
 
     eff_name = effective_name(args.dataset, args.method)
     n_tag = f"_n{args.n_samples}" if args.n_samples > 0 else ""
-    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{eff_name}{n_tag}_seed{args.seed}"
+    run_dir = Path(cfg["output_root"]) / "runs" / f"{args.model}_{eff_name}{n_tag}_seed{args.seed}{args.run_suffix}"
     ensure_dir(run_dir)
     setup_logging(run_dir / "train.log")
     logging.info(f"Starting training: model={args.model}, dataset={eff_name}, seed={args.seed}, device={device}")
@@ -161,10 +167,12 @@ def main():
     if not train_manifest.exists():
         raise FileNotFoundError(f"Train manifest missing at {train_manifest}. Run build_splits.py")
 
-    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion"} else None
+    fft_cache_root = (Path(cfg["output_root"]) / "fft_cache" / eff_name) if args.model in {"freq", "hybrid", "early_fusion", "freq_resnet18"} else None
 
-    train_loader = make_dataloader(train_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=True, fft_cache_root=fft_cache_root, seed=args.seed)
-    val_loader = make_dataloader(val_manifest, cfg, mode=args.model if args.model != "hybrid" else "hybrid", train=False, fft_cache_root=fft_cache_root, seed=args.seed)
+    _DATA_MODE = {"freq_resnet18": "freq"}
+    data_mode = _DATA_MODE.get(args.model, args.model if args.model != "hybrid" else "hybrid")
+    train_loader = make_dataloader(train_manifest, cfg, mode=data_mode, train=True, fft_cache_root=fft_cache_root, seed=args.seed)
+    val_loader = make_dataloader(val_manifest, cfg, mode=data_mode, train=False, fft_cache_root=fft_cache_root, seed=args.seed)
 
     model = select_model(args.model, pretrained=args.pretrained, cfg=cfg).to(device)
     if cfg.get("compile_model", False) and hasattr(torch, "compile"):
