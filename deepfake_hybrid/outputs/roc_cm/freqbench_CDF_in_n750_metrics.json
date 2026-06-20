@@ -1,0 +1,50 @@
+{
+  "FreqCNN": {
+    "checkpoint": "outputs/runs/freq_CDF_n750_seed0/best.pt",
+    "n_frames": 7419,
+    "auc": 0.578152603850527,
+    "threshold": 0.10285913199186325,
+    "threshold_source": "file:threshold.json",
+    "tp": 1869,
+    "tn": 2362,
+    "fp": 1599,
+    "fn": 1589,
+    "acc": 0.5702924922496293,
+    "precision": 0.5389273356401384,
+    "recall": 0.5404858299595142,
+    "f1": 0.5397054576956396,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/freqbench_CDF_in_n750_preds_FreqCNN.csv"
+  },
+  "ResNet18__pretrained": {
+    "checkpoint": "outputs/runs/freq_resnet18_CDF_n750_seed0_pretrained/best.pt",
+    "n_frames": 7419,
+    "auc": 0.6085679358709827,
+    "threshold": 0.7235081791877747,
+    "threshold_source": "youden",
+    "tp": 1323,
+    "tn": 3103,
+    "fp": 858,
+    "fn": 2135,
+    "acc": 0.5965763579997304,
+    "precision": 0.6066024759284732,
+    "recall": 0.3825910931174089,
+    "f1": 0.46923213335697816,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/freqbench_CDF_in_n750_preds_ResNet18__pretrained.csv"
+  },
+  "ResNet18__scratch": {
+    "checkpoint": "outputs/runs/freq_resnet18_CDF_n750_seed0_scratch/best.pt",
+    "n_frames": 7419,
+    "auc": 0.5452448168369188,
+    "threshold": 0.47724130749702454,
+    "threshold_source": "youden",
+    "tp": 788,
+    "tn": 3344,
+    "fp": 617,
+    "fn": 2670,
+    "acc": 0.5569483757918857,
+    "precision": 0.5608540925266904,
+    "recall": 0.2278773857721226,
+    "f1": 0.32407978614024263,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/freqbench_CDF_in_n750_preds_ResNet18__scratch.csv"
+  }
+}

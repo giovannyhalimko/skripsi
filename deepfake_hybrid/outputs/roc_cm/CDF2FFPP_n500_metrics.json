@@ -1,0 +1,50 @@
+{
+  "spatial": {
+    "checkpoint": "outputs/runs/spatial_CDF_n500_seed0/best.pt",
+    "n_frames": 5741,
+    "auc": 0.6152405896612432,
+    "threshold": 0.2855185270309448,
+    "threshold_source": "file:threshold.json",
+    "tp": 479,
+    "tn": 2865,
+    "fp": 13,
+    "fn": 2384,
+    "acc": 0.5824769203971434,
+    "precision": 0.9735772357723578,
+    "recall": 0.1673070206077541,
+    "f1": 0.28554396423248884,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/CDF2FFPP_n500_preds_spatial.csv"
+  },
+  "hybrid": {
+    "checkpoint": "outputs/runs/hybrid_CDF_n500_seed0/best.pt",
+    "n_frames": 5741,
+    "auc": 0.6352175573084211,
+    "threshold": 0.3458821773529053,
+    "threshold_source": "file:threshold.json",
+    "tp": 572,
+    "tn": 2765,
+    "fp": 113,
+    "fn": 2291,
+    "acc": 0.5812576206235848,
+    "precision": 0.8350364963503649,
+    "recall": 0.19979042961928048,
+    "f1": 0.322435174746336,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/CDF2FFPP_n500_preds_hybrid.csv"
+  },
+  "freq": {
+    "checkpoint": "outputs/runs/freq_CDF_n500_seed0/best.pt",
+    "n_frames": 5741,
+    "auc": 0.5061879574946412,
+    "threshold": 0.9971345663070679,
+    "threshold_source": "file:threshold.json",
+    "tp": 1162,
+    "tn": 1650,
+    "fp": 1228,
+    "fn": 1701,
+    "acc": 0.48981013760668873,
+    "precision": 0.48619246861924686,
+    "recall": 0.4058679706601467,
+    "f1": 0.4424138587473824,
+    "predictions_csv": "/workspace/skripsi/deepfake_hybrid/outputs/roc_cm/CDF2FFPP_n500_preds_freq.csv"
+  }
+}
