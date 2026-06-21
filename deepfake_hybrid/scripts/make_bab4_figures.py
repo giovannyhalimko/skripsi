@@ -1,8 +1,12 @@
-"""Generate BAB IV figures (Indonesian labels) from the settled d28efae result tables.
+"""Generate BAB IV figures (Indonesian labels) from the result tables.
 
-Reads results_vast_20260609/tables/n*/ summary CSVs and produces thesis-ready PNGs
-into documents/media_v2/ with the gambar_4_x_* naming convention. No model inference
-needed — purely re-plots the aggregated metrics.
+Reads the 3-seed summary CSVs (default: outputs/tables/n*/ — the adopted 2026-06-20
+run) and produces thesis-ready PNGs into documents/media_v2/ with the gambar_4_x_*
+naming convention. No model inference needed — purely re-plots the aggregated metrics.
+
+Usage:
+  python scripts/make_bab4_figures.py                 # default: outputs/tables (run baru)
+  python scripts/make_bab4_figures.py results_vast_20260609/tables   # override (run lama)
 
 Produces:
   gambar_4_3_perbandingan_in_dataset.png     (bar F1 + AUC, in-dataset n=750)
@@ -19,7 +23,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLES = ROOT / "results_vast_20260609" / "tables"
+TABLES = (Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "outputs" / "tables")
+if not TABLES.is_absolute():
+    TABLES = ROOT / TABLES
 OUT = ROOT.parent / "documents" / "media_v2"
 OUT.mkdir(parents=True, exist_ok=True)
 
