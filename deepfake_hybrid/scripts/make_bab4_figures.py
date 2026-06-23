@@ -109,6 +109,62 @@ def fig_drop():
     fig.savefig(p); plt.close(fig); return p
 
 
+def fig_auc_in_vs_cross():
+    """Slope chart: perubahan AUC in-dataset -> cross-dataset per model, per arah.
+
+    Menyoroti besarnya penurunan (atau kenaikan) AUC saat model diuji lintas
+    dataset, dipisah per arah pelatihan sehingga asimetri arah terlihat langsung.
+    In-dataset diambil dari dataset pelatihan yang sama; cross-dataset dari arah
+    pengujian yang berkaitan (FFPP->CDF dilatih FFPP, CDF->FFPP dilatih CDF).
+    """
+    ind = pd.read_csv(TABLES / "n750" / "Table1_in_dataset_summary.csv")
+    cro = pd.read_csv(TABLES / "n750" / "Table2_cross_dataset_summary.csv")
+
+    def in_auc(m, ds):
+        return float(ind[(ind.model == m) & (ind.train_dataset == ds)]["auc_mean"].iloc[0])
+
+    def cross_auc(m, tr):
+        return float(cro[(cro.model == m) & (cro.train_dataset == tr)]["auc_mean"].iloc[0])
+
+    panels = [("FFPP", "FFPP→CDF"), ("CDF", "CDF→FFPP")]
+    fig, axes = plt.subplots(1, 2, figsize=(13, 6), sharey=True)
+    xpos = [0, 1]
+    for ax, (tr, dir_label) in zip(axes, panels):
+        for m in ORDER:
+            y0 = in_auc(m, tr)
+            y1 = cross_auc(m, tr)
+            # Δ konsisten dgn Tabel 4.4: in-dataset - cross-dataset (positif = penurunan)
+            delta = y0 - y1
+            ax.plot(xpos, [y0, y1], "-o", color=COLOR[m], linewidth=2.4,
+                    markersize=9, markeredgecolor="black", markeredgewidth=0.5,
+                    label=LABEL[m], zorder=3)
+            ax.annotate(f"{y0:.3f}", (0, y0), textcoords="offset points",
+                        xytext=(-10, 0), ha="right", va="center", fontsize=10)
+            ax.annotate(f"{y1:.3f}", (1, y1), textcoords="offset points",
+                        xytext=(10, 0), ha="left", va="center", fontsize=10)
+            # label besarnya penurunan di tengah garis (Δ = +/- selisih AUC)
+            dstr = f"{delta:+.3f}".replace("-", "−").replace("+", "+")
+            ax.annotate(f"Δ={dstr}", (0.5, (y0 + y1) / 2),
+                        textcoords="offset points", xytext=(0, 8), ha="center",
+                        va="bottom", fontsize=9, color=COLOR[m], fontweight="bold")
+        ax.axhline(0.5, color="grey", ls=":", lw=1, alpha=0.8)
+        ax.text(0.5, 0.512, "tebakan acak (0,5)", color="grey", fontsize=8,
+                va="bottom", ha="center", transform=ax.get_yaxis_transform())
+        ax.set_title(dir_label, fontweight="bold")
+        ax.set_xticks(xpos)
+        ax.set_xticklabels(["AUC In-Dataset", "AUC Cross-Dataset"])
+        ax.set_xlim(-0.45, 1.45)
+        ax.set_ylim(0.45, 1.0)
+        ax.grid(axis="y", alpha=0.3)
+    axes[0].set_ylabel("AUC")
+    axes[0].legend(loc="lower left", fontsize=9)
+    fig.suptitle("Perubahan AUC In-Dataset → Cross-Dataset per Model (n = 750)",
+                 fontsize=15, fontweight="bold")
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    p = OUT / "gambar_4_x_auc_in_vs_cross.png"
+    fig.savefig(p); plt.close(fig); return p
+
+
 def fig_scaling():
     tiers = [250, 500, 750]
     ind = {n: pd.read_csv(TABLES / f"n{n}" / "Table1_in_dataset_summary.csv") for n in tiers}
@@ -139,5 +195,9 @@ def fig_scaling():
 
 
 if __name__ == "__main__":
-    for fn in (fig_in_dataset, fig_cross_dataset, fig_drop, fig_scaling):
+    only = sys.argv[2] if len(sys.argv) > 2 else None
+    funcs = (fig_in_dataset, fig_cross_dataset, fig_drop, fig_auc_in_vs_cross, fig_scaling)
+    for fn in funcs:
+        if only and only not in fn.__name__:
+            continue
         print("saved", fn().relative_to(ROOT.parent))
