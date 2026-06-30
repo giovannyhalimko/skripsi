@@ -37,6 +37,7 @@ Hal yang penting: ketiganya dilatih pada **dataset yang sama** — FaceForensics
 ## 2 · Mengunggah klip & alur pemrosesan (2:00 – 4:00)
 
 > `[LAYAR: klik kotak unggah, pilih video wajah singkat, lalu klik "Analyze".]`
+> **Pilihan klip:** unggah **video PALSU (fake)** terlebih dahulu — inilah yang paling meyakinkan, karena model spatial akan mendeteksinya dengan yakin sementara hybrid lebih ragu atau bahkan keliru, langsung membuktikan temuan §5.
 
 Kami akan mengunggah sebuah klip video wajah singkat. Kami klik **Analyze**.
 
@@ -67,6 +68,8 @@ Ambang itu penting, dan nilainya bukan sekadar 0,5. Untuk setiap model, kami men
 > `[LAYAR: kini arahkan ke ketiga kartu sekaligus.]`
 
 Sekarang, perbandingannya. Lihat ketiga kartu bersamaan untuk klip yang sama. Anda akan sering melihatnya **berbeda pendapat** — dan ketidaksepakatan itulah inti dari demo ini. Baseline spatial cenderung paling yakin dan paling tepat; sementara model hybrid dan frequency lebih ragu-ragu, dan kadang keliru.
+
+> **Opsional — klip kedua (video ASLI/real):** jika waktu memungkinkan, unggah satu klip asli setelah ini. Ketiga model idealnya sepakat menyebut ASLI, yang menunjukkan bahwa perbedaan pendapat di atas murni terjadi pada video palsu, bukan artefak acak.
 
 ---
 
@@ -118,6 +121,6 @@ Terima kasih telah menyaksikan.
 
 ### Tips perekaman
 - **Siapkan klip lebih dahulu.** Inferensi di CPU untuk 16 frame × 3 model butuh beberapa detik — siapkan video uji Anda dan pertimbangkan untuk memotong jeda "Analyze" saat menyunting, atau bicara selama menunggu (naskah pada §2 sudah dirancang untuk ini).
-- **Siapkan dua klip jika memungkinkan** — idealnya satu klip di mana baseline benar dan hybrid berbeda pendapat, agar poin pada §5 terlihat jelas di layar.
+- **Siapkan dua klip jika memungkinkan** — klip pertama **PALSU** (untuk §2–4, agar ketidaksepakatan spatial vs. hybrid terlihat), klip kedua **ASLI** (opsional, untuk §3 perbandingan, untuk menunjukkan semua model setuju). Urutan ini membuat §5 jauh lebih meyakinkan karena penonton sudah menyaksikan sendiri.
 - **Perbesar tampilan browser** ke ~125% agar kartu dan garis penanda ambang terbaca jelas di video.
 - Jika waktu mepet, §1 dan §4 paling bisa dipadatkan; §3 (membaca kartu) dan §5 (temuan) adalah bagian yang wajib dipertahankan.
