@@ -20,6 +20,9 @@ Thumbs.db
 desktop.ini
 *.tmp
 
+# Machine-specific symlink to the live thesis .docx on OneDrive (path differs per author)
+live-thesis-document.docx
+
 # IDE
 .idea/
 .vscode/
