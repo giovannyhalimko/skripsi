@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+table { border-collapse: collapse; width: 100%; font-family: 'Times New Roman', serif; font-size: 12pt; }
+th, td { border: 1px solid black; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: bold; text-align: center; }
+caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 6px; }
+.copy-btn { display: block; margin: 10px auto; padding: 8px 20px; font-family: 'Times New Roman', serif; font-size: 11pt; cursor: pointer; background: #f0f0f0; border: 1px solid #999; border-radius: 4px; }
+.copy-btn:hover { background: #ddd; }
+</style></head><body>
+<div id="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Tahap</th>
+      <th>Operasi</th>
+      <th>Cabang</th>
+      <th>Tujuan Utama</th>
+      <th>Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Ekstraksi <i>frame</i></td>
+      <td>Bersama</td>
+      <td>Mengubah video menjadi deretan <i>frame</i></td>
+      <td>Citra per-<i>frame</i></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Deteksi wajah (MTCNN)</td>
+      <td>Bersama</td>
+      <td>Menemukan lokasi (<i>bounding box</i>) wajah</td>
+      <td>Koordinat wajah</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><i>Cropping</i> (margin 0,3)</td>
+      <td>Bersama</td>
+      <td>Memotong area wajah dari latar</td>
+      <td><i>Patch</i> wajah</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><i>Resize</i> 224&times;224</td>
+      <td>Spasial (RGB)</td>
+      <td>Menyeragamkan resolusi</td>
+      <td>Citra RGB 224&times;224</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Normalisasi ImageNet</td>
+      <td>Spasial (RGB)</td>
+      <td>Menstabilkan intensitas dan kontras</td>
+      <td>Citra RGB ternormalisasi</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Konversi <i>grayscale</i></td>
+      <td>Frekuensi</td>
+      <td>Mengambil informasi luminansi</td>
+      <td>Citra 1-kanal</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><i>Resize</i> 224&times;224</td>
+      <td>Frekuensi</td>
+      <td>Menyeragamkan resolusi</td>
+      <td>Citra 1-kanal 224&times;224</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Transformasi FFT (<i>high-pass</i>, <i>log</i>)</td>
+      <td>Frekuensi</td>
+      <td>Mengubah ke domain frekuensi</td>
+      <td>Peta <i>log-magnitude</i></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Normalisasi <i>z-score</i></td>
+      <td>Frekuensi</td>
+      <td>Menyeragamkan skala spektral</td>
+      <td>Peta FFT ternormalisasi</td>
+    </tr>
+  </tbody>
+  <caption>Tabel 2.4 Tahapan Preprocessing. Tahap 1&ndash;3 bersifat bersama; tahap 4&ndash;5 menghasilkan representasi spasial (RGB) untuk XceptionNet, sedangkan tahap 6&ndash;9 menghasilkan representasi frekuensi (peta FFT <i>log-magnitude</i>) untuk FreqCNN. Kedua representasi digabungkan di dalam model pada tahap <i>late fusion</i>, bukan sebagai kanal tambahan.</caption>
+</table>
+</div>
+<button class="copy-btn" onclick="copyTable()">Copy Table</button>
+<script>
+function copyTable(){var r=document.getElementById('table-wrapper');var s=window.getSelection();s.removeAllRanges();var rng=document.createRange();rng.selectNodeContents(r);s.addRange(rng);document.execCommand('copy');s.removeAllRanges();this.textContent='Copied!';}
+</script>
+</body></html>

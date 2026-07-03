@@ -29,6 +29,30 @@
 16. [🔴 Daftar &#34;Artefak Spasial&#34;: butir (d) &#34;ekspresi antar-frame&#34; itu TEMPORAL, bentrok dgn frame-level](#item-16)
 17. [🟡 Struktur membingungkan: dikotomi artefak spasial/frekuensi diulang 3x dengan 3 format berbeda](#item-17)
 18. [🟡 &#34;Alasan Pemilihan FFPP&#34;: 3 klaim faktual tanpa sitasi (+ &#34;GAN dan non-GAN&#34; kurang tepat)](#item-18)
+19. [🟡 Paragraf Celeb-DF: angka BENAR, tapi sitasi [18] salah tunjuk (harusnya Li et al.) + daftar tanpa penutup](#item-19)
+20. [🟡 Alur preprocessing: 7 langkah semua ADA, tapi urutan salah + menyembunyikan percabangan RGB/FFT](#item-20)
+21. [🔴 Review §2.13/§2.13.1 Preprocessing: kontradiksi temporal + resize tanpa angka + 299 vs 224 + tabel under-describe FFT](#item-21)
+22. [✅ Gradient Clipping (norma L2, rumus 2.29) — COCOK dgn kode (max_norm=5,0); tapi sitasi KOSONG](#item-22)
+23. [🔴 Daftar metrik evaluasi HILANG AUC — padahal AUC metrik UTAMA (seleksi model + early stopping)](#item-23)
+24. [❓ "Kenapa komparatif? Ada paper yang menyarankan?" — jawaban + sitasi](#item-24)
+
+---
+
+## Status re-check terhadap WORD terbaru (2026-07-03)
+
+**Sudah diperbaiki di .docx ✅:**
+- [Item 10](#item-10) — klaim "XceptionNet unggul di FF++, DFDC, Celeb-DF" → "DFDC" sudah hilang.
+- [Item 12](#item-12) — "cross-spatial" → sudah jadi "cross-channel" (line 599).
+- [Item 16](#item-16) — butir temporal "ketidakkonsistenan ekspresi saat frame" → sudah hilang.
+- [Item 11](#item-11) #2 (§2.7.3) — sudah ditulis ulang jadi late fusion (line 597). *(minor: typo "ynag"→"yang" 2×.)*
+- [Item 7](#item-7) (line 420) — sudah "fokus late fusion; early fusion tidak dievaluasi".
+- [Item 21](#item-21)-1 — kalimat temporal (flickering) di §2.13.1 → sudah hilang.
+
+**Masih terbuka 🔴 (belum diperbaiki di .docx):**
+- [Item 11](#item-11) #7 / [Item 7](#item-7) — **line 1476**: masih "...model spatial, hybrid, **dan early fusion**, backbone dibekukan...".
+- [Item 11](#item-11) #8 — **line 812**: masih "...menambahkan informasi Frekuensi ... sebagai **channel 4**...".
+- [Item 21](#item-21)-3 / [Item 11](#item-11) #5 — **Tabel 2.4** di .docx belum diganti dgn versi baru (`table/tabel_2_4_tahapan_preprocessing.html`).
+- [Item 19](#item-19) — sitasi Celeb-DF **line 703** masih "[18]" (harusnya Li et al.).
 
 ---
 
@@ -839,3 +863,196 @@ Jadi hanya NeuralTextures yang benar-benar adversarial; Deepfakes autoencoder; d
 ### Ringkas untuk dieksekusi
 
 Tambahkan **[7]** di akhir kalimat Alasan 1 dan Alasan 2 (dan awal Alasan 4), tambah tinjauan (Rana/Rao) untuk klaim "ratusan publikasi" & "generalisasi", ganti "GAN dan non-GAN" → "grafika komputer dan pembelajaran". Perhatikan **desync penomoran** in-text vs Daftar Pustaka (lihat catatan [Item 10](#item-10)) saat menaruh nomor.
+
+---
+
+<a name="item-19"></a>
+
+## Item 19 — Paragraf komposisi Celeb-DF (§2.10, docx line 709-713): angka benar, tapi sitasi [18] salah tunjuk + daftar tanpa penutup
+
+**Verdict: 🟡 ISI ANGKA BENAR. Tapi (a) sitasi [18] kemungkinan menunjuk referensi SALAH (bukan paper Celeb-DF), dan (b) daftar 3 poin ditutup mendadak tanpa kalimat penutup (instingmu benar).**
+
+### Cek fakta angka — semua BENAR ✅
+| Klaim | Status |
+|---|---|
+| Celeb-DF punya v1 dan v2, v2 lebih luas dipakai | ✅ benar |
+| Celeb-DF v2: **590 video asli** | ✅ benar (angka baku "Celeb-real" v2) |
+| Celeb-DF v2: **5.639 video deepfake** | ✅ benar |
+| "encoder-decoder yang disempurnakan" | ✅ benar (metode sintesis autoencoder yang ditingkatkan: resolusi 256×256, koreksi warna, dll.) |
+| variasi tinggi (pencahayaan, resolusi, latar, ekspresi) | ✅ sesuai deskripsi paper |
+
+*(Opsional: v2 juga menambah 300 video "YouTube-real" untuk test set, tetapi 590/5.639 adalah angka baku yang dikutip mayoritas paper. Tak perlu diubah.)*
+
+### 🔴 Masalah sitasi [18]
+Paragraf ditutup dengan **[18]** untuk mendukung deskripsi Celeb-DF. Padahal di Daftar Pustaka (ekstraksi live .docx):
+- **[18] = X. Luo dan Y. Wang, "Frequency-Domain Masking and Spatial Interaction..."** (2025) — **bukan** Celeb-DF.
+- **[19] = Y. Li, X. Yang, P. Sun, H. Qi, S. Lyu, "Celeb-DF: A Large-scale Challenging Dataset for DeepFake Forensics"** (2020) — **INI** paper Celeb-DF.
+
+Jadi seperti tertulis, [18] menyeret pembaca ke paper Frequency-Domain Masking, bukan Celeb-DF. Sitasi ini **seharusnya Li et al. (entri [19])**. Instans lain dari **desync penomoran** ([Item 10](#item-10)). **Aksi:** ganti [18]→[19] di sini (lebih baik: *refresh* seluruh field Ctrl+A→F9 lalu verifikasi sitasi Celeb-DF me-resolve ke Li et al.). Cek juga [18] di paragraf lain (mis. line 715/716) apakah maksudnya Celeb-DF atau Frequency-Domain Masking.
+
+### 🟡 Daftar 3 poin ditutup mendadak
+Setelah butir 3, sub-bab langsung lompat ke "Peran Celeb-DF dalam Evaluasi Cross-Dataset" tanpa penutup. Tambahkan jembatan:
+> "Perbedaan-perbedaan ini menjadikan Celeb-DF sebagai dataset uji yang lebih menantang dibanding FaceForensics++, sekaligus tolok ukur penting untuk menilai generalisasi model, sebagaimana diuraikan pada bagian berikut."
+
+Menutup daftar sekaligus menyambung ke §2.10.2. (Pola "daftar tanpa penutup" ini sama dengan yang kamu rasakan di [Item 17](#item-17) — layak dicek juga di daftar lain.)
+
+---
+
+<a name="item-20"></a>
+
+## Item 20 — "Alur preprocessing mencakup ekstraksi frame, deteksi wajah, cropping, resize, normalisasi, konversi skala warna, dan transformasi FFT" (§3-preprocessing, docx line ~730)
+
+**Verdict: 🟡 Ketujuh langkah SEMUA nyata di kode ✅, tetapi (a) URUTANNYA tidak akurat, (b) daftar linear MENYEMBUNYIKAN percabangan RGB vs FFT, dan (c) "konversi skala warna" hanya untuk cabang FFT + istilah kurang tepat.**
+
+### Cek keberadaan tiap langkah — semua ADA ✅
+| Langkah diklaim | Ada di kode? | Lokasi |
+|---|---|---|
+| ekstraksi frame | ✅ | `extract_frames.py` |
+| deteksi wajah | ✅ | MTCNN `detect_face_bbox` (jika `--face-crop`) |
+| cropping | ✅ | `crop_face` (margin 0.3) |
+| resize | ✅ | ke 224 — di FFT (`image_to_fft_logmag`) & di `spatial_transform` |
+| normalisasi | ✅ | RGB: ImageNet mean/std; FFT: z-score (`deepfake_data.py:129`) |
+| konversi skala warna | ✅ | grayscale `img.convert("L")` — **hanya di cabang FFT** (`fft_utils.py:24`) |
+| transformasi FFT | ✅ | `np.fft.fft2` + high-pass + log1p |
+
+### 🟡 Masalah URUTAN
+Klaim: ...resize → **normalisasi** → **konversi skala warna** → **transformasi FFT**. Yang benar di kode:
+1. **Grayscale ("konversi skala warna") terjadi SEBELUM resize+FFT**, bukan setelah normalisasi. Alur FFT sebenarnya: `convert("L")` → `resize(224)` → `fft2` (`fft_utils.py:24-27`).
+2. **Normalisasi FFT justru SETELAH transformasi FFT** (z-score pada log-magnitude, `deepfake_data.py:129`), padahal klaim menaruh "normalisasi" sebelum "transformasi FFT".
+3. Jadi daftar linear itu menempatkan langkah pada urutan yang keliru untuk cabang frekuensi.
+
+### 🟡 Menyembunyikan percabangan (ini inti masalahnya)
+Pipeline sebenarnya **bercabang setelah cropping** menjadi dua representasi paralel:
+```
+ekstraksi frame → deteksi wajah → cropping
+        ├─ cabang SPASIAL (RGB): resize 224 → normalisasi ImageNet        (tetap berwarna)
+        └─ cabang FREKUENSI: grayscale → resize 224 → FFT (high-pass, log) → normalisasi z-score
+```
+Daftar linear tunggal menyiratkan satu rantai berurutan, padahal ada **front bersama + dua ekor paralel**. Penting juga: **grayscale hanya untuk cabang FFT** — citra RGB yang masuk XceptionNet tetap 3-kanal berwarna. Menyebut "konversi skala warna" sebagai langkah umum bisa disalahartikan seakan RGB pun di-grayscale-kan.
+
+### Catatan istilah
+"Konversi skala warna" ambigu (bisa dibaca konversi ruang warna, mis. RGB→YCbCr). Yang dilakukan kode = **RGB → skala keabuan (grayscale/luminance)**. Pakai "**konversi ke skala keabuan (grayscale)**".
+
+### Konsistensi internal (prosa vs Tabel 2.4)
+- **Prosa** (kalimat ini): 7 langkah, berakhir di "transformasi FFT", **memuat** "konversi skala warna".
+- **Tabel 2.4**: 7 langkah (Ekstraksi, Deteksi wajah, Cropping, Resize, Normalisasi pixel, Transformasi FFT, **Channel fusion→4-channel**), **tanpa** grayscale.
+→ Prosa dan tabel **tak sinkron** (prosa punya grayscale tanpa channel-fusion; tabel punya channel-fusion tanpa grayscale). Tabel-nya juga masih memuat "Channel fusion → 4-channel" yang keliru ([Item 11](#item-11) #5).
+
+### Perbaikan (disarankan) — ganti daftar linear jadi deskripsi bercabang
+> Alur preprocessing terdiri atas tahap bersama lalu bercabang. Tahap bersama meliputi ekstraksi *frame*, deteksi wajah, dan *cropping* wajah. Selanjutnya setiap *frame* diolah menjadi dua representasi: (1) cabang spasial (RGB) yang di-*resize* ke 224×224 lalu dinormalisasi dengan statistik ImageNet, dan (2) cabang frekuensi yang dikonversi ke skala keabuan, di-*resize*, ditransformasikan dengan FFT (*high-pass* dan *log-magnitude*), lalu dinormalisasi dengan *z-score*. Dengan demikian data masukan memiliki format seragam, representasi wajah yang stabil, dan struktur frekuensi yang tidak terdistorsi.
+
+**Alternatif minimal** (tetap satu kalimat, hanya benahi urutan): "...ekstraksi frame, deteksi wajah, cropping, resize, konversi ke skala keabuan (khusus cabang frekuensi), transformasi FFT, dan normalisasi."
+
+---
+
+<a name="item-21"></a>
+
+## Item 21 — Review menyeluruh §2.13 "Preprocessing" & §2.13.1 "Tahapan dan Alur Preprocessing"
+
+**Verdict: 🔴 Seksi ini mengumpulkan banyak masalah — 2 sudah tercatat + 3 baru. Prioritas: kontradiksi temporal & Tabel 2.4.**
+
+### Sudah tercatat (ada di seksi ini)
+- **[Item 20](#item-20):** kalimat intro "Alur preprocessing mencakup ..." — urutan salah + sembunyikan percabangan + "konversi skala warna".
+- **[Item 11](#item-11) #5:** **Tabel 2.4** baris 7 "Channel fusion → **Tensor 4-channel**" + caption "...digunakan sebagai **fitur tambahan** pada model hybrid" = framing early-fusion (padahal model late fusion).
+
+### 🔴 BARU-1 — Kontradiksi temporal di "Ekstraksi Frame Video"
+> "...pemrosesan per-frame memungkinkan **analisis lebih mendetail terhadap variasi temporal, seperti flickering dan inkonsistensi ekspresi**..."
+
+Ini **bertentangan** dengan metode kalian. *Flickering* dan "inkonsistensi ekspresi antar-frame" adalah fenomena **temporal** — butuh membandingkan/mengurutkan frame. Tapi §Analisis Video (kalimat tepat di atasnya) menegaskan penelitian ini **frame-level**, "diproses secara terpisah ... **tanpa informasi sekuensial antar-frame**". Pemrosesan per-frame independen **justru TIDAK bisa** menangkap flickering. Sama tema dengan [Item 16](#item-16). **Fix:** hapus/ubah kalimat ini, mis. → "pemrosesan per-frame memungkinkan model menangkap variasi artefak **spasial dan spektral** yang berbeda antar-frame **tanpa bergantung pada urutan temporal**."
+
+### 🟡 BARU-2 — "Resize" kehilangan angka + inkonsistensi 299 vs 224
+- Kalimat: "Citra kemudian **di-resize menjadi pixel** agar sesuai dengan input XceptionNet." → **angka "224×224" hilang** (kemungkinan teks/field terputus). Kalimat berikutnya baru menyebut "Ukuran 224×224". **Fix:** "di-resize menjadi **224×224 piksel**".
+- Inkonsistensi: §Arsitektur XceptionNet menyatakan "citra masukan berukuran **299×299**" (spec asli Chollet), tetapi preprocessing me-*resize* ke **224×224** (sesuai kode `image_size=224`). Frasa "agar sesuai dengan input XceptionNet" jadi rancu (input asli Xception 299). **Fix:** samakan cerita — implementasi kalian **memang 224×224**; sebutkan itu pilihan sadar (kompatibel *pretrained* 224), dan jangan mengklaim 224 = "sesuai input asli Xception". (Sekalian "struktur local" → "struktur **lokal**".)
+
+### 🟡 BARU-3 — Tabel 2.4 & langkah under-describe cabang FFT
+Langkah bernomor dan Tabel 2.4 hanya menyebut "Transformasi FFT → Spektrum frekuensi". **Tidak ada**: konversi grayscale, *high-pass filtering*, maupun normalisasi z-score FFT. Padahal intro §2.13 menyebut "konversi skala warna". Jadi **intro (ada grayscale) vs Tabel 2.4 (tanpa grayscale, malah ada channel-fusion)** tak sinkron, dan cabang FFT tampil kurang utuh. **Fix:** buat langkah/tabel mencerminkan cabang FFT sebenarnya: grayscale → resize → FFT (high-pass, log) → normalisasi z-score; dan buang baris "channel fusion 4-channel".
+
+### 🟡 BARU-4 — Duplikasi BAB II vs BAB III
+Preprocessing juga dibahas ulang di **BAB III §3.3 "Tahapan Preprocessing Data"** (docx ~line 1100). Pastikan tidak saling bertentangan (mis. 224 vs 299, urutan langkah, ada/tidaknya channel-fusion). Idealnya BAB II = konsep, BAB III = implementasi spesifik penelitian (senada pola [Item 17](#item-17)).
+
+### Ringkas prioritas fix di seksi ini
+1. 🔴 Hapus klaim temporal (flickering/inkonsistensi ekspresi) di Ekstraksi Frame.
+2. 🔴 Tabel 2.4: buang baris "Channel fusion → 4-channel", perbaiki caption ([Item 11](#item-11)).
+3. 🟡 "di-resize menjadi **224×224 piksel**" + selaraskan 299/224.
+4. 🟡 Lengkapi langkah cabang FFT (grayscale/high-pass/z-score), sinkronkan intro↔tabel.
+5. 🟡 Cek konsistensi dengan BAB III §3.3.
+
+> ✅ **Sudah dibuatkan versi ready copy-paste** (Item 20 + 21 terintegrasi, sitasi (Nama, Tahun)): **`documents/REVISI_BAB_II_2.13_Preprocessing_2026-07-03.md`**. Item 20 juga tercakup di file itu. Tabel 2.4 terkoreksi: **`documents/table/tabel_2_4_tahapan_preprocessing.html`**.
+
+---
+
+<a name="item-22"></a>
+
+## Item 22 — "Gradient Clipping" (BAB II §2.15.4 rumus 2.29 + BAB III §3.5.6)
+
+**Verdict: ✅ ISI & RUMUS BENAR, COCOK PERSIS dengan kode. Satu-satunya kekurangan: paragraf BAB II TANPA SITASI.**
+
+### Cek fakta — semua BENAR ✅
+| Klaim | Kode | Status |
+|---|---|---|
+| "gradient clipping berdasarkan norma L2" | `clip_grad_norm_(...)` (default norm_type=2 = L2) | ✅ |
+| Rumus g←g bila ‖g‖₂≤c; g←g·(c/‖g‖₂) bila ‖g‖₂>c | perilaku persis `clip_grad_norm_` | ✅ |
+| "menjaga arah gradien, membatasi besarnya" | penskalaan menjaga arah | ✅ |
+| ambang c = **max_norm** | `max_norm=5.0` (`train.py:117`) | ✅ (BAB III Tabel hyperparameter tulis **max_norm = 5,0**, Norma L2) |
+| "saat backbone pretrained dilepaskan (unfreezing)" | backbone di-unfreeze epoch 4 | ✅ |
+| "AMP: `scaler.unscale_()` sebelum clipping" (BAB III) | `scaler.unscale_()` lalu `clip_grad_norm_` (`train.py:116-117`) | ✅ persis |
+
+Tidak ada kesalahan faktual. Nilai c = 5,0 konsisten antara kode, BAB III §3.5.6, dan Tabel hyperparameter.
+
+### 🟡 Satu-satunya masalah: SITASI KOSONG
+Paragraf §2.15.4 (line 845-846) **tidak memuat sitasi**, padahal teknik ini punya sumber jelas.
+- **Termudah:** **(Goodfellow et al., 2016)** — buku *Deep Learning* (MIT Press) membahas *gradient clipping* (§10.11.1) dan **sudah ada di Daftar Pustaka** (line 2135). Tinggal tempel nama, tanpa menambah referensi baru.
+- **Sumber primer (opsional):** **(Pascanu et al., 2013)** — *"On the difficulty of training recurrent neural networks"* (ICML 2013), pengenalan *gradient norm clipping*. Belum ada di Daftar Pustaka; perlu ditambah bila dipakai.
+
+**Aksi:** tambahkan **(Goodfellow et al., 2016)** di akhir kalimat pertama:
+> "...diterapkan _gradient clipping_ berdasarkan norma L2 (Goodfellow et al., 2016)."
+
+---
+
+<a name="item-23"></a>
+
+## Item 23 — "metrik evaluasi yang digunakan meliputi Confusion Matrix, Accuracy, Precision, Recall, dan F1-Score" (intro §2.16 Metrik Evaluasi)
+
+**Verdict: 🔴 DAFTAR TIDAK LENGKAP — HILANG "AUC (Area Under the ROC Curve)", padahal AUC adalah metrik UTAMA penelitian. Ini kontradiksi dengan seluruh bagian dokumen lain.**
+
+### Bukti bahwa AUC memang dipakai (dan justru paling utama)
+- **Kode `src/metrics.py`** menghitung: `confusion_matrix`, `accuracy_score`, `precision_recall_fscore_support`, **`roc_auc_score`**, dan **`roc_curve`**. Jadi AUC + kurva ROC memang dihitung.
+- **Kode `train.py`**: seleksi checkpoint terbaik pakai **val AUC** (`if val_metrics["auc"] > best_auc`, `:296`) dan **early stopping pada AUC** (`:305` "val AUC did not improve"). Jadi AUC = **metrik seleksi model & early stopping** — bukan sekadar pelengkap.
+- **Abstrak** (line 52): "...menggunakan metrik akurasi, presisi, recall, F1-score, **dan AUC**...".
+- **BAB I** (line 297, 302, 322): tujuan & cakupan menyebut "akurasi, presisi, recall, **dan AUC**".
+- **BAB II** punya sub-bab tersendiri **§2.16.6 "Area Under the ROC Curve"** (TOC line 153).
+- **BAB IV**: Kurva ROC (Gambar 4.4, 4.6), **Tabel 4.5 AUC In-Dataset**, perbandingan AUC (Gambar 4.8, 4.9). Hasil headline semuanya AUC.
+
+Jadi **semua tempat lain menampilkan AUC**, hanya kalimat pengantar §2.16 ini yang melewatkannya. Padahal AUC justru **metrik yang paling menentukan** di skripsi ini. Penguji hampir pasti menyorot ini.
+
+### Masalah kedua — "Seluruh metrik dihitung berdasarkan hasil prediksi ... kelas sebenarnya"
+Setelah AUC dimasukkan, kalimat ini jadi **tidak akurat untuk AUC**. Accuracy/Precision/Recall/F1/Confusion Matrix dihitung dari **label prediksi** (pada ambang θ = 0,5), tetapi **AUC dihitung dari skor probabilitas** model (`y_prob`) dan **independen terhadap ambang** — justru itulah alasan AUC dipakai sebagai metrik utama. Jadi jangan menyamaratakan "seluruh metrik dari hasil prediksi (label)".
+
+### Perbaikan (disarankan)
+> "Pada penelitian ini, metrik evaluasi yang digunakan meliputi _Confusion Matrix_, _Accuracy_, _Precision_, _Recall_, _F1-Score_, dan _Area Under the ROC Curve_ (AUC). Metrik _Accuracy_, _Precision_, _Recall_, dan _F1-Score_ dihitung dari hasil prediksi model pada ambang tertentu (θ = 0,5) terhadap kelas sebenarnya, sedangkan AUC dihitung dari skor probabilitas model sehingga bersifat independen terhadap ambang. AUC digunakan sebagai **metrik utama** untuk seleksi model dan _early stopping_ karena sifatnya yang tahan terhadap ketidakseimbangan kelas dan tidak bergantung pada pemilihan ambang."
+
+Menambahkan AUC di sini sekaligus **menyelaraskan** intro §2.16 dengan §2.16.6, abstrak, BAB I, dan BAB IV.
+
+---
+
+<a name="item-24"></a>
+
+## Item 24 — Pertanyaan penguji: "Kenapa (studi) komparatif? Apakah ada paper ilmiah yang menyarankan?"
+
+**Verdict: ❓ Pertanyaan antisipatif. Jawaban kuat + ada dasar paper. Ringkas: pertanyaan riset kami memang komparatif secara inheren, mengisi celah literatur, dan protokol evaluasi komparatif lintas-dataset memang direkomendasikan/ditetapkan oleh paper benchmark & survei.**
+
+### Kenapa komparatif (3 alasan)
+1. **Pertanyaan risetnya memang komparatif.** Tujuan kami mengukur **kontribusi domain frekuensi**. Satu-satunya cara ilmiah mengisolasi kontribusi itu adalah **membandingkan** model domain-tunggal (spasial, frekuensi) vs hybrid **di bawah kondisi identik** (dataset, backbone, training, split, seed sama). Ini pada dasarnya **ablation terkontrol** — variabel bebasnya arsitektur, sisanya dijaga tetap. Tanpa baseline domain-tunggal, kontribusi frekuensi tidak bisa diatribusikan.
+2. **Mengisi celah literatur.** Metode hybrid (SpecXNet, FSBI, frequency-aware) **mengklaim** fusi frekuensi meningkatkan generalisasi, tetapi sebagian besar dioptimalkan untuk **in-dataset FF++** dan **belum menguji kontribusi itu secara sistematis lintas-dataset**. Kalian sudah menyatakan ini eksplisit di BAB II ("...belum mengevaluasi secara sistematis kontribusi fusi late dan gating terhadap robustness lintas dataset. Penelitian ini mengisi celah tersebut"). Studi komparatif = **verifikasi terkontrol** atas klaim yang belum terbukti.
+3. **Jujur terhadap temuan.** Ternyata kontribusi frekuensi **terbatas** (freq ≈ tebakan acak, hybrid tidak mengungguli spasial). Framing **komparatif** (mengukur kontribusi) adalah wadah yang tepat untuk menyampaikan temuan itu — lebih jujur daripada mengklaim arsitektur baru yang superior. Hasil negatif/terbatas yang terverifikasi adalah **kontribusi ilmiah yang sah** (mengoreksi asumsi over-optimistik di literatur).
+
+### "Ada paper yang menyarankan?" — YA, ada dasarnya
+- **(Li et al., 2020 — Celeb-DF)** **menetapkan protokol evaluasi komparatif lintas-dataset** (latih FaceForensics++ → uji Celeb-DF) sebagai tolok ukur yang menantang. Protokol inilah yang kami ikuti; jadi desain komparatif cross-dataset kami mengikuti benchmark yang sudah baku.
+- **(Rana et al., 2022 — Systematic Literature Review)** dan **(Rao & Uehara, 2025 — Chronological Review)**: survei sistematis menegaskan bahwa **generalisasi lintas-dataset, bukan akurasi in-dataset, adalah metrik paling relevan**, dan banyak metode **overfit** ke dataset pelatihan (penurunan AUC 10–20 poin lintas-dataset). Ini **secara langsung merekomendasikan** pendekatan evaluasi komparatif yang kami pakai. (Sudah kalian kutip di BAB II.)
+- **Metodologi ablation/perbandingan terkontrol adalah standar** di bidang ini — bahkan paper yang kami bandingkan memakainya: **SpecXNet** melakukan ablation modul (DDFC/DFA, backbone ResNet vs Xception); **(Durall et al., 2020)** membandingkan spektrum citra real vs GAN. Jadi membandingkan untuk mengatribusikan kontribusi = norma keilmuan, bukan pilihan yang perlu dibela.
+
+### Jawaban siap-ucap (± 30 detik)
+> "Karena pertanyaan riset kami memang komparatif: kami ingin mengukur **seberapa besar kontribusi domain frekuensi**, dan itu hanya bisa dijawab dengan **membandingkan** model spasial, frekuensi, dan hybrid pada kondisi yang identik — sebuah ablation terkontrol. Ini mengisi celah nyata: metode hybrid di literatur mengklaim manfaat frekuensi untuk generalisasi, tetapi jarang mengujinya secara sistematis lintas-dataset. Soal dasar ilmiah: protokol komparatif lintas-dataset (latih FF++, uji Celeb-DF) justru **ditetapkan oleh Li et al. (2020)** pada paper Celeb-DF, dan survei seperti **Rana et al. (2022)** serta **Rao & Uehara (2025)** menegaskan bahwa generalisasi lintas-dataset adalah metrik yang paling relevan. Jadi desain komparatif kami mengikuti rekomendasi dan benchmark yang sudah baku di bidang ini."
+
+### Kalau ditekan "berarti tidak ada kontribusi baru?"
+> "Kontribusi kami adalah **verifikasi terkontrol** atas klaim yang belum terbukti, plus temuan bahwa kontribusi frekuensi **terbatas** pada kondisi terkompresi/face-crop — temuan yang justru mengoreksi optimisme literatur dan mengarahkan penelitian lanjutan (fasa/SPSL, FFT citra penuh). Studi komparatif yang jujur dan terkontrol adalah bentuk kontribusi ilmiah yang sah."

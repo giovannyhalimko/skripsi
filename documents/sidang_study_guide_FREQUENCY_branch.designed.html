@@ -1,0 +1,869 @@
+<title>Frequency Branch — Sidang Study Guide</title>
+<style>
+  :root{
+    --bg:#0c0e13; --panel:#14171f; --panel-2:#1b1f2a; --panel-3:#222834;
+    --line:#272d3a; --line-2:#333b4c;
+    --ink:#e9e6f1; --muted:#9793a8; --faint:#6c6980;
+    --amber:#ff9142; --amber-dim:#c9722f; --magenta:#e5497f; --violet:#8b6cff;
+    --good:#46c8a0; --bad:#e5566d; --warn:#f2b24a;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,system-ui,sans-serif;
+    --maxw:1080px; --prose:790px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(255,145,66,.28)}
+  a{color:var(--amber); text-decoration:none}
+  a:hover{text-decoration:underline; text-underline-offset:3px}
+  :focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:3px}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .prose{max-width:var(--prose); margin-left:auto; margin-right:auto}
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+
+  /* ---------- typographic primitives ---------- */
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--faint); font-weight:600;
+  }
+  h1,h2,h3,h4{text-wrap:balance; letter-spacing:-.02em; line-height:1.12; margin:0}
+  h2{font-size:clamp(1.5rem,3.4vw,2rem); font-weight:800}
+  h3{font-size:1.16rem; font-weight:700; letter-spacing:-.01em; line-height:1.25}
+  h4{font-size:.98rem; font-weight:700; letter-spacing:0}
+  p{margin:0 0 1rem}
+  strong{color:#fff; font-weight:680}
+  em{color:var(--ink)}
+  code,.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  code{
+    font-size:.86em; background:var(--panel-2); color:#f0d9c4;
+    padding:.12em .4em; border-radius:4px; border:1px solid var(--line);
+    white-space:nowrap;
+  }
+
+  /* ---------- chips & badges ---------- */
+  .chip{
+    display:inline-flex; align-items:center; gap:.35em;
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.06em;
+    text-transform:uppercase; font-weight:600;
+    padding:.28em .6em; border-radius:100px; border:1px solid var(--line-2);
+    color:var(--muted); background:var(--panel-2); white-space:nowrap;
+  }
+  .chip--core{color:#ffcf9e; border-color:rgba(255,145,66,.35); background:rgba(255,145,66,.1)}
+  .chip--code{color:#c8c2e8; text-transform:none; letter-spacing:0; font-size:.72rem; background:var(--panel-3)}
+  .chip--time{color:var(--muted)}
+  .chip--hard{color:#ffb3bd; border-color:rgba(229,86,109,.4); background:rgba(229,86,109,.12)}
+  .chip--likely{color:#f6cd86; border-color:rgba(242,178,74,.35); background:rgba(242,178,74,.1)}
+  .chip--trap{color:#f4a0c6; border-color:rgba(229,73,127,.4); background:rgba(229,73,127,.12)}
+  .chip--possible{color:var(--muted)}
+  .cite{
+    font-family:var(--mono); font-size:.82em; color:var(--violet);
+    font-weight:600; white-space:nowrap;
+  }
+
+  /* ---------- sticky nav ---------- */
+  nav.bar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,14,19,.82); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-in{display:flex; align-items:center; gap:20px; height:54px; max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .brand{font-family:var(--mono); font-size:.8rem; font-weight:700; letter-spacing:.02em; color:var(--ink); display:flex; align-items:center; gap:.5em}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--amber); box-shadow:0 0 10px var(--amber)}
+  .bar-links{display:flex; gap:4px; margin-left:auto; overflow-x:auto}
+  .bar-links a{
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--muted); padding:.4em .7em; border-radius:6px; white-space:nowrap;
+  }
+  .bar-links a:hover{color:var(--ink); background:var(--panel-2); text-decoration:none}
+  @media(max-width:680px){.bar-links{display:none}}
+
+  /* ---------- hero ---------- */
+  header.hero{position:relative; overflow:hidden; border-bottom:1px solid var(--line)}
+  #spectrum{position:absolute; left:0; right:0; bottom:0; width:100%; height:190px; display:block; opacity:.55; z-index:0}
+  .hero::after{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(120% 80% at 15% 0%, rgba(139,108,255,.1), transparent 55%),
+               radial-gradient(90% 70% at 92% 8%, rgba(229,73,127,.08), transparent 60%)}
+  .hero-in{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:64px 24px 96px}
+  .hero .eyebrow{color:var(--amber); margin-bottom:20px}
+  h1{font-size:clamp(2.4rem,6.4vw,4.4rem); font-weight:850; letter-spacing:-.035em; line-height:1}
+  h1 .em{color:var(--amber)}
+  .dek{max-width:60ch; color:var(--muted); font-size:1.06rem; margin-top:22px}
+  .dek b{color:var(--ink); font-weight:600}
+
+  .hero-grid{display:grid; grid-template-columns:1.35fr 1fr; gap:26px; margin-top:44px; align-items:stretch}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+  .oneliner{
+    position:relative; margin:0; padding:26px 28px; border-radius:14px;
+    background:linear-gradient(180deg,rgba(27,31,42,.9),rgba(20,23,31,.9));
+    border:1px solid var(--line-2); font-size:1.12rem; line-height:1.55; color:var(--ink);
+  }
+  .oneliner:before{content:""; position:absolute; left:0; top:18px; bottom:18px; width:3px; border-radius:3px;
+    background:linear-gradient(180deg,var(--violet),var(--magenta) 45%,var(--amber))}
+  .oneliner .lead{display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:12px}
+  .oneliner b{color:#fff}
+
+  .measure{
+    display:flex; flex-direction:column; gap:16px; padding:22px;
+    border-radius:14px; background:var(--panel); border:1px solid var(--line-2);
+  }
+  .bignum{font-family:var(--mono); font-weight:700; font-variant-numeric:tabular-nums;
+    font-size:clamp(2.8rem,7vw,4rem); line-height:.9; color:var(--amber); letter-spacing:-.03em}
+  .bignum small{display:block; font-family:var(--mono); font-size:.68rem; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); margin-top:12px; line-height:1.5}
+  .chart{width:100%; height:auto; display:block}
+  .chart-cap{font-family:var(--mono); font-size:.7rem; letter-spacing:.04em; color:var(--faint); margin-top:6px; text-align:center}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:66px 0; border-bottom:1px solid var(--line); scroll-margin-top:64px}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:14px; flex-wrap:wrap}
+  .sec-num{font-family:var(--mono); font-size:.9rem; font-weight:700; color:var(--amber); letter-spacing:.02em}
+  .sec-rule{height:2px; margin:22px 0 34px; border:0;
+    background:linear-gradient(90deg,var(--amber),var(--magenta) 30%,transparent 72%)}
+  .lead-p{font-size:1.08rem; color:var(--muted); max-width:66ch}
+
+  /* ---------- curriculum items ---------- */
+  .item{
+    border:1px solid var(--line); border-radius:14px; background:var(--panel);
+    margin:18px 0; overflow:hidden;
+  }
+  .item-head{display:flex; gap:16px; align-items:flex-start; padding:20px 22px 16px;
+    border-bottom:1px solid var(--line); background:linear-gradient(180deg,var(--panel-2),transparent)}
+  .item-no{flex:none; width:38px; height:38px; border-radius:9px; display:grid; place-items:center;
+    font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--bg);
+    background:linear-gradient(150deg,var(--amber),var(--amber-dim)); box-shadow:0 3px 14px rgba(255,145,66,.25)}
+  .item-tt{flex:1; min-width:0}
+  .item-tt h3{margin-bottom:9px}
+  .metas{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .item-body{padding:18px 22px 22px}
+  .item-body>p:last-child, .item-body>ul:last-child{margin-bottom:0}
+  ul{margin:0 0 1rem; padding-left:1.15em}
+  li{margin:.5em 0}
+  li::marker{color:var(--amber-dim)}
+  .item-body ul ul{margin:.4em 0}
+
+  /* pull note inside items */
+  .note{
+    margin:16px 0 4px; padding:14px 16px 14px 18px; border-radius:10px;
+    background:var(--panel-2); border:1px solid var(--line); position:relative;
+  }
+  .note:before{content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px; border-radius:3px; background:var(--amber)}
+  .note .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--amber); font-weight:600; display:block; margin-bottom:6px}
+  .note p{margin:0}
+
+  /* callouts */
+  .callout{margin:22px 0; padding:18px 20px; border-radius:12px; border:1px solid var(--line); background:var(--panel)}
+  .callout .k{font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; display:flex; align-items:center; gap:.55em; margin-bottom:10px}
+  .callout .k:before{content:""; width:10px; height:10px; border-radius:2px; flex:none}
+  .callout p:last-child{margin-bottom:0}
+  .co-good{border-color:rgba(70,200,160,.3); background:linear-gradient(180deg,rgba(70,200,160,.07),transparent)}
+  .co-good .k{color:var(--good)} .co-good .k:before{background:var(--good)}
+  .co-warn{border-color:rgba(242,178,74,.32); background:linear-gradient(180deg,rgba(242,178,74,.07),transparent)}
+  .co-warn .k{color:var(--warn)} .co-warn .k:before{background:var(--warn)}
+  .co-bad{border-color:rgba(229,86,109,.32); background:linear-gradient(180deg,rgba(229,86,109,.07),transparent)}
+  .co-bad .k{color:var(--bad)} .co-bad .k:before{background:var(--bad)}
+  .co-frame{border-color:rgba(139,108,255,.34); background:linear-gradient(180deg,rgba(139,108,255,.09),transparent)}
+  .co-frame .k{color:var(--violet)} .co-frame .k:before{background:var(--violet); border-radius:50%}
+  .co-frame p{font-size:1.05rem}
+
+  .caution{color:var(--warn); font-family:var(--mono); font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .caution:before{content:"\25B2  "}
+
+  /* ---------- tables ---------- */
+  table{width:100%; border-collapse:collapse; font-size:.92rem; margin:6px 0}
+  .datatable{min-width:520px}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line)}
+  thead th{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:600; border-bottom:1px solid var(--line-2)}
+  tbody td:not(:first-child),.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  .rowlabel{color:var(--ink); font-weight:600}
+  tr.hl td{background:rgba(255,145,66,.07)}
+  tr.hl .rowlabel{color:var(--amber)}
+  tr.contrast td{color:var(--muted)}
+  td .peak{color:var(--amber); font-weight:700}
+  .table-cap{font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; letter-spacing:.02em}
+
+  /* ---------- Q&A ---------- */
+  .qa-tools{display:flex; justify-content:flex-end; margin-bottom:8px}
+  .toggle-all{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    background:var(--panel-2); border:1px solid var(--line-2); padding:.5em .9em; border-radius:8px; cursor:pointer}
+  .toggle-all:hover{color:var(--ink); border-color:var(--amber-dim)}
+  details.qa{border:1px solid var(--line); border-radius:12px; background:var(--panel); margin:12px 0; overflow:hidden}
+  details.qa[open]{border-color:var(--line-2)}
+  details.qa summary{list-style:none; cursor:pointer; padding:18px 20px; display:flex; gap:14px; align-items:flex-start}
+  details.qa summary::-webkit-details-marker{display:none}
+  .qcode{font-family:var(--mono); font-weight:700; font-size:.82rem; color:var(--amber); flex:none; padding-top:2px; min-width:38px}
+  .qtext{flex:1; font-weight:640; color:var(--ink); line-height:1.4}
+  .qtext .metas{margin-top:9px}
+  .qmark{flex:none; width:26px; height:26px; border-radius:7px; border:1px solid var(--line-2); background:var(--panel-2);
+    display:grid; place-items:center; color:var(--muted); transition:transform .2s ease}
+  .qmark:before{content:"+"; font-family:var(--mono); font-size:1.1rem; line-height:1}
+  details.qa[open] .qmark{transform:rotate(45deg); color:var(--amber); border-color:var(--amber-dim)}
+  .answer{margin:0 20px 20px; padding:16px 18px; border-radius:10px; background:var(--panel-2); border:1px solid var(--line);
+    position:relative; color:var(--ink)}
+  .answer:before{content:""; position:absolute; left:0; top:14px; bottom:14px; width:3px; border-radius:3px; background:var(--amber)}
+  .answer .k{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); font-weight:600; display:block; margin-bottom:8px}
+  .answer p{margin:0; line-height:1.58}
+
+  /* ---------- spectra proof ---------- */
+  .proof{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:8px 0 4px}
+  @media(max-width:560px){.proof{grid-template-columns:1fr}}
+  .spec-card{border:1px solid var(--line-2); border-radius:12px; overflow:hidden; background:#000}
+  .spec-card canvas{display:block; width:100%; height:auto; aspect-ratio:1/1}
+  .spec-card .lab{display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--panel-2); border-top:1px solid var(--line)}
+  .spec-card .lab b{font-family:var(--mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase}
+  .spec-card .lab span{font-family:var(--mono); font-size:.7rem; color:var(--faint)}
+
+  /* ---------- numbers card (spec plate) ---------- */
+  .plate{border:1px solid var(--line-2); border-radius:16px; overflow:hidden; background:var(--panel)}
+  .plate-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 22px;
+    background:linear-gradient(90deg,rgba(255,145,66,.12),rgba(229,73,127,.06)); border-bottom:1px solid var(--line-2)}
+  .plate-head b{font-family:var(--mono); letter-spacing:.05em; font-size:.9rem}
+  .plate-head span{font-family:var(--mono); font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em}
+  .spec-row{display:grid; grid-template-columns:210px 1fr; gap:0; border-bottom:1px solid var(--line)}
+  .spec-row:last-child{border-bottom:0}
+  .spec-row dt{padding:13px 22px; font-family:var(--mono); font-size:.75rem; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; background:var(--panel-2); border-right:1px solid var(--line)}
+  .spec-row dd{margin:0; padding:13px 22px; font-size:.92rem; line-height:1.5}
+  .spec-row dd .mono{color:#f0d9c4}
+  @media(max-width:600px){.spec-row{grid-template-columns:1fr}.spec-row dt{border-right:0; border-bottom:1px solid var(--line)}}
+
+  /* ---------- checklist (one evening) ---------- */
+  ol.evening{list-style:none; counter-reset:e; margin:0; padding:0; display:grid; gap:12px}
+  ol.evening li{counter-increment:e; position:relative; padding:16px 18px 16px 62px; border:1px solid var(--line);
+    border-radius:12px; background:var(--panel); margin:0}
+  ol.evening li:before{content:counter(e); position:absolute; left:16px; top:14px; width:32px; height:32px; border-radius:8px;
+    display:grid; place-items:center; font-family:var(--mono); font-weight:700; color:var(--amber);
+    border:1px solid var(--amber-dim); background:rgba(255,145,66,.08)}
+
+  /* ---------- reference list ---------- */
+  .refs{display:grid; gap:12px; margin:8px 0}
+  .ref{border:1px solid var(--line); border-radius:11px; background:var(--panel); padding:14px 18px}
+  .ref h4{margin-bottom:5px; display:flex; align-items:center; gap:.6em; flex-wrap:wrap}
+  .ref p{margin:0; font-size:.92rem; color:var(--muted)}
+  .ref p b{color:var(--ink)}
+
+  /* ---------- footer ---------- */
+  footer{padding:54px 0 70px; text-align:center}
+  .companions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:22px 0}
+  .comp{border:1px solid var(--line-2); border-radius:10px; padding:12px 18px; background:var(--panel);
+    font-family:var(--mono); font-size:.78rem; color:var(--muted)}
+  .comp.cur{border-color:var(--amber-dim); color:var(--amber); background:rgba(255,145,66,.07)}
+  .foot-meta{font-family:var(--mono); font-size:.72rem; color:var(--faint); letter-spacing:.04em; margin-top:16px}
+
+  .kicker{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:14px}
+</style>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="brand"><span class="dot"></span>FREQ&nbsp;BRANCH</span>
+    <div class="bar-links">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#results">Results</a>
+      <a href="#qa">Q&amp;A</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#evening">One Evening</a>
+      <a href="#demo">Demo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="spectrum" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <div class="eyebrow">Frequency Branch &nbsp;·&nbsp; FreqCNN + FFT log-magnitude &nbsp;·&nbsp; Sidang Study Guide</div>
+    <h1>Near-random,<br>by <span class="em">measurement.</span></h1>
+    <p class="dek">You own the frequency branch: the FFT log-magnitude map, the <b>FreqCNN</b>, and the thesis's <b>central negative result</b>. Frequency is the variable this whole comparative study measures, and it being the weakest detector is the <b>result</b>, not a bug. Two of the hardest reviewer targets land on you.</p>
+
+    <div class="hero-grid">
+      <blockquote class="oneliner">
+        <span class="lead">§0 · The one-liner you defend</span>
+        The frequency branch is our <b>weakest detector</b> — in-dataset AUC only <b>~0.56</b> on both datasets, and its validation AUC is <b>flat from epoch 1</b>. That is not a training failure. We ruled out under-powering three ways (more data, a bigger backbone, verified preprocessing) and near-chance survives all three. So the bottleneck is the <b>information content of the compressed, face-cropped FFT input</b>, not the model. A <b>controlled falsification</b> of the assumption that spectral artifacts are a strong, general cue.
+      </blockquote>
+
+      <aside class="measure">
+        <div class="bignum">0.562
+          <small>In-dataset AUC · FFPP &amp; CDF · n=750<br>the weakest model on both datasets</small>
+        </div>
+        <div>
+          <svg class="chart" viewBox="0 0 280 150" role="img" aria-label="Validation AUC stays flat near 0.56 across epochs while the expected learning curve rises">
+            <line x1="34" y1="126" x2="268" y2="126" stroke="#333b4c" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="30" y="129" text-anchor="end" fill="#6c6980" font-family="var(--mono)" font-size="8">.50</text>
+            <text x="30" y="27" text-anchor="end" fill="#6c6980" font-family="var(--mono)" font-size="8">.90</text>
+            <text x="150" y="146" text-anchor="middle" fill="#6c6980" font-family="var(--mono)" font-size="8">epoch →</text>
+            <polyline points="34,113 72,92 112,72 160,52 210,38 268,25" fill="none" stroke="#4b4568" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <text x="196" y="34" fill="#6c6980" font-size="8" font-family="var(--mono)">expected</text>
+            <polyline id="flatline" points="34,113.8 60,111.1 86,112.8 112,110.6 138,111.8 164,111.3 190,112.3 216,110.8 242,111.6 268,110.3"
+              fill="none" stroke="#ff9142" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="42" y="105" fill="#ff9142" font-size="8.5" font-family="var(--mono)" font-weight="700">flat from epoch 1</text>
+          </svg>
+          <div class="chart-cap">validation AUC — it never found signal (Gambar 4.10/4.11)</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ CURRICULUM ============ -->
+<section id="curriculum">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§1</span><h2>What to study — the ordered curriculum</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Each item: <em>what · why you need it · what to read.</em> Tick them off. Priority and time to budget are marked on every card.</p>
+    </div>
+
+    <div class="prose">
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">1</div>
+          <div class="item-tt">
+            <h3>The FFT transform, exactly</h3>
+            <div class="metas"><span class="chip chip--code">image_to_fft_logmag · fft_utils.py:22-33</span><span class="chip chip--time">~1.5 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>This is the “explain your frequency representation” question. You must walk it step by step.</p>
+          <ul>
+            <li><strong>Grayscale → resize 224×224</strong> (<code>img.convert("L")</code>). Color is dropped; the branch sees luminance structure only.</li>
+            <li><strong><code>np.fft.fft2</code> → <code>np.fft.fftshift</code></strong> — 2-D Fourier transform, then shift the <strong>DC (zero-frequency)</strong> term to the image center. After shift: <strong>center = low freq, edges = high freq.</strong></li>
+            <li><strong>Magnitude only</strong> (<code>np.abs</code>) — keeps spectral <strong>energy</strong> per frequency. <strong>Phase is thrown away</strong> (memorize this — failure cause #2).</li>
+            <li><strong>Gaussian high-pass mask</strong> (<code>_highpass_mask</code>, cutoff 0.15) — attenuates the dominant low-frequency center so the CNN focuses on the high-frequency band where GAN up-sampling fingerprints live.</li>
+            <li><strong><code>log1p</code></strong> = <code>log(1+|F|)</code> — log scaling compresses the huge dynamic range of the spectrum into a trainable map.</li>
+            <li>Output: a <strong>single-channel 224×224</strong> FFT log-magnitude map, cached as <code>.npy</code>.</li>
+          </ul>
+          <div class="note"><span class="k">One-sentence answer</span><p>“We take each frame to grayscale, compute its 2-D FFT, keep the magnitude spectrum, apply a Gaussian high-pass to emphasize high frequencies, and log-scale it — producing a single-channel FFT log-magnitude map. The FreqCNN learns discriminative features from that map.”</p></div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">2</div>
+          <div class="item-tt">
+            <h3>The high-pass mask is <em>soft</em>, not a hard cut</h3>
+            <div class="metas"><span class="chip chip--code">_highpass_mask · fft_utils.py:9-19</span><span class="chip chip--time">30 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>A likely trap: “you said low frequency is unused.” <strong>Wrong — it's attenuated, not removed.</strong></p>
+          <ul>
+            <li>Formula: <code>H = 1 − exp(−d²/2σ²)</code>, with <code>σ = cutoff·size = 0.15·224 ≈ 33.6 px</code>. <code>d</code> = distance from center.</li>
+            <li><strong>Only the pure DC term (d=0) is multiplied by ~0.</strong> At <code>d=σ</code> the mask ≈ 0.39, at <code>d=2σ</code> ≈ 0.86, edges → 1.0.</li>
+            <li><strong>Why soft, not hard:</strong> (a) a smooth roll-off avoids <strong>ringing</strong> artifacts a sharp cut would introduce, and (b) some discriminative signal (spectral roll-off, Durall <span class="cite">[8]</span>) lives in the <strong>mid</strong> band, not only the edge.</li>
+            <li><strong>Correct phrasing:</strong> “high frequencies are <strong>amplified</strong>, low frequencies are <strong>suppressed (attenuated)</strong> — not discarded.” (The thesis says <em>“menekan dominasi”</em> — suppress, not remove.)</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">3</div>
+          <div class="item-tt">
+            <h3>Why FFT <em>should</em> expose deepfakes — the literature you are testing</h3>
+            <div class="metas"><span class="chip chip--time">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li>GANs up-sample with <strong>transposed convolution / interpolation</strong>, which inserts zeros → replicates the spectrum into the high-frequency band → periodic <strong>checkerboard</strong> grid artifacts (Odena <span class="cite">[21]</span>).</li>
+            <li>CNN-based generators <strong>fail to reproduce the natural spectral distribution</strong> — their power spectrum deviates from real images, mostly in the <strong>high-frequency tail</strong> (Durall <span class="cite">[8]</span>; Zhang <span class="cite">[9]</span>).</li>
+            <li>Frequency-aware detectors exploit this: F³-Net (Qian <span class="cite">[11]</span>), DCT anomalies (Giudice <span class="cite">[10]</span>), FreqNet (Tan <span class="cite">[12]</span>).</li>
+            <li><strong>Your study asks:</strong> does a <em>simple raw-FFT branch</em> capture this and help fusion? <strong>Answer, under our conditions: no.</strong> You're testing the claim, not assuming it.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">4</div>
+          <div class="item-tt">
+            <h3>The FreqCNN architecture — read it line by line</h3>
+            <div class="metas"><span class="chip chip--code">src/models/freq_cnn.py</span><span class="chip chip--time">1 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li><strong><code>FreqBlock</code></strong> (the building block): <code>Conv3×3 → BatchNorm → ReLU</code>, plus a <strong>residual shortcut</strong> (a <code>1×1</code> conv when channels change, else identity), added <strong>before</strong> a <code>MaxPool2d(2)</code>. So one block = <code>pool(conv(x) + shortcut(x))</code>. Residual idea from ResNet (He <span class="cite">[5]</span>).</li>
+            <li><strong>Configurable depth/channels</strong> via <code>freq_depth</code> / <code>freq_base_channels</code>. <span class="caution">The results run uses depth=5, base_channels=64</span> (<code>config.yaml:22-23</code>), <strong>not</strong> the constructor defaults (3/32).
+              <ul>
+                <li>Channel progression <strong>1 → 64 → 128 → 256 → 512 → 512</strong>, feature dim <strong>512</strong>, <strong>~4.2M params</strong> (4,217,217).</li>
+                <li>The docstring's “depth=5 → 256-d, ~700K” describes base=32; that is <strong>not</strong> what the experiments use. Say <strong>512-dim, 4.2M</strong>.</li>
+              </ul>
+            </li>
+            <li><strong><code>.features</code></strong> = conv blocks + <code>Dropout2d(0.2)</code> + <code>AdaptiveAvgPool2d(1)</code> → a 512-vector. <strong><code>.classifier</code></strong> = <code>Flatten → Linear(512→256) → ReLU → Dropout(0.3) → Linear(256→1)</code>.</li>
+            <li><strong>Key fact for the hybrid:</strong> inside the hybrid, only <code>FreqCNN.features</code> is used — the classifier head is <strong>bypassed</strong> (<code>hybrid_fusion.py:58</code>). Standalone <code>freq</code> uses the full net.</li>
+            <li>Input <strong>224×224, single channel</strong>. Layer-by-layer is in <strong>Tabel 3.7</strong>, diagrams in <strong>Gambar 3.8/3.9</strong>.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">5</div>
+          <div class="item-tt">
+            <h3>FFT normalization + augmentation — the preprocessing you must defend</h3>
+            <div class="metas"><span class="chip chip--code">deepfake_data.py:129-141</span><span class="chip chip--time">45 min</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li><strong>Per-dataset z-score:</strong> <code>(x − mean) / std</code> from <code>fft_stats.json</code>. Auto-computed after <code>compute_fft_cache.py</code>. FFPP stats: <strong>mean ≈ 5.84 / std ≈ 1.28</strong> (the live file; docs sometimes quote 5.78 — code reads the file, so 5.84 runs). The old fallback <code>std=3.0</code> was <strong>~2.3× too big</strong> — a real bug that was found and fixed.</li>
+            <li><strong>Train-only FFT augmentation:</strong> Gaussian noise <code>σ=0.05</code> added to the map, plus <strong>5%-probability spectral-band masking</strong> (zero a random horizontal/vertical frequency band) to stop the net memorizing any single band. Off at inference.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item" id="results">
+        <div class="item-head">
+          <div class="item-no">6</div>
+          <div class="item-tt">
+            <h3>Freq results — memorize your own numbers</h3>
+            <div class="metas"><span class="chip chip--time">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <h4 style="margin-bottom:10px">In-dataset AUC <span style="color:var(--faint);font-weight:400">(mean over seeds 0/1/2)</span></h4>
+          <div class="scroll">
+            <table class="datatable">
+              <thead><tr><th></th><th>n=250</th><th>n=500</th><th>n=750</th></tr></thead>
+              <tbody>
+                <tr class="hl"><td class="rowlabel">FFPP freq</td><td>0.469</td><td>0.545</td><td><span class="peak">0.562</span></td></tr>
+                <tr class="hl"><td class="rowlabel">CDF freq</td><td>0.500</td><td>0.549</td><td><span class="peak">0.562</span></td></tr>
+                <tr class="contrast"><td class="rowlabel">FFPP spatial <span style="font-weight:400">(contrast)</span></td><td>0.743</td><td>0.693</td><td>0.778</td></tr>
+                <tr class="contrast"><td class="rowlabel">CDF spatial <span style="font-weight:400">(contrast)</span></td><td>0.914</td><td>0.945</td><td>0.971</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-cap">Freq is <strong style="color:var(--amber)">last on both datasets at every reliable tier.</strong> 3× the data (250→750) shifts AUC ~0.06 then plateaus at ~0.56. Validation-AUC curve is flat from epoch 1 (BAB IV §4.1.7, Gambar 4.10/4.11) — it never found signal.</p>
+
+          <h4 style="margin:24px 0 10px">Cross-dataset, n=750 <span style="color:var(--faint);font-weight:400">(AUC / recall)</span></h4>
+          <div class="scroll">
+            <table class="datatable">
+              <thead><tr><th>Direction</th><th>AUC</th><th>Recall</th></tr></thead>
+              <tbody>
+                <tr><td class="rowlabel">FFPP→CDF freq</td><td>0.606</td><td><span style="color:var(--bad);font-weight:700">0.064</span> <span style="color:var(--faint)">freq's own collapse</span></td></tr>
+                <tr><td class="rowlabel">CDF→FFPP freq</td><td>0.575</td><td>0.531</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-cap">Mirror of spatial: freq <strong>collapses FFPP→CDF</strong> (recall 0.064) while spatial collapses CDF→FFPP. Same mechanism (score distribution sinks past the fixed 0.5 cutoff) — a <strong>threshold-calibration artifact under domain shift</strong>, not a total loss of ranking. See <code>RECALL_COLLAPSE_ANALYSIS.md</code>.</p>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">7</div>
+          <div class="item-tt">
+            <h3>Why frequency fails — four causes, each with a citation</h3>
+            <div class="metas"><span class="chip chip--time">1 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>Your core defense (Slide 19, BAB IV §4.2.4). Memorize all four, <strong>in order of strength.</strong></p>
+          <ol style="padding-left:0;list-style:none;counter-reset:c;display:grid;gap:12px;margin:6px 0">
+            <li style="counter-increment:c;position:relative;padding:14px 16px 14px 54px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2)">
+              <span style="position:absolute;left:14px;top:13px;font-family:var(--mono);font-weight:700;color:var(--amber)">01</span>
+              <strong>Preprocessing destroys the artifacts (strongest).</strong> MTCNN face-crop removes edge/background context carrying spectral traces, <strong>and</strong> c23 compression is a low-pass filter that kills exactly the high-frequency band where GAN fingerprints live (Mejri <span class="cite">[31]</span>). Durall got ~100% on <strong>raw, uncompressed</strong> output; we use cropped, c23 frames. <strong>Visible proof:</strong> real vs fake FFT spectra look indistinguishable (Gambar 4.2).
+            </li>
+            <li style="counter-increment:c;position:relative;padding:14px 16px 14px 54px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2)">
+              <span style="position:absolute;left:14px;top:13px;font-family:var(--mono);font-weight:700;color:var(--amber)">02</span>
+              <strong>Phase is discarded.</strong> Magnitude only. Phase carries most structural info (Oppenheim &amp; Lim <span class="cite">[25]</span>); SPSL (Liu <span class="cite">[26]</span>) shows phase catches up-sampling artifacts invisible in magnitude. A <strong>deliberate, flagged</strong> handicap → future work.
+            </li>
+            <li style="counter-increment:c;position:relative;padding:14px 16px 14px 54px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2)">
+              <span style="position:absolute;left:14px;top:13px;font-family:var(--mono);font-weight:700;color:var(--amber)">03</span>
+              <strong>CNN spectral / texture bias.</strong> CNNs learn texture and <strong>low</strong> frequencies first (Geirhos <span class="cite">[28]</span>; Rahaman <span class="cite">[29]</span> “F-principle”; Wang <span class="cite">[30]</span>). A weak high-frequency signal is intrinsically hard for a shallow CNN without architectural help.
+            </li>
+            <li style="counter-increment:c;position:relative;padding:14px 16px 14px 54px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2)">
+              <span style="position:absolute;left:14px;top:13px;font-family:var(--mono);font-weight:700;color:var(--amber)">04</span>
+              <strong>Over-simplified representation.</strong> A single <strong>raw FFT magnitude map</strong> into a <strong>shallow CNN</strong> is less expressive than SOTA's learned/decomposed frequency spaces — DCT (Giudice <span class="cite">[10]</span>, Qian <span class="cite">[11]</span>), FreqNet (Tan <span class="cite">[12]</span>). → future work.
+            </li>
+          </ol>
+          <div class="callout co-frame">
+            <span class="k">The framing that wins</span>
+            <p>“This is <strong>not a contradiction of the literature, it's a boundary condition.</strong> Spectral artifacts are real; <em>exploiting</em> them is <strong>conditional</strong> on representation, fusion design, and test difficulty. We mark exactly <em>when</em> frequency stops helping.”</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">8</div>
+          <div class="item-tt">
+            <h3>Proving it's NOT under-powered — the rigor that upgrades “failure” to “finding”</h3>
+            <div class="metas"><span class="chip chip--time">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>A reviewer's sharpest attack is “your freq net is just too small / under-trained / mis-normalized.” You dismantle each.</p>
+          <div class="callout co-good">
+            <span class="k">The not-under-powered trio</span>
+            <ul style="margin-bottom:0">
+              <li><strong>Sample-size sweep = a direct power analysis.</strong> If freq were data-starved, AUC would keep rising with n. It <strong>plateaus at ~0.56.</strong> (n=100 is noisy — argue the 250→750 trend.)</li>
+              <li><strong>Architecture control (FreqCNN vs ResNet18).</strong> A standard <strong>ResNet18</strong> (11.2M params, <strong>2.6× bigger</strong>), both scratch and pretrained — every arm still sits at <strong>AUC 0.51–0.63</strong> (<code>FREQ_BENCHMARK_RESULTS.md</code>). Bigger backbone can't lift FFT input out of near-chance → bottleneck = <strong>input information</strong>, not capacity.</li>
+              <li><strong>Verified preprocessing.</strong> FFT stats recomputed (fixed the std=3.0 bug); splits <strong>by video ID</strong>; identical optimizer/schedule/epochs/early-stopping as spatial. Apples-to-apples, 3 seeds, small std (~0.007–0.015).</li>
+            </ul>
+          </div>
+          <div class="callout co-warn">
+            <span class="k">Honest caveat</span>
+            <p>Cite the <strong>scratch</strong> arm as the clean win (FreqCNN wins 4/4 under matched training). The <strong>pretrained</strong> ResNet18 arm is a <strong>2–2 split</strong> — do <strong>not</strong> claim it as a FreqCNN victory.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q&A ============ -->
+<section id="qa">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§2</span><h2>Reviewer questions aimed at the frequency owner</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Ranked by likelihood. Answer honestly; frame negatives as findings. <strong>Try to recall each answer before revealing it.</strong></p>
+      <div class="qa-tools"><button class="toggle-all" id="toggleAll" aria-expanded="false">Reveal all</button></div>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ1</span>
+          <span class="qtext">“Explain your frequency representation — walk me through the FFT step.”<span class="metas"><span class="chip chip--hard">almost certain</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“Per frame: grayscale, resize 224, 2-D FFT, <code>fftshift</code> so DC is centered, take the <strong>magnitude</strong> spectrum, apply a <strong>Gaussian high-pass</strong> (cutoff 0.15) to emphasize high frequencies, then <code>log(1+|F|)</code> to compress the range. That single-channel log-magnitude map is the FreqCNN's input. Phase is not used — a deliberate, documented limitation.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ2</span>
+          <span class="qtext">“Your frequency branch is near-random (AUC 0.56). Isn't that just a failed model?”<span class="metas"><span class="chip chip--hard">certain · the hard one</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“It's a <strong>measured negative result</strong>, and we made sure it's not an artifact of under-powering. Three checks: a <strong>data sweep</strong> (AUC plateaus at ~0.56, so not data-starved), an <strong>architecture swap</strong> to a 2.6×-bigger ResNet18 (still 0.51–0.63, so not capacity), and <strong>verified FFT normalization</strong>. Near-chance survives all three, across 3 seeds. So the limit is the <strong>information content of the compressed, cropped FFT input</strong>, not the network. That's a finding about the domain, not a bug in our code.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ3</span>
+          <span class="qtext">“Why does frequency work near-perfectly in papers like Durall but not for you?”<span class="metas"><span class="chip chip--hard">certain</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“Conditions differ. Durall et al. <span class="cite">[8]</span> tested <strong>raw, uncompressed GAN output</strong>, where the up-sampling spectral fingerprint is intact. We use <strong>face-cropped, c23-compressed</strong> frames. Cropping and compression act as a <strong>low-pass filter that erases the high-frequency traces</strong> those methods rely on (Mejri <span class="cite">[31]</span>). It's the same reason our demo's real-vs-fake spectra look identical.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ4</span>
+          <span class="qtext">“Why magnitude only? You cite Oppenheim that phase carries more information.”<span class="metas"><span class="chip chip--trap">likely · the phase trap</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“Two things that don't conflict. Oppenheim &amp; Lim <span class="cite">[25]</span> is about <strong>perceptual structure</strong> of natural images — phase dominates edges/shapes. Deepfake detection targets <strong>spectral artifacts</strong>, which show up strongly in the <strong>magnitude</strong> (Durall, Frank, Wang). So magnitude is a legitimate artifact channel; phase is <strong>complementary</strong>, not a replacement. We fixed the representation to the <strong>canonical</strong> log-magnitude to keep the <em>architecture</em> comparison controlled, and flag phase (SPSL, Liu <span class="cite">[26]</span>) as future work. Adding phase would change the research question from ‘compare architectures’ to ‘compare representations.’”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ5</span>
+          <span class="qtext">“Walk me through FreqCNN. Why this design and not just a big CNN?”<span class="metas"><span class="chip chip--likely">likely</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“It's a lightweight stack of <strong>residual conv blocks</strong> — each is Conv3×3→BN→ReLU with a 1×1 shortcut, then MaxPool. Depth 5, base 64 → channels 1→64→128→256→512→512, a 512-d feature vector, ~4.2M params — an order of magnitude smaller than Xception. We kept it light on purpose: the FFT input carries little signal, so a heavier net just overfits. And we <strong>tested</strong> that — a 2.6×-bigger ResNet18 didn't beat it under matched training.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ6</span>
+          <span class="qtext">“Frequency looks inverted at n=250 (AUC 0.469 &lt; 0.5). Is your labeling broken?”<span class="metas"><span class="chip chip--trap">a trap</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“No — that's <strong>small-sample noise</strong>. The n=100/250 test splits are ~15–37 videos, so a near-random model produces sub-0.5 AUCs by chance. We base the analysis on <strong>n≥250</strong> and headline <strong>n=750</strong>, and state n=100 exclusion as a limitation. The stable read is ‘freq ≈ chance,’ and the trend from 250→750 confirms it plateaus, not inverts.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ7</span>
+          <span class="qtext">“Recall for freq FFPP→CDF is 0.064 — total collapse?”<span class="metas"><span class="chip chip--likely">likely</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“Same mechanism as the spatial CDF→FFPP collapse: under domain shift the whole score distribution sinks below the fixed 0.5 cutoff, so almost everything is called ‘real.’ AUC stays ~0.61, meaning the <strong>ranking partly survives</strong> — a <strong>threshold-calibration artifact</strong>, not a loss of all ability. A target-calibrated threshold recovers recall. But the near-chance AUC still says transfer is genuinely weak — I won't oversell it.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ8</span>
+          <span class="qtext">“What does the high-pass filter actually remove?”<span class="metas"><span class="chip chip--possible">possible</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“It <strong>suppresses</strong>, not removes. It's <code>1 − Gaussian</code>, so only the pure DC term is zeroed; low frequencies pass with reduced weight, high frequencies pass fully. The roll-off is smooth to avoid ringing. We suppress low freq because it mostly encodes global face shape and lighting — less discriminative than the high-frequency band where synthesis artifacts concentrate (Durall <span class="cite">[8]</span>).”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ9</span>
+          <span class="qtext">“If frequency is useless, why include it at all / why isn't this a wasted branch?”<span class="metas"><span class="chip chip--possible">possible</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“Because measuring ‘useless, and why’ is the contribution. This is an <strong>ablation</strong>: spatial-only vs freq-only vs hybrid isolates each domain's contribution and answers RM3. A clean negative on the freq branch tells the field ‘a naive FFT branch doesn't rescue cross-dataset generalization under compression’ — and it points to the right future work (phase, DCT/wavelet, full-frame FFT).”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary>
+          <span class="qcode">FQ10</span>
+          <span class="qtext">“Why single-channel / grayscale? Don't you lose the color artifacts?”<span class="metas"><span class="chip chip--possible">possible</span></span></span>
+          <span class="qmark" aria-hidden="true"></span>
+        </summary>
+        <div class="answer"><span class="k">Say this</span><p>“The FFT branch targets <strong>structural/periodic</strong> spectral artifacts, which are luminance-dominated; a single-channel log-magnitude map is the standard, cacheable representation (Durall, Frank, Wang) and matches FreqCNN's 1-channel input. Color-domain artifacts are the <strong>spatial</strong> branch's job — that's the division of labor in the two-branch design.”</p></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIBLE PROOF ============ -->
+<section id="proof">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§2b</span><h2>The visible proof — real vs fake spectra</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Your headline visual (Gambar 4.2 / the demo's MAGMA spectra gallery). Point at it and say it out loud.</p>
+      <div class="proof">
+        <div class="spec-card"><canvas data-spec="real" width="360" height="360" aria-label="FFT log-magnitude spectrum of a real frame"></canvas><div class="lab"><b style="color:var(--good)">Real</b><span>FFT log-mag · magma</span></div></div>
+        <div class="spec-card"><canvas data-spec="fake" width="360" height="360" aria-label="FFT log-magnitude spectrum of a fake frame"></canvas><div class="lab"><b style="color:var(--bad)">Fake</b><span>FFT log-mag · magma</span></div></div>
+      </div>
+      <div class="callout co-frame" style="margin-top:20px">
+        <span class="k">The one sentence for this panel</span>
+        <p>“Real and fake spectra are essentially <strong>indistinguishable</strong> under crop + c23 — that's the human-visible reason the frequency branch carries little signal, and exactly what its ~0.56 AUC reports.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS CARD ============ -->
+<section id="numbers">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§3</span><h2>Frequency-branch numbers card</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Keep this on your phone. Every value quoted from the results run.</p>
+    </div>
+    <div class="prose" style="max-width:940px">
+      <div class="plate">
+        <div class="plate-head"><b>FreqCNN · FFT log-magnitude</b><span>results run</span></div>
+        <dl style="margin:0">
+          <div class="spec-row"><dt>Representation</dt><dd>grayscale → FFT2 → fftshift → |magnitude| → Gaussian high-pass (cutoff 0.15) → log1p → <span class="mono">1×224×224</span> map</dd></div>
+          <div class="spec-row"><dt>Phase</dt><dd><strong>Discarded</strong> (magnitude only) — deliberate, flagged limitation</dd></div>
+          <div class="spec-row"><dt>Model</dt><dd>FreqCNN — residual <code>FreqBlock</code> (Conv3×3→BN→ReLU + 1×1 shortcut → MaxPool)</dd></div>
+          <div class="spec-row"><dt>Config (run)</dt><dd><span class="mono">freq_depth=5</span>, <span class="mono">freq_base_channels=64</span> → channels <span class="mono">1→64→128→256→512→512</span>, feature dim <span class="mono">512</span></dd></div>
+          <div class="spec-row"><dt>Params</dt><dd><span class="mono">~4.2M</span> (4,217,217) — vs Xception 20.8M</dd></div>
+          <div class="spec-row"><dt>Normalization</dt><dd>per-dataset z-score, FFPP <span class="mono">mean ≈ 5.84 / std ≈ 1.28</span> (file); old fallback std 3.0 was ~2.3× too big</dd></div>
+          <div class="spec-row"><dt>Aug (train)</dt><dd>FFT Gaussian noise <span class="mono">σ=0.05</span> · <span class="mono">5%</span>-prob spectral-band masking</dd></div>
+          <div class="spec-row"><dt>In-dataset AUC</dt><dd>n=750 — FFPP <span class="mono" style="color:var(--amber)">0.562</span> · CDF <span class="mono" style="color:var(--amber)">0.562</span> (weakest model, both)</dd></div>
+          <div class="spec-row"><dt>Cross-dataset</dt><dd>n=750 — FFPP→CDF AUC <span class="mono">0.606</span> (recall <span class="mono" style="color:var(--bad)">0.064</span>) · CDF→FFPP AUC <span class="mono">0.575</span> (recall <span class="mono">0.531</span>)</dd></div>
+          <div class="spec-row"><dt>Threshold (demo)</dt><dd><span class="mono">0.451</span> (Youden's J on FFPP val — near 0.5, consistent with near-random)</dd></div>
+          <div class="spec-row"><dt>Power checks</dt><dd>data sweep plateaus ~0.56 · ResNet18 (2.6× params) still 0.51–0.63 · 3 seeds, small std</dd></div>
+          <div class="spec-row"><dt>Key citations</dt><dd style="line-height:2">
+            <span class="cite">[8]</span> Durall · <span class="cite">[9]</span> Zhang · <span class="cite">[21]</span> Odena · <span class="cite">[11]</span> Qian/F³-Net · <span class="cite">[10]</span> Giudice · <span class="cite">[12]</span> Tan/FreqNet · <span class="cite">[25]</span> Oppenheim&amp;Lim · <span class="cite">[26]</span> SPSL/Liu · <span class="cite">[28]</span> Geirhos · <span class="cite">[29]</span> Rahaman · <span class="cite">[30]</span> Wang · <span class="cite">[31]</span> Mejri · <span class="cite">[5]</span> He/ResNet
+          </dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ONE EVENING ============ -->
+<section id="evening">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§4</span><h2>If you only have one evening</h2></div>
+      <hr class="sec-rule">
+      <ol class="evening">
+        <li><strong>Walk the FFT transform</strong> end to end (FQ1) and know the high-pass is <strong>soft</strong> (FQ8).</li>
+        <li><strong>Memorize freq AUC ~0.56 + the flat validation curve</strong> and the <strong>four failure causes with citations</strong> (FQ2, FQ3).</li>
+        <li><strong>Rehearse the “not under-powered” trio</strong> — data sweep, ResNet18 control, verified normalization (FQ2, §1·8).</li>
+        <li><strong>Own the phase handicap</strong> as deliberate future work, not an oversight (FQ4).</li>
+        <li>Re-read <code>sidang_study_notes_detailed_2026-06-25.md</code> Steps 03 &amp; 07 and <code>FREQ_BENCHMARK_RESULTS.md</code> once.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LITERATURE ============ -->
+<section id="lit">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§5</span><h2>Literature notes worth keeping</h2></div>
+      <hr class="sec-rule">
+      <div class="callout co-warn"><span class="k">Before sidang</span><p>In-text numbers follow the docx. <strong>Verify each [N] against Daftar Pustaka</strong> — the fact-check flagged in-text / bibliography desync.</p></div>
+      <div class="refs">
+        <div class="ref"><h4>Durall et al. <span class="cite">[8]</span> — “Watch your Up-Convolution”</h4><p>GAN up-sampling fails to reproduce the spectral distribution; deviation is in the <b>high-freq tail</b> → ~100% on <b>raw</b> output. Your <b>justification</b> for trying FFT <em>and</em> the <b>contrast</b> that explains your weak result (they used uncompressed; you use c23 crops).</p></div>
+        <div class="ref"><h4>Odena <span class="cite">[21]</span> / Zhang <span class="cite">[9]</span></h4><p>Checkerboard &amp; spectral artifacts from transposed conv — the mechanism your branch was designed to catch.</p></div>
+        <div class="ref"><h4>Mejri <span class="cite">[31]</span> — “Leveraging High-Frequency Components”</h4><p>Compression/filtering destroys high-frequency deepfake cues. <b>The single best citation for failure cause #1.</b></p></div>
+        <div class="ref"><h4>Oppenheim &amp; Lim <span class="cite">[25]</span> + Liu/SPSL <span class="cite">[26]</span></h4><p>Phase carries structure; phase surfaces up-sampling artifacts — back the phase-as-future-work argument. Oppenheim is about <b>perceptual structure</b>, not artifact detection — don't let it become “magnitude is worthless.”</p></div>
+        <div class="ref"><h4>Geirhos <span class="cite">[28]</span> · Rahaman <span class="cite">[29]</span> · Wang <span class="cite">[30]</span></h4><p>Texture bias / F-principle / high-freq ↔ generalization — the CNN-bias reason a shallow FreqCNN struggles on a weak high-freq signal (failure cause #3). The “teori tambahan BAB II” added 2026-06-17.</p></div>
+        <div class="ref"><h4>Qian/F³-Net <span class="cite">[11]</span> · Giudice/DCT <span class="cite">[10]</span> · Tan/FreqNet <span class="cite">[12]</span></h4><p>Richer frequency-aware SOTA — frame your raw-FFT-magnitude as the <b>simple baseline</b> and these as the future-work direction.</p></div>
+        <div class="ref"><h4>He/ResNet <span class="cite">[5]</span></h4><p>The residual idea inside <code>FreqBlock</code>.</p></div>
+        <div class="ref"><h4>SpecXNet (Alam <span class="cite">[13]</span>) · FSBI (Hasanaath <span class="cite">[16]</span>)</h4><p>Dual-domain / freq-enhanced related work — cite as <b>inspiration</b>, and be precise that they do <b>not</b> append FFT as a 4th channel (that's early fusion, which you did not evaluate).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIRKS ============ -->
+<section id="quirks">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§6</span><h2>Known quirks to OWN before they're pointed out</h2></div>
+      <hr class="sec-rule">
+      <div class="callout co-warn"><span class="k">Docstring vs results config</span><p><code>freq_cnn.py</code>'s docstring says depth=5 → 256-d ~700K; that's for <strong>base=32</strong>. Your run is <strong>base=64 → 512-d, 4.2M</strong>. Quote the config values, not the docstring.</p></div>
+      <div class="callout co-warn"><span class="k">.features only in hybrid</span><p>The FreqCNN's own classifier head is <strong>bypassed</strong> inside the hybrid; only the 512-d feature vector is used. Standalone <code>freq</code> uses the full head.</p></div>
+      <div class="callout co-warn"><span class="k">FFT-stats number</span><p>File on disk is <strong>5.84 / 1.28</strong>; some docs say 5.78. Code reads the file live → 5.84 runs. Quote 5.84.</p></div>
+      <div class="callout co-warn"><span class="k">Two FFT re-encodes differ by one JPEG hop</span><p>Training computes FFT from the saved JPEG crop, the demo from the in-memory crop — immaterial, but be honest if asked.</p></div>
+      <div class="callout co-warn"><span class="k">Freq threshold 0.451 ≈ 0.5</span><p>That near-0.5 operating point is itself <em>evidence</em> of near-randomness (no confident cutoff exists), not a tuning mistake.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section id="demo">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§7</span><h2>The demo — freq-branch things a reviewer can point at live</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Pair with <code>sidang_study_guide_DEMO_debug.md</code> (the full operational guide). This is <strong>only</strong> the frequency-specific angles. The demo runs all three models side-by-side so the negative result is <em>visible</em> — your branch is the one that's supposed to look weak, and it does.</p>
+
+      <h3 style="margin:26px 0 12px">What is <em>yours</em> on screen</h3>
+      <ul>
+        <li>The <strong>“FFT spectra” gallery</strong> (<code>inference._build_visuals</code> → <code>_spectrum_to_rgb</code>, MAGMA colormap) is <strong>exactly the freq/hybrid input</strong> (raw <code>image_to_fft_logmag</code>, pre z-score). Your headline visual proof (Gambar 4.2).</li>
+        <li>The <strong>freq verdict card</strong> shows the fake-probability bar with a tick at the <strong>0.451</strong> threshold.</li>
+      </ul>
+
+      <h3 style="margin:30px 0 12px">Freq-specific failure modes</h3>
+      <div class="scroll">
+        <table class="datatable" style="min-width:640px">
+          <thead><tr><th>Symptom</th><th>Cause</th><th>What to say</th></tr></thead>
+          <tbody>
+            <tr><td class="rowlabel">Freq card near its threshold / flips on tiny changes</td><td style="font-family:var(--sans)">freq is near-random (AUC ~0.56), threshold 0.451 ≈ 0.5</td><td style="font-family:var(--sans)">“Expected — a near-random model has no confident operating point. Evidence, not a defect.”</td></tr>
+            <tr><td class="rowlabel">Cards show “⚠︎ FFT calibration estimated”</td><td style="font-family:var(--sans)"><code>fft_stats.json</code> missing → fallback mean 5.0/std 3.0 (<code>inference.py:123-133</code>)</td><td style="font-family:var(--sans)">Copy <code>outputs/fft_cache/FFPP/fft_stats.json</code> → <code>checkpoints/</code>. Spatial is unaffected (RGB-only).</td></tr>
+            <tr><td class="rowlabel">Freq says the opposite of spatial on an OOD clip</td><td style="font-family:var(--sans)">freq ≈ coin flip; clip is off-distribution</td><td style="font-family:var(--sans)">“Freq alone is near chance, so disagreement is uninformative — that's the finding, and why we don't ship freq alone.”</td></tr>
+            <tr><td class="rowlabel">Freq is fast but weak</td><td style="font-family:var(--sans)">1-channel FFT input, tiny 4.2M net</td><td style="font-family:var(--sans)">latency isn't the point; the point is the flat spectra above it</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:30px 0 12px">Reviewer: “change X and show me” — freq edit points</h3>
+      <ul>
+        <li><strong>“Turn off the high-pass”</strong> → <code>image_to_fft_logmag(..., highpass=False)</code> in <code>inference._preprocess</code>. <span class="caution">Say first: this diverges from training, so the numbers stop matching the thesis.</span></li>
+        <li><strong>“Change the FFT high-pass cutoff”</strong> → <code>_highpass_mask(cutoff=…)</code> in <code>src/fft_utils.py</code>. Same caveat.</li>
+        <li><strong>“Run just the frequency model”</strong> → in <code>inference.py</code> <code>MODELS_SPEC</code>, keep only the <code>("freq", …)</code> row.</li>
+      </ul>
+
+      <div class="callout co-frame" style="margin-top:26px">
+        <span class="k">The one sentence for the demo</span>
+        <p>“The FFT-spectra panel <em>is</em> my defense: you can see for yourself that fake spectra look like real ones after cropping and compression — so the frequency branch has almost nothing to grab, and that's exactly what its ~0.56 AUC reports.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap prose">
+    <div class="kicker">Companion guides</div>
+    <div class="companions">
+      <span class="comp cur">◆ FREQUENCY branch</span>
+      <span class="comp">SPATIAL branch</span>
+      <span class="comp">HYBRID branch</span>
+      <span class="comp">DEMO debug</span>
+    </div>
+    <p class="foot-meta">Sidang study guide · FreqCNN + FFT · deepfake_hybrid · values from the results run</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- magma colormap ---- */
+  var anchors = [[0,0,4],[24,15,109],[59,15,112],[140,41,129],[222,73,104],[252,137,45],[252,187,58],[252,255,164]];
+  var stops   = [0, .14, .25, .40, .58, .78, .90, 1];
+  function magma(t){
+    if(t<=0) return anchors[0]; if(t>=1) return anchors[anchors.length-1];
+    for(var i=1;i<stops.length;i++){
+      if(t<=stops[i]){
+        var f=(t-stops[i-1])/(stops[i]-stops[i-1]), a=anchors[i-1], b=anchors[i];
+        return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f];
+      }
+    }
+    return anchors[anchors.length-1];
+  }
+
+  /* ---- hero spectrum band (equalizer, mostly flat = the finding) ---- */
+  var cv = document.getElementById('spectrum');
+  if(cv){
+    var ctx = cv.getContext('2d'), W, H, bars=110, base=[];
+    for(var i=0;i<bars;i++){
+      // low, flat profile with a couple of low-frequency bumps near the center
+      var x=i/bars, bump=Math.exp(-Math.pow((x-0.5)*6,2))*0.22;
+      base.push(0.08 + bump + (Math.sin(i*1.7)*0.5+0.5)*0.06);
+    }
+    function size(){ W=cv.width=cv.clientWidth*devicePixelRatio; H=cv.height=190*devicePixelRatio; }
+    function draw(t){
+      ctx.clearRect(0,0,W,H);
+      var bw = W/bars;
+      for(var i=0;i<bars;i++){
+        var jitter = reduce?0:(Math.sin(t*0.0016+i*0.9)*0.5+0.5)*0.05*base[i]/0.14;
+        var h = (base[i]+jitter)*H*1.3;
+        var col = magma(Math.min(1,(base[i]+jitter)*3.2));
+        var g = ctx.createLinearGradient(0,H,0,H-h);
+        g.addColorStop(0,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+',0.85)');
+        g.addColorStop(1,'rgba('+(col[0]|0)+','+(col[1]|0)+','+(col[2]|0)+',0.15)');
+        ctx.fillStyle=g;
+        ctx.fillRect(i*bw+bw*0.18, H-h, bw*0.64, h);
+      }
+    }
+    size(); draw(0);
+    window.addEventListener('resize', function(){ size(); draw(performance.now()); });
+    if(!reduce){ (function loop(t){ draw(t); requestAnimationFrame(loop); })(0); }
+  }
+
+  /* ---- real vs fake spectra: near-identical magma noise fields ---- */
+  function paintSpectrum(canvas, seed){
+    var ctx=canvas.getContext('2d'), N=canvas.width, img=ctx.createImageData(N,N),
+        cx=N/2, cy=N/2, s=seed;
+    function rnd(){ s=(s*9301+49297)%233280; return s/233280; }
+    for(var y=0;y<N;y++) for(var x=0;x<N;x++){
+      var dx=(x-cx)/cx, dy=(y-cy)/cy, d=Math.sqrt(dx*dx+dy*dy);
+      // log-mag falls off from center (DC), high-pass suppresses the very center, plus grain
+      var radial = Math.max(0, 1 - d*0.9);
+      var hp = 1 - Math.exp(-(d*d)/(2*0.16*0.16));      // soft high-pass, dims DC
+      var grain = (rnd()-0.5)*0.28;
+      var v = Math.min(1, Math.max(0, 0.16 + radial*0.7*hp + grain*hp));
+      var c = magma(v), o=(y*N+x)*4;
+      img.data[o]=c[0]|0; img.data[o+1]=c[1]|0; img.data[o+2]=c[2]|0; img.data[o+3]=255;
+    }
+    ctx.putImageData(img,0,0);
+  }
+  var specs=document.querySelectorAll('canvas[data-spec]');
+  // near-identical seeds → the two look the same on purpose
+  paintSpectrum(specs[0], 12007);
+  paintSpectrum(specs[1], 12041);
+
+  /* ---- Q&A reveal-all ---- */
+  var btn=document.getElementById('toggleAll');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded')==='true';
+      document.querySelectorAll('details.qa').forEach(function(d){ d.open=!open; });
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.textContent = open ? 'Reveal all' : 'Hide all';
+    });
+  }
+})();
+</script>

@@ -1,0 +1,740 @@
+<title>Hybrid Branch — Sidang Study Guide</title>
+<style>
+  :root{
+    --bg:#0c0e13; --panel:#14171f; --panel-2:#1b1f2a; --panel-3:#222834;
+    --line:#272d3a; --line-2:#333b4c;
+    --ink:#e9e6f1; --muted:#9793a8; --faint:#6c6980;
+    --acc:#8b7dff; --acc-dim:#6357c6;        /* fusion / SE gate — primary */
+    --spatial:#57a6ff;                        /* spatial branch */
+    --freq:#ff9142;                           /* frequency branch */
+    --good:#46c8a0; --bad:#e5566d; --warn:#f2b24a;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,system-ui,sans-serif;
+    --maxw:1080px; --prose:790px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden}
+  ::selection{background:rgba(139,125,255,.3)}
+  a{color:var(--acc); text-decoration:none}
+  a:hover{text-decoration:underline; text-underline-offset:3px}
+  :focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .prose{max-width:var(--prose); margin-left:auto; margin-right:auto}
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); font-weight:600}
+  h1,h2,h3,h4{text-wrap:balance; letter-spacing:-.02em; line-height:1.12; margin:0}
+  h2{font-size:clamp(1.5rem,3.4vw,2rem); font-weight:800}
+  h3{font-size:1.16rem; font-weight:700; letter-spacing:-.01em; line-height:1.25}
+  h4{font-size:.98rem; font-weight:700; letter-spacing:0}
+  p{margin:0 0 1rem}
+  strong{color:#fff; font-weight:680}
+  code,.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  code{font-size:.86em; background:var(--panel-2); color:#d9d3f6; padding:.12em .4em; border-radius:4px; border:1px solid var(--line); white-space:nowrap}
+
+  .chip{display:inline-flex; align-items:center; gap:.35em; font-family:var(--mono); font-size:.68rem; letter-spacing:.06em;
+    text-transform:uppercase; font-weight:600; padding:.28em .6em; border-radius:100px; border:1px solid var(--line-2);
+    color:var(--muted); background:var(--panel-2); white-space:nowrap}
+  .chip--core{color:#cfc9ff; border-color:rgba(139,125,255,.4); background:rgba(139,125,255,.12)}
+  .chip--code{color:#c8c2e8; text-transform:none; letter-spacing:0; font-size:.72rem; background:var(--panel-3)}
+  .chip--hard{color:#ffb3bd; border-color:rgba(229,86,109,.4); background:rgba(229,86,109,.12)}
+  .chip--likely{color:#f6cd86; border-color:rgba(242,178,74,.35); background:rgba(242,178,74,.1)}
+  .chip--trap{color:#a9c6ff; border-color:rgba(87,166,255,.4); background:rgba(87,166,255,.12)}
+  .chip--possible{color:var(--muted)}
+  .cite{font-family:var(--mono); font-size:.82em; color:var(--acc); font-weight:600; white-space:nowrap}
+
+  nav.bar{position:sticky; top:0; z-index:50; background:rgba(12,14,19,.82); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+  .bar-in{display:flex; align-items:center; gap:20px; height:54px; max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .brand{font-family:var(--mono); font-size:.8rem; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:.5em}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px var(--acc)}
+  .bar-links{display:flex; gap:4px; margin-left:auto; overflow-x:auto}
+  .bar-links a{font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); padding:.4em .7em; border-radius:6px; white-space:nowrap}
+  .bar-links a:hover{color:var(--ink); background:var(--panel-2); text-decoration:none}
+  @media(max-width:680px){.bar-links{display:none}}
+
+  header.hero{position:relative; overflow:hidden; border-bottom:1px solid var(--line)}
+  #gateband{position:absolute; left:0; right:0; bottom:0; width:100%; height:180px; display:block; opacity:.5; z-index:0}
+  .hero::after{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(120% 80% at 12% 0%, rgba(139,125,255,.12), transparent 55%),
+               radial-gradient(90% 70% at 92% 6%, rgba(87,166,255,.08), transparent 60%)}
+  .hero-in{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:64px 24px 92px}
+  .hero .eyebrow{color:var(--acc); margin-bottom:20px}
+  h1{font-size:clamp(2.4rem,6.4vw,4.4rem); font-weight:850; letter-spacing:-.035em; line-height:1}
+  h1 .em{color:var(--acc)}
+  .dek{max-width:60ch; color:var(--muted); font-size:1.06rem; margin-top:22px}
+  .dek b{color:var(--ink); font-weight:600}
+
+  .hero-grid{display:grid; grid-template-columns:1.35fr 1fr; gap:26px; margin-top:44px; align-items:stretch}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+  .oneliner{position:relative; margin:0; padding:26px 28px; border-radius:14px;
+    background:linear-gradient(180deg,rgba(27,31,42,.9),rgba(20,23,31,.9)); border:1px solid var(--line-2); font-size:1.12rem; line-height:1.55}
+  .oneliner:before{content:""; position:absolute; left:0; top:18px; bottom:18px; width:3px; border-radius:3px;
+    background:linear-gradient(180deg,var(--spatial),var(--acc) 50%,var(--freq))}
+  .oneliner .lead{display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:12px}
+  .oneliner b{color:#fff}
+
+  .measure{display:flex; flex-direction:column; gap:14px; padding:22px; border-radius:14px; background:var(--panel); border:1px solid var(--line-2)}
+  .rank{font-family:var(--mono); font-weight:700; font-size:1.12rem; letter-spacing:.01em; display:flex; align-items:center; gap:.5em; flex-wrap:wrap}
+  .rank .s{color:var(--spatial)} .rank .h{color:var(--acc)} .rank .f{color:var(--freq)} .rank .gt{color:var(--faint)}
+  .rank small{width:100%; font-family:var(--mono); font-size:.66rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:2px}
+  .chart{width:100%; height:auto; display:block}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:.7rem; color:var(--muted)}
+  .legend b{display:inline-flex; align-items:center; gap:.45em; font-weight:600; color:var(--muted)}
+  .legend b:before{content:""; width:10px; height:10px; border-radius:3px; background:currentColor}
+  .lg-s{color:var(--spatial)} .lg-h{color:var(--acc)} .lg-f{color:var(--freq)}
+
+  section{padding:66px 0; border-bottom:1px solid var(--line); scroll-margin-top:64px}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:14px; flex-wrap:wrap}
+  .sec-num{font-family:var(--mono); font-size:.9rem; font-weight:700; color:var(--acc)}
+  .sec-rule{height:2px; margin:22px 0 34px; border:0; background:linear-gradient(90deg,var(--acc),var(--spatial) 30%,transparent 72%)}
+  .lead-p{font-size:1.08rem; color:var(--muted); max-width:66ch}
+
+  .item{border:1px solid var(--line); border-radius:14px; background:var(--panel); margin:18px 0; overflow:hidden}
+  .item-head{display:flex; gap:16px; align-items:flex-start; padding:20px 22px 16px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,var(--panel-2),transparent)}
+  .item-no{flex:none; width:38px; height:38px; border-radius:9px; display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--bg);
+    background:linear-gradient(150deg,var(--acc),var(--acc-dim)); box-shadow:0 3px 14px rgba(139,125,255,.28)}
+  .item-tt{flex:1; min-width:0}
+  .item-tt h3{margin-bottom:9px}
+  .metas{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .item-body{padding:18px 22px 22px}
+  .item-body>p:last-child, .item-body>ul:last-child{margin-bottom:0}
+  ul{margin:0 0 1rem; padding-left:1.15em}
+  li{margin:.5em 0}
+  li::marker{color:var(--acc-dim)}
+  .item-body ul ul{margin:.4em 0}
+
+  .note{margin:16px 0 4px; padding:14px 16px 14px 18px; border-radius:10px; background:var(--panel-2); border:1px solid var(--line); position:relative}
+  .note:before{content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px; border-radius:3px; background:var(--acc)}
+  .note .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--acc); font-weight:600; display:block; margin-bottom:6px}
+  .note p{margin:0}
+
+  .callout{margin:22px 0; padding:18px 20px; border-radius:12px; border:1px solid var(--line); background:var(--panel)}
+  .callout .k{font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; display:flex; align-items:center; gap:.55em; margin-bottom:10px}
+  .callout .k:before{content:""; width:10px; height:10px; border-radius:2px; flex:none}
+  .callout p:last-child, .callout ul:last-child{margin-bottom:0}
+  .co-good{border-color:rgba(70,200,160,.3); background:linear-gradient(180deg,rgba(70,200,160,.07),transparent)}
+  .co-good .k{color:var(--good)} .co-good .k:before{background:var(--good)}
+  .co-warn{border-color:rgba(242,178,74,.32); background:linear-gradient(180deg,rgba(242,178,74,.07),transparent)}
+  .co-warn .k{color:var(--warn)} .co-warn .k:before{background:var(--warn)}
+  .co-bad{border-color:rgba(229,86,109,.32); background:linear-gradient(180deg,rgba(229,86,109,.07),transparent)}
+  .co-bad .k{color:var(--bad)} .co-bad .k:before{background:var(--bad)}
+  .co-frame{border-color:rgba(139,125,255,.36); background:linear-gradient(180deg,rgba(139,125,255,.1),transparent)}
+  .co-frame .k{color:var(--acc)} .co-frame .k:before{background:var(--acc); border-radius:50%}
+  .co-frame p{font-size:1.05rem}
+  .caution{color:var(--warn); font-family:var(--mono); font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .caution:before{content:"\25B2  "}
+
+  table{width:100%; border-collapse:collapse; font-size:.92rem; margin:6px 0}
+  .datatable{min-width:520px}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line)}
+  thead th{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:600; border-bottom:1px solid var(--line-2)}
+  tbody td:not(:first-child),.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  .rowlabel{color:var(--ink); font-weight:600}
+  tr.hl td{background:rgba(139,125,255,.08)}
+  tr.hl .rowlabel{color:var(--acc)}
+  tr.base td{color:var(--muted)}
+  td .peak{color:var(--acc); font-weight:700}
+  .table-cap{font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; letter-spacing:.02em}
+
+  .qa-tools{display:flex; justify-content:flex-end; margin-bottom:8px}
+  .toggle-all{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--panel-2); border:1px solid var(--line-2); padding:.5em .9em; border-radius:8px; cursor:pointer}
+  .toggle-all:hover{color:var(--ink); border-color:var(--acc-dim)}
+  details.qa{border:1px solid var(--line); border-radius:12px; background:var(--panel); margin:12px 0; overflow:hidden}
+  details.qa[open]{border-color:var(--line-2)}
+  details.qa summary{list-style:none; cursor:pointer; padding:18px 20px; display:flex; gap:14px; align-items:flex-start}
+  details.qa summary::-webkit-details-marker{display:none}
+  .qcode{font-family:var(--mono); font-weight:700; font-size:.82rem; color:var(--acc); flex:none; padding-top:2px; min-width:40px}
+  .qtext{flex:1; font-weight:640; color:var(--ink); line-height:1.4}
+  .qtext .metas{margin-top:9px}
+  .qmark{flex:none; width:26px; height:26px; border-radius:7px; border:1px solid var(--line-2); background:var(--panel-2); display:grid; place-items:center; color:var(--muted); transition:transform .2s ease}
+  .qmark:before{content:"+"; font-family:var(--mono); font-size:1.1rem; line-height:1}
+  details.qa[open] .qmark{transform:rotate(45deg); color:var(--acc); border-color:var(--acc-dim)}
+  .answer{margin:0 20px 20px; padding:16px 18px; border-radius:10px; background:var(--panel-2); border:1px solid var(--line); position:relative; color:var(--ink)}
+  .answer:before{content:""; position:absolute; left:0; top:14px; bottom:14px; width:3px; border-radius:3px; background:var(--acc)}
+  .answer .k{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:600; display:block; margin-bottom:8px}
+  .answer p{margin:0; line-height:1.58}
+
+  /* fusion diagram */
+  .flow{border:1px solid var(--line-2); border-radius:14px; background:var(--panel-2); padding:20px; margin:10px 0}
+  .branch{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+  .node{font-family:var(--mono); font-size:.76rem; padding:8px 11px; border-radius:8px; border:1px solid var(--line-2); background:var(--panel); white-space:nowrap}
+  .node b{font-weight:700} .node .d{color:var(--faint)}
+  .n-sp{border-color:rgba(87,166,255,.45)} .n-sp b{color:var(--spatial)}
+  .n-fq{border-color:rgba(255,145,66,.45)} .n-fq b{color:var(--freq)}
+  .n-fu{border-color:rgba(139,125,255,.5)} .n-fu b{color:var(--acc)}
+  .arr{color:var(--faint); font-family:var(--mono)}
+  .merge{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:6px; padding-top:14px; border-top:1px dashed var(--line-2)}
+
+  /* SE gate weight strip */
+  .gatefig{border:1px solid var(--line); border-radius:12px; background:var(--panel-2); padding:16px 18px; margin:16px 0}
+  .gatebars{display:flex; align-items:flex-end; gap:2px; height:76px; margin-bottom:10px}
+  .gatebars i{flex:1; border-radius:2px 2px 0 0; display:block}
+  .gatefig figcaption{font-family:var(--mono); font-size:.72rem; color:var(--faint); letter-spacing:.02em; margin:0}
+
+  ol.evening{list-style:none; counter-reset:e; margin:0; padding:0; display:grid; gap:12px}
+  ol.evening li{counter-increment:e; position:relative; padding:16px 18px 16px 62px; border:1px solid var(--line); border-radius:12px; background:var(--panel); margin:0}
+  ol.evening li:before{content:counter(e); position:absolute; left:16px; top:14px; width:32px; height:32px; border-radius:8px; display:grid; place-items:center; font-family:var(--mono); font-weight:700; color:var(--acc); border:1px solid var(--acc-dim); background:rgba(139,125,255,.1)}
+
+  .refs{display:grid; gap:12px; margin:8px 0}
+  .ref{border:1px solid var(--line); border-radius:11px; background:var(--panel); padding:14px 18px}
+  .ref h4{margin-bottom:5px; display:flex; align-items:center; gap:.6em; flex-wrap:wrap}
+  .ref p{margin:0; font-size:.92rem; color:var(--muted)}
+  .ref p b{color:var(--ink)}
+
+  .plate{border:1px solid var(--line-2); border-radius:16px; overflow:hidden; background:var(--panel)}
+  .plate-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 22px; background:linear-gradient(90deg,rgba(139,125,255,.14),rgba(87,166,255,.06)); border-bottom:1px solid var(--line-2)}
+  .plate-head b{font-family:var(--mono); letter-spacing:.05em; font-size:.9rem}
+  .plate-head span{font-family:var(--mono); font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em}
+  .spec-row{display:grid; grid-template-columns:210px 1fr; gap:0; border-bottom:1px solid var(--line)}
+  .spec-row:last-child{border-bottom:0}
+  .spec-row dt{padding:13px 22px; font-family:var(--mono); font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; background:var(--panel-2); border-right:1px solid var(--line)}
+  .spec-row dd{margin:0; padding:13px 22px; font-size:.92rem; line-height:1.5}
+  .spec-row dd .mono{color:#d9d3f6}
+  @media(max-width:600px){.spec-row{grid-template-columns:1fr}.spec-row dt{border-right:0; border-bottom:1px solid var(--line)}}
+
+  footer{padding:54px 0 70px; text-align:center}
+  .companions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:22px 0}
+  .comp{border:1px solid var(--line-2); border-radius:10px; padding:12px 18px; background:var(--panel); font-family:var(--mono); font-size:.78rem; color:var(--muted)}
+  .comp.cur{border-color:var(--acc-dim); color:var(--acc); background:rgba(139,125,255,.08)}
+  .foot-meta{font-family:var(--mono); font-size:.72rem; color:var(--faint); letter-spacing:.04em; margin-top:16px}
+  .kicker{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:600; margin-bottom:14px}
+</style>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="brand"><span class="dot"></span>HYBRID&nbsp;BRANCH</span>
+    <div class="bar-links">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#results">Results</a>
+      <a href="#qa">Q&amp;A</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#evening">One Evening</a>
+      <a href="#demo">Demo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="gateband" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <div class="eyebrow">Hybrid Model &nbsp;·&nbsp; Late Fusion + SE Gating &nbsp;·&nbsp; Sidang Study Guide</div>
+    <h1>Built to fuse.<br>Measured to <span class="em">lose honestly.</span></h1>
+    <p class="dek">You own the <b>hybrid model</b> — <code>HybridTwoBranch</code>, the fusion design (projection → concatenation → SE gating → classifier), and the thesis's <b>headline comparative claim</b>: the proposed hybrid does <b>not</b> beat the spatial baseline. Your job at the defense is to defend that as a <b>rigorous ablation result</b>, not a failed improvement.</p>
+
+    <div class="hero-grid">
+      <blockquote class="oneliner">
+        <span class="lead">§0 · The one-liner you defend</span>
+        The hybrid is our <b>proposed</b> model. Its architecture is sound — we balance the two branches to 256-d each and add an <b>SE gate</b> to adaptively weight them. But because the frequency branch is near-random, fusion <b>injects noise</b>: the hybrid lands <b>below pure spatial</b> in-dataset on both datasets. The one place FFT helps is <b>reducing the generalization drop FFPP→CDF</b> — but only that direction, and at the cost of in-dataset accuracy. Our answer to “does adding FFT help?” is a <b>quantified, qualified no</b>.
+      </blockquote>
+
+      <aside class="measure">
+        <div class="rank"><span class="s">Spatial</span><span class="gt">&gt;</span><span class="h">Hybrid</span><span class="gt">&gt;</span><span class="f">Freq</span><small>ranking on both datasets, every reliable tier</small></div>
+        <svg class="chart" viewBox="0 0 280 172" role="img" aria-label="Grouped AUC bars at n=750 showing hybrid below spatial on both datasets">
+          <line x1="34" y1="140" x2="272" y2="140" stroke="#333b4c" stroke-width="1"/>
+          <text x="30" y="143" text-anchor="end" fill="#6c6980" font-size="8" font-family="var(--mono)">.50</text>
+          <text x="30" y="24" text-anchor="end" fill="#6c6980" font-size="8" font-family="var(--mono)">1.0</text>
+          <!-- FFPP group -->
+          <rect x="46"  y="73.3"  width="16" height="66.7"  rx="2" fill="#57a6ff"/>
+          <rect x="64"  y="105.4" width="16" height="34.6"  rx="2" fill="#8b7dff"/>
+          <rect x="82"  y="125.1" width="16" height="14.9"  rx="2" fill="#ff9142"/>
+          <text x="72" y="156" text-anchor="middle" fill="#9793a8" font-size="8.5" font-family="var(--mono)">FFPP</text>
+          <!-- CDF group -->
+          <rect x="176" y="27"    width="16" height="113"   rx="2" fill="#57a6ff"/>
+          <rect x="194" y="39.4"  width="16" height="100.6" rx="2" fill="#8b7dff"/>
+          <rect x="212" y="125.1" width="16" height="14.9"  rx="2" fill="#ff9142"/>
+          <text x="202" y="156" text-anchor="middle" fill="#9793a8" font-size="8.5" font-family="var(--mono)">CDF</text>
+        </svg>
+        <div class="legend"><b class="lg-s">Spatial</b><b class="lg-h">Hybrid</b><b class="lg-f">Freq</b><span style="color:var(--faint)">in-dataset AUC · n=750</span></div>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ CURRICULUM ============ -->
+<section id="curriculum">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§1</span><h2>What to study — the ordered curriculum</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Each item: <em>what · why you need it · what to read.</em> The fusion is where you go deep — everything else you defer to the spatial and frequency guides.</p>
+    </div>
+
+    <div class="prose">
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">1</div>
+          <div class="item-tt">
+            <h3>The full hybrid forward pass</h3>
+            <div class="metas"><span class="chip chip--code">HybridTwoBranch.forward · hybrid_fusion.py:56-67</span><span class="chip">1.5 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>You must be able to draw this from memory, with dimensions.</p>
+          <div class="flow">
+            <div class="branch">
+              <span class="node n-sp">RGB <b>3×224²</b></span><span class="arr">→</span>
+              <span class="node n-sp">Xception <b>2048</b></span><span class="arr">→</span>
+              <span class="node n-sp">spatial_proj <b>256</b> <span class="d">Lin+BN+ReLU</span></span>
+            </div>
+            <div class="branch">
+              <span class="node n-fq">FFT <b>1×224²</b></span><span class="arr">→</span>
+              <span class="node n-fq">FreqCNN.features <b>512</b></span><span class="arr">→</span>
+              <span class="node n-fq">freq_proj <b>256</b> <span class="d">Lin+BN+ReLU</span></span>
+            </div>
+            <div class="merge">
+              <span class="node n-fu">concat <b>512</b></span><span class="arr">→</span>
+              <span class="node n-fu">SE gate <b>reweight</b></span><span class="arr">→</span>
+              <span class="node n-fu">classifier <b>512→128→1</b> <span class="d">Drop·ReLU·Drop</span></span><span class="arr">→</span>
+              <span class="node n-fu"><b>1 logit</b></span>
+            </div>
+          </div>
+          <ul>
+            <li>Two <strong>independent</strong> branches extract features (<code>self.spatial(rgb)</code>, <code>self.freq.features(fft)</code>), then fuse <strong>once at the feature level</strong> — that's <strong>late fusion</strong>.</li>
+            <li>Spatial branch = Xception's <strong>2048-d</strong> global-avg-pooled feature (num_classes=0 extractor); freq branch = FreqCNN's <strong>512-d</strong> <code>.features</code> output (its classifier head bypassed).</li>
+            <li><strong>~25.9M params</strong> (25,878,570) = spatial extractor 20.8M + FreqCNN 4.2M + projections/SE/head (~0.85M).</li>
+            <li>Thesis refs: <strong>§3.4.3</strong>, <strong>Gambar 3.10</strong> (architecture diagram).</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">2</div>
+          <div class="item-tt">
+            <h3>Why project both branches to 256 — the symmetric bottleneck</h3>
+            <div class="metas"><span class="chip">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>This is the “why not just concatenate?” question.</p>
+          <ul>
+            <li>Raw dims are <strong>wildly asymmetric: spatial 2048 vs freq 512 (a 4:1 ratio).</strong> Concatenating raw would let the 2048-d spatial branch <strong>dominate</strong>, and the gradient reaching the freq branch would shrink to near-nothing.</li>
+            <li><strong><code>spatial_proj</code> / <code>freq_proj</code></strong> each = <code>Linear(→256) + BatchNorm1d + ReLU</code>. Projecting <strong>both to 256</strong> equalizes their contribution; <strong>BatchNorm</strong> normalizes their scales; the result is a <strong>balanced 512-d vector</strong> the SE gate can weight fairly.</li>
+            <li><strong>This is exactly the fix</strong> for the original collapse (see item 7): the pre-fix model concatenated 2048:64 directly and spatial swamped everything (~97% spatial). Symmetric projection is <em>what makes late fusion fair between modalities.</em> (Thesis: projection eq. 2.15, §2.8.)</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">3</div>
+          <div class="item-tt">
+            <h3>The SE gate — squeeze, excitation, scale</h3>
+            <div class="metas"><span class="chip chip--code">SEGate · hybrid_fusion.py:11-24</span><span class="chip">1 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>The most likely “explain your fusion mechanism” question. SE-Net is Hu et al. <span class="cite">[38]</span>.</p>
+          <ul>
+            <li>It's <strong>channel attention</strong> on the <strong>512-d fused vector</strong> (here each “channel” is a fused feature dimension).</li>
+            <li><strong>Squeeze:</strong> <code>Linear(512→128)</code> (reduction=4) summarizes cross-channel interactions into a compact descriptor.</li>
+            <li><strong>Excitation:</strong> <code>Linear(128→512) → Sigmoid</code> produces a per-dimension <strong>gate weight in (0,1)</strong>.</li>
+            <li><strong>Scale (reweight):</strong> multiply the fused vector by those gates — <code>x * gate(x)</code> (forward, line 24).</li>
+            <li><strong>Intent:</strong> <strong>down-weight</strong> the useless frequency dimensions and <strong>up-weight</strong> the good spatial ones, <em>adaptively per input</em> — a learned branch weighting. Gate weights come from the <strong>whole 512-d vector</strong>, so both domains condition the reweighting.</li>
+          </ul>
+          <figure class="gatefig">
+            <div class="gatebars" id="gatebars" aria-hidden="true"></div>
+            <figcaption>Illustrative SE-gate output: <span style="color:var(--spatial)">spatial dims kept ≈0.9</span>, <span style="color:var(--freq)">frequency dims suppressed ≈0.2–0.3</span> — but not to zero, which is why noise leaks through.</figcaption>
+          </figure>
+          <div class="callout co-bad">
+            <span class="k">The honest punchline — say it</span>
+            <p>In our results the SE gate <strong>fails to fully suppress</strong> the near-random frequency branch, so the hybrid still underperforms pure spatial. <em>Adding a gate was the right idea; it wasn't enough.</em> (Thesis §3.4.3 shows the gate suppressing low-value dims to ~0.2–0.3 and keeping high-value dims at ~0.9.)</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">4</div>
+          <div class="item-tt">
+            <h3>Concatenation + SE are <em>both</em> used, not alternatives</h3>
+            <div class="metas"><span class="chip">30 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>A classic trap: “BAB II says SE beats simple concatenation — but you use concatenation. Contradiction?” <strong>No.</strong></p>
+          <ul>
+            <li>Order is <strong>projection → CONCATENATION (512) → SE GATE → classifier.</strong> Concatenation <strong>unites</strong> the two branches into one vector; SE gating <strong>reweights</strong> that vector afterward. They stack.</li>
+            <li>“<strong>Simple</strong> concatenation” (the thing BAB II calls weaker) = concat with <strong>no</strong> adaptive weighting, straight into the classifier. Your model is on the <strong>better</strong> side of that comparison: concat <strong>plus</strong> SE gate.</li>
+            <li>Analogy: “a plain wall is weak, so we reinforce it with steel.” The wall (concat) stays; the steel (SE) is added. Not wall-vs-steel — <strong>wall+steel.</strong></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">5</div>
+          <div class="item-tt">
+            <h3>Hybrid training mechanics — the 3-group LR and freeze</h3>
+            <div class="metas"><span class="chip chip--code">scripts/train.py</span><span class="chip">1 hr</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <p>The hybrid is the trickiest to train — it mixes a <strong>pretrained</strong> backbone with a <strong>randomly-initialized</strong> freq branch and fusion head. Every choice protects the backbone.</p>
+          <div class="scroll">
+            <table class="datatable" style="min-width:640px">
+              <thead><tr><th>Choice</th><th>Value</th><th>Why (rehearse)</th></tr></thead>
+              <tbody>
+                <tr><td class="rowlabel">Backbone freeze</td><td style="font-family:var(--sans)">frozen first <strong>3 epochs</strong>, unfreeze at epoch 4</td><td style="font-family:var(--sans)">Let FreqCNN + projections + SE + classifier stabilize before the pretrained backbone moves. Random parts backpropping into the backbone on epoch 1 would corrupt ImageNet features.</td></tr>
+                <tr><td class="rowlabel">3-group differential LR</td><td style="font-family:var(--sans)">backbone <span class="mono">2e-5</span> · freq <span class="mono">5e-5</span> · head <span class="mono">2e-4</span></td><td style="font-family:var(--sans)">Backbone precious → nudge gently. Freq is random → must move, not dominate. Head is random + on top → learns fastest. One high LR let random branches overwrite the backbone — a documented cause of the original collapse.</td></tr>
+                <tr><td class="rowlabel">Optimizer</td><td style="font-family:var(--sans)"><strong>AdamW</strong> <span class="cite">[45]</span></td><td style="font-family:var(--sans)">decoupled weight decay → cleaner regularization.</td></tr>
+                <tr><td class="rowlabel">LR schedule</td><td style="font-family:var(--sans)">warmup 3 ep → cosine to <span class="mono">1e-6</span></td><td style="font-family:var(--sans)">warmup avoids destabilizing the backbone on step 1; cosine anneals smoothly.</td></tr>
+                <tr><td class="rowlabel">Loss</td><td style="font-family:var(--sans)"><code>BCEWithLogitsLoss</code> + <code>pos_weight</code> + label smoothing 0.05</td><td style="font-family:var(--sans)">pos_weight handles frame-level imbalance; smoothing curbs overconfidence on small data.</td></tr>
+                <tr><td class="rowlabel">Consistent hflip</td><td style="font-family:var(--sans)">one flip → <code>TF.hflip(rgb)</code> and <code>torch.flip(fft)</code></td><td style="font-family:var(--sans)">independent flips would desync the RGB and FFT views of the same frame.</td></tr>
+                <tr><td class="rowlabel">Grad accumulation</td><td style="font-family:var(--sans)">2 steps · grad clip max-norm 5.0</td><td style="font-family:var(--sans)">stability on small effective batches.</td></tr>
+                <tr><td class="rowlabel">Selection</td><td style="font-family:var(--sans)">best by <strong>val AUC</strong>, patience 12, max 30 ep</td><td style="font-family:var(--sans)">AUC = threshold-independent, robust selection.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note"><span class="k">If asked “why three learning rates?”</span><p>“Three parameter groups with three roles: a pretrained backbone I must preserve (lowest LR), a randomly-initialized frequency branch that must learn but not overpower the backbone (mid LR), and a randomly-initialized fusion head that should converge fast (highest LR). One flat LR let the random branches' early gradients wreck the ImageNet features — a real failure we fixed.”</p></div>
+        </div>
+      </article>
+
+      <article class="item" id="results">
+        <div class="item-head">
+          <div class="item-no">6</div>
+          <div class="item-tt">
+            <h3>Hybrid results — memorize your own numbers</h3>
+            <div class="metas"><span class="chip">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <h4 style="margin-bottom:10px">In-dataset AUC <span style="color:var(--faint);font-weight:400">(mean over seeds 0/1/2)</span></h4>
+          <div class="scroll">
+            <table class="datatable">
+              <thead><tr><th></th><th>n=250</th><th>n=500</th><th>n=750</th></tr></thead>
+              <tbody>
+                <tr class="hl"><td class="rowlabel">FFPP hybrid</td><td>0.540</td><td>0.616</td><td><span class="peak">0.644</span></td></tr>
+                <tr class="hl"><td class="rowlabel">CDF hybrid</td><td>0.787</td><td>0.839</td><td><span class="peak">0.919</span></td></tr>
+                <tr class="base"><td class="rowlabel">FFPP spatial <span style="font-weight:400">(baseline)</span></td><td>0.743</td><td>0.693</td><td>0.778</td></tr>
+                <tr class="base"><td class="rowlabel">CDF spatial <span style="font-weight:400">(baseline)</span></td><td>0.914</td><td>0.945</td><td>0.971</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-cap">Ranking is <strong style="color:var(--acc)">Spatial &gt; Hybrid &gt; Freq</strong> on both datasets, every reliable tier. The hybrid <strong>loses to its own baseline</strong> — that IS the thesis.</p>
+
+          <h4 style="margin:24px 0 10px">Cross-dataset, n=750 <span style="color:var(--faint);font-weight:400">(AUC / recall)</span></h4>
+          <div class="scroll">
+            <table class="datatable">
+              <thead><tr><th>Direction</th><th>Model</th><th>AUC</th><th>Recall</th></tr></thead>
+              <tbody>
+                <tr class="hl"><td class="rowlabel">FFPP→CDF</td><td>hybrid</td><td>0.665</td><td>0.599</td></tr>
+                <tr class="base"><td class="rowlabel">FFPP→CDF</td><td>spatial</td><td>0.678</td><td>0.637</td></tr>
+                <tr class="hl"><td class="rowlabel">CDF→FFPP</td><td>hybrid</td><td>0.555</td><td>0.142</td></tr>
+                <tr class="base"><td class="rowlabel">CDF→FFPP</td><td>spatial</td><td>0.607</td><td>0.074</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 style="margin:24px 0 10px">Generalization drop (ΔF1, n=750) <span style="color:var(--good);font-weight:400">— the ONE place hybrid helps</span></h4>
+          <div class="scroll">
+            <table class="datatable" style="min-width:560px">
+              <thead><tr><th>Model</th><th>Train</th><th>F1 in</th><th>F1 cross</th><th>Δ</th></tr></thead>
+              <tbody>
+                <tr class="base"><td class="rowlabel">spatial</td><td>FFPP</td><td>0.705</td><td>0.614</td><td>+0.091</td></tr>
+                <tr class="hl"><td class="rowlabel">hybrid</td><td>FFPP</td><td>0.606</td><td>0.594</td><td><span style="color:var(--good);font-weight:700">+0.012</span> smallest</td></tr>
+                <tr class="base"><td class="rowlabel">spatial</td><td>CDF</td><td>0.906</td><td>0.137</td><td>+0.769</td></tr>
+                <tr class="base"><td class="rowlabel">hybrid</td><td>CDF</td><td>0.834</td><td>0.238</td><td>+0.597</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout co-frame">
+            <span class="k">The RM2 nuance — memorize the exact shape</span>
+            <p>FFT <em>does</em> reduce the generalization drop — <strong>but only FFPP→CDF</strong> (ΔF1 +0.012 vs spatial's +0.091), and it's <strong>bought with a lower in-dataset score</strong> (0.606 vs 0.705). It does <strong>not</strong> hold CDF→FFPP. So FFT helps <strong>inconsistently and at a cost</strong> — the honest answer to RM2.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <div class="item-no">7</div>
+          <div class="item-tt">
+            <h3>Why fusion drags the hybrid down — the mechanism</h3>
+            <div class="metas"><span class="chip">45 min</span><span class="chip chip--core">Core</span></div>
+          </div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li>The freq branch is <strong>≈ random</strong> (AUC ~0.56, flat val curve from epoch 1). Concatenating it <strong>injects noise</strong> into the fused 512-d vector.</li>
+            <li>The <strong>SE gate was meant to suppress</strong> that noise but <strong>can't fully</strong> — so fusion ≤ spatial. The thesis (§4.2.1, §4.2.3): the frequency branch <em>“cenderung menjadi sumber noise yang menyeret turun performa fusi.”</em></li>
+            <li><strong>H0 cannot be rejected:</strong> no meaningful cross-dataset generalization gain from FFT (BAB IV §4.2.1, BAB V §5.1).</li>
+          </ul>
+          <div class="callout co-warn">
+            <span class="k">Context — the collapse doc is OLDER than the final model</span>
+            <p><code>Hybrid_Model_Collapse_Analysis_2026-03-14.md</code> describes the <strong>pre-fix</strong> hybrid: raw 2048:64 concat (~97% spatial), per-image FFT min-max norm, no scheduler, no freeze, no differential LR → catastrophic collapse (CDF→FFPP F1 = 0.038, AUC 0.506). Your fixes — symmetric 256-d projections, SE gate, 3-group LR, freeze-then-unfreeze, cosine schedule, <strong>global FFT z-score</strong>, Youden's-J thresholds — <strong>stopped the catastrophic collapse but did not make frequency informative.</strong> That is the final, honest negative result.</p>
+          </div>
+          <div class="note"><span class="k">If asked “did your fixes accomplish anything?”</span><p>“Yes — they turned a catastrophic collapse (F1 0.038) into a competitive-but-not-better model. They did <strong>not</strong> make frequency discriminative. That localizes the limit to the <strong>domain/representation</strong>, not the training code — which <em>strengthens</em> the conclusion.”</p></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q&A ============ -->
+<section id="qa">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§2</span><h2>Reviewer questions aimed at the hybrid owner</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Ranked by likelihood. HQ1 is the hardest question in the whole room, and it's aimed at you. <strong>Recall each answer before revealing it.</strong></p>
+      <div class="qa-tools"><button class="toggle-all" id="toggleAll" aria-expanded="false">Reveal all</button></div>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ1</span><span class="qtext">“Your proposed hybrid is worse than your own baseline. What's the contribution?”<span class="metas"><span class="chip chip--hard">certain · hardest in the room</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“It's a <strong>comparative / ablation study</strong>, not an improvement study. We set out to <strong>measure</strong> the frequency domain's contribution, and the measured answer is: under compressed, face-cropped, cross-dataset conditions, FFT fusion <strong>doesn't help and can inject noise</strong>. A rigorously explained negative result is legitimate science — it falsifies the common ‘adding FFT must help’ assumption with quantitative evidence, and stops others walking into the same dead end. The hybrid losing to spatial is a <strong>result</strong>, not a failure of the design.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ2</span><span class="qtext">“Explain your fusion. Why projection + concatenation + SE gating?”<span class="metas"><span class="chip chip--hard">almost certain</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“Three steps. First <strong>projection</strong>: the branches are 2048-d spatial vs 512-d freq — a 4:1 imbalance that would let spatial dominate — so I project <strong>both to 256-d</strong> with Linear+BN+ReLU to balance scale and contribution. Then <strong>concatenation</strong> into a 512-d vector. Then an <strong>SE gate</strong> — channel attention that squeezes the 512-d vector to 128, excites back to 512 through a sigmoid, and multiplies — to adaptively down-weight useless frequency dimensions and up-weight good spatial ones per input. Finally a dropout-regularized 2-layer classifier.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ3</span><span class="qtext">“What does the SE gate actually do here, and did it work?”<span class="metas"><span class="chip chip--hard">certain</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“It's input-dependent channel reweighting on the fused vector — squeeze <code>Linear(512→128)</code>, excitation <code>Linear(128→512)→sigmoid</code>, then <code>x*gate(x)</code>. The intent was to let the model suppress the near-random frequency channels. It <strong>partially</strong> does that, but it <strong>can't fully</strong> suppress a branch that's essentially noise, so the hybrid still underperforms spatial. The gate was the right idea and necessary — it just isn't enough to rescue a weak input.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ4</span><span class="qtext">“BAB II says SE gating beats simple concatenation, but you use concatenation. Isn't that a contradiction?”<span class="metas"><span class="chip chip--trap">likely trap</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“No — we use <strong>both, in sequence</strong>: concatenation unites the two branches, then SE gating reweights the concatenated vector. ‘Simple concatenation’ means concat with <strong>no</strong> adaptive weighting; our model is the <em>improved</em> version, concat <strong>plus</strong> SE gate. So that paragraph endorses our design, it doesn't contradict it.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ5</span><span class="qtext">“Is FFT a 4th channel of XceptionNet?”<span class="metas"><span class="chip chip--trap">likely · early-fusion confusion</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“No. In the model we evaluate — <strong>late fusion, HybridTwoBranch</strong> — XceptionNet processes RGB (3-channel) and FreqCNN processes the FFT map (1-channel) in <strong>separate branches</strong>, fused at the <strong>feature level</strong>. The 4-channel ‘FFT-as-channel-4’ design is <strong>early fusion</strong>; it exists in our code but was <strong>not</strong> part of the evaluation. We chose late fusion so we can pick a different architecture per domain and <strong>isolate each domain's contribution</strong> for the ablation.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ6</span><span class="qtext">“Why does hybrid help FFPP→CDF but not CDF→FFPP?”<span class="metas"><span class="chip chip--likely">likely</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“Source-dataset diversity. Trained on <strong>FFPP</strong> — four manipulation methods — the model sees varied artifacts and the frequency branch adds a little cross-dataset robustness, shrinking the F1 drop to +0.012 vs spatial's +0.091. Trained on <strong>CDF</strong> — one homogeneous synthesis method — there's less to generalize from, and FFT doesn't help. So the benefit is <strong>real but directional</strong>, and it costs in-dataset accuracy. That asymmetry is the honest RM2 answer, not a contradiction.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ7</span><span class="qtext">“How do you know the hybrid isn't just under-trained or badly fused?”<span class="metas"><span class="chip chip--likely">likely</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“Because we removed each confound. The freq branch's own power was checked three ways (data sweep plateaus, a 2.6×-bigger ResNet18 stays near chance, verified normalization). The fusion was <strong>rebuilt</strong> from a version that catastrophically collapsed — symmetric projections, SE gate, 3-group LR, freeze/unfreeze, global FFT z-score — and the collapse went away while the near-chance freq contribution <strong>remained</strong>. That tells us the limit is the frequency <strong>input</strong>, not the training or the fusion code.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ8</span><span class="qtext">“Why not weight the branches manually, or drop the freq branch when it's bad?”<span class="metas"><span class="chip chip--possible">possible</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“That's essentially what the SE gate learns to do — adaptive, per-input weighting — and it still can't lift a noise input. A hard manual down-weight to zero would just recover the spatial model, which is exactly our finding: under these conditions the spatial branch alone is best. We report that instead of hiding it.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ9</span><span class="qtext">“~25.9M parameters for a model that's worse than a 20.8M one — isn't that wasteful?”<span class="metas"><span class="chip chip--possible">possible</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“Precisely one of our practical conclusions: for <strong>low-resource, frame-based</strong> deepfake detection, the pretrained spatial backbone alone is both the <strong>strongest</strong> and the <strong>most parameter-efficient</strong> choice. Adding the FFT branch adds ~5M parameters and <strong>lowers</strong> accuracy. That's actionable design guidance, and it's only visible because we measured the hybrid honestly.”</p></div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qcode">HQ10</span><span class="qtext">“Why late fusion and not early fusion?”<span class="metas"><span class="chip chip--possible">possible</span></span></span><span class="qmark" aria-hidden="true"></span></summary>
+        <div class="answer"><span class="k">Say this</span><p>“Late fusion keeps the two domains <strong>separable</strong>, which is what lets us run the ablation — spatial-only vs freq-only vs hybrid — and attribute the contribution to each domain (RM3). Early fusion mixes RGB and FFT at the input, so you can't isolate the frequency contribution. It's also cleaner architecturally: each domain gets the backbone that suits it.”</p></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS CARD ============ -->
+<section id="numbers">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§3</span><h2>Hybrid numbers card</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Keep this on your phone. Every value from the results run.</p>
+    </div>
+    <div class="prose" style="max-width:940px">
+      <div class="plate">
+        <div class="plate-head"><b>HybridTwoBranch · Late Fusion + SE</b><span>results run</span></div>
+        <dl style="margin:0">
+          <div class="spec-row"><dt>Architecture</dt><dd>Xception(2048) + FreqCNN(512) → project both to <span class="mono">256</span> → concat <span class="mono">512</span> → <strong>SE gate</strong> → classifier</dd></div>
+          <div class="spec-row"><dt>SE gate</dt><dd>squeeze <code>Linear(512→128)</code> (reduction 4) → excite <code>Linear(128→512)→Sigmoid</code> → <code>x*gate(x)</code></dd></div>
+          <div class="spec-row"><dt>Classifier</dt><dd><code>Dropout(0.5) → Linear(512,128) → ReLU → Dropout(0.5) → Linear(128,1)</code></dd></div>
+          <div class="spec-row"><dt>Params</dt><dd><span class="mono">~25.9M</span> (25,878,570) = spatial 20.8M + freq 4.2M + fusion ~0.85M</dd></div>
+          <div class="spec-row"><dt>3-group LR</dt><dd>backbone <span class="mono">2e-5</span> · freq <span class="mono">5e-5</span> (base×0.25) · head <span class="mono">2e-4</span> · AdamW · warmup 3 → cosine to 1e-6</dd></div>
+          <div class="spec-row"><dt>Freeze</dt><dd>spatial backbone frozen 3 ep → unfreeze epoch 4</dd></div>
+          <div class="spec-row"><dt>In-dataset AUC</dt><dd>n=750 — FFPP <span class="mono" style="color:var(--acc)">0.644</span> · CDF <span class="mono" style="color:var(--acc)">0.919</span> — <strong>below spatial (0.778 / 0.971) both</strong></dd></div>
+          <div class="spec-row"><dt>Cross-dataset</dt><dd>n=750 — FFPP→CDF AUC <span class="mono">0.665</span> (recall 0.599) · CDF→FFPP AUC <span class="mono">0.555</span> (recall 0.142)</dd></div>
+          <div class="spec-row"><dt>Where FFT helps</dt><dd>ΔF1 FFPP→CDF <span class="mono" style="color:var(--good)">+0.012</span> (smallest drop) vs spatial +0.091 — only this direction, at lower in-dataset F1</dd></div>
+          <div class="spec-row"><dt>Threshold (demo)</dt><dd><span class="mono">0.229</span> (Youden's J on FFPP val)</dd></div>
+          <div class="spec-row"><dt>Mechanism</dt><dd>freq ≈ noise → concat injects noise → SE gate can't fully suppress → hybrid ≤ spatial; <strong>H0 not rejected</strong></dd></div>
+          <div class="spec-row"><dt>Key citations</dt><dd style="line-height:2"><span class="cite">[38]</span> SE-Net/Hu · <span class="cite">[6]</span> Xception/Chollet · <span class="cite">[5]</span> He · <span class="cite">[13]</span> SpecXNet/Alam · <span class="cite">[16]</span> FSBI/Hasanaath · <span class="cite">[45]</span> AdamW · <span class="cite">[46]</span> Ben-David</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ONE EVENING ============ -->
+<section id="evening">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§4</span><h2>If you only have one evening</h2></div>
+      <hr class="sec-rule">
+      <ol class="evening">
+        <li><strong>Draw the full forward pass</strong> with dims (2048 &amp; 512 → 256 &amp; 256 → 512 → SE → head) — HQ2.</li>
+        <li><strong>Explain the SE gate</strong> (squeeze/excite/scale) <em>and</em> say it partially-but-not-fully suppresses the noise — HQ3.</li>
+        <li><strong>Memorize the n=750 table</strong> (hybrid &lt; spatial both) and the <strong>ΔF1 +0.012 FFPP→CDF</strong> nuance — HQ1, HQ6.</li>
+        <li><strong>Rehearse the 3-group LR + freeze</strong> rationale — HQ7, and the “concat + SE are both used” rebuttal — HQ4.</li>
+        <li><strong>Own the negative:</strong> the fusion is well-built; the freq <em>input</em> is weak; hybrid ≤ spatial is the measured result. Re-read <code>sidang_study_notes_detailed_2026-06-25.md</code> Steps 04, 05, 07.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LITERATURE ============ -->
+<section id="lit">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§5</span><h2>Literature notes worth keeping</h2></div>
+      <hr class="sec-rule">
+      <div class="callout co-warn"><span class="k">Before sidang</span><p>In-text numbers follow the docx. <strong>Verify each [N] against Daftar Pustaka</strong> — the fact-check flagged in-text / bibliography desync.</p></div>
+      <div class="refs">
+        <div class="ref"><h4>Hu et al. <span class="cite">[38]</span> — Squeeze-and-Excitation Networks</h4><p>The SE gate's source. In BAB II §2.8 it's framed as an <b>adaptive multi-domain fusion mechanism</b> — channel attention that suppresses uninformative channels and enhances discriminative ones. Cite for the gate <em>and</em> the “better than simple concatenation” claim (which endorses your concat+SE design).</p></div>
+        <div class="ref"><h4>Chollet <span class="cite">[6]</span> (Xception) · He <span class="cite">[5]</span> (ResNet)</h4><p>The two backbones inside the hybrid — depthwise-separable spatial branch, residual <code>FreqBlock</code>.</p></div>
+        <div class="ref"><h4>SpecXNet (Alam <span class="cite">[13]</span>) · FSBI (Hasanaath <span class="cite">[16]</span>)</h4><p>Dual-domain / freq-enhanced related work — cite as <b>inspiration</b>, and be precise: SpecXNet fuses spatial-spectral via channel split + Fourier attention inside each block; FSBI uses frequency-enhanced self-blended images. <b>Neither appends FFT as a 4th channel</b> — don't equate their approach with early fusion.</p></div>
+        <div class="ref"><h4>Ben-David et al. <span class="cite">[46]</span> — domain adaptation theory</h4><p>The formal name for the cross-dataset drop the hybrid is trying (and mostly failing) to reduce.</p></div>
+        <div class="ref"><h4>AdamW (Loshchilov &amp; Hutter) <span class="cite">[45]</span></h4><p>The optimizer for all three models.</p></div>
+        <div class="ref"><h4>Why the fused input is weak</h4><p>For the mechanism behind hybrid ≤ spatial, lean on the frequency guide's citations: Durall <span class="cite">[8]</span>, Mejri <span class="cite">[31]</span>, Oppenheim&amp;Lim <span class="cite">[25]</span> / SPSL <span class="cite">[26]</span>, Geirhos <span class="cite">[28]</span> / Rahaman <span class="cite">[29]</span> / Wang <span class="cite">[30]</span>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIRKS ============ -->
+<section id="quirks">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§6</span><h2>Known quirks to OWN before they're pointed out</h2></div>
+      <hr class="sec-rule">
+      <div class="callout co-warn"><span class="k">“early fusion” leftovers in the .docx</span><p>The live Word doc still says “dan early fusion” in a couple of methodology spots and once frames FFT as a “4th channel.” Those are <strong>being revised</strong> — the evaluated model is <strong>late fusion only</strong> (three models: spatial, freq, hybrid). If a reviewer quotes one: “that's the unevaluated early-fusion variant; our results are late fusion.” (Fact-check Items 7 &amp; 11.)</p></div>
+      <div class="callout co-warn"><span class="k">BatchNorm in the projections needs batch &gt; 1</span><p><code>spatial_proj</code>/<code>freq_proj</code> use <code>BatchNorm1d</code>; at inference the demo batches all frames together, so it's fine — just know it's there.</p></div>
+      <div class="callout co-warn"><span class="k">Freq classifier bypassed</span><p>Inside the hybrid, only <code>FreqCNN.features</code> (512-d) is used; the standalone freq classifier head is not part of the hybrid.</p></div>
+      <div class="callout co-warn"><span class="k">“SE learns correlations” — don't overclaim</span><p>SE gating is <strong>channel reweighting conditioned on both domains</strong>, not full pairwise cross-attention / bilinear correlation. Say “adaptive channel weighting conditioned on the fused vector,” not “models the full spatial-frequency correlation.”</p></div>
+      <div class="callout co-warn"><span class="k">Effective batch varies by GPU</span><p>The canonical run auto-tunes batch size; BAB IV's “batch efektif 32” is the config baseline. If asked: “effective batch was GPU-dependent via auto-tuning; the config baseline is 32.”</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section id="demo">
+  <div class="wrap">
+    <div class="prose">
+      <div class="sec-head"><span class="sec-num">§7</span><h2>The demo — hybrid-specific things a reviewer can point at live</h2></div>
+      <hr class="sec-rule">
+      <p class="lead-p">Pair with <code>sidang_study_guide_DEMO_debug.md</code>. This is <strong>only</strong> the hybrid angles. The demo runs all three models side-by-side so the comparison is self-evident — your model is the <em>proposal</em>, and it's supposed to sit at or below spatial.</p>
+
+      <h3 style="margin:26px 0 12px">What is <em>yours</em> on screen</h3>
+      <ul>
+        <li>The <strong>hybrid verdict card</strong> — fake-probability bar with a tick at threshold <strong>0.229</strong>. In <code>inference.predict_video</code> the hybrid path is <code>model(rgb_batch, fft_batch)</code> (consumes <strong>both</strong> inputs), then <code>sigmoid(logits).mean()</code> over frames.</li>
+        <li>The comparison itself is the point: <strong>hybrid tracking close to but not above spatial is the thesis made visible</strong> — not a bug.</li>
+      </ul>
+
+      <h3 style="margin:30px 0 12px">Hybrid-specific failure modes</h3>
+      <div class="scroll">
+        <table class="datatable" style="min-width:640px">
+          <thead><tr><th>Symptom</th><th>Cause</th><th>What to say</th></tr></thead>
+          <tbody>
+            <tr><td class="rowlabel">Hybrid agrees-but-underperforms or loses to spatial</td><td style="font-family:var(--sans)">the finding — freq input is near-noise, SE can't fully suppress it</td><td style="font-family:var(--sans)">“Expected and central to the thesis: the proposed hybrid does not beat the spatial baseline. A measured comparative result.”</td></tr>
+            <tr><td class="rowlabel">Card shows “⚠︎ FFT calibration estimated”</td><td style="font-family:var(--sans)"><code>fft_stats.json</code> missing → fallback mean 5.0/std 3.0 (<code>inference.py:123-133</code>)</td><td style="font-family:var(--sans)">Hybrid <strong>depends on FFT stats</strong> (it has a freq branch). Copy <code>outputs/fft_cache/FFPP/fft_stats.json</code> → <code>checkpoints/</code>. Spatial is unaffected.</td></tr>
+            <tr><td class="rowlabel"><code>RuntimeError: size mismatch</code> loading <code>hybrid.pt</code></td><td style="font-family:var(--sans)">built arch ≠ checkpoint (wrong <code>freq_depth</code>/<code>base_channels</code>)</td><td style="font-family:var(--sans)">The demo reads depth/base from the checkpoint's embedded config (<code>inference.py:65-66</code>, defaults 5/64). Copy the right run's <code>best.pt</code>.</td></tr>
+            <tr><td class="rowlabel">Hybrid disagrees with both on an OOD clip</td><td style="font-family:var(--sans)">out-of-distribution + a noisy freq branch</td><td style="font-family:var(--sans)">“Models are trained on FFPP crops; other sources are OOD, and the freq branch adds noise — that's the fusion cost we report.”</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:30px 0 12px">Reviewer: “change X and show me” — hybrid edit points</h3>
+      <ul>
+        <li><strong>“Run just the hybrid”</strong> → keep only the <code>("hybrid", …)</code> row in <code>inference.py</code> <code>MODELS_SPEC</code>.</li>
+        <li><strong>“Use 0.5 threshold instead of 0.229”</strong> → delete/rename <code>hybrid_threshold.json</code>; it falls back to 0.5 (<code>inference.py:118-119</code>). Good moment to explain Youden's J.</li>
+        <li><strong>Anything touching FFT preprocessing</strong> (fps, crop, high-pass) affects the hybrid's freq branch → <span class="caution">it will no longer match the training distribution, so the numbers stop being comparable to the thesis.</span></li>
+      </ul>
+
+      <div class="callout co-frame" style="margin-top:26px">
+        <span class="k">The one sentence for the demo</span>
+        <p>“Watch the hybrid sit right at or just under the spatial card on every clip — that side-by-side <em>is</em> our result: a well-engineered fusion can't turn a near-random frequency input into an improvement, so the honest answer to ‘does FFT help?’ is no under these conditions.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap prose">
+    <div class="kicker">Companion guides</div>
+    <div class="companions">
+      <span class="comp">SPATIAL branch</span>
+      <span class="comp">FREQUENCY branch</span>
+      <span class="comp cur">◆ HYBRID branch</span>
+      <span class="comp">DEMO debug</span>
+    </div>
+    <p class="foot-meta">Sidang study guide · HybridTwoBranch late fusion · deepfake_hybrid · values from the results run</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- hero gate band: fused feature dims, spatial kept / freq suppressed ---- */
+  var cv = document.getElementById('gateband');
+  if(cv){
+    var ctx=cv.getContext('2d'), W,H, bars=96, split=Math.floor(bars*0.55), base=[];
+    for(var i=0;i<bars;i++){
+      if(i<split){ base.push(0.62 + (Math.sin(i*1.3)*0.5+0.5)*0.32); }   // spatial dims: high gates
+      else { base.push(0.14 + (Math.sin(i*2.1)*0.5+0.5)*0.16); }          // freq dims: suppressed
+    }
+    function size(){ W=cv.width=cv.clientWidth*devicePixelRatio; H=cv.height=180*devicePixelRatio; }
+    function draw(t){
+      ctx.clearRect(0,0,W,H);
+      var bw=W/bars;
+      for(var i=0;i<bars;i++){
+        var jit = reduce?0:(Math.sin(t*0.0015+i*0.7)*0.5+0.5)*0.05;
+        var v = Math.min(1, base[i]+jit), h=v*H*0.92;
+        var spatial = i<split;
+        var r=spatial?87:255, g=spatial?166:145, b=spatial?255:66;
+        var grad=ctx.createLinearGradient(0,H,0,H-h);
+        grad.addColorStop(0,'rgba('+r+','+g+','+b+',0.85)');
+        grad.addColorStop(1,'rgba('+r+','+g+','+b+',0.12)');
+        ctx.fillStyle=grad;
+        ctx.fillRect(i*bw+bw*0.2, H-h, bw*0.6, h);
+      }
+    }
+    size(); draw(0);
+    window.addEventListener('resize', function(){ size(); draw(performance.now()); });
+    if(!reduce){ (function loop(t){ draw(t); requestAnimationFrame(loop); })(0); }
+  }
+
+  /* ---- SE gate figure (static bars) ---- */
+  var fig=document.getElementById('gatebars');
+  if(fig){
+    var n=44, sp=Math.floor(n*0.55), html='';
+    for(var i=0;i<n;i++){
+      var spatial=i<sp;
+      var h = spatial ? (72 + (i*37%22)) : (18 + (i*29%14));   // deterministic pseudo-heights, %
+      var hp = Math.min(96, h);
+      var col = spatial ? 'var(--spatial)' : 'var(--freq)';
+      html += '<i style="height:'+hp+'%;background:linear-gradient(180deg,'+col+',rgba(0,0,0,0))"></i>';
+    }
+    fig.innerHTML=html;
+  }
+
+  /* ---- Q&A reveal-all ---- */
+  var btn=document.getElementById('toggleAll');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded')==='true';
+      document.querySelectorAll('details.qa').forEach(function(d){ d.open=!open; });
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.textContent = open ? 'Reveal all' : 'Hide all';
+    });
+  }
+})();
+</script>
