@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Arsitektur FreqCNN" id="freqcnn38">
+    <mxGraphModel dx="4275" dy="1223" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2100" pageHeight="320" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;strokeColor=none;fillColor=none;fontColor=#1C1C1A;fontSize=17;fontStyle=1;" value="Arsitektur FreqCNN (depth = 5, base_channels = 64, ~4,2 juta parameter)" vertex="1">
+          <mxGeometry height="26" width="1200" x="-110" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gl-bb" parent="1" style="text;html=1;align=left;strokeColor=none;fillColor=none;fontColor=#E24A38;fontSize=10;fontStyle=1;" value="Backbone (Feature Extractor) — cabang frekuensi" vertex="1">
+          <mxGeometry height="18" width="360" x="192" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="gl-hd" parent="1" style="text;html=1;align=left;strokeColor=none;fillColor=none;fontColor=#555555;fontSize=10;fontStyle=1;" value="Classifier Head" vertex="1">
+          <mxGeometry height="18" width="80" x="942" y="292" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="i0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="i1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="i2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="i3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="i4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="i5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="i6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="i7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="i8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="i9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="i10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="i11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i0" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;size=0.14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FFT Input&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;(1, 224, 224)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="20" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FreqBlock 1&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;1→64 · 112×112&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="192" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FreqBlock 2&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;64→128 · 56×56&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="362" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FreqBlock 3&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;128→256 · 28×28&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="532" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FreqBlock 4&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;256→512 · 14×14&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="702" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FreqBlock 5&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;512→512 · 7×7&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="872" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="i6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Dropout2d&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;p = 0,2&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="872" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="i7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="GAP&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;512 → 1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="702" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="i8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="FC + ReLU&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;512 → 256&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="532" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="i9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Dropout&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;p = 0,3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="362" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="i10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="FC&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;256 → 1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="192" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="i11" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;size=0.14;strokeWidth=2;fillColor=#EAF3EC;strokeColor=#27AE60;" value="Logit&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;skor (1-d)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="150" x="20" y="210" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

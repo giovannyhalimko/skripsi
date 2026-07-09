@@ -1,0 +1,168 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Alur Preprocessing" id="flow34compact">
+    <mxGraphModel dx="2530" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e-s-d" edge="1" parent="1" source="START" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="dataset">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-d-e" edge="1" parent="1" source="dataset" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="ekstraksi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-e-de" edge="1" parent="1" source="ekstraksi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="deteksi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-de-p" edge="1" parent="1" source="deteksi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="pembagian">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="START" parent="1" style="shape=mxgraph.flowchart.terminator;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#EAE7DF;" value="START" vertex="1">
+          <mxGeometry height="40" width="70" x="10" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dataset" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;size=0.12;strokeWidth=2;" value="Dataset Video&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;FFPP (c23) &amp;amp; Celeb-DF v2&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="180" x="110" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekstraksi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Ekstraksi Frame&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;5 FPS · maks 50 frame/video&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="180" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="deteksi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Deteksi Wajah &amp;amp; Crop&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;MTCNN · margin 0,3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="180" x="530" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-14" edge="1" parent="1" source="pembagian" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2E86C1;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="sp1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="70" />
+              <mxPoint x="960" y="132" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-16" edge="1" parent="1" source="pembagian" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="fr1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="50" />
+              <mxPoint x="990" y="50" />
+              <mxPoint x="990" y="194" />
+            </Array>
+            <mxPoint x="940" y="194" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pembagian" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Pembagian Dataset&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;Train 70% / Val 15% / Test 15% · per-video&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="200" x="740" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-sp" parent="1" style="text;html=1;align=left;strokeColor=none;fillColor=none;fontColor=#2E86C1;fontSize=10;fontStyle=1;" value="CABANG SPASIAL · RGB" vertex="1">
+          <mxGeometry height="18" width="120" x="805" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-fr" parent="1" style="text;html=1;align=left;strokeColor=none;fillColor=none;fontColor=#E24A38;fontSize=10;fontStyle=1;" value="CABANG FREKUENSI · FFT" vertex="1">
+          <mxGeometry height="18" width="140" x="795" y="216" as="geometry" />
+        </mxCell>
+        <mxCell id="e-sp1-2" edge="1" parent="1" source="sp1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#2E86C1;" target="sp2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-sp2-3" edge="1" parent="1" source="sp2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#2E86C1;" target="sp3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sp1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#EAF1F8;strokeColor=#2E86C1;" value="Resize 224×224" vertex="1">
+          <mxGeometry height="44" width="180" x="750" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sp2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#EAF1F8;strokeColor=#2E86C1;" value="Normalisasi ImageNet&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;tetap 3-kanal warna&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="190" x="525" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-25" edge="1" parent="1" source="sp3" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E86C1;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="train">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="120" />
+              <mxPoint x="220" y="120" />
+            </Array>
+            <mxPoint x="240" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sp3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#EAF1F8;strokeColor=#2E86C1;" value="Augmentasi (pelatihan)&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;ColorJitter · RRC · HFlip · RandErasing&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="240" x="260" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fr1-2" edge="1" parent="1" source="fr1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#E24A38;" target="fr2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fr5-6" edge="1" parent="1" source="fr5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#E24A38;" target="fr6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fr1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Konversi Grayscale&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;Y=0,299R+0,587G+0,114B&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="180" x="750" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-12" edge="1" parent="1" source="fr4" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="fr5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fr5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Log Scaling&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;log(1 + |F(u,v)|)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="160" x="545" y="234" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-17" edge="1" parent="1" source="fr6" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="fr7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fr6" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;size=0.12;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Cache .npy + Z-Score&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;μ,σ per-dataset&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="150" x="550" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-19" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="332" />
+              <mxPoint x="240" y="140" />
+            </Array>
+            <mxPoint x="335" y="332.006993006993" as="sourcePoint" />
+            <mxPoint x="210" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fr7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Augmentasi (pelatihan)&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;Noise σ=0,05 · Spectral band mask&lt;/div&gt;" vertex="1">
+          <mxGeometry height="48" width="150" x="335" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="e-t-v" edge="1" parent="1" source="train" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="validasi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-v-ev" edge="1" parent="1" source="validasi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="evaluasi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ev-tb" edge="1" parent="1" source="evaluasi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="tabel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-tb-end" edge="1" parent="1" source="tabel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;" target="END">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="train" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Pelatihan Model&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;Spasial / Freq / Hybrid · Hybrid = late fusion&lt;/div&gt;" vertex="1">
+          <mxGeometry height="46" width="230" x="-20" y="109" as="geometry" />
+        </mxCell>
+        <mxCell id="validasi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Validasi → Checkpoint Terbaik&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;seleksi &amp;amp; early stopping by AUC&lt;/div&gt;" vertex="1">
+          <mxGeometry height="46" width="220" x="-15" y="179" as="geometry" />
+        </mxCell>
+        <mxCell id="evaluasi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Evaluasi (In &amp;amp; Cross-dataset)&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;acc, precision, recall, F1, AUC&lt;/div&gt;" vertex="1">
+          <mxGeometry height="46" width="200" x="-5" y="254" as="geometry" />
+        </mxCell>
+        <mxCell id="tabel" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;size=0.12;strokeWidth=2;" value="Tabel Hasil → Analisis" vertex="1">
+          <mxGeometry height="46" width="170" x="10" y="329" as="geometry" />
+        </mxCell>
+        <mxCell id="END" parent="1" style="shape=mxgraph.flowchart.terminator;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#EAE7DF;" value="END" vertex="1">
+          <mxGeometry height="40" width="70" x="60" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-11" edge="1" parent="1" source="fr2" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="fr3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fr2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Resize 224×224" vertex="1">
+          <mxGeometry height="44" width="150" x="545" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="1zn-AfiBOIqXhKHVwGON-23" edge="1" parent="1" source="fr3" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#E24A38;strokeWidth=1.5;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="fr4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="285" y="194" />
+              <mxPoint x="285" y="256" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fr3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="FFT 2D + FFTShift&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;np.fft.fft2 → fftshift&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="325" y="174" as="geometry" />
+        </mxCell>
+        <mxCell id="fr4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#FCECEA;strokeColor=#E24A38;" value="Magnitude &amp;amp; High-Pass&lt;div style=&#39;font-size:9px;color:#555&#39;&gt;|F(u,v)| × Gaussian HPF (β=0,15)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="210" x="305" y="234" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

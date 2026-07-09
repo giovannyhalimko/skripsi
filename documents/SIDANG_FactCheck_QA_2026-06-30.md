@@ -35,6 +35,22 @@
 22. [✅ Gradient Clipping (norma L2, rumus 2.29) — COCOK dgn kode (max_norm=5,0); tapi sitasi KOSONG](#item-22)
 23. [🔴 Daftar metrik evaluasi HILANG AUC — padahal AUC metrik UTAMA (seleksi model + early stopping)](#item-23)
 24. [❓ "Kenapa komparatif? Ada paper yang menyarankan?" — jawaban + sitasi](#item-24)
+25. [❓ "Kenapa nilai learning rate sekian? Ada paper? Kenapa tidak HP-tuning?" — jawaban](#item-25)
+26. [❓ "SE gate malah menyeret turun hybrid — bagaimana kalau SE gate dihapus?" — koreksi premis + data + ablation](#item-26)
+27. [🔴 "Dua metode utama ... terbukti unggul" + "sebagian besar penelitian memisahkan" — tanpa sitasi & kontradiktif](#item-27)
+28. [🔴 EfficientNet dibandingkan 5× (+ angka Tabel 2.8) tapi TANPA sitasi & tak ada di Daftar Pustaka; klaim perbandingan tak terdukung](#item-28)
+29. [🔴 Kalimat penutup "kombinasi FFT+Xception menghasilkan sistem lebih tangguh..." terasa GARANSI — padahal studi komparatif dgn hasil negatif](#item-29)
+30. [🟡 §2.18.3 ~75% RECAP dari §2.18.1 + §2.18.2 (FFT & spatial diulang) — rewrite jadi seksi perbandingan yang lean](#item-30)
+31. [🔴 Diagram BAB III (media_v2): gambar 3.4 flowchart salah (recreated), 3.8 FreqCNN & 3.9 Hybrid pakai config lama (base=32/256-d)](#item-31)
+32. [🔴/✅ §3.3.1 Ekstraksi Frame: naming/label/manifest BENAR; "paralel" & "FFPP n=1000 ~50.000" SALAH (sekuensial di face-crop; n max=750)](#item-32)
+33. [✅ Face cropping menaikkan performa spasial di FFPP — ADA referensi: Rössler et al. (2019), Tabel 1 (74,78%→95,73% c23)](#item-33)
+34. [✅ Classifier head hybrid (Dropout 0,5 → Linear 512→128 → ReLU → Dropout 0,5 → Linear 128→1) — COCOK kode; catatan "moderat" untuk p=0,5 debatable](#item-34)
+35. [🔴 "Desain 3 varian menjawab RM1/2 yaitu membangun detektor lebih akurat..." (docx 1397) — MISLEADING: salah nyatakan RM (sisa judul lama "Peningkatan") + bertabrakan dgn temuan negatif](#item-35)
+36. [✅ Transfer learning + backbone freezing 3 epoch → unfreeze epoch 4 — COCOK kode; minor: "requires_grad(True)" itu set atribut bukan pemanggilan, "catastrophic forgetting" longgar](#item-36)
+37. [🟡 Loss (BCE + pos_weight + label smoothing): konten BENAR & pos_weight betul dipakai, TAPI BAB III mengulang verbatim BAB II 2.31/2.32 + kontradiksi "telah diuraikan"](#item-37)
+38. [✅ §3.5.2-3.5.8 (diff LR, LR schedule, AdamW, accum, clip, AMP, early stop) — SEMUA BENAR cocok kode](#item-38)
+39. [🔴 §3.6 vs §3.6.1 repetitif (paragraf faktorial identik) + Tabel 3.12: "Ukuran sampel CDF" salah (berlaku kedua dataset) + total run/eval kosong (72/144)](#item-39)
+40. [🟡 Paragraf Δ generalization drop (docx 1616) repetitif dgn BAB I/II — motivasi cross-dataset & interpretasi Δ diulang; pola berulang BAB III re-motivasi+re-derive](#item-40)
 
 ---
 
@@ -53,6 +69,81 @@
 - [Item 11](#item-11) #8 — **line 812**: masih "...menambahkan informasi Frekuensi ... sebagai **channel 4**...".
 - [Item 21](#item-21)-3 / [Item 11](#item-11) #5 — **Tabel 2.4** di .docx belum diganti dgn versi baru (`table/tabel_2_4_tahapan_preprocessing.html`).
 - [Item 19](#item-19) — sitasi Celeb-DF **line 703** masih "[18]" (harusnya Li et al.).
+
+---
+
+## 🔬 AUDIT BAB II MENYELURUH terhadap WORD terbaru (2026-07-03) — 2213 paragraf
+
+Cek per-item ke `.docx` saat ini. Ringkas: **mayoritas item BAB II SUDAH kamu perbaiki** (rewrite §2.9/§2.13/§2.15/§2.17/§2.18 sudah ditempel; EfficientNet dihapus total). Sisa yang perlu diubah relatif sedikit.
+
+### ✅ Sudah memadai (terverifikasi di .docx sekarang)
+| Item | Bukti fix |
+|---|---|
+| 10 (Xception unggul DFDC/CDF) | "DFDC" hilang total (0 hit) |
+| 12 (cross-spatial) | jadi "cross-channel" |
+| 13 (pembuka DSC repetitif) | pembuka lama hilang |
+| 15 (kompresi c23/c40) | line 658-661: RAW/HQ(c23,CRF23)/LQ(c40,CRF40) + "pakai HQ (c23)" ✅ |
+| 16 (butir temporal artefak) | hilang |
+| 17 (artefak spasial/freq 3×) | line 675: jadi pemetaan **per-teknik** (Deepfakes/Face2Face/...) ✅ |
+| 18 (GAN dan non-GAN) | frasa hilang |
+| 20+21 (preprocessing) | line 725-740: **bercabang** RGB/FFT, grayscale, high-pass, z-score ✅ |
+| 27 (dua metode + gap) | line 956: gap direframe + sebut SpecXNet/FSBI/FDM ✅ |
+| 28 (EfficientNet) | **dihapus total** dari prosa & Tabel 2.8; MesoNet dikoreksi ke **83,10%**; ResNet-50 dibuang dari tabel ✅ |
+| 29 (kalimat garansi) | line 985+: direframe jadi "berpotensi/dilaporkan/menguji" ✅ |
+| 30 (§2.18.3 recap) | direwrite jadi **lean** (rujuk 2.18.1/2.18.2 + Tabel 2.9) ✅ |
+
+### 🔴 Masih perlu diubah
+1. **[Item 23](#item-23) — BELUM.** line 856 masih: "metrik ... meliputi _Confusion Matrix, Accuracy, Precision, Recall, dan F1-Score_. **Seluruh metrik dihitung berdasarkan hasil prediksi ...**" → **AUC masih hilang dari daftar** (padahal §2.16 nanti + BAB III/IV menyebut AUC metrik utama, line 894). Tambahkan AUC + kaveat "AUC dari skor probabilitas". **Ini yang paling penting tersisa di BAB II.**
+2. **[Item 11](#item-11) #8 — BELUM.** line 812 masih "...menambahkan informasi Frekuensi ... sebagai **channel 4**..." (early fusion di prosa BAB II). Ganti ke cabang FreqCNN terpisah + late fusion.
+3. **Tabel 2.8 — parameter MesoNet "4M" salah** → MesoNet/MesoInception-4 ~**28 ribu** parameter (~0,03M), bukan 4M. Juga caption "[3, 4, 13, 7]": angka FF++ sebenarnya dari **[4] Afchar & [7] Rössler** saja ([3] Haq = Celeb-DF, [13] SpecXNet tak menguji ini) → rapikan jadi [4, 7].
+
+### 🟡 Typo pada rewrite yang sudah ditempel (kecil)
+- line 597: "mekanisme **ynag** berbeda" → "**yang**".
+- line 956: "**sebagai besar** dioptimalkan" → "**sebagian besar**".
+
+### 🟢 Boleh dibiarkan / opsional
+- [Item 5](#item-5) (framing fase Oppenheim) — pelunakan bersifat opsional; boleh tetap.
+- [Item 6](#item-6) (§2.7 line 418 "digabungkan (concatenated) ... tanpa saling mengganggu") — deskripsi **konsep umum** late fusion di landasan teori; dapat diterima. Instansiasi spesifik sudah benar di line 597.
+- [Item 19](#item-19) (Celeb-DF [18]) — di Daftar Pustaka sekarang FDM (Luo&Wang) lalu Li (Celeb-DF) berurutan; in-text FDM=[17], Celeb-DF=[18] → **tampak konsisten**. Tetap **refresh field (Ctrl+A→F9)** lalu spot-check bahwa [18] me-resolve ke Li et al.
+
+### Kesimpulan
+BAB II **sudah cukup memadai** — tinggal **3 perubahan wajib** (AUC di daftar metrik [Item 23]; "channel 4" line 812; parameter MesoNet 4M→~28K di Tabel 2.8) + **2 typo** (line 597, 956), lalu **refresh field sitasi** sekali untuk mengunci penomoran.
+
+> ✅ **Ready copy-paste untuk semua sisa fix di atas:** **`documents/REVISI_BAB_II_FIX_Sisa_Audit_2026-07-03.md`** (find/replace per lokasi + checklist).
+
+---
+
+## 🔬🔬 CEK ULANG THOROUGH — ROUND 2 (2026-07-03, 2213 paragraf)
+
+**6 fix audit: SEMUA sudah diterapkan ✅** (AUC masuk daftar metrik line 856; "channel 4" hilang; MesoNet param "~0,03 juta"; typo "ynag"/"sebagai besar" hilang).
+
+**Diverifikasi BENAR (tidak perlu diubah):**
+- **Rumus metrik §2.16** — contoh TP=180/FP=20/TN=160/FN=40 → Accuracy 85%, **Precision 90% = TP/(TP+FP)**, **Recall 81,8% = TP/(TP+FN)**, F1 85,7%. Semua **konsisten & benar** (rumus recall sudah benar). ✅
+- **Rumus SE §2.8** — squeeze 512→128, excitation 128→512 sigmoid, scale, classifier Dropout(0,5)→Linear(512→128)→ReLU → **cocok dengan kode**. ✅
+
+### 🔴 Temuan BARU yang masih perlu diubah
+1. **Line 286 (intro §2.1) — "ResNet-50 ... akurasi di atas 90% pada FaceForensics++ [3, 5]" TAK TERDUKUNG.** Ini kembaran temuan [Item 28](#item-28) tapi di **intro** (belum tersentuh saat fix Tabel 2.8). Haq [3] = **Celeb-DF (79%)**, He [5] = ImageNet. Tak ada sumber ResNet-50 >90% di FF++.
+   **Ganti:** "ResNet-50 memperkenalkan _residual learning_ untuk merepresentasikan fitur spasial yang lebih dalam (He et al., 2015), namun performanya pada deteksi deepfake dilaporkan lebih rendah dibanding XceptionNet dan menurun pada pengujian lintas dataset (Haq, 2021)."
+   - Bonus di kalimat sama: "99,26% ... [6, 7]" — [6] Chollet = ImageNet (tak melaporkan angka FF++); cukup **(Rössler et al., 2019)**.
+
+### 🟡 Temuan BARU kecil
+2. **Line 462 — typo "Lao et al." → "Luo dan Wang"** (Frequency-Domain Masking, [17]). Di tempat lain (line 381/419/524) sudah benar "Luo dan Wang".
+3. **Line 462 — sitasi menggantung setelah titik**: "...citra sintetis. **[11]**" dan "...antar-dataset. **[16]**" → pindahkan [11] & [16] ke **sebelum** titik (tempat lain, mis. line 380/381/496, sudah benar). Juga verba "membuktikan" → "menunjukkan" (lebih hati-hati).
+4. **Statistik "96% ... pornografi non-konsensual [2]" muncul 2×** (line 285 intro bab & line 348 §2.1.1) — redundansi kecil; pertimbangkan sebut sekali (mis. hanya di §2.1.1) agar tidak berulang.
+
+### Kesimpulan Round 2
+BAB II **solid**. Rumus & angka metrik benar, SE benar, 6 fix terpasang. Sisa **1 wajib** (line 286 ResNet) + **3 kecil** (Lao→Luo, sitasi menggantung line 462, redundansi 96%). Setelah ini + refresh field, BAB II tuntas.
+
+### ✅ VERIFIKASI FINAL (2026-07-03) — semua fix Round 2 SUDAH diterapkan
+- **FIX 7** (line 286 ResNet >90% FFPP) → ✅ diganti: "...residual learning ... [5], namun performanya pada deteksi deepfake dilaporkan lebih rendah dibanding XceptionNet dan menurun lintas dataset [3]".
+- **FIX 8** ("Lao et al." → "Luo dan Wang") → ✅.
+- **FIX 9** (sitasi [11]/[16] dipindah ke sebelum titik) → ✅.
+- **FIX 10** (statistik "96%" dari 2× → 1×) → ✅.
+- 6 fix Round 1 tetap terpasang (AUC di metrik ✅, "channel 4" hilang ✅, EfficientNet hilang ✅).
+
+**Sisa ultra-minor (opsional, tidak menghalangi):** line 286 "99,26% ... [6, 7]" — [6] Chollet = ImageNet, boleh di-drop jadi [7] saja; "membuktikan" → "menunjukkan" (line 462). Plus satu langkah mekanis: **Ctrl+A→F9** refresh field + spot-check sitasi Celeb-DF.
+
+**STATUS BAB II: TUNTAS.** Semua temuan Item 1-30 + audit Round 1 & 2 sudah terselesaikan (atau opsional/dapat-diterima).
 
 ---
 
@@ -1056,3 +1147,563 @@ Menambahkan AUC di sini sekaligus **menyelaraskan** intro §2.16 dengan §2.16.6
 
 ### Kalau ditekan "berarti tidak ada kontribusi baru?"
 > "Kontribusi kami adalah **verifikasi terkontrol** atas klaim yang belum terbukti, plus temuan bahwa kontribusi frekuensi **terbatas** pada kondisi terkompresi/face-crop — temuan yang justru mengoreksi optimisme literatur dan mengarahkan penelitian lanjutan (fasa/SPSL, FFT citra penuh). Studi komparatif yang jujur dan terkontrol adalah bentuk kontribusi ilmiah yang sah."
+
+---
+
+<a name="item-25"></a>
+
+## Item 25 — Pertanyaan penguji: "Kenapa nilai learning rate sekian-sekian? Ada paper? Kenapa tidak hyperparameter fine-tuning kalau resource terbatas?"
+
+**Verdict: ❓ Antisipatif. Nilai LR = resep transfer-learning yang PRINSIPIL (bukan asal), metodenya punya sitasi, dan TIDAK men-tuning HP justru pilihan tepat untuk studi komparatif + realistis untuk resource.**
+
+### Nilai LR aktual (kode `train.py:189-221`, `config.yaml`)
+| Kelompok parameter | LR | Rasio | Alasan |
+|---|---|---|---|
+| _Head_ / fusion (lapisan baru) | **2e-4** | 1× (base) | dilatih dari nol → perlu belajar cepat |
+| _Backbone_ XceptionNet (pretrained) | **2e-5** | **÷10** | _fine-tuning_ lembut agar fitur ImageNet tak rusak |
+| Cabang FreqCNN (hybrid) | **5e-5** | **×0,25** | init acak tapi dibatasi agar tak mendominasi gradien awal |
+| Optimizer | **AdamW**, wd **1e-4** | — | cocok utk skala gradien berbeda antar cabang |
+| Jadwal | _warmup_ 3 epoch → _cosine decay_ (eta_min 1e-6) | — | cegah instabilitas awal (mis. saat unfreeze epoch 4) |
+
+### Q1 — Kenapa nilai itu? (prinsipil, bukan asal)
+Ini **discriminative / differential learning rate** untuk transfer learning: lapisan baru cepat, backbone pretrained pelan (÷10), cabang frekuensi menengah (×0,25). Semua **diturunkan dari peran tiap komponen**, bukan angka ajaib. Nilai _base_ **2e-4** dengan AdamW adalah **default yang lazim & teruji** untuk _fine-tuning_ CNN; _warmup→cosine_ adalah jadwal standar modern.
+
+### Q2 — Ada paper? YA untuk metodenya
+- **Optimizer:** **(Kingma & Ba, 2015)** Adam — sudah dikutip [44]; **(Loshchilov & Hutter, 2019)** AdamW _decoupled weight decay_ — sudah dikutip [45]. ✅ ada di Daftar Pustaka.
+- **Differential/discriminative LR** (backbone LR lebih rendah): prinsip dari **(Howard & Ruder, 2018)** ULMFiT — _discriminative fine-tuning_. **Belum** di Daftar Pustaka; bisa ditambah bila mau sitasi eksplisit di §3.5.2.
+- **_Warmup_ + _cosine annealing_:** _cosine_ dari **(Loshchilov & Hutter, 2017)** SGDR; _warmup_ dari **(Goyal et al., 2017)**. **Belum** di Daftar Pustaka; opsional ditambah di §3.5.3.
+- **Nilai spesifik 2e-4** = _default_ konvensional, bukan dari satu paper. Jujur saja: konvensi tidak wajib disitasi angka-per-angka; yang disitasi adalah **metode**-nya (Adam/AdamW, differential LR, cosine).
+
+### Q3 — Kenapa tidak HP-tuning? (INI kuncinya — 2 argumen saling menguatkan)
+**(a) Metodologis (paling kuat):** Ini **studi komparatif** ([Item 24](#item-24)). Tujuannya membandingkan arsitektur pada **kondisi identik**. Kalau tiap model di-tuning terpisah, muncul **confound** — perbedaan bisa jadi karena **usaha tuning**, bukan arsitektur. Memakai **hyperparameter baku yang sama** untuk ketiga model menjaga perbandingan **adil & terkontrol**. Jadi HP tetap = **pilihan desain untuk validitas internal**, bukan sekadar alasan resource.
+
+**(b) Praktis (resource):** Matriks eksperimen sudah besar: **3 model × 2 dataset × 4 ukuran sampel × 3 seed = 72 run**. Grid search sederhana (mis. 3 LR × 3 WD = 9 konfig) akan mengalikannya ~9× → ratusan run, **tidak feasible di Colab**.
+
+**(c) Mitigasi (mengurangi kebutuhan tuning):** kami pakai default prinsipil + **early stopping pada val AUC** (adaptif, kurangi sensitivitas terhadap LR/epoch) + _warmup_ + differential LR. HP-tuning per-model dinyatakan sebagai **future work**.
+
+### Jawaban siap-ucap
+> "Nilai learning rate kami bukan asal: ini resep _transfer learning_ berjenjang — lapisan baru 2×10⁻⁴, backbone pretrained sepuluh kali lebih rendah agar fitur ImageNet tidak rusak, dan cabang frekuensi di antaranya. Metodenya berdasar paper: Adam (Kingma & Ba, 2015) dan AdamW (Loshchilov & Hutter, 2019) yang sudah kami kutip, plus prinsip _discriminative fine-tuning_ (Howard & Ruder, 2018) dan _cosine schedule_ (Loshchilov & Hutter, 2017). Soal kenapa tidak _hyperparameter tuning_: karena ini **studi komparatif**, justru kami sengaja memakai hyperparameter baku **yang sama** untuk ketiga model supaya perbandingannya **adil** — kalau tiap model di-tuning terpisah, perbedaan hasilnya bisa disebabkan usaha tuning, bukan arsitektur. Selain itu matriks 72 run kami sudah di batas resource Colab. Kami mitigasi dengan _early stopping_ berbasis AUC, dan _tuning_ per-model kami catat sebagai penelitian lanjutan."
+
+### Antisipasi lanjutan: "Mungkin cabang frekuensi lemah karena LR-nya tak di-tuning?"
+> "Cabang frekuensi sudah kami beri LR khusus (5×10⁻⁵) agar tidak tertekan. Lemahnya lebih dijelaskan oleh **representasi magnitudo-saja** dan **hilangnya sidik jari spektral akibat kompresi/face-crop** ([Item 5](#item-5), [Item 8](#item-8)), bukan LR. Tuning khusus cabang frekuensi memang arah future work."
+
+---
+
+<a name="item-26"></a>
+
+## Item 26 — "SE gate seharusnya membantu, tapi malah menyeret turun hybrid — bagaimana kalau SE gate dihapus?"
+
+**Verdict: ❓ Premis perlu DIKOREKSI (SE gate ≠ membuang low-freq). Data MEMBENARKAN bahwa hybrid < spatial (fusi menyeret turun). Tapi "hapus SE gate" BELUM tentu memperbaiki, dan kita BELUM punya ablasinya — ini eksperimen yang layak dijalankan.**
+
+### 1. Koreksi premis: SE gate TIDAK "membuang low frequency"
+Dua hal berbeda (jangan tertukar):
+- **Membuang/menekan low frequency** = tugas **_high-pass filter_** di preprocessing FFT ([Item 4](#item-4)) — langkah tetap, di ranah frekuensi.
+- **SE gate** = _channel attention_ **pada vektor fitur gabungan 512-d** (256 spasial + 256 frekuensi). Ia membobot ulang **dimensi fitur hasil belajar**, bukan pita frekuensi. Tujuannya: adaptif menonjolkan modalitas yang lebih berguna per-input. Jadi SE gate **tidak** beroperasi pada "low frequency".
+
+### 2. Data membenarkan "hybrid diseret turun" (in-dataset AUC, tier terpercaya)
+| Dataset | spatial | hybrid | freq | drag (hybrid−spatial) |
+|---|---|---|---|---|
+| CDF n250 | 0,914 | 0,787 | 0,500 | **−0,127** |
+| CDF n500 | 0,945 | 0,839 | 0,549 | **−0,106** |
+| FFPP n250 | 0,743 | 0,540 | 0,469 | **−0,203** |
+| FFPP n500 | 0,693 | 0,616 | 0,545 | **−0,077** |
+
+Konsisten **spatial > hybrid > freq**. Hybrid tertarik **ke bawah, ke arah cabang freq yang lemah** → fusi + SE gate **gagal melindungi** performa spasial.
+
+### 3. Kenapa SE gate gagal melindungi?
+- **SE gate itu SOFT** (`Sigmoid`, `x * gate(x)` — `hybrid_fusion.py:20,24`): bobot ∈ (0,1), **tak pernah 0**. Jadi ia bisa **meredam** tapi **tak bisa mematikan** dimensi freq → noise selalu bocor.
+- **Fitur freq selalu ter-konkatenasi** ke classifier (512-d), apa pun bobot gate-nya. Classifier dilatih di atas vektor gabungan → dimensi freq yang berisik menambah variansi dan bisa memicu **overfitting ke pola spektral semu**.
+- Jadi drag berasal dari **fakta bahwa cabang lemah ikut difusikan**, bukan khusus dari SE gate.
+
+### 4. "Kalau SE gate dihapus?" — jujur: BELUM diukur, dan kemungkinan TIDAK menyelesaikan
+- Matriks eksperimen kita = spatial / freq / hybrid. **Tidak ada** varian "hybrid tanpa SE gate", jadi **tidak ada angka** untuk dijawab pasti.
+- Penalaran: hapus SE gate → concat polos → classifier. Fitur freq **tetap** masuk classifier, jadi **drag kemungkinan tetap ada**. SE gate justru dirancang untuk **membantu** (meredam adaptif); menghapusnya tak otomatis memperbaiki. Efeknya bisa sedikit membaik (parameter lebih sedikit) atau memburuk (kehilangan peredaman) — **genuinely uncertain tanpa eksperimen**.
+- Yang benar-benar mengangkat hybrid ke level spasial bukan "hapus SE gate", melainkan **membuang/keras-gerbang cabang freq** atau memperkuat penekanannya.
+
+### 5. Ablation yang tepat untuk menjawabnya (layak dijalankan)
+- **(A) Hybrid TANPA SE gate** (concat → classifier langsung) → mengisolasi kontribusi SE gate. Jika hybrid-tanpa-SE ≈ hybrid → SE gate bukan biang; jika ≈ spatial → SE gate bagian masalah.
+- **(B) Hybrid dengan cabang freq di-nol-kan** → cek waras: seharusnya ≈ spatial (memastikan mesin fusi tak rusak).
+- **(C) Hard-gate / bobot cabang skalar yang dipelajari** → uji apakah penekanan lebih kuat memulihkan performa spasial.
+
+Hasil apa pun berguna: (A) membela desain SE **atau** menjadi temuan ("channel-attention lunak tak cukup menetralkan modalitas lemah pada late fusion").
+
+### Jawaban siap-ucap
+> "Perlu diluruskan dulu: SE gate tidak membuang frekuensi rendah — itu tugas _high-pass filter_ di preprocessing. SE gate adalah atensi kanal pada vektor fitur gabungan yang mestinya meredam modalitas yang kurang berguna. Data kami memang menunjukkan hybrid di bawah spasial, artinya SE gate **tidak berhasil sepenuhnya** meredam cabang frekuensi yang lemah — wajar, karena SE gate bersifat _soft_ (sigmoid, tak pernah nol) dan fitur frekuensi tetap terkonkatenasi. Menghapus SE gate belum tentu memperbaiki, karena akar masalahnya adalah **memfusikan cabang yang lemah**, bukan gerbangnya. Kami belum menjalankan ablasi tanpa-SE, dan itu justru **eksperimen ablation yang tepat** untuk memastikannya — kami catat sebagai kelanjutan."
+
+> 💡 **Ini eksperimen kecil & runnable.** Ablasi (A) hanya perlu satu flag untuk melewati `se_gate` di `HybridTwoBranch.forward`, lalu latih ulang hybrid. Bisa dibuatkan bila mau bukti empiris untuk sidang.
+
+---
+
+<a name="item-27"></a>
+
+## Item 27 — Dua paragraf "Pemilihan Metode" (§ sebelum "Pemilihan Transformasi FFT", docx line 953 & 955): klaim empiris & research-gap TANPA sitasi + kontradiktif
+
+**Verdict: 🔴 Instingmu benar dua-duanya. Paragraf 1: klaim "terbukti unggul secara empiris" tanpa sitasi DAN salah atribusi (cross-dataset ke XceptionNet). Paragraf 2: klaim "sebagian besar penelitian memisahkan" tanpa menyebut penelitian mana DAN bertentangan dengan BAB II sendiri.**
+
+### Paragraf 1 (line 953) — "dua metode utama ... telah terbukti unggul secara empiris ... akurasi, efisiensi, cross-dataset robustness"
+**Masalah:**
+1. **Tanpa sitasi** sama sekali, padahal klaimnya kuat ("terbukti unggul secara empiris dalam berbagai penelitian").
+2. **Salah atribusi cross-dataset ke XceptionNet.** XceptionNet unggul untuk **akurasi in-dataset + efisiensi**, tetapi **generalisasi lintas-dataset-nya JUSTRU LEMAH** — itu premis & temuan kalian sendiri (dan [Item 10](#item-10)). Menyebut XceptionNet "terbukti unggul dalam cross-dataset robustness" **menggerus tesis kalian sendiri**.
+3. **Cross-dataset FFT sebagai "sudah terbukti".** Ketahanan lintas-dataset domain frekuensi adalah **klaim/harapan** literatur — dan hasil kalian **justru membantahnya** (freq ≈ tebakan acak). Menyatakannya "telah terbukti unggul" bertentangan dengan hasil, sekaligus **melemahkan alasan penelitian** (kalau sudah terbukti, kenapa diteliti? → [Item 24](#item-24)).
+
+**Rewrite (dengan sitasi (Nama, Tahun), klaim didisentangle):**
+> "Dalam penelitian ini digunakan dua metode utama, yaitu FFT sebagai representasi domain frekuensi dan XceptionNet sebagai model ekstraksi fitur spasial. XceptionNet dipilih karena efisiensi _depthwise separable convolution_ (Chollet, 2017) dan performanya sebagai detektor domain spasial terbaik pada FaceForensics++ (Rössler et al., 2019), meskipun keunggulan ini umumnya bersifat _in-dataset_. FFT dipilih karena analisis domain frekuensi **dilaporkan** mampu menangkap artefak sintesis yang bersifat algoritmik dan lebih stabil lintas dataset (Durall et al., 2020; Zhang et al., 2019; Tan et al., 2024; Hasanaath et al., 2023). Perlu ditekankan bahwa klaim ketahanan lintas-dataset domain frekuensi inilah yang **justru diuji secara empiris** pada penelitian ini, bukan diasumsikan sebagai fakta yang sudah pasti."
+
+### Paragraf 2 (line 955) — "sebagian besar penelitian terdahulu masih MEMISAHKAN pendekatan spasial dan frekuensi ..."
+**Masalah:**
+1. **"Penelitian mana?"** — tak ada satu pun sitasi. Klaim research-gap wajib menyebut karya yang dimaksud.
+2. **Kontradiksi internal.** BAB II kalian sendiri (line 291) justru membahas metode **hybrid yang MENGGABUNGKAN** spasial+frekuensi: SpecXNet, FSBI, Frequency-Domain Masking. Jadi "sebagian besar masih memisahkan" **bertentangan** dengan related-work kalian. Gap yang benar (dan sudah kalian tulis di line 291): hybrid **sudah ada**, tetapi dioptimalkan untuk **in-dataset FFPP** dan **belum mengukur kontribusi domain frekuensi terhadap robustness lintas-dataset secara sistematis**.
+
+**Rewrite (gap yang akurat + sitasi):**
+> "Sejumlah penelitian terkini telah menggabungkan domain spasial dan frekuensi, misalnya SpecXNet (Alam et al., 2025), FSBI (Hasanaath et al., 2023), dan _Frequency-Domain Masking_ (Luo & Wang, 2025). Namun, pendekatan hybrid tersebut sebagian besar **dioptimalkan untuk performa in-dataset** pada FaceForensics++ dan **belum mengevaluasi secara sistematis seberapa besar kontribusi domain frekuensi terhadap ketahanan lintas-dataset** (Rana et al., 2022; Rao & Uehara, 2025). Penelitian ini mengisi celah tersebut dengan merancang model hybrid FFT–XceptionNet, sekaligus **mengukur kontribusi domain frekuensi melalui perbandingan terkontrol** antar model."
+
+### Sitasi yang dipakai (Nama, Tahun)
+(Chollet, 2017), (Rössler et al., 2019), (Durall et al., 2020), (Zhang et al., 2019), (Tan et al., 2024), (Hasanaath et al., 2023), (Alam et al., 2025), (Luo & Wang, 2025), (Rana et al., 2022), (Rao & Uehara, 2025) — semuanya sudah ada di Daftar Pustaka.
+
+### Kalau penguji menyorot
+> "Betul, dua paragraf ini akan kami lengkapi sitasinya dan luruskan. Keunggulan XceptionNet yang terbukti adalah **in-dataset dan efisiensi**, bukan generalisasi lintas-dataset; sedangkan ketahanan lintas-dataset domain frekuensi adalah **klaim literatur yang justru kami uji**. Untuk klaim research-gap, kami akan menyebut karya spesifik (SpecXNet, FSBI, Frequency-Domain Masking) dan memperbaiki gap-nya menjadi 'hybrid sudah ada tetapi belum mengukur kontribusi frekuensi lintas-dataset', konsisten dengan related-work di BAB II."
+
+---
+
+<a name="item-28"></a>
+
+## Item 28 — EfficientNet dibandingkan berulang kali tanpa sitasi & tanpa entri Daftar Pustaka (§2.18 "Pemilihan Arsitektur XceptionNet")
+
+**Verdict: 🔴 Instingmu benar. EfficientNet dipakai sebagai pembanding **5×** (termasuk sub-judul & baris Tabel 2.8 dengan angka spesifik), tetapi **tidak ada satu pun sitasi** dan **tidak ada di Daftar Pustaka**. Lebih jauh: **tidak ada studi yang dikutip yang benar-benar membandingkan XceptionNet vs EfficientNet** pada deteksi deepfake — jadi klaim perbandingannya tak terdukung.**
+
+### Di mana EfficientNet muncul (semua tanpa referensi EfficientNet)
+| Lokasi | Kutipan | Sitasi tertera | Masalah |
+|---|---|---|---|
+| line 977 | "lebih efisien ... dibandingkan ResNet dan **EfficientNet**" | [3, 4] | [3]=Haq, [4]=Afchar — bukan sumber EfficientNet |
+| line 979 | "Dibandingkan **EfficientNet** ... XceptionNet lebih peka tekstur ... [13]" | [13]=SpecXNet | SpecXNet tak menguji EfficientNet |
+| line 981 | "Terbukti akurasi lebih tinggi dibanding ResNet dan **EfficientNet**" | — | tak ada sumber yang membandingkan |
+| line 1000 (Tabel 2.8) | "**EfficientNet** \| 94–96% \| 18M \| kurang sensitif tekstur" | caption [3,4,13,7] | **angka spesifik tanpa sumber** |
+| line 1007 | "SpecXNet [13] ... XceptionNet lebih tangguh dibanding ... **EfficientNet**" | [13]=SpecXNet | **misatribusi** — SpecXNet ablasi ResNet/Xception, **bukan** EfficientNet |
+
+### Tiga masalah
+1. **Arsitektur EfficientNet (Tan & Le, 2019) tidak dikutip di mana pun** dan **tidak ada di Daftar Pustaka**. ⚠️ Hati-hati: ada "C. Tan" di Daftar Pustaka, tapi itu **Chuangchuang Tan** (Frequency-Aware Deepfake, AAAI-24, in-text [13]) — **BUKAN** Mingxing Tan (EfficientNet). Jangan dikira sudah tersitasi.
+2. **Angka Tabel 2.8 untuk EfficientNet (94–96%, 18M, "kurang sensitif tekstur") tanpa sumber.** Tidak ada di [3,4,13,7]. Ini **risiko data fabrikatif** — dari mana angka itu?
+3. **Klaim "XceptionNet lebih akurat / lebih peka tekstur daripada EfficientNet" tak terdukung.** Rössler [7] membandingkan Xception vs ResNet vs MesoNet (bukan EfficientNet); SpecXNet [13] membandingkan Xception vs ResNet (bukan EfficientNet). Jadi **tidak ada studi terkutip** yang menguji Xception vs EfficientNet. Menyematkan [13]/[7] untuk klaim ini = **misatribusi**. (Catatan teknis: EfficientNet juga memakai _depthwise separable conv_ + SE via MBConv, jadi "kurang peka tekstur" pun lemah secara argumentatif.)
+
+### Dua jalan perbaikan
+**Jalan 1 (kalau EfficientNet dipertahankan):**
+- Tambahkan **(Tan & Le, 2019)** — "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks" (ICML 2019) — ke Daftar Pustaka, sitir saat EfficientNet diperkenalkan.
+- **Sumberkan angka Tabel 2.8** (94–96%/18M). Bila tak ada studi deepfake yang menguji EfficientNet di FF++, **hapus angka akurasinya** (biarkan jumlah parameter saja, itu dari Tan & Le) dan jangan mengklaim "terbukti lebih tinggi".
+- Lunakkan klaim: bukan "terbukti akurasi lebih tinggi", tetapi "EfficientNet belum lazim dipakai/divalidasi sebagai baseline deepfake pada FF++, sedangkan XceptionNet sudah menjadi standar".
+
+**Jalan 2 (disarankan — lebih bersih): buang perbandingan EfficientNet.**
+- Justifikasi terkuat XceptionNet: **standar de-facto** deteksi deepfake (dipakai FF++, dibangun-atas oleh SpecXNet) → memungkinkan **komparabilitas** dengan literatur. Argumen ini **tidak butuh** EfficientNet.
+- Karena tak ada sumber yang membandingkan Xception vs EfficientNet, membuang tangent ini menghilangkan klaim tak-terdukung + angka tak-bersumber sekaligus. Pertahankan perbandingan ResNet/MesoNet (itu **memang** terkutip via Rössler [7]).
+
+### Kalau penguji menyorot ("EfficientNet dari mana?")
+> "Perbandingan EfficientNet akan kami perbaiki. Tidak ada studi yang kami kutip yang benar-benar menguji EfficientNet pada deteksi deepfake, sehingga klaim akurasi dan angka pada Tabel 2.8 tidak kami dasari sumber yang tepat. Kami akan memilih salah satu: menambahkan referensi asli EfficientNet (Tan & Le, 2019) dengan klaim yang dilunakkan dan angka yang disumberkan, atau membuang perbandingan EfficientNet dan bersandar pada argumen bahwa XceptionNet adalah **baseline standar** deteksi deepfake demi komparabilitas. Pemilihan backbone alternatif kami catat sebagai penelitian lanjutan."
+
+### 🔧 PERBAIKAN (refined, per catatan penulis 2026-07-03): Tan & Le TIDAK menguji EfficientNet pada FaceForensics
+Poin penting: **(Tan & Le, 2019) hanya menguji EfficientNet pada ImageNet** (klasifikasi umum), **bukan** pada FaceForensics++/deteksi deepfake. Jadi menambahkan (Tan & Le, 2019) **hanya bisa menyumberkan** klaim efisiensi parameter/arsitektur umum — **TIDAK** bisa menyumberkan angka "94–96% pada FaceForensics++" maupun klaim "Xception lebih akurat dari EfficientNet pada deepfake". Angka FF++ EfficientNet **tetap tak bersumber** apa pun yang terjadi → **wajib dibuang**.
+
+**Keputusan fix (disarankan): pertahankan penyebutan EfficientNet secara jujur & singkat (sitir Tan & Le hanya untuk efisiensi parameter), tetapi BUANG semua angka FF++ dan klaim superioritas deepfake, dan HAPUS baris EfficientNet dari Tabel 2.8.**
+
+**Ready copy-paste — §2.18.2 (sitasi (Nama, Tahun)):**
+> Arsitektur XceptionNet (_Extreme Inception Network_) dipilih untuk mengekstraksi fitur spasial secara efisien melalui _depthwise separable convolution_, yang memisahkan konvolusi per kanal (_depthwise_) dari penggabungan antarkanal (_pointwise_). Desain ini membuat XceptionNet efisien secara parameter dibandingkan arsitektur konvensional seperti ResNet, sekaligus mempertahankan sensitivitas tinggi terhadap tekstur, tepi, dan pola detail pada citra wajah hasil manipulasi (Chollet, 2017; Afchar et al., 2018).
+>
+> Penelitian Afchar et al. (2018) dengan MesoNet menunjukkan arsitektur CNN dangkal dapat mendeteksi wajah palsu secara efektif, meskipun akurasinya menurun pada dataset yang lebih kompleks. Rössler et al. (2019) melaporkan XceptionNet mencapai akurasi hingga 99,26% pada FaceForensics++, melampaui ResNet dan MesoNet. Haq (2021), yang membandingkan XceptionNet dan ResNet-50 dengan _Gaussian filter_ dan _Local Binary Pattern_ (LBP), menemukan XceptionNet tidak hanya lebih akurat tetapi juga lebih cepat.
+>
+> Arsitektur lain seperti EfficientNet (Tan & Le, 2019) menawarkan efisiensi jumlah parameter yang baik pada tugas klasifikasi umum, tetapi **belum divalidasi secara luas sebagai _baseline_ deteksi deepfake pada FaceForensics++**, sehingga perbandingan empiris langsung pada tugas ini belum tersedia. XceptionNet sendiri telah menjadi _baseline_ kuat dan banyak dipakai pada FaceForensics++ (Rössler et al., 2019) serta sebagai _backbone_ pada SpecXNet (Alam et al., 2025). Oleh karena itu, XceptionNet dipilih karena:
+> - Efisien secara parameter namun tetap mampu mengekstraksi fitur spasial yang kompleks.
+> - Terbukti mencapai akurasi tertinggi dibanding ResNet dan MesoNet pada FaceForensics++ (Rössler et al., 2019).
+> - Telah menjadi _baseline_ standar dalam berbagai studi deteksi deepfake, sehingga memudahkan komparabilitas dengan penelitian sebelumnya.
+
+**Juga perbaiki §2.18.3 (line 1007):** "...XceptionNet lebih tangguh ... dibandingkan dengan ResNet ~~maupun EfficientNet~~ (Alam et al., 2025)." → SpecXNet mengablasi ResNet & Xception, **bukan** EfficientNet, jadi buang "maupun EfficientNet".
+
+**Tabel 2.8:** baris EfficientNet dihapus. Versi terkoreksi: **`documents/table/tabel_2_8_perbandingan_model_cnn.html`** (MesoNet, ResNet-50, XceptionNet saja).
+
+*(Alternatif kalau mau lebih tegas: buang total penyebutan EfficientNet — tetapi menyebutnya singkat & jujur seperti di atas lebih baik karena menunjukkan kalian sudah mempertimbangkannya.)*
+
+### 🔎 Verifikasi angka MesoNet & ResNet-50 di Tabel 2.8 (dicek ke PDF sumber, 2026-07-03)
+Sumber PDF ada lokal: MesoNet (Afchar), FaceForensics++ (Rössler), Haq. Hasil cek:
+
+**MesoNet — angka "85–90%" IMPRECISE.** Rössler et al. (2019) Tabel 1 (dilatih 4 metode) melaporkan MesoNet: **Raw 95,23% · HQ/c23 83,10% · LQ/c40 70,47%**. Jadi "85–90%" **bukan angka riil** mana pun. Yang benar (untuk c23 yang dipakai penelitian ini) = **83,10%**, atau rentang **83,10–95,23% (HQ–Raw)**. → sudah dikoreksi di tabel.
+
+**ResNet-50 — angka "92–94% pada FaceForensics++" FABRIKATIF / salah sumber. 🔴**
+1. **ResNet TIDAK ADA** di benchmark FF++ Rössler (Tabel 1 hanya: Steg.Features, Cozzolino, Bayar&Stamm, Rahmouni, MesoNet, XceptionNet). Jadi tak ada angka FF++ untuk ResNet dari Rössler.
+2. **Haq (2021)** — sumber [3] yang dikutip — ternyata **memakai dataset Celeb-DF (V2), BUKAN FaceForensics++**, dengan preprocessing Gaussian+LBP, dan melaporkan **ResNet-50: AUC 0,87; akurasi 0,79 (79%)** (XceptionNet lebih baik dari itu). Jadi angka riilnya **79% di Celeb-DF**, bukan "92–94% di FF++".
+3. Konsekuensi: klaim di **line 286** ("ResNet-50 ... di atas 90% pada FaceForensics++ [3, 5]") juga **tidak terdukung** — Haq = 79% di Celeb-DF, dan He et al. [5] = ImageNet.
+
+**Aksi pada tabel:** baris **ResNet-50 dihapus** dari Tabel 2.8 (tak ada sumber FF++). Perbandingan XceptionNet vs ResNet-50 tetap sah **di prosa** dengan sumber yang benar: Haq (2021) menemukan XceptionNet > ResNet-50 pada **Celeb-DF** (ResNet-50 akurasi 79%). Tabel 2.8 kini hanya memuat **MesoNet & XceptionNet** (dua-duanya dari benchmark FF++ Rössler). File: `documents/table/tabel_2_8_perbandingan_model_cnn.html`.
+
+**Bonus temuan:** parameter MesoNet "4M" pada tabel lama juga meragukan — MesoNet/MesoInception-4 hanya **~28 ribu parameter** (~0,03M), sengaja dibuat "mesoscopic". Kolom parameter sebaiknya dicek/di-drop; di tabel baru kolom parameter saya hilangkan agar tidak memuat angka tak-bersumber.
+
+---
+
+<a name="item-29"></a>
+
+## Item 29 — Kalimat penutup "kombinasi FFT+XceptionNet ... menghasilkan sistem yang lebih akurat, efisien, dan lebih tangguh ..." (§2.18.3, docx line ~1008): terasa GARANSI
+
+**Verdict: 🔴 BENAR, instingmu tepat. Kalimat ini berbunyi seperti JAMINAN keberhasilan, padahal (a) ini studi komparatif yang justru MENGUJI klaim itu, dan (b) hasil kalian sebagian besar NEGATIF (hybrid tak mengungguli spasial, freq ≈ tebakan acak). Kalimat ini BERTENTANGAN dengan BAB IV/V kalian sendiri.**
+
+### Kenapa terasa "garansi"
+Kalimat: "Integrasi keduanya **menghasilkan sistem deteksi deepfake yang tidak hanya lebih akurat dan efisien, tetapi juga lebih tangguh terhadap variasi data, tingkat kompresi, serta teknik manipulasi baru**, sebagaimana ditunjukkan pada penelitian-penelitian terkini [13, 16, 7, 17]."
+- Bentuknya **deklaratif-pasti** ("menghasilkan sistem yang lebih tangguh ...") — bukan hipotesis. Pembaca menangkapnya sebagai **hasil yang dijamin**.
+- Frasa "lebih tangguh terhadap variasi data, kompresi, teknik baru" persis **klaim yang kalian UJI** — dan hasilnya: hybrid **tidak** mengungguli spasial (AUC hybrid < spatial), cabang frekuensi **nyaris tebakan acak** (0,56–0,61), generalisasi lintas-dataset **tetap runtuh**. Jadi kalimat ini **dibantah oleh hasil kalian sendiri** (BAB IV/V + abstrak).
+- "[13, 16, 7, 17]" = SpecXNet, FSBI, Rössler, Frequency-Domain Masking — itu **hasil positif paper LAIN**, dipinjam untuk menjamin pendekatan **kalian**. Sama polanya dengan [Item 10](#item-10)/[Item 27](#item-27).
+- Ironi genre: kalau sudah "ditunjukkan menghasilkan sistem lebih tangguh", **kenapa diteliti?** Garansi di BAB II merusak justifikasi studi komparatif ([Item 24](#item-24)) dan menyiapkan **kontradiksi** dengan BAB IV/V.
+
+### Perbaikan — ubah dari GARANSI jadi HIPOTESIS/RASIONAL (ready copy-paste, (Nama, Tahun))
+> "Secara teoretis, kombinasi FFT dan XceptionNet bersifat saling melengkapi: FFT **berpotensi** mengekstraksi pola artefak yang tersembunyi di domain frekuensi seperti _spectral distortion_ dan _GAN fingerprints_, sedangkan XceptionNet kuat dalam mendeteksi anomali spasial pada struktur wajah dan tekstur visual. Sejumlah penelitian terkini **melaporkan** bahwa integrasi kedua domain **dapat** meningkatkan akurasi dan ketahanan deteksi (Alam et al., 2025; Hasanaath et al., 2023; Rössler et al., 2019; Luo & Wang, 2025), meskipun besarnya manfaat **bergantung pada representasi frekuensi, strategi fusi, dan karakteristik dataset**. Penelitian ini bertujuan **menguji secara empiris** sejauh mana kombinasi tersebut memberikan peningkatan, khususnya pada skenario lintas dataset — dan bukan mengasumsikannya sebagai hasil yang pasti."
+
+Kunci perubahan: "menghasilkan" → "berpotensi/dapat"; "sebagaimana ditunjukkan" → "melaporkan"; tambah kaveat "bergantung pada ..."; tutup dengan "penelitian ini menguji ...".
+
+### Cek pola serupa
+Kalimat "garansi" di BAB II ini satu keluarga dengan [Item 10](#item-10), [Item 27](#item-27) (klaim over-optimistik yang bertabrakan dengan hasil negatif). Sebaiknya seluruh BAB II disisir untuk verba pasti ("menghasilkan", "membuktikan", "terbukti unggul") pada hal-hal yang justru **diuji** — ubah ke modal hipotesis ("berpotensi", "dilaporkan", "diharapkan").
+
+### Jawaban siap-ucap kalau penguji menyorot
+> "Betul, kalimat itu terlalu menjanjikan untuk sebuah studi komparatif. Yang tepat adalah membingkainya sebagai **hipotesis**: secara teoretis kedua domain saling melengkapi dan penelitian lain melaporkan potensinya, tetapi justru **itulah yang kami uji**. Temuan kami menunjukkan kontribusi domain frekuensi **terbatas** pada konfigurasi ini, sehingga kalimat di BAB II akan kami lunakkan agar konsisten dengan hasil di BAB IV dan V."
+
+---
+
+<a name="item-30"></a>
+
+## Item 30 — §2.18.3 "Perbandingan Akurasi dan Ketahanan Metode FFT dan XceptionNet" ~75% RECAP dari §2.18.1 + §2.18.2
+
+**Verdict: 🟡 Repetitif, instingmu tepat. §2.18.3 menulis ulang justifikasi FFT (sudah di §2.18.1) DAN justifikasi XceptionNet (sudah di §2.18.2), lalu menutup. Yang benar-benar baru hanya framing "saling melengkapi" + Tabel 2.9.**
+
+### Peta duplikasi (dicek di .docx)
+| §2.18.3 (isi) | Duplikat dari | Sumber & klaim yang diulang |
+|---|---|---|
+| Para "Pada domain frekuensi ..." | **§2.18.1** (Pemilihan FFT) | Durall & Zhang [8,9] (artefak upsampling universal), FSBI [16] (robust lintas-dataset) — **sama persis**; hanya tambah Qian/Tan [11,12] |
+| Para "Sementara itu, pada domain spasial ..." (yang kamu kutip) | **§2.18.2** (Pemilihan XceptionNet) | Afchar [4]/MesoNet, Rössler [7]/XceptionNet 96–99% > ResNet & MesoNet, Haq [3] — **sama persis**; hanya tambah Alam/SpecXNet [13] |
+| Para "Dengan demikian, kombinasi ..." | — (baru) | tapi ini kalimat **GARANSI** → lihat [Item 29](#item-29) |
+| Tabel 2.9 Ringkasan FFT vs XceptionNet | — (baru, **value asli**) | perbandingan aspek-per-aspek |
+
+Jadi 2 dari 3 paragraf isi = **recap**. §2.18.1 membenarkan FFT, §2.18.2 membenarkan XceptionNet, lalu §2.18.3 **membenarkan keduanya lagi**.
+
+### Apa yang seharusnya dilakukan §2.18.3
+Judulnya "**Perbandingan** ... FFT dan XceptionNet" → tugasnya **membandingkan & menunjukkan komplementaritas**, bukan menurunkan ulang keunggulan masing-masing. Cukup: satu paragraf jembatan (rujuk balik §2.18.1/§2.18.2) + Tabel 2.9 + paragraf motivasi (versi hipotesis, bukan garansi).
+
+### Rewrite lean (ready copy-paste, (Nama, Tahun); sudah gabung fix [Item 29](#item-29))
+> Berdasarkan pembahasan pada sub-bab 2.18.1 dan 2.18.2, FFT dan XceptionNet unggul pada dimensi yang berbeda sehingga **berpotensi saling melengkapi**. XceptionNet unggul pada akurasi _in-dataset_ dan efisiensi parameter, tetapi cenderung bergantung pada artefak visual yang spesifik terhadap dataset pelatihan. Sebaliknya, representasi FFT menonjolkan artefak spektral yang bersifat algoritmik dan **dilaporkan** lebih stabil pada skenario lintas-dataset serta variasi kompresi, meskipun kehilangan informasi lokasi spasial. Ringkasan perbandingan kedua pendekatan disajikan pada Tabel 2.9.
+>
+> Secara teoretis, kombinasi keduanya **dapat** menghasilkan representasi yang lebih lengkap: FFT menangkap _spectral distortion_ dan _GAN fingerprints_ di domain frekuensi, sedangkan XceptionNet menangkap anomali spasial pada struktur wajah dan tekstur. Sejumlah penelitian terkini **melaporkan** potensi peningkatan akurasi dan ketahanan dari integrasi dua domain (Alam et al., 2025; Hasanaath et al., 2023; Luo & Wang, 2025), meskipun besarnya manfaat bergantung pada representasi frekuensi, strategi fusi, dan karakteristik dataset. **Penelitian ini bertujuan menguji secara empiris** sejauh mana kombinasi tersebut memberikan peningkatan, khususnya pada skenario lintas-dataset.
+
+Hasil: buang ~2 paragraf recap, pertahankan Tabel 2.9, dan paragraf terakhir sudah dalam mode **hipotesis** (bukan garansi).
+
+### Catatan lanjutan
+- Klaim baru di Para spasial "SpecXNet [13] ... XceptionNet lebih tangguh terhadap variasi dataset ... dibandingkan ResNet" perlu hati-hati: itu **cross-dataset robustness untuk XceptionNet** — bertabrakan dengan temuan kalian (spasial justru **runtuh** lintas-dataset). Kalau paragraf ini dibuang (rewrite di atas), masalahnya ikut hilang.
+- Pola "seksi perbandingan yang malah mengulang seksi sebelumnya" ini sekeluarga dengan [Item 13](#item-13) & [Item 17](#item-17). Saat menyisir BAB II, cek juga apakah §2.18.1/§2.18.2/§2.18.3 sebaiknya digabung/diringkas jadi struktur yang lebih rapi (FFT → XceptionNet → perbandingan-singkat).
+
+---
+
+<a name="item-31"></a>
+
+## Item 31 — Audit DIAGRAM BAB III (`documents/media_v2/`)
+
+**Verdict: 🔴 3 dari 5 diagram arsitektur perlu perbaikan. Yang paling penting: gambar 3.8 (FreqCNN) & 3.9 (Hybrid) memakai konfigurasi LAMA (base_channels=32 → 256-d), padahal teks/Tabel 3.7/config = base_channels=64 → 512-d.**
+
+### Hasil cek per diagram (dibandingkan ke kode + config)
+| Gambar | Status | Temuan |
+|---|---|---|
+| **3.4** Flowchart preprocessing | 🔴→✅ **sudah di-recreate** | Salah: grayscale jadi langkah utama, tanpa face-crop, tanpa high-pass/resize, rantai tunggal (bukan bercabang). Versi baru: artifact + Mermaid. |
+| **3.6** FreqBlock residual | ✅ **BENAR** | Conv3×3→BN→ReLU + shortcut(1×1) → MaxPool, cocok kode. |
+| **3.3** Spectral band masking | ✅ **BENAR** (minor) | Menunjukkan pita horizontal di-nol. (Minor: pita digambar agak lebar; hanya kasus horizontal, kode juga bisa vertikal.) |
+| **3.8** Arsitektur FreqCNN | 🔴 **SALAH** | Pakai **base_channels=32 → 256-d, ~700K params**. Seharusnya **base_channels=64 → 512-d, ~4,2 juta** (sesuai `config.yaml`, Tabel 3.7, dan teks docx line 1358 "vektor fitur berdimensi 512"). |
+| **3.9** Arsitektur Hybrid | 🔴 **SALAH** | (a) cabang freq "256-d" & "Proj 256→256" → **512-d** & **512→256**; (b) Classifier "**Drop(0,3)**" → **Drop(0,5)** (kode hybrid pakai dropout 0,5, dua kali). |
+
+*(Gambar 3.2 frame real/fake, 3.5 FFT viz, 3.10 LR schedule, dan semua 4.x = plot/foto ter-generate dari data — bukan diagram konseptual, tidak bermasalah.)*
+
+### Koreksi persis untuk 3.8 (FreqCNN)
+Judul: "depth=5, **base_channels=64, ~4,2 juta params**". Blok:
+`FreqBlock 1: 1→64` · `2: 64→128` · `3: 128→256` · `4: 256→512` · `5: 512→512` (dimensi spasial 112→56→28→14→7 sudah benar) · `GAP 512→1` · `FC 512→256 +ReLU` · `Drop(0,3)` · `FC 256→1` · Logit.
+
+### Koreksi persis untuk 3.9 (Hybrid)
+Cabang frekuensi: `FreqCNN → 512-d → Proj Linear+BN+ReLU 512→256 → 256`. Classifier: `Drop(0,5) · FC 512→128 · FC 128→1`. (Cabang spasial, Concat 512, SE Gate 512→512 sudah benar.)
+
+### Kenapa ini penting
+Kedua diagram itu **bertentangan dengan teks BAB III & Tabel 3.7 sendiri** (yang benar 512-d/base=64). Penguji yang membandingkan gambar vs tabel akan langsung melihat inkonsistensi 256 vs 512. Ini konsisten dengan dugaanmu ("masalah di grafik 3+").
+
+> 🔧 Tidak ada skrip generator untuk diagram ini (hand-made). Bisa diperbaiki di tool asalnya (draw.io) dengan mengganti angka di atas, **atau** minta aku recreate 3.8 & 3.9 sebagai artifact (seperti flowchart 3.4).
+>
+> ✅ **Sudah dibuatkan** PNG terkoreksi + **.drawio editable** di `documents/media_v2/` (3.4 versi compact untuk Word, 3.8, 3.9). Generator: `scripts/make_architecture_figures.py` (PNG) & `scripts/make_architecture_drawio.py` (.drawio).
+
+---
+
+<a name="item-32"></a>
+
+## Item 32 — §3.3.1 "Ekstraksi Frame" butir 4-6 + justifikasi 5 FPS / 50 frame
+
+**Verdict: naming/label/manifest ✅ BENAR; tapi 2 klaim SALAH — "ekstraksi paralel" (sebenarnya SEKUENSIAL di mode face-crop) dan "FFPP n=1000 ~50.000" (n maksimum sebenarnya 750 → ~37.500).**
+
+### Cek per butir (vs `scripts/extract_frames.py`)
+| Klaim | Status |
+|---|---|
+| Butir 4: nama berkas "frame_000000.jpg", "frame_000001.jpg" (JPEG) | ✅ BENAR — `f"frame_{saved:06d}.jpg"` (L98) + `cv2.imwrite` |
+| Butir 5: label diinferensi dari nama direktori via pencocokan kata kunci terkonfigurasi | ✅ BENAR — `infer_label(p.parent, real_kw, fake_kw)` (L149), keyword dari `config.yaml` |
+| Butir 6: manifes CSV kolom **video_id, label, frames_dir** | ✅ BENAR — `pd.DataFrame(rows, columns=["video_id","label","frames_dir"])` (L254) |
+| Butir 6: **"ekstraksi dilakukan secara paralel (multiprocessing pool)"** | 🔴 **HANYA saat face-crop OFF.** Pada mode **face-crop (MTCNN)** — yang dipakai penelitian ini — ekstraksi **SEKUENSIAL**: L222-223 "MTCNN can't be pickled for multiprocessing" / "Extracting frames sequentially (face crop mode)". Jadi untuk run kalian, klaim paralel **keliru**. |
+
+**Fix butir 6:** "Proses ekstraksi memanfaatkan _multiprocessing pool_ untuk paralelisasi pada mode tanpa _face-crop_; namun pada mode _face-crop_ dengan MTCNN yang digunakan pada penelitian ini, ekstraksi dilakukan secara **sekuensial** karena detektor MTCNN tidak dapat di-_pickle_."
+
+### Gambar 3.3 "Pseudocode ekstraksi frame" — nomor OK, tapi ISI kurang face-crop
+- ✅ **Penomoran benar**: di docx, Gambar 3.3 = Pseudocode (bukan band masking; nama file `gambar_3_3_spectral_band_masking.png` di media_v2 yang melenceng — itu Gambar 3.5 docx). Tak perlu renumber.
+- ✅ Pseudocode **tidak** mengklaim paralel/multiprocessing → isu "paralel" murni di prosa, bukan di sini.
+- 🔴 **Pseudocode kehilangan langkah face-crop MTCNN (margin 0,3) + fallback frame penuh** (kode `extract_frames.py` L86-96). Menggambarkan pipeline full-frame, padahal hasil BAB IV pakai frame ter-crop. Instance lain dari [[facecrop-mtcnn-doc-gap]].
+- 🟡 Juga hilang: skip frame pertama hitam/gagal (`mean<3`), dan guard `max(round(...),1)`.
+- **Pseudocode benar** (drop-in): tambahkan setelah cek `frame_idx mod interval == 0` → `bbox ← MTCNN(frame, margin 0,3); jika ada → crop; else → frame penuh`; plus skip hitam di awal dan penamaan `frame_{saved:06d}.jpg`.
+
+### Justifikasi "5 FPS / 50 frame" (docx line 1129)
+| Klaim | Status |
+|---|---|
+| "5 FPS = satu sampel setiap 200ms" | ✅ BENAR (1/5 s = 200 ms) |
+| "Pada 30 native FPS" (ambil tiap frame ke-6) | ✅ konteks benar |
+| **"membatasi total frame FFPP n=1000 ~50.000"** | 🔴 **SALAH.** Tabel 3.3 kalian sendiri menyatakan FFPP = **100, 250, 500, 750** (bukan ...1000). Semua BAB IV headline **n=750**, dan **tidak ada tabel hasil n1000** (maks di disk = n750). Jadi n=1000 adalah sisa skema tier LAMA (100/300/600/1000). Yang benar: **n=750 → 750×50 = ~37.500 frame**. |
+
+**Fix:** "Batas 50 frame/video membatasi total frame FaceForensics++ pada ukuran sampel terbesar (**n=750**) menjadi sekitar **37.500** frame, ukuran yang dapat dilatih pada satu sesi Colab Pro tanpa mengorbankan keberagaman video."
+
+> ⚠️ Angka "n=1000" ini menandakan ada **sisa dari skema tier lama** yang mungkin masih muncul di tempat lain. Saat menyisir BAB III, cek konsistensi: semua rujukan tier FFPP harus **100/250/500/750**, bukan 300/600/1000.
+
+---
+
+<a name="item-33"></a>
+
+## Item 33 — "Face cropping meningkatkan performa spasial secara substansial pada FaceForensics++" — apakah ada referensi?
+
+**Verdict: ✅ ADA — Rössler et al. (2019), paper FaceForensics++ itu sendiri.**
+
+Tabel 1 Rössler et al. membandingkan XceptionNet (model spasial) dengan vs tanpa face-crop:
+
+| XceptionNet | Raw | HQ (c23) | LQ (c40) |
+|---|---|---|---|
+| Full Image (tanpa crop) | 82,01% | **74,78%** | 70,52% |
+| Face-cropped | 99,26% | **95,73%** | 81,00% |
+
+Pada c23 (kompresi yang dipakai): **74,78% → 95,73%**, lompatan **~21 poin** → persis klaim "substansial". Rössler et al. menulis face extraction *"improves the overall performance of a forgery detector in comparison to a naïve approach that uses the whole image."* Sitasi = **(Rössler et al., 2019)** [7].
+
+⚠️ Kata **"Secara empiris"** menyiratkan temuan sendiri, padahal matriks eksperimen kalian **tidak memuat ablasi crop-vs-no-crop**. Rekomendasi: atribusikan ke literatur — *"Sebagaimana ditunjukkan Rössler et al. (2019), face cropping meningkatkan performa model spasial secara substansial pada FaceForensics++ (74,78% → 95,73% pada c23)."* Jangan biarkan "Secara empiris" berdiri tanpa sitasi/ablasi.
+
+---
+
+<a name="item-34"></a>
+
+## Item 34 — Classifier head hybrid (pasca SE gating, ĥ_fused ∈ ℝ⁵¹²)
+
+**Verdict: ✅ BENAR — struktur cocok persis kode `src/models/hybrid_fusion.py`.**
+
+```python
+fused_dim = PROJ_DIM * 2            # = 512  (L46)
+self.se_gate = SEGate(fused_dim)   # 512 → 512, reduction 4  (L47)
+self.classifier = nn.Sequential(   # (L48-54)
+    nn.Dropout(0.5),               # ✅
+    nn.Linear(fused_dim, 128),     # ✅ 512 → 128
+    nn.ReLU(inplace=True),         # ✅
+    nn.Dropout(0.5),               # ✅
+    nn.Linear(128, 1),             # ✅ 128 → 1 (logit)
+)
+# forward: fused = cat([spatial(256), freq(256)]) → se_gate → classifier   (L64-66)
+```
+
+| Klaim | Status |
+|---|---|
+| ĥ_fused ∈ ℝ⁵¹² pasca SE gating | ✅ `fused_dim = 256×2 = 512`; SEGate keluar 512-d |
+| Dropout(0,5) | ✅ |
+| Linear(512 → 128) "reduksi dimensi" | ✅ |
+| ReLU | ✅ |
+| Dropout(0,5) | ✅ |
+| Linear(128 → 1) "logit biner" | ✅ |
+
+🟡 **Satu catatan bahasa (bukan salah kode):** kalimat menyebut dropout 0,5 sebagai **"moderat ... agar tidak menghilangkan terlalu banyak sinyal"**. Secara teknis p=0,5 me-nol-kan **50%** aktivasi — itu dropout **kuat/standar** (nilai default klasik Srivastava et al., 2014), bukan "moderat". Penguji bisa mengait: *"0,5 kok disebut moderat, padahal buang setengah sinyal?"* Saran aman: *"Dropout(0,5), nilai standar untuk regularisasi kuat pada kepala klasifikasi (Srivastava et al., 2014)"* — atau hapus frasa "moderat / tidak menghilangkan terlalu banyak sinyal".
+
+---
+
+<a name="item-35"></a>
+
+## Item 35 — "Desain tiga varian ... menjawab RM pertama & kedua, yaitu bagaimana membangun detektor lebih akurat ..." (docx line 1397)
+
+**Verdict: 🔴 MISLEADING — menyalahnyatakan rumusan masalah + bertabrakan dengan temuan negatif. (Deskripsi model di kalimat pertama BENAR; hanya kalimat kedua yang bermasalah.)**
+
+### RM asli (BAB I, docx 293-296) — semuanya analitis/komparatif
+| | Rumusan masalah asli |
+|---|---|
+| RM1 | Sejauh mana detektor spasial murni **mengalami penurunan** performa cross-dataset? |
+| RM2 | Sejauh mana **FFT memperkecil penurunan** tersebut? |
+| RM3 | Seberapa besar **kontribusi** komponen (spasial vs frekuensi)? |
+
+**Tidak ada RM "membangun detektor yang lebih akurat".**
+
+### Tiga cacat kalimat
+1. 🔴 **RM1 salah dinyatakan** sebagai "bagaimana membangun detektor lebih akurat". Itu **sisa framing judul lama** ("Metode **Peningkatan** Deteksi Deepfake" → sudah retitle "**Studi Komparatif**"). Grep: framing "lebih akurat" HANYA muncul di line 1397 — yatim & bertentangan dgn seluruh narasi.
+2. 🔴 **Salah nomor:** "kontribusi masing-masing jenis fitur" = **RM3**, bukan RM2 (RM2 = FFT memperkecil penurunan).
+3. 🔴 **Bertabrakan dgn hasil sendiri:** kesimpulan = *hybrid TIDAK mengungguli baseline spasial; H0 tidak ditolak*. Klaim "menjawab bagaimana membangun detektor lebih akurat" → penguji menodong *"terjawab tidak? kan tidak lebih akurat."* Temuan negatif itu SAH untuk studi komparatif; framing "lebih akurat" yang membuatnya tampak gagal.
+
+### Fix (kalimat kedua saja) — TANPA menyebut hasil (ini BAB III; hasil ranah BAB IV)
+> "Desain tiga varian ini menjadi basis *ablation study* yang menjawab ketiga rumusan masalah: model spasial-saja mengukur penurunan performa domain spasial lintas dataset (RM1), perbandingan hybrid terhadap spasial menguji apakah penambahan domain frekuensi memperkecil penurunan tersebut (RM2), dan kontras spasial vs frekuensi vs hybrid mengisolasi kontribusi masing-masing domain (RM3). Sesuai sifat komparatifnya, penelitian ini diarahkan untuk **mengukur kontribusi** domain frekuensi terhadap generalisasi, bukan semata membangun detektor dengan akurasi tertinggi."
+
+> ⚠️ **Koreksi atas saran awal (2026-07-07):** versi fix pertamaku sempat menambahkan klausa *"...sehingga temuan bahwa hybrid tidak mengungguli baseline spasial tetap sah"* — itu **KELIRU** karena menyeret HASIL (BAB IV) ke BAB III. Passage line 1397 ada di **bab metodologi**, jadi fix harus berhenti pada framing tujuan/sifat komparatif; **jangan menyebut outcome** ("hybrid tidak mengungguli"). Statemen sifat-studi (komparatif, mengukur kontribusi) = sah di BAB III; statemen hasil = tidak.
+
+⚠️ **Pola berulang:** cek seluruh BAB I & III untuk sisa framing "peningkatan / lebih akurat / lebih unggul" dari judul lama — harus konsisten dengan judul komparatif. (Konsistensi dengan temuan negatif = urusan BAB IV/V, bukan di sini.)
+
+---
+
+<a name="item-36"></a>
+
+## Item 36 — Transfer learning & backbone freezing (spasial + hybrid)
+
+**Verdict: ✅ BENAR — cocok persis `scripts/train.py`.** Salah satu paragraf paling akurat.
+
+| Klaim | Kode | Status |
+|---|---|---|
+| Freeze backbone 3 epoch pertama | `FREEZE_EPOCHS = 3` (L26); epoch 1-3 | ✅ |
+| Spasial: hanya head diperbarui | freeze semua kecuali `head.fc`/`fc` (L236-239) | ✅ |
+| Hybrid: FreqCNN + proyeksi + SE gate + classifier diperbarui | freeze **hanya** `model.spatial` (L242-243) | ✅ |
+| Unfreeze pada **epoch ke-4** | `if epoch == FREEZE_EPOCHS + 1` (L274), epoch 1-indexed | ✅ |
+| Fine-tuning menyeluruh | `p.requires_grad = True` (L277/281) | ✅ |
+
+🟡 **Catatan halus (bukan salah kode):**
+1. **"pemanggilan `requires_grad(True)`"** → kode meng-**set atribut** `p.requires_grad = True`, bukan memanggil fungsi. `requires_grad(True)` sbg pemanggilan tidak ada di PyTorch. Rapikan: *"menyetel `requires_grad = True`"* / method `requires_grad_(True)`.
+2. **"catastrophic forgetting"** → istilah ketatnya = lupa tugas lama (continual learning); di sini lebih tepat "gradien head acak merusak bobot pretrained". Longgar tapi umum; penguji ML bisa koreksi.
+3. **"proyeksi"** = **dua** lapisan (spatial_proj 2048→256 + freq_proj 512→256), keduanya trainable saat freeze. `spatial_proj` belajar memproyeksikan fitur backbone yang beku — konsisten.
+
+---
+
+<a name="item-37"></a>
+
+## Item 37 — Loss BCEWithLogitsLoss + pos_weight + label smoothing (BAB II teori vs BAB III metode)
+
+**Verdict: 🟡 Konten BENAR SEMUA, tapi BAB III REPETITIF (mengulang verbatim BAB II) + satu kontradiksi.**
+
+### Konten ✅ (cocok kode)
+| Klaim | Kode | Status |
+|---|---|---|
+| `pos_weight = n_neg/n_pos` **betul dipakai** | train.py L184-185 `BCEWithLogitsLoss(pos_weight=...)` | ✅ |
+| Label smoothing `y'=y(1-α)+α·0,5` | L112 `targets*(1-ls)+ls*0.5` | ✅ cocok persis |
+| α = 0,05 konfigurasi akhir | config.yaml L17 | ✅ |
+| Seimbang → pos_weight = 1 | benar | ✅ |
+
+### Repetisi 🟡
+1. 🔴 BAB III **"Penyeimbangan Kelas (pos_weight)"** ≈ **verbatim** BAB II rumus 2.31 ("dikalikan pada sampel positif... seimbang → pos_weight=1 → BCE standar").
+2. 🟡 BAB III **"Label Smoothing"** kalimat pertama (α=0,02 → 0,01/0,99) = **duplikat** BAB II 2.32; hanya "α=0,05 akhir" yang baru.
+3. ⚠️ **Kontradiksi**: BAB III menulis "kedua rumus **telah diuraikan** pada 2.31 & 2.32" lalu **menguraikannya lagi**.
+
+### Unik & pertahankan
+"Contoh Perhitungan BCEWithLogitsLoss" (z=2,5, y=1, α=0,05, wp=1) — nilai tambah BAB III, tidak ada di BAB II.
+
+### Fix (konkret — ganti seluruh subbab loss di BAB III)
+Prinsip: BAB II = teori+rumus; BAB III = **nilai dipakai + apakah aktif + contoh**, jangan derive ulang.
+
+> **Fungsi Loss dan Penyesuaiannya**
+> Fungsi loss yang digunakan adalah *BCEWithLogitsLoss* (persamaan 2.30), dengan dua penyesuaian dari teori pada Subbab 2.x sesuai konfigurasi eksperimen:
+> 1. **Penyeimbangan kelas (pos_weight).** Bobot `pos_weight = n_neg/n_pos` (persamaan 2.31) dihitung otomatis dari komposisi data latih. Karena pengambilan sampel dirancang **seimbang 50:50**, nilai `pos_weight ≈ 1` sehingga loss efektif setara BCEWithLogitsLoss standar; mekanisme tetap disiapkan agar robust bila komposisi kelas bergeser.
+> 2. **Label smoothing.** Diaktifkan dengan **α = 0,05** (persamaan 2.32) sebagai regularisasi ringan untuk mencegah *overconfidence* pada dataset kecil (mulai n = 100).
+>
+> **Contoh perhitungan.** Untuk satu sampel: z = 2,5, y = 1 (*fake*), `pos_weight` = 1, α = 0,05:
+> - y' = 1·(1 − 0,05) + 0,05·0,5 = **0,975**
+> - σ(2,5) = 1/(1 + e^(−2,5)) ≈ **0,9241**
+> - L = −[0,975·ln(0,9241) + 0,025·ln(0,0759)] ≈ **0,141**
+
+**Yang dihapus/diubah:** (a) hapus subbab yang menurunkan ulang pos_weight & label smoothing (verbatim BAB II) + kalimat kontradiktif "telah diuraikan pada 2.31/2.32"; (b) tambah **pos_weight ≈ 1** (karena 50:50); (c) hapus contoh "α=0,02 → 0,01/0,99" (duplikat 2.32 + nilai lama); (d) pertahankan & lengkapi **Contoh Perhitungan** (satu-satunya bagian milik BAB III).
+
+**Bonus BAB II:** contoh label smoothing masih pakai α=0,02 (sisa nilai lama) — selaraskan ke **α=0,05** (0→0,025, 1→0,975) agar konsisten dgn config & BAB III.
+
+---
+
+<a name="item-38"></a>
+
+## Item 38 — §3.5.2–3.5.8 (optimizer/LR/gradient/AMP/early stop)
+
+**Verdict: ✅ SEMUA BENAR — cocok `train.py` + `config.yaml`.** Salah satu bagian paling akurat.
+
+| Klaim | Kode | Status |
+|---|---|---|
+| Backbone LR 10× lebih rendah | `backbone_lr = base_lr/10` = 2e-5 (L191) | ✅ |
+| FreqCNN (hybrid) LR 25% base | `base_lr*0.25` = 5e-5 (L~218) | ✅ |
+| Head LR = base 2e-4 | (L219) | ✅ |
+| Warmup LinearLR(0.1→1.0, 3ep) + CosineAnnealingLR(T_max=max(ep−3,1), eta_min=1e-6) via SequentialLR | L257-266 | ✅ persis |
+| AdamW, base_lr=2e-4, wd=1e-4 | config L12-13 | ✅ |
+| accum_steps=2, batch 16 → efektif 32 | config L10,16 (semua model) | ✅ |
+| Gradient clip max_norm=5.0, unscale_() sebelum clip | L116-117 | ✅ |
+| AMP + TF32 Ampere+ | ✅ | ✅ |
+| Early stopping AUC, patience 12, max 30 | config L14-15 | ✅ |
+
+Tidak ada kesalahan faktual. (Angka rumus kosong di extraction karena objek equation, tapi logika cocok.)
+
+---
+
+<a name="item-39"></a>
+
+## Item 39 — §3.6 vs §3.6.1 repetitif + Tabel 3.12 error
+
+**Verdict: 🔴 Paragraf redundan + 2 kesalahan di Tabel 3.12.**
+
+- §3.6 & §3.6.1 **paragraf pertama nyaris identik** ("eksperimen faktorial, tiga faktor: model/dataset/ukuran sampel, seed, reliabel"). Fix: §3.6 = tujuan singkat; §3.6.1 **langsung Tabel 3.12** tanpa mengulang framing faktorial.
+- **Tabel 3.12 errors** (vs `run_all.py`, `MODELS_CORE=[spatial,freq,hybrid]`):
+  | Masalah | Betul |
+  |---|---|
+  | 🔴 "Ukuran sampel **CDF**" | berlaku **kedua** dataset (Tabel 3.3: FFPP & CDF sama 100/250/500/750) → "Ukuran sampel (per dataset)" |
+  | 🔴 "Total pelatihan: [kosong]" / "Total evaluasi: [kosong]" | **72 run** (3×2×4×3); **144 evaluasi** (72 × in+cross) |
+
+---
+
+<a name="item-40"></a>
+
+## Item 40 — Paragraf Δ (generalization drop) repetitif dgn BAB I/II
+
+**Verdict: 🟡 Mildly repetitif.** BAB II (docx 940) sudah mendefinisikan Δ = selisih F1 in-dataset vs cross-dataset (rumus 2.40). BAB III (docx 1616):
+- 🟡 Kalimat 1 (motivasi "cross-dataset penting krn skenario nyata / metode belum dilihat") = ulang **BAB I latar belakang** (docx 290) + BAB II.
+- 🟡 Kalimat 3 ("Δ besar → generalisasi buruk") = interpretasi berdempet dgn BAB II 940 (dan ranah BAB IV).
+- ✅ Kalimat 2 ("rumus di 2.40") sudah benar.
+
+**Fix:** *"Selain in-dataset, setiap model dievaluasi cross-dataset (FFPP↔CDF); selisih performa dikuantifikasi dengan generalization drop (Δ, persamaan 2.40)."* Buang motivasi + interpretasi.
+
+> 🔁 **Pola berulang (Item 37, 39, 40):** BAB III sering **re-motivasi + re-derive** konsep BAB I/II lalu tetap bilang "sudah dijelaskan di [rumus]". Aturan bersih: BAB III = **nilai/konfigurasi + apa yang dilakukan + rujuk balik**; tanpa re-motivasi/re-derive.
+
+---
+
+# 🔁 STATUS RE-CHECK MENYELURUH BAB I-III (2026-07-07)
+
+Re-extract docx terkini (`CUR.txt`, 2613 paragraf), cek Item 1-40.
+
+## ✅ SUDAH DITERAPKAN di docx
+Item **23** (AUC di daftar metrik, L1009) · **27** (Pemilihan Metode "diuji empiris" + sitasi, L1145) · **28** (EfficientNet dihapus) · **29** (garansi dilunakkan "diharapkan…robust", L460) · **32** (ekstraksi sekuensial caveat MTCNN L1336; n=1000/50.000 hilang) · **33** (sitasi Rös19 face-crop L1348) · **34** ("moderat" dihapus) · **35** (RM → "basis ablation study", L1721, tanpa "lebih akurat"/tanpa hasil) · **36** (`requires_grad_(True)` L1798) · **39** (§3.6.1 dup dihapus; "Ukuran sampel (per dataset)"; total 72/144, L1945-56) · **40** (Δ para trim, L1967) · HQ/LQ=c23/c40 (L789-791) · Contoh loss L=0,1415 **arithmetic BENAR** (#3.15-3.17).
+
+## ⏳ MASIH PERLU
+- **Item 37 (parsial):** pos_weight sudah OK ("≈1"), tapi **bullet Label smoothing masih ulang α=0,02→0,01/0,99** (L1837) → hapus, sisakan α=0,05. BAB II L1006 masih "mis. 0,02" (opsional).
+- **BARU §3.5.5 AdamW:** L1852 mengulang penjelasan decoupled weight decay dari §2.15.2/2.15.3 → ringkas + rujuk balik.
+- **Item 30:** §2.18.3 masih ada (L1191) — verifikasi sudah dipangkas dari recap 2.18.1+2.18.2.
+
+## 🟡 TYPO BARU
+- L322 "Aristektur" → **Arsitektur** (caption Gambar 3.10). · L1721 "dieksploitasi **adalah** model" → ":"/"yaitu". · L1856 "scaler.unscale()" → **unscale_()**. · L1336 "denganMTCNN" → "dengan MTCNN".
+
+## 🎯 early_fusion
+Masih ada (L508-513, 715) tapi **tidak lagi misleading** — diframing "alternatif konseptual, tidak dievaluasi" (L513) + L715 kontras "bukan kanal tambahan". Klaim lama "hybrid=kanal keempat" HILANG. Boleh tetap (literatur) atau dihapus utk ketat.
+
+## 📁 Nomor gambar (bukan error docx)
+Nama file media_v2 ≠ nomor docx: `gambar_3_6_freqblock`=**Gambar 3.9**; `gambar_3_9_hybrid`=**Gambar 3.10**; `gambar_3_4_flowchart`=**Gambar 3.1** (Flowchart Utama). `gambar_3_8_freqcnn`=3.8 ✅. `gambar_3_3_pseudocode`=3.3 ✅.
+
+---
+
+# 🔬 AUDIT BAB IV–V + TYPO SWEEP (2026-07-07, 3 auditor paralel)
+
+Detail + fix CARI/GANTI: **`REVISI_BAB_IV_V_FIX_Audit_2026-07-07.md`**.
+
+- **BAB IV (angka):** ✅ BERSIH — Tabel 4.1–4.5 cocok persis CSV `outputs/`; semua Δ/AUC aritmetik benar.
+- **Konsistensi antar-bab:** ✅ Abstract↔IV↔V↔RM/H0 konsisten; H0 tidak ditolak; tak ada over-claim di hasil/kesimpulan.
+- **🔴 WAJIB:** (A) Tabel 3.11 label smoothing "Dinonaktifkan untuk dataset kecil" **SALAH** (config=0,05, prosa 1836 = diaktifkan) → "Diaktifkan α=0,05". (B) "AUC 0,56–0,68" → batas bawah **0,55** (min 0,555); di BAB IV L2253 + Abstrak.
+- **Typo jelas:** spasi heading (BAB IVHASIL/BAB VPENUTUP), titik ganda (2361/1832/1231/1226), berdukungan/PyTroch/dibahasa/Alam el at/ke-mmm/resiko, dibawah-diatas (5×), judul Daftar Pustaka (Assesment/Deteciton/Enchanced/Detectionin/Explainthe/in-CML).
+- **Soft:** klaim hybrid-F1 unggul n=250/500 (L2364) BENAR tapi tak ditabelkan → cek Gambar 4.9; scope Tabel 4.4 vs Gambar 4.9; dimana→di mana; fasa→fase; nama DP (Cozzolino/Giudice/Loshchilov/Zhao); BAB II L1167 klaim FFT datar; tahun lahir Samuel L2581 hilang.
+
+---
+
+<a name="item-41"></a>
+
+## Item 41 — Tabel 4.1 (BAB IV) = Tabel 3.12 (BAB III) duplikat
+
+**Verdict: 🔴 Redundan — matriks eksperimen yang sama muncul dua kali.** Isi identik (Model 3 · Dataset 2 · Ukuran sampel 4 · Seed 3 · Evaluasi 2); beda hanya kosmetik (header "Dimensi"/"Faktor", urutan baris).
+
+**Fix:** hapus **Tabel 4.1**, ganti rujukan ke Tabel 3.12. Alasan: (1) matriks = desain → rumah di BAB III; (2) BAB IV sudah **merujuk** Tabel 3.11/3.16/3.17 tanpa menyalin — matriks harus diperlakukan sama; (3) risiko drift bila dua tabel terpisah; (4) **3.12 lebih benar** — 4.1 menaruh "Skenario evaluasi=2" sbg faktor matriks (menyesatkan; arah eval bukan faktor pelatihan), sedangkan 3.12 memisahkan 72 run vs 144 eval. **Pertahankan 3.12**, buang 4.1.
+
+### §4.1.1 versi bersih (drop-in, Tabel 4.1 dihapus)
+> **4.1.1 Lingkungan dan Konfigurasi Eksperimen**
+> Seluruh eksperimen dijalankan pada lingkungan komputasi berbasis GPU dengan PyTorch dan *timm* untuk backbone XceptionNet; spesifikasi perangkat dirinci pada Tabel 3.16 dan 3.17. Konfigurasi hyperparameter konsisten untuk seluruh model (Tabel 3.11): optimizer AdamW (lr dasar 2×10⁻⁴), gradient accumulation dua langkah (batch efektif 32), early stopping AUC validasi patience 12, dan pembekuan backbone tiga epoch pertama. Pemilihan model terbaik berdasarkan AUC validasi tertinggi.
+> Evaluasi mengikuti **matriks eksperimen penuh pada §3.6.1 (Tabel 3.12)**, yaitu 3 model (spasial, frekuensi, hybrid) × 2 dataset (FFPP, CDF) × 4 ukuran sampel (100, 250, 500, 750) × 3 seed, menghasilkan **72 pelatihan dan 144 evaluasi**. Pengujian dua arah: in-dataset (FFPP→FFPP, CDF→CDF) dan cross-dataset (FFPP→CDF, CDF→FFPP), dengan metrik accuracy, precision, recall, F1-score, dan AUC. Khusus n=100 (~15 video, rentan noise pencuplikan), analisis utama bertumpu pada n=250, n=500, n=750, dengan n=750 representasi utama.
+
+**Berubah:** ❌ hapus Tabel 4.1 + kalimat "Rincian…Tabel 4.1" · 🔄 ganti jadi 1 kalimat rujuk Tabel 3.12 (72/144 inline) · ✅ tetap: lingkungan/hyperparameter (rujuk 3.11/3.16/3.17), 2-arah eval, caveat n=100.
+
+⚠️ **Konsekuensi renumber:** hapus Tabel 4.1 → Tabel 4.2→4.1, 4.3→4.2, dst. **Ctrl+A→F9** untuk refresh field (SEQ/REF); cek nomor tabel yang diketik manual (tidak auto-update).
