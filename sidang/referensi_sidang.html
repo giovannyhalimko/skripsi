@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referensi Sidang — Deepfake Hybrid XceptionNet–FFT</title>
+<style>
+  :root{
+    --bg:#F5F6F8; --surface:#FFFFFF; --surface-2:#FBFCFD;
+    --ink:#1A1D21; --muted:#5A616B; --faint:#8A919C;
+    --line:#E3E6EB; --line-2:#EDEFF3;
+    --spatial:#2E6FB0; --spatial-bg:#E9F1FA;
+    --freq:#D6483B; --freq-bg:#FBEBE9;
+    --hybrid:#7B57B0; --hybrid-bg:#F1EBF8;
+    --good:#2E9E6B; --good-bg:#E7F5EE;
+    --warn:#B5820A; --warn-bg:#FBF1DC;
+    --shadow:0 1px 2px rgba(20,30,50,.05),0 8px 24px -14px rgba(20,30,50,.16);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --r:12px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#14161A; --surface:#1B1E23; --surface-2:#20242A;
+      --ink:#EAECEF; --muted:#9AA1AC; --faint:#6B7280;
+      --line:#2A2E35; --line-2:#23272D;
+      --spatial:#5DA0E0; --spatial-bg:#17293B;
+      --freq:#EC7266; --freq-bg:#361C1A;
+      --hybrid:#B18BE0; --hybrid-bg:#271C39;
+      --good:#4FC58C; --good-bg:#12271D;
+      --warn:#E0AE4A; --warn-bg:#2C2413;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -16px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#F5F6F8; --surface:#FFFFFF; --surface-2:#FBFCFD; --ink:#1A1D21; --muted:#5A616B; --faint:#8A919C;
+    --line:#E3E6EB; --line-2:#EDEFF3; --spatial:#2E6FB0; --spatial-bg:#E9F1FA; --freq:#D6483B; --freq-bg:#FBEBE9;
+    --hybrid:#7B57B0; --hybrid-bg:#F1EBF8; --good:#2E9E6B; --good-bg:#E7F5EE; --warn:#B5820A; --warn-bg:#FBF1DC;
+    --shadow:0 1px 2px rgba(20,30,50,.05),0 8px 24px -14px rgba(20,30,50,.16);
+  }
+  :root[data-theme="dark"]{
+    --bg:#14161A; --surface:#1B1E23; --surface-2:#20242A; --ink:#EAECEF; --muted:#9AA1AC; --faint:#6B7280;
+    --line:#2A2E35; --line-2:#23272D; --spatial:#5DA0E0; --spatial-bg:#17293B; --freq:#EC7266; --freq-bg:#361C1A;
+    --hybrid:#B18BE0; --hybrid-bg:#271C39; --good:#4FC58C; --good-bg:#12271D; --warn:#E0AE4A; --warn-bg:#2C2413;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -16px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.01em}
+  a{color:var(--spatial);text-decoration:none}
+  code,.mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600}
+
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;align-items:center;gap:18px;height:56px}
+  .brand{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.02em;white-space:nowrap}
+  .brand .dot{color:var(--spatial)} .brand .dot2{color:var(--freq)}
+  .navlinks{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+  .navlinks a{font-family:var(--mono);font-size:12px;color:var(--muted);padding:6px 9px;border-radius:7px}
+  .navlinks a:hover{background:var(--surface);color:var(--ink)}
+  .toggle{margin-left:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);
+    width:34px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:grid;place-items:center}
+  .toggle:hover{color:var(--ink);border-color:var(--faint)}
+  .toggle:focus-visible{outline:2px solid var(--spatial);outline-offset:2px}
+
+  section{padding:44px 0;border-top:1px solid var(--line-2)}
+  section:first-of-type{border-top:none}
+  .sechead{display:flex;align-items:baseline;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .sechead h2{font-size:clamp(20px,3.2vw,26px);font-weight:680}
+  .sechead .num{font-family:var(--mono);font-size:12px;color:var(--faint);border:1px solid var(--line);
+    border-radius:6px;padding:2px 7px}
+  .lead{color:var(--muted);max-width:66ch}
+
+  .hero{padding:52px 0 40px}
+  .hero h1{font-size:clamp(28px,5vw,44px);font-weight:720;margin:14px 0 12px}
+  .hero .k{white-space:nowrap}
+  .hero .sp{color:var(--spatial)} .hero .fr{color:var(--freq)} .hero .hy{color:var(--hybrid)}
+  .hero p.lead{font-size:17px;max-width:60ch}
+  .verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:26px}
+  .vtile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 15px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .vtile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--edge,var(--line))}
+  .vtile.sp{--edge:var(--spatial)} .vtile.fr{--edge:var(--freq)} .vtile.hy{--edge:var(--hybrid)} .vtile.nt{--edge:var(--faint)}
+  .vtile .lab{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+  .vtile .big{font-family:var(--mono);font-weight:700;font-size:30px;letter-spacing:-.02em;margin-top:6px;line-height:1}
+  .vtile.sp .big{color:var(--spatial)} .vtile.fr .big{color:var(--freq)} .vtile.hy .big{color:var(--hybrid)}
+  .vtile .sub{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .mini{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .mchip{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+  .mchip b{color:var(--ink);font-weight:700}
+
+  .chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:600;
+    padding:2px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+  .chip::before{content:"";width:7px;height:7px;border-radius:2px}
+  .chip.spatial{color:var(--spatial);background:var(--spatial-bg)} .chip.spatial::before{background:var(--spatial)}
+  .chip.freq{color:var(--freq);background:var(--freq-bg)} .chip.freq::before{background:var(--freq)}
+  .chip.hybrid{color:var(--hybrid);background:var(--hybrid-bg)} .chip.hybrid::before{background:var(--hybrid)}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  caption{caption-side:bottom;text-align:left;color:var(--faint);font-size:12px;padding:9px 14px 2px;font-family:var(--mono)}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
+  thead th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;background:var(--surface-2);position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .kv td{white-space:normal;overflow-wrap:anywhere;vertical-align:top;padding:9px 12px}
+  .kv td:first-child{color:var(--muted);width:40%;padding-right:6px}
+  .kv td:last-child{font-family:var(--mono);text-align:right;color:var(--ink);width:60%}
+
+  .aucbar{display:flex;align-items:center;gap:9px;justify-content:flex-end;min-width:120px}
+  .aucbar .v{font-family:var(--mono);font-weight:700;min-width:44px;text-align:right}
+  .aucbar .track{width:64px;height:6px;border-radius:3px;background:var(--line-2);overflow:hidden;flex:none}
+  .aucbar .fill{height:100%;border-radius:3px}
+  .g-strong{color:var(--good)} .g-mid{color:var(--ink)} .g-weak{color:var(--warn)}
+
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+  .card .ch{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid var(--line-2)}
+  .card .ch h3{font-size:14px;font-weight:660}
+  .card .ch .ic{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .card table{font-size:13px;table-layout:fixed}
+  .card .body{padding:4px 0}
+  .card.arch{border-top:3px solid var(--edge)}
+  .card.arch.sp{--edge:var(--spatial)} .card.arch.fr{--edge:var(--freq)} .card.arch.hy{--edge:var(--hybrid)}
+
+  .journal{position:relative;margin-left:8px;padding-left:26px}
+  .journal::before{content:"";position:absolute;left:5px;top:6px;bottom:10px;width:2px;
+    background:linear-gradient(var(--spatial),var(--hybrid),var(--freq))}
+  .train{position:relative;padding:0 0 26px}
+  .train::before{content:"";position:absolute;left:-25px;top:5px;width:12px;height:12px;border-radius:50%;
+    background:var(--surface);border:2.5px solid var(--edge,var(--faint))}
+  .train.final::before{background:var(--good);border-color:var(--good)}
+  .train .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .train .date{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink)}
+  .train .tier{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--line);
+    padding:1px 8px;border-radius:999px}
+  .train .name{font-weight:640;font-size:14.5px}
+  .train .tag{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--good);background:var(--good-bg);padding:2px 9px;border-radius:999px}
+  .deltas{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+  .d{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line-2);
+    padding:2px 8px;border-radius:6px}
+  .d b{color:var(--ink)}
+  .train .res{font-size:13.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:11px 14px}
+  .train .res .mono{color:var(--ink)}
+  .train .take{font-size:13px;color:var(--ink);margin-top:9px;padding-left:2px}
+  .train .take b{color:var(--edge,var(--ink))}
+
+  .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .fcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+    padding:18px 18px 16px;border-top:3px solid var(--edge,var(--line))}
+  .fcard.late{--edge:var(--hybrid)} .fcard.early{--edge:var(--warn)} .fcard.bench{--edge:var(--freq)}
+  .fcard h3{font-size:15px;font-weight:680;margin-bottom:3px}
+  .fcard .st{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:11px}
+  .fcard.late .st{color:var(--hybrid)} .fcard.early .st{color:var(--warn)} .fcard.bench .st{color:var(--freq)}
+  .fcard p{margin:0 0 10px;font-size:13.5px;color:var(--muted)}
+  .fcard p b{color:var(--ink)}
+  .verdict-pill{font-family:var(--mono);font-size:12px;font-weight:700;display:inline-block;padding:5px 11px;border-radius:8px}
+  .vp-drop{color:var(--warn);background:var(--warn-bg)} .vp-keep{color:var(--hybrid);background:var(--hybrid-bg)}
+
+  .qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;box-shadow:var(--shadow)}
+  .qcard .q{font-weight:660;font-size:14px;display:flex;gap:9px;align-items:flex-start}
+  .qcard .q::before{content:"?";font-family:var(--mono);font-weight:700;color:var(--freq);background:var(--freq-bg);
+    width:22px;height:22px;border-radius:6px;display:grid;place-items:center;flex:none;font-size:13px}
+  .qcard .a{margin-top:9px;font-size:13px;color:var(--muted);padding-left:31px}
+  .qcard .a b{color:var(--good)}
+  .qcard .ev{margin-top:9px;padding-left:31px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+  .note{font-size:12.5px;color:var(--muted);margin-top:12px;display:flex;gap:8px}
+  .note .b{color:var(--warn);font-weight:700;font-family:var(--mono)}
+
+  footer{border-top:1px solid var(--line);padding:30px 0 46px;color:var(--faint);font-size:12.5px}
+  footer .paths{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre;line-height:1.7}
+
+  @media (max-width:640px){
+    .navlinks{display:none}
+    section{padding:34px 0}
+    .aucbar .track{width:44px}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+  }
+
+  /* ══ CETAK / PDF ══ paksa tema terang, jaga page-break, pertahankan warna ══ */
+  @media print{
+    :root,:root[data-theme="dark"],:root[data-theme="light"]{
+      --bg:#FFFFFF; --surface:#FFFFFF; --surface-2:#F6F7F9;
+      --ink:#14171B; --muted:#454B54; --faint:#767D87;
+      --line:#C7CCD4; --line-2:#DCE0E6;
+      --spatial:#215C97; --spatial-bg:#E4EEF9;
+      --freq:#BC3A2E; --freq-bg:#FAE6E3;
+      --hybrid:#6A489E; --hybrid-bg:#EDE5F6;
+      --good:#237A50; --good-bg:#E1F1E8;
+      --warn:#8A6100; --warn-bg:#FBF1DC;
+      --shadow:none;
+    }
+    @page{size:A4;margin:12mm 11mm}
+    html,body{background:#fff}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:10.5px;line-height:1.45}
+    nav{position:static;backdrop-filter:none;border-bottom:1.5px solid var(--line)}
+    .navlinks,.toggle{display:none}
+    .navrow{height:auto;padding:8px 0}
+    .wrap{max-width:none;padding:0 4mm}
+    section{padding:12px 0;border-top:1px solid var(--line-2)}
+    .hero{padding:8px 0 12px}
+    .hero h1{font-size:22px;margin:8px 0}
+    .hero p.lead{font-size:12px}
+    .eyebrow{font-size:9.5px}
+    .sechead{margin-bottom:12px;break-after:avoid;page-break-after:avoid}
+    .sechead h2{font-size:17px}
+    h1,h2,h3{break-after:avoid;page-break-after:avoid}
+    /* jangan potong komponen di tengah halaman */
+    .vtile,.card,.fcard,.qcard,.train,.scroll,.note{break-inside:avoid;page-break-inside:avoid}
+    .scroll{overflow:visible}
+    table{break-inside:auto} tr,td,th{break-inside:avoid;page-break-inside:avoid}
+    thead{display:table-header-group}
+    /* mulai seksi besar di halaman baru agar rapi */
+    #jurnal,#fusi{break-before:page;page-break-before:always}
+    .journal::before{background:var(--hybrid)}
+    a{color:var(--ink)}
+    footer{padding:14px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <span class="brand">XceptionNet<span class="dot">·</span>FFT<span class="dot2">&#8594;</span>Hybrid</span>
+    <div class="navlinks">
+      <a href="#hasil">Hasil</a>
+      <a href="#param">Parameter</a>
+      <a href="#jurnal">Jurnal</a>
+      <a href="#fusi">Fusi</a>
+      <a href="#qa">Q&amp;A</a>
+    </div>
+    <button class="toggle" id="tg" aria-label="Ganti tema">&#9689;</button>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div class="eyebrow">Studi Komparatif &middot; Deteksi Deepfake &middot; Referensi Sidang</div>
+  <h1>Deteksi deepfake dua domain: <span class="k sp">spasial</span> + <span class="k fr">frekuensi</span> &#8594; <span class="k hy">hybrid</span></h1>
+  <p class="lead">Mengukur kontribusi domain frekuensi (FFT) terhadap generalisasi lintas dataset, dibandingkan model domain tunggal. Ringkasan parameter, hasil, dan seluruh eksperimen yang pernah dijalankan.</p>
+
+  <div class="verdict">
+    <div class="vtile sp"><div class="lab">Spasial &middot; AUC in-dataset</div><div class="big">0,97</div><div class="sub">konsisten paling unggul</div></div>
+    <div class="vtile fr"><div class="lab">Frekuensi &middot; AUC</div><div class="big">0,56&#8211;0,61</div><div class="sub">&#8776; tebakan acak (0,5)</div></div>
+    <div class="vtile hy"><div class="lab">Hybrid</div><div class="big">tidak &gt; spasial</div><div class="sub">SE gate tak menutup gap</div></div>
+    <div class="vtile nt"><div class="lab">Hipotesis</div><div class="big">H&#8320; tak ditolak</div><div class="sub">manfaat frekuensi parsial</div></div>
+  </div>
+  <div class="mini">
+    <span class="mchip"><b>72</b> pelatihan</span>
+    <span class="mchip"><b>144</b> evaluasi</span>
+    <span class="mchip"><b>3</b> model</span>
+    <span class="mchip"><b>2</b> dataset &middot; FFPP + CDF</span>
+    <span class="mchip">headline <b>n=750</b></span>
+    <span class="mchip"><b>3</b> seed</span>
+  </div>
+</header>
+
+<section id="hasil" class="wrap">
+  <div class="sechead"><span class="num">01</span><h2>Hasil final &mdash; n=750, 3 seed</h2></div>
+  <p class="lead" style="margin-bottom:20px">Nilai AUC rata-rata (mean atas 3 seed). Batang menandai skala 0,5 &#8594; 1,0; warna sesuai domain model.</p>
+
+  <div class="scroll" style="margin-bottom:16px">
+    <table>
+      <caption>In-dataset (dilatih &amp; diuji pada dataset yang sama)</caption>
+      <thead><tr><th>Model</th><th class="num">FFPP &mdash; AUC</th><th class="num">CDF &mdash; AUC</th><th class="num">F1 (FFPP/CDF)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="chip spatial">spatial</span></td>
+          <td><div class="aucbar"><span class="v g-mid">0,778</span><span class="track"><span class="fill" style="width:56%;background:var(--spatial)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-strong">0,971</span><span class="track"><span class="fill" style="width:94%;background:var(--spatial)"></span></span></div></td>
+          <td class="num">0,705 / 0,906</td>
+        </tr>
+        <tr>
+          <td><span class="chip freq">freq</span></td>
+          <td><div class="aucbar"><span class="v g-weak">0,562</span><span class="track"><span class="fill" style="width:12%;background:var(--freq)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-weak">0,562</span><span class="track"><span class="fill" style="width:12%;background:var(--freq)"></span></span></div></td>
+          <td class="num">0,550 / 0,510</td>
+        </tr>
+        <tr>
+          <td><span class="chip hybrid">hybrid</span></td>
+          <td><div class="aucbar"><span class="v g-mid">0,644</span><span class="track"><span class="fill" style="width:29%;background:var(--hybrid)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-strong">0,919</span><span class="track"><span class="fill" style="width:84%;background:var(--hybrid)"></span></span></div></td>
+          <td class="num">0,606 / 0,834</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Cross-dataset (diuji pada dataset berbeda) &mdash; disertai keruntuhan recall</caption>
+      <thead><tr><th>Model</th><th class="num">FFPP&#8594;CDF</th><th class="num">CDF&#8594;FFPP</th><th class="num">Recall (terparah)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="chip spatial">spatial</span></td>
+          <td><div class="aucbar"><span class="v g-mid">0,678</span><span class="track"><span class="fill" style="width:36%;background:var(--spatial)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-mid">0,607</span><span class="track"><span class="fill" style="width:21%;background:var(--spatial)"></span></span></div></td>
+          <td class="num g-weak">0,074</td>
+        </tr>
+        <tr>
+          <td><span class="chip freq">freq</span></td>
+          <td><div class="aucbar"><span class="v g-mid">0,606</span><span class="track"><span class="fill" style="width:21%;background:var(--freq)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-weak">0,575</span><span class="track"><span class="fill" style="width:15%;background:var(--freq)"></span></span></div></td>
+          <td class="num g-weak">0,064</td>
+        </tr>
+        <tr>
+          <td><span class="chip hybrid">hybrid</span></td>
+          <td><div class="aucbar"><span class="v g-mid">0,665</span><span class="track"><span class="fill" style="width:33%;background:var(--hybrid)"></span></span></div></td>
+          <td><div class="aucbar"><span class="v g-weak">0,555</span><span class="track"><span class="fill" style="width:11%;background:var(--hybrid)"></span></span></div></td>
+          <td class="num g-weak">0,142</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><span class="b">!</span><span>Manfaat frekuensi hanya pada F1 cross-dataset FFPP&#8594;CDF di tier kecil (n=250/500), tidak tercermin pada AUC. Manfaat bersifat parsial, bergantung arah, dan bergantung metrik.</span></div>
+</section>
+
+<section id="param" class="wrap">
+  <div class="sechead"><span class="num">02</span><h2>Parameter &amp; konfigurasi</h2></div>
+  <p class="lead" style="margin-bottom:22px">Nilai efektif dari <code>config.yaml</code> + kode <code>src/</code>. Sumber kebenaran: <code>config.yaml</code>.</p>
+
+  <div class="pgrid">
+    <div class="card">
+      <div class="ch"><span class="ic">&#9672;</span><h3>Ekstraksi frame &amp; split</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Sampling</td><td>5 FPS &middot; maks 50 frame/video</td></tr>
+        <tr><td>Ukuran citra</td><td>224 &times; 224</td></tr>
+        <tr><td>Deteksi wajah</td><td>MTCNN &middot; margin 0,3</td></tr>
+        <tr><td>Skip frame hitam</td><td>mean &lt; 3</td></tr>
+        <tr><td>Split</td><td>70 / 15 / 15 &middot; per-video</td></tr>
+        <tr><td>Rasio kelas</td><td>50 : 50 (real : fake)</td></tr>
+        <tr><td>Penamaan</td><td>frame_%06d.jpg</td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><span class="ic">&#8767;</span><h3>Transformasi FFT</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Grayscale</td><td>0,299R+0,587G+0,114B</td></tr>
+        <tr><td>Transform</td><td>fft2 &#8594; fftshift &#8594; |&middot;|</td></tr>
+        <tr><td>High-pass (&beta;)</td><td>Gaussian &middot; 0,15</td></tr>
+        <tr><td>Log scaling</td><td>log(1 + |F|)</td></tr>
+        <tr><td>Normalisasi</td><td>z-score per-dataset</td></tr>
+        <tr><td>Cache</td><td>.npy</td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><span class="ic">&#8862;</span><h3>Augmentasi</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Resize (spasial)</td><td>256 &#8594; RRC 224 (0,8&#8211;1,0)</td></tr>
+        <tr><td>ColorJitter</td><td>0,2 &middot; 0,2 &middot; 0,1 &middot; 0,05</td></tr>
+        <tr><td>HFlip / RandErasing</td><td>0,5 / p=0,1</td></tr>
+        <tr><td>Normalize</td><td>ImageNet mean/std</td></tr>
+        <tr><td>Noise FFT (&sigma;)</td><td>0,05</td></tr>
+        <tr><td>Spectral band mask</td><td>p=0,05</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;margin:26px 0 14px;font-weight:660;color:var(--muted)">Arsitektur &mdash; tiga model</h3>
+  <div class="pgrid">
+    <div class="card arch sp">
+      <div class="ch"><span class="chip spatial">spatial</span><h3>XceptionNet</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Backbone</td><td>timm xception &middot; ImageNet</td></tr>
+        <tr><td>Input</td><td>RGB (3, 224, 224)</td></tr>
+        <tr><td>Fitur (GAP)</td><td>2048-d</td></tr>
+        <tr><td>Parameter</td><td>~22 juta</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card arch fr">
+      <div class="ch"><span class="chip freq">freq</span><h3>FreqCNN</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Input</td><td>FFT (1, 224, 224)</td></tr>
+        <tr><td>Depth &middot; base</td><td>5 &middot; 64</td></tr>
+        <tr><td>Channels</td><td>64&middot;128&middot;256&middot;512&middot;512</td></tr>
+        <tr><td>Fitur</td><td>512-d &middot; Dropout2d 0,2</td></tr>
+        <tr><td>Parameter</td><td>~4,2 juta</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card arch hy">
+      <div class="ch"><span class="chip hybrid">hybrid</span><h3>HybridTwoBranch</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Proyeksi</td><td>2048&#8594;256 &middot; 512&#8594;256</td></tr>
+        <tr><td>Fusi</td><td>concat 512 (late)</td></tr>
+        <tr><td>SE gate</td><td>512&#8594;512 &middot; reduction 4</td></tr>
+        <tr><td>Classifier</td><td>Drop0,5&middot;512&#8594;128&middot;Drop0,5&middot;128&#8594;1</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;margin:26px 0 14px;font-weight:660;color:var(--muted)">Pelatihan &middot; matriks &middot; evaluasi</h3>
+  <div class="pgrid">
+    <div class="card">
+      <div class="ch"><span class="ic">&#9881;</span><h3>Hyperparameter</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Optimizer</td><td>AdamW</td></tr>
+        <tr><td>LR base / wd</td><td>2e-4 / 1e-4</td></tr>
+        <tr><td>LR backbone / freq</td><td>2e-5 (&divide;10) / 5e-5 (&times;0,25)</td></tr>
+        <tr><td>Freeze / unfreeze</td><td>3 epoch &#8594; epoch 4</td></tr>
+        <tr><td>Schedule</td><td>warmup 3 &#8594; cosine (1e-6)</td></tr>
+        <tr><td>Loss</td><td>BCE + pos_weight &middot; LS 0,05</td></tr>
+        <tr><td>Clip / accum</td><td>max_norm 5,0 / 2 (eff. 32)</td></tr>
+        <tr><td>Batch / epoch</td><td>16 / maks 30</td></tr>
+        <tr><td>Early stop</td><td>AUC &middot; patience 12</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic">&#9638;</span><h3>Matriks eksperimen</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Model</td><td>spatial &middot; freq &middot; hybrid</td></tr>
+        <tr><td>Dataset</td><td>FFPP &middot; CDF</td></tr>
+        <tr><td>Ukuran sampel</td><td>100 &middot; 250 &middot; 500 &middot; 750</td></tr>
+        <tr><td>Seed</td><td>0 &middot; 1 &middot; 2</td></tr>
+        <tr><td>Total pelatihan</td><td>3&times;2&times;4&times;3 = 72</td></tr>
+        <tr><td>Total evaluasi</td><td>72 &times; 2 = 144</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic">&#9678;</span><h3>Evaluasi &amp; environment</h3></div>
+      <div class="body"><table class="kv"><tbody>
+        <tr><td>Metrik</td><td>acc &middot; prec &middot; recall &middot; F1 &middot; AUC</td></tr>
+        <tr><td>Threshold</td><td>0,5 + Youden's J</td></tr>
+        <tr><td>Metrik utama</td><td>AUC (seleksi + early stop)</td></tr>
+        <tr><td>Framework</td><td>PyTorch &middot; timm</td></tr>
+        <tr><td>GPU</td><td>T4 15GB / V100 &middot; Colab</td></tr>
+        <tr><td>Unit test</td><td>&mdash; (test = evaluasi)</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<section id="jurnal" class="wrap">
+  <div class="sechead"><span class="num">03</span><h2>Jurnal eksperimen &mdash; train demi train</h2></div>
+  <p class="lead" style="margin-bottom:26px">Setiap iterasi: apa yang diubah &#8594; hasilnya &#8594; catatan. Bukti di <code>outputs/</code> (train.log, conclusion.md, metrics.json).</p>
+
+  <div class="journal">
+    <div class="train" style="--edge:var(--spatial)">
+      <div class="top"><span class="date">2026-03-12&#8594;16</span><span class="tier">n=50 &middot; 200 &middot; +early n=400</span><span class="name">Train 1 &mdash; baseline awal</span></div>
+      <div class="deltas"><span class="d">lr <b>1e-4</b></span><span class="d"><b>Adam</b></span><span class="d">FreqCNN <b>depth 3</b></span><span class="d">FFT-norm (x&#8722;0,5)/0,5</span><span class="d">10 epoch</span></div>
+      <div class="res">AUC n50 FFPP &mdash; <span class="mono">S 0,808 &middot; F 0,541 &middot; H 0,662</span> &middot; CDF <span class="mono">S 0,654 &middot; F 0,297 &middot; H 0,554</span>. <b>Early fusion</b> (n400 FFPP): val-AUC puncak <span class="mono">0,685</span>.</div>
+      <div class="take">Spasial terbaik; <b>early fusion diuji, tidak lebih baik</b> &#8594; tidak dikejar.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--hybrid)">
+      <div class="top"><span class="date">2026-03-23&#8594;24</span><span class="tier">n=100&#8230;1000</span><span class="name">Train 2 &mdash; arsitektur baru</span></div>
+      <div class="deltas"><span class="d">FreqCNN <b>3&#8594;5</b></span><span class="d">+ <b>SE gate</b></span><span class="d">+ label smoothing 0,05</span><span class="d">+ grad clip &middot; noise FFT</span><span class="d">warmup+cosine</span></div>
+      <div class="res">Masih fluktuatif; hybrid sempat collapse di beberapa tier. FFPP n100 H <span class="mono">F1 0,597</span>.</div>
+      <div class="take">Fondasi arsitektur dua-cabang + SE gate ditetapkan.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--spatial)">
+      <div class="top"><span class="date">2026-03-25</span><span class="tier">n=100</span><span class="name">Train 3 &mdash; lompatan</span></div>
+      <div class="deltas"><span class="d"><b>Adam&#8594;AdamW</b></span><span class="d">FreqCNN <b>residual</b> (FreqBlock)</span><span class="d"><b>backbone freeze</b> 3ep</span><span class="d">+ ColorJitter &middot; RandErasing</span><span class="d">dropout 0,5&#8594;0,3</span></div>
+      <div class="res">FFPP AUC &mdash; <span class="mono">S 0,706 (+0,147) &middot; F 0,727 &middot; H 0,787</span>.</div>
+      <div class="take"><b>Lompatan besar</b> &mdash; AdamW + FreqCNN residual + freeze.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--freq)">
+      <div class="top"><span class="date">2026-04-03</span><span class="tier">n=100</span><span class="name">Train 4 &mdash; tuning loss</span></div>
+      <div class="deltas"><span class="d">lr <b>5e-4</b></span><span class="d">+ <b>pos_weight</b></span><span class="d">clip 1&#8594;5</span><span class="d">mask 0,30&#8594;0,15</span><span class="d">tier &#8594; 100/250/500/750</span></div>
+      <div class="res">CDF AUC &mdash; <span class="mono">S 0,951 &middot; F 0,799 &middot; H 0,895</span>. FFPP tetap sulit (S 0,542).</div>
+      <div class="take">CDF sangat baik; FFPP tetap menantang.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--freq)">
+      <div class="top"><span class="date">2026-04-05</span><span class="tier">n=100 &middot; 250</span><span class="name">Train 5 &mdash; regresi n250</span></div>
+      <div class="deltas"><span class="d">lr 2e-4</span><span class="d">warmup 2</span><span class="d">patience 10</span><span class="d">seed 0</span></div>
+      <div class="res">FFPP n250 AUC &mdash; <span class="mono">S 0,552 &middot; F 0,723 &middot; H 0,563</span>.</div>
+      <div class="take">Regresi di n250 &mdash; diperbaiki pada Train 8.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--faint)">
+      <div class="top"><span class="date">2026-04-09&#8594;10</span><span class="tier">n=100</span><span class="name">Train 6 &mdash; ablasi</span></div>
+      <div class="deltas"><span class="d"><b>face crop</b> vs tanpa</span><span class="d">separated_ffpp</span><span class="d"><b>freq-only</b> (seed 42)</span></div>
+      <div class="res">Memfinalkan keputusan face crop + isolasi cabang.</div>
+      <div class="take">Ablasi pendukung keputusan pipeline.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--hybrid)">
+      <div class="top"><span class="date">2026-04-15</span><span class="tier">n=500 &middot; Kaggle</span><span class="name">Train 7 &mdash; hybrid collapse</span></div>
+      <div class="deltas"><span class="d">full matrix</span><span class="d">patience</span></div>
+      <div class="res">FFPP &mdash; <span class="mono">S 0,749 &middot; F 0,531 &middot; H 0,555</span> (collapse, early-stop ep 6). CDF S 0,923.</div>
+      <div class="take">Hybrid-FFPP collapse &mdash; early stopping terlalu dini.</div>
+    </div>
+
+    <div class="train" style="--edge:var(--good)">
+      <div class="top"><span class="date">2026-06-04</span><span class="tier">n=100 &middot; 250 &middot; Kaggle</span><span class="name">Train 8 &mdash; config final</span></div>
+      <div class="deltas"><span class="d"><b>LR rebalance</b> freq 5e-5</span><span class="d">3-group optimizer</span><span class="d">patience 10&#8594;<b>12</b></span><span class="d">config-drift fix</span></div>
+      <div class="res">FFPP n250 AUC &mdash; <span class="mono">S 0,877 &middot; F 0,670 &middot; H 0,668</span>. CDF S 0,884 &middot; H 0,803.</div>
+      <div class="take"><b>Hybrid collapse teratasi</b>; regresi n250 dibalik. Konfigurasi final.</div>
+    </div>
+
+    <div class="train final">
+      <div class="top"><span class="date">FINAL</span><span class="tier">n=750 &middot; 3 seed</span><span class="name">Train 9 &mdash; hasil skripsi</span><span class="tag">dipakai</span></div>
+      <div class="deltas"><span class="d">config final</span><span class="d"><b>3 seed</b> (0&middot;1&middot;2)</span><span class="d">mean &plusmn; std</span></div>
+      <div class="res">In-dataset AUC &mdash; spasial <span class="mono">0,778 / 0,971</span> &middot; freq <span class="mono">0,562</span> &middot; hybrid <span class="mono">0,644 / 0,919</span>. Cross-dataset <span class="mono">0,56&#8211;0,68</span> + keruntuhan recall.</div>
+      <div class="take" style="--edge:var(--good)">Spasial terbaik &middot; freq near-random &middot; <b>hybrid tidak mengungguli spasial</b>.</div>
+    </div>
+  </div>
+</section>
+
+<section id="fusi" class="wrap">
+  <div class="sechead"><span class="num">04</span><h2>Strategi fusi &amp; benchmark backbone</h2></div>
+  <div class="fgrid">
+    <div class="fcard late">
+      <div class="st">Jalur utama</div>
+      <h3>Late fusion &mdash; Hybrid</h3>
+      <p>Dua cabang terpisah (XceptionNet + FreqCNN) &#8594; proyeksi 256 &#8594; concat 512 &#8594; <b>SE gate</b> &#8594; classifier. Dituning di seluruh Train 1&#8211;9.</p>
+      <span class="verdict-pill vp-keep">tidak mengungguli spasial</span>
+    </div>
+    <div class="fcard early">
+      <div class="st">Diuji, tidak dikejar</div>
+      <h3>Early fusion (4-kanal)</h3>
+      <p>XceptionNet 4-kanal RGB+FFT. Diuji sekali (2026-03-12, n=400 FFPP): val-AUC puncak <b>&#8776; 0,685</b> &mdash; setara/di bawah hybrid.</p>
+      <span class="verdict-pill vp-drop">&#8594; alternatif konseptual saja</span>
+    </div>
+    <div class="fcard bench">
+      <div class="st">freqbench &middot; n=750</div>
+      <h3>FreqCNN vs ResNet18</h3>
+      <p>Backbone alternatif di input FFT &mdash; untuk membuktikan kelemahan frekuensi <b>bukan</b> salah FreqCNN.</p>
+      <div class="scroll" style="box-shadow:none">
+        <table><thead><tr><th>Skenario</th><th class="num">FreqCNN</th><th class="num">RN18-pre</th><th class="num">RN18-scr</th></tr></thead>
+        <tbody>
+          <tr><td>FFPP in</td><td class="num">0,569</td><td class="num">0,561</td><td class="num">0,507</td></tr>
+          <tr><td>CDF in</td><td class="num">0,578</td><td class="num">0,609</td><td class="num">0,545</td></tr>
+          <tr><td>FFPP&#8594;CDF</td><td class="num">0,614</td><td class="num">0,628</td><td class="num">0,544</td></tr>
+          <tr><td>CDF&#8594;FFPP</td><td class="num">0,586</td><td class="num">0,578</td><td class="num">0,545</td></tr>
+        </tbody></table>
+      </div>
+      <p style="margin-top:11px">Semua near-random (0,51&#8211;0,63), termasuk ResNet18-pretrained &#8594; keterbatasan representasi FFT.</p>
+    </div>
+  </div>
+</section>
+
+<section id="qa" class="wrap">
+  <div class="sechead"><span class="num">05</span><h2>&ldquo;Pernah dicoba?&rdquo; &mdash; bukti untuk Q&amp;A</h2></div>
+  <div class="qa">
+    <div class="qcard"><div class="q">Pernah coba early fusion?</div><div class="a"><b>Ya.</b> n=400 FFPP, val-AUC &#8776; 0,68, tidak lebih baik dari hybrid.</div><div class="ev">runs/early_fusion_FFPP_n400_seed0/</div></div>
+    <div class="qcard"><div class="q">Mungkin FreqCNN kurang kuat?</div><div class="a"><b>Sudah diuji ResNet18</b> (pretrained &amp; scratch) di FFT &mdash; tetap near-random.</div><div class="ev">roc_cm/freqbench_*</div></div>
+    <div class="qcard"><div class="q">Cuma beberapa ukuran sampel?</div><div class="a"><b>Tidak</b> &mdash; n=10 s.d. 1000 pernah dijalankan; final 100/250/500/750.</div><div class="ev">runs/ &middot; tables/</div></div>
+    <div class="qcard"><div class="q">Face crop berpengaruh?</div><div class="a"><b>Ada ablasinya</b> (dengan vs tanpa MTCNN).</div><div class="ev">2026-04-09/face_crop/</div></div>
+    <div class="qcard"><div class="q">Multi-seed / reliabel?</div><div class="a"><b>Ya</b> &mdash; final 3 seed (0,1,2), mean &plusmn; std.</div><div class="ev">*_seed{0,1,2}</div></div>
+    <div class="qcard"><div class="q">Kenapa AUC metrik utama?</div><div class="a"><b>Independen threshold</b> &amp; tahan ketidakseimbangan; dipakai untuk seleksi + early stopping.</div><div class="ev">eval.py &middot; train.py</div></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>Bukti fisik seluruh eksperimen tersimpan di <code>deepfake_hybrid/outputs/</code>:</div>
+  <div class="paths">outputs/
+&#9500;&#9472;&#9472; runs/early_fusion_FFPP_n400_seed0/     &#8592; bukti early fusion
+&#9500;&#9472;&#9472; roc_cm/freqbench_*_metrics.json        &#8592; FreqCNN vs ResNet18
+&#9500;&#9472;&#9472; tables/n{100,250,500,750}/             &#8592; hasil final (Train 9)
+&#9492;&#9472;&#9472; 2026-03-15 &#8230; 2026-06-04/conclusion.md  &#8592; jurnal Train 1&#8211;8</div>
+  <div>Sumber: <code>RINGKASAN_PARAMETER_NILAI_PROYEK.md</code> + <code>INVENTARIS_SEMUA_EKSPERIMEN_2026-07-07.md</code> &middot; dibuat 2026-07-07 &middot; nilai dikonfirmasi terhadap kode &amp; data.</div>
+</footer>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('tg');
+    function apply(t){ if(t){root.setAttribute('data-theme',t);} }
+    try{ apply(localStorage.getItem('dref-theme')); }catch(e){}
+    btn.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      if(!cur){ cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'; }
+      var next = cur==='dark' ? 'light':'dark';
+      apply(next);
+      try{ localStorage.setItem('dref-theme',next); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

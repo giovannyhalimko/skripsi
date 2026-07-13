@@ -202,6 +202,8 @@
   .comp.cur{border-color:var(--acc-dim); color:var(--acc); background:rgba(139,125,255,.08)}
   .foot-meta{font-family:var(--mono); font-size:.72rem; color:var(--faint); letter-spacing:.04em; margin-top:16px}
   .kicker{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:600; margin-bottom:14px}
+
+@media print{@page{size:A4;margin:12mm 11mm}html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}nav,.nav,.toc,.tocbar{position:static !important}.callout,.answer,.node,.spec-row,.item-head,.qtext,.qcode,figure,table,pre,blockquote,.card,.item{break-inside:avoid;page-break-inside:avoid}h1,h2,h3,.sec-head,.item-head,.item-tt{break-after:avoid;page-break-after:avoid}}
 </style>
 
 <nav class="bar">
