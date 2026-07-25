@@ -31,6 +31,7 @@
 | [Rekap_Eksperimen_Deepfake_2026-07-07.xlsx](Rekap_Eksperimen_Deepfake_2026-07-07.xlsx) | **Excel 6 sheet** — jurnal train + kolom *"kenapa train ini tidak dipakai"*, hasil detail per train, hasil final, early fusion, freqbench, parameter. |
 | [RINGKASAN_PARAMETER_NILAI_PROYEK.md](RINGKASAN_PARAMETER_NILAI_PROYEK.md) | Semua parameter & nilai config (dengan rujukan `file:line`). |
 | [INVENTARIS_SEMUA_EKSPERIMEN_2026-07-07.md](INVENTARIS_SEMUA_EKSPERIMEN_2026-07-07.md) | Jurnal kronologis Train 1→9 + section fusi (late/early/freqbench) + bukti path. |
+| [HASIL_SEBELUM_FACE_CROP_2026-07-25.md](HASIL_SEBELUM_FACE_CROP_2026-07-25.md) | **Arsip hasil pre-crop (full frame, n100–750)** + perbandingan berpasangan sebelum/sesudah MTCNN. Bukti untuk *"kenapa pakai face crop?"* dan satu penyebab mekanistik cabang freq lemah. |
 
 ### B. Q&A & Fact-Check
 | Berkas | Isi |
@@ -92,6 +93,7 @@
 | *"Mungkin FreqCNN kurang kuat?"* | Excel Sheet 5 (freqbench) → **sudah coba ResNet18, tetap near-random** |
 | *"Kenapa AUC metrik utama?"* | PANDUAN + referensi → independen threshold + tahan imbalance |
 | *"Kok hybrid tidak lebih baik?"* | HYBRID study guide → freq lemah membatasi fusi; temuan negatif yang sah |
+| *"Kenapa pakai face crop? Ada hasil tanpa crop?"* | [HASIL_SEBELUM_FACE_CROP](HASIL_SEBELUM_FACE_CROP_2026-07-25.md) → **ada, 4 tier**; tanpa crop FFPP di bawah 0,5, dengan crop spatial 0,901 |
 
 ---
 
