@@ -1,3 +1,5 @@
+![1784907502119](image/Citation_Audit_AllRefs_vs_Sources_2026-07-24_1812/1784907502119.png)
+
 # Audit Sitasi Menyeluruh — Kalimat Skripsi vs Isi Paper Sumber
 
 **Tanggal:** 2026-07-24 18:12
@@ -14,6 +16,7 @@
 - **6 referensi "yatim"** (terdaftar tapi tidak pernah disitasi di badan teks).
 
 ### Pola berulang (akar masalah)
+
 1. **Label "FFT" ditempel ke paper non-FFT.** F3-Net [11] pakai **DCT**; FSBI [16] pakai **DWT/wavelet**; Zhang [9] **membuang fase** (hanya log-magnitude). Skripsi menyebut "FFT" untuk ketiganya.
 2. **Klaim "band frekuensi menengah"** ditempel ke paper yang sebenarnya melaporkan sinyal **frekuensi tinggi/periodik** (SpecXNet [13], FSBI [16]).
 3. **"Ketahanan terhadap kompresi" ↔ "generalisasi lintas-dataset" tertukar** antara F3-Net [11] (kompresi, 1 dataset) dan FreqNet [12]/FSBI [16] (lintas-sumber).
@@ -26,14 +29,14 @@
 
 Gaya IEEE mensyaratkan tiap entri Daftar Pustaka dikutip minimal sekali. Enam entri ini hanya muncul di daftar:
 
-| Ref | Judul | Tindakan |
-|-----|-------|----------|
-| [20] | Aduwala — Deepfake Detection using GAN Discriminators | sitasi di teks atau hapus |
-| [22] | Dai — Learning Affinity-Aware Upsampling | sitasi di teks atau hapus |
-| [33] | Nguyen — Learning Spatio-temporal features | sitasi di teks atau hapus |
-| [34] | Güera — Deepfake Video Detection Using RNN | sitasi di teks atau hapus |
-| [42] | Bottou — Stochastic Gradient Descent Tricks | sitasi di teks atau hapus |
-| [49] | Wikimedia — 2D Fourier Transform image | pastikan dipakai sebagai kredit gambar; jika tidak, hapus |
+| Ref  | Judul                                                 | Tindakan                                                  |
+| ---- | ----------------------------------------------------- | --------------------------------------------------------- |
+| [20] | Aduwala — Deepfake Detection using GAN Discriminators | sitasi di teks atau hapus                                 |
+| [22] | Dai — Learning Affinity-Aware Upsampling              | sitasi di teks atau hapus                                 |
+| [33] | Nguyen — Learning Spatio-temporal features            | sitasi di teks atau hapus                                 |
+| [34] | Güera — Deepfake Video Detection Using RNN            | sitasi di teks atau hapus                                 |
+| [42] | Bottou — Stochastic Gradient Descent Tricks           | sitasi di teks atau hapus                                 |
+| [49] | Wikimedia — 2D Fourier Transform image                | pastikan dipakai sebagai kredit gambar; jika tidak, hapus |
 
 > Catatan: [33] Nguyen & [34] Güera adalah paper temporal/video klasik. Jika bab "analisis video" membahasnya secara konsep, kemungkinan sitasinya hilang saat editing (kandidat kuat untuk dikutip, bukan dihapus).
 
@@ -43,51 +46,51 @@ Gaya IEEE mensyaratkan tiap entri Daftar Pustaka dikutip minimal sekali. Enam en
 
 ### 3a. Salah paper / salah nomor sitasi (yang paling mengkhawatirkan)
 
-| Ref | Kalimat (ringkas) | Masalah | Perbaikan |
-|-----|-------------------|---------|-----------|
-| **[48] Dropout** | Gambar 2.2 "Representasi Domain Frekuensi [48]" (muncul 3x) | Paper Dropout tak ada hubungan dgn domain frekuensi/FFT | Ganti ke **[24]** Gonzalez & Woods atau **[23]** |
-| **[6] Xception** (4) | "frequency-aware features ... distribusi energi frekuensi ciri khas deepfake [6]" | Chollet murni klasifikasi citra; tak menyinggung frekuensi/deepfake | Ganti ke **[8]** / **[11]** |
-| **[6] Xception** (19) | "Chollet [6] ... XceptionNet baseline efektif deteksi manipulasi wajah" | Chollet tak menguji deteksi manipulasi wajah | Sandarkan ke **[7]** FFPP |
-| **[6] Xception** (14) | "XceptionNet sensitif terhadap variasi struktur lokal [6]" | Pernyataan tak ada di paper | Hapus tag / cari sumber lain |
-| **[27] Karras** (2) | "pendekatan spasial identifikasi blending/warping/blur [27]" | PGGAN paper GENERASI GAN, bukan deteksi | Ganti ke **[4]/[9]/[14]** |
-| **[40] Sabir** (3) | "[40] menemukan sinyal frekuensi tinggi lebih efektif utk deepfake terkompresi" | Sabir NOL konten frekuensi (paper RNN/temporal murni; grep bersih) | Ganti ke **[31]/[11]/[12]** — kemungkinan nomor tertukar |
-| **[28] Geirhos** (2) | "bias terhadap tekstur **dan komponen frekuensi rendah** [28]" | Geirhos hanya tekstur-vs-bentuk; low-freq-first milik [29] | "...tekstur **[28]** dan komponen frekuensi rendah lebih dahulu **[29]**" |
-| **[14] Rana** | "spectral distortions ... keterbatasan struktural model generatif [14]" | Rana tak pernah bahas distorsi spektral | Ganti ke **[8]** Durall |
-| **[9] Zhang** (12) | "ketidakkontinyuan pada batas blending [9]" | Zhang soal replikasi spektral upsampling, bukan blending | Ganti ke **[16]** FSBI |
-| **[8] Durall** (7) | "citra = kombinasi gelombang sinusoidal [8]" | Definisi Fourier dasar; tak diartikulasikan Durall | Ganti ke **[24]** |
-| **[8] Durall** (14) | "domain shift = kualitas video/kompresi/device/lighting [8]" | Durall tak bahas domain shift | Ganti ke **[46]/[14]** |
-| **[8] Durall** (17) | "FFT kompleksitas rendah, efisien utk hi-res [8]" | Durall tak klaim biaya komputasi FFT | Ganti ke sumber DSP/**[24]** |
-| **[7] FFPP** (15) | "Adam konvergensi cepat & stabil [7]" | FFPP hanya MEMAKAI Adam, tak klaim itu | Ganti ke **[44]/[41]** |
+| Ref                   | Kalimat (ringkas)                                                                 | Masalah                                                             | Perbaikan                                                                |
+| --------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **[48] Dropout**      | Gambar 2.2 "Representasi Domain Frekuensi [48]" (muncul 3x)                       | Paper Dropout tak ada hubungan dgn domain frekuensi/FFT             | Ganti ke**[24]** Gonzalez & Woods atau **[23]**                          |
+| **[6] Xception** (4)  | "frequency-aware features ... distribusi energi frekuensi ciri khas deepfake [6]" | Chollet murni klasifikasi citra; tak menyinggung frekuensi/deepfake | Ganti ke**[8]** / **[11]**                                               |
+| **[6] Xception** (19) | "Chollet [6] ... XceptionNet baseline efektif deteksi manipulasi wajah"           | Chollet tak menguji deteksi manipulasi wajah                        | Sandarkan ke**[7]** FFPP                                                 |
+| **[6] Xception** (14) | "XceptionNet sensitif terhadap variasi struktur lokal [6]"                        | Pernyataan tak ada di paper                                         | Hapus tag / cari sumber lain                                             |
+| **[27] Karras** (2)   | "pendekatan spasial identifikasi blending/warping/blur [27]"                      | PGGAN paper GENERASI GAN, bukan deteksi                             | Ganti ke**[4]/[9]/[14]**                                                 |
+| **[40] Sabir** (3)    | "[40] menemukan sinyal frekuensi tinggi lebih efektif utk deepfake terkompresi"   | Sabir NOL konten frekuensi (paper RNN/temporal murni; grep bersih)  | Ganti ke**[31]/[11]/[12]** — kemungkinan nomor tertukar                  |
+| **[28] Geirhos** (2)  | "bias terhadap tekstur**dan komponen frekuensi rendah** [28]"                     | Geirhos hanya tekstur-vs-bentuk; low-freq-first milik [29]          | "...tekstur**[28]** dan komponen frekuensi rendah lebih dahulu **[29]**" |
+| **[14] Rana**         | "spectral distortions ... keterbatasan struktural model generatif [14]"           | Rana tak pernah bahas distorsi spektral                             | Ganti ke**[8]** Durall                                                   |
+| **[9] Zhang** (12)    | "ketidakkontinyuan pada batas blending [9]"                                       | Zhang soal replikasi spektral upsampling, bukan blending            | Ganti ke**[16]** FSBI                                                    |
+| **[8] Durall** (7)    | "citra = kombinasi gelombang sinusoidal [8]"                                      | Definisi Fourier dasar; tak diartikulasikan Durall                  | Ganti ke**[24]**                                                         |
+| **[8] Durall** (14)   | "domain shift = kualitas video/kompresi/device/lighting [8]"                      | Durall tak bahas domain shift                                       | Ganti ke**[46]/[14]**                                                    |
+| **[8] Durall** (17)   | "FFT kompleksitas rendah, efisien utk hi-res [8]"                                 | Durall tak klaim biaya komputasi FFT                                | Ganti ke sumber DSP/**[24]**                                             |
+| **[7] FFPP** (15)     | "Adam konvergensi cepat & stabil [7]"                                             | FFPP hanya MEMAKAI Adam, tak klaim itu                              | Ganti ke**[44]/[41]**                                                    |
 
 ### 3b. Bertentangan dengan isi sumber (paling serius — sumber berkata sebaliknya)
 
-| Ref | Kalimat (ringkas) | Yang sumber sebenarnya katakan |
-|-----|-------------------|-------------------------------|
-| **[7] FFPP** (5) | "variasi kompresi tidak mengganggu performa, XceptionNet tahan compression noise" | FFPP: Xception **kesulitan** pada kompresi; akurasi LQ turun ke **81%** (full-image 70%). Balik total. |
-| **[9] Zhang** (7) | "[9] freq info meningkatkan robustness thd variasi kualitas video" | Zhang: JPEG/resize **menghancurkan** artefak upsampling; tentang citra, bukan video. Menunjukkan generalisasi, bukan ketahanan degradasi. |
-| **[9] Zhang** (10) | "FFT menangkap amplitudo **dan fase** di semua frekuensi [9]" | Zhang eksplisit: **"phase information is discarded"** — hanya log-magnitude. Pindahkan klaim fase ke **[25]/[26]**. |
-| **[4] MesoNet** (2) | taksonomi artefak termasuk "inkonsistensi pencahayaan" [4] | MesoNet: deepfake justru "same illumination and expression". Taksonomi tak ada di paper. → **[14]** |
-| **[4] MesoNet** (10) | trailing "[4]" pada "XceptionNet melampaui ResNet & MesoNet" | Di paper [4], Xception fine-tune mereka **96,1/93,5%**, di BAWAH MesoNet 98,4%. Hapus tag [4]. |
+| Ref                  | Kalimat (ringkas)                                                                 | Yang sumber sebenarnya katakan                                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **[7] FFPP** (5)     | "variasi kompresi tidak mengganggu performa, XceptionNet tahan compression noise" | FFPP: Xception**kesulitan** pada kompresi; akurasi LQ turun ke **81%** (full-image 70%). Balik total.                                    |
+| **[9] Zhang** (7)    | "[9] freq info meningkatkan robustness thd variasi kualitas video"                | Zhang: JPEG/resize**menghancurkan** artefak upsampling; tentang citra, bukan video. Menunjukkan generalisasi, bukan ketahanan degradasi. |
+| **[9] Zhang** (10)   | "FFT menangkap amplitudo**dan fase** di semua frekuensi [9]"                      | Zhang eksplisit:**"phase information is discarded"** — hanya log-magnitude. Pindahkan klaim fase ke **[25]/[26]**.                       |
+| **[4] MesoNet** (2)  | taksonomi artefak termasuk "inkonsistensi pencahayaan" [4]                        | MesoNet: deepfake justru "same illumination and expression". Taksonomi tak ada di paper. →**[14]**                                       |
+| **[4] MesoNet** (10) | trailing "[4]" pada "XceptionNet melampaui ResNet & MesoNet"                      | Di paper [4], Xception fine-tune mereka**96,1/93,5%**, di BAWAH MesoNet 98,4%. Hapus tag [4].                                            |
 
 ### 3c. Klaim domain frekuensi tertukar/salah label (inti argumen frekuensi skripsi)
 
-| Ref | Kalimat (ringkas) | Masalah | Perbaikan |
-|-----|-------------------|---------|-----------|
-| **[11] Qian/F3-Net** (3) | "meningkatkan generalisasi pada **berbagai dataset** [11]" | F3-Net hanya diuji di FF++ (lintas kompresi), tak pernah lintas-dataset | "...pada **berbagai tingkat kompresi** di FaceForensics++" |
-| **[11] Qian** (4) | "belajar interaksi spasial-frekuensi **dari layer konvolusi pertama**, butuh input multi-channel" (framing early-fusion) | F3-Net **bukan** early fusion; dua stream frekuensi difusi belakangan; malah memperingatkan FFT/DCT mentah "infeasible" utk CNN vanilla | Ganti contoh / hapus framing early-fusion |
-| **[11] Qian** (7) | "CNN utk freq clues (mis. melalui representasi **FFT**) [11]" | F3-Net pakai **DCT** | Hapus "FFT" / ganti "DCT" |
-| **[11] Qian** (10) | "high-freq clues lebih stabil thd variasi domain → deteksi **unseen datasets** lebih baik [11]" | Robustness F3-Net thd **kompresi**, bukan domain shift; tak ada uji unseen-dataset | Ubah ke "kompresi" |
-| **[12] Tan/FreqNet** (4) | "detektor frekuensi lebih baik pada **citra terkompresi** [12]" | FreqNet tak punya eksperimen kompresi (fokus generalisasi lintas-GAN) | Pindahkan ke **[11]** |
-| **[13] Alam/SpecXNet** (4) | "deepfake beda signifikan pada **band frekuensi menengah** [16][13]" | SpecXNet lapor sinyal **frekuensi tinggi/periodik** (radial lines, symmetry), bukan mid-band | Hapus "menengah" |
-| **[16] FSBI** (6) | "FSBI lapor deepfake beda di **band frekuensi menengah**" | FSBI pakai DWT (detail frekuensi tinggi), tanpa klaim mid-band | Hapus "menengah" |
-| **[16] FSBI** (11) | "metode frekuensi seperti **FFT** lebih tahan lintas dataset [16]" | FSBI pakai **DWT/wavelet**, bukan FFT | Ganti label ke "DWT" |
+| Ref                        | Kalimat (ringkas)                                                                                                       | Masalah                                                                                                                                | Perbaikan                                                 |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| **[11] Qian/F3-Net** (3)   | "meningkatkan generalisasi pada**berbagai dataset** [11]"                                                               | F3-Net hanya diuji di FF++ (lintas kompresi), tak pernah lintas-dataset                                                                | "...pada**berbagai tingkat kompresi** di FaceForensics++" |
+| **[11] Qian** (4)          | "belajar interaksi spasial-frekuensi**dari layer konvolusi pertama**, butuh input multi-channel" (framing early-fusion) | F3-Net**bukan** early fusion; dua stream frekuensi difusi belakangan; malah memperingatkan FFT/DCT mentah "infeasible" utk CNN vanilla | Ganti contoh / hapus framing early-fusion                 |
+| **[11] Qian** (7)          | "CNN utk freq clues (mis. melalui representasi**FFT**) [11]"                                                            | F3-Net pakai**DCT**                                                                                                                    | Hapus "FFT" / ganti "DCT"                                 |
+| **[11] Qian** (10)         | "high-freq clues lebih stabil thd variasi domain → deteksi**unseen datasets** lebih baik [11]"                          | Robustness F3-Net thd**kompresi**, bukan domain shift; tak ada uji unseen-dataset                                                      | Ubah ke "kompresi"                                        |
+| **[12] Tan/FreqNet** (4)   | "detektor frekuensi lebih baik pada**citra terkompresi** [12]"                                                          | FreqNet tak punya eksperimen kompresi (fokus generalisasi lintas-GAN)                                                                  | Pindahkan ke**[11]**                                      |
+| **[13] Alam/SpecXNet** (4) | "deepfake beda signifikan pada**band frekuensi menengah** [16][13]"                                                     | SpecXNet lapor sinyal**frekuensi tinggi/periodik** (radial lines, symmetry), bukan mid-band                                            | Hapus "menengah"                                          |
+| **[16] FSBI** (6)          | "FSBI lapor deepfake beda di**band frekuensi menengah**"                                                                | FSBI pakai DWT (detail frekuensi tinggi), tanpa klaim mid-band                                                                         | Hapus "menengah"                                          |
+| **[16] FSBI** (11)         | "metode frekuensi seperti**FFT** lebih tahan lintas dataset [16]"                                                       | FSBI pakai**DWT/wavelet**, bukan FFT                                                                                                   | Ganti label ke "DWT"                                      |
 
 ### 3d. Lain-lain
 
-| Ref | Kalimat (ringkas) | Masalah | Perbaikan |
-|-----|-------------------|---------|-----------|
-| **[1] Korshunov** | "tingkat geopolitik: instrumen disinformasi & propaganda [1]" | Paper soal kerentanan face recognition + database VidTIMIT; kata propaganda/disinformasi tak ada (hanya sebut fake-news tangan-kedua) | Ganti ke **[14]** Rana (abstraknya sebut "misinformation and propaganda") |
-| **[19] Chadha** | "...hiburan, film, lip-sync translation, dan **virtual reality** [19]" | "virtual reality" tak ada di Chadha (paper sebut *video games*) | Hapus "virtual reality" / ganti "video game" |
+| Ref               | Kalimat (ringkas)                                                     | Masalah                                                                                                                               | Perbaikan                                                                |
+| ----------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **[1] Korshunov** | "tingkat geopolitik: instrumen disinformasi & propaganda [1]"         | Paper soal kerentanan face recognition + database VidTIMIT; kata propaganda/disinformasi tak ada (hanya sebut fake-news tangan-kedua) | Ganti ke**[14]** Rana (abstraknya sebut "misinformation and propaganda") |
+| **[19] Chadha**   | "...hiburan, film, lip-sync translation, dan**virtual reality** [19]" | "virtual reality" tak ada di Chadha (paper sebut*video games*)                                                                        | Hapus "virtual reality" / ganti "video game"                             |
 
 ---
 
