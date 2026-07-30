@@ -3,11 +3,11 @@ output_root: "./outputs"
 
 # Frame extraction
 frame_sampling_fps: 5
-max_frames_per_video: 50
+max_frames_per_video: 100   # Canonical runs used 100 (verified: test split ~66-82 frames/video, impossible at 50)
 image_size: 224
 
 # Training
-batch_size: 16
+batch_size: 64           # Per step; effective batch 128 with accum_steps=2 (matches Tabel 3.11). vast_run.sh auto-tunes by VRAM (32/64/128).
 num_workers: 2
 lr: 2.0e-4
 weight_decay: 1.0e-4
