@@ -358,3 +358,33 @@ temporal diabaikan.
 - **Kekurangan:** Circular, tipis, tak sebut trade-off yg diminta.
 - **Skor:** 5/10
 
+## Pertanyaan #16 — Kenapa BCE (1 output) bukan CrossEntropy 2 kelas; guna label smoothing (dijawab ulang)
+
+**Jawaban ringkas mahasiswa:** BCE karena output hanya dua (0 real, 1 fake). Label smoothing meredam
+overconfidence model hybrid (backbone pretrained + cabang baru) yg bisa hasilkan logit ekstrem.
+
+**Evaluasi**
+- **Ketepatan:** Poin 2 BAGUS (label smoothing meredam overconfidence; konteks hybrid→logit ekstrem
+  cerdas). Poin 1 TAK BERUBAH meski sudah diberi kesempatan ulang & di-nudge. "Karena kelasnya dua"
+  bukan alasan pembeda (CrossEntropy pun 2 kelas).
+- **Kedalaman:** Alasan benar poin 1: biner butuh 1 neuron/1 logit → sigmoid → P(fake); P(real)=1−P(fake)
+  jadi 1 output cukup; CrossEntropy 2 kelas = 2 output redundan. BCEWithLogitsLoss = sigmoid+BCE stabil
+  numerik.
+- **Kekurangan:** Poin 1 gagal jawab "kenapa 1 output bukan 2" walau sudah retry.
+- **Skor:** 6/10
+
+## Pertanyaan #17 — Kenapa magnitudo FFT di-log (log1p)?
+
+**Jawaban ringkas mahasiswa:** Magnitudo murni angka sangat besar; di-log jadi lebih kecil tapi tetap
+"preserve range".
+
+**Evaluasi**
+- **Ketepatan:** Permukaan benar (magnitudo besar → log mengecilkan). TAPI "preserve range" KELIRU —
+  log justru MENGOMPRES rentang dinamis (itu tujuannya). Magnitudo FFT punya rentang dinamis SANGAT lebar
+  (DC/low-freq >> high-freq).
+- **Kedalaman:** Lewat inti pertanyaan "kalau log dihapus": tanpa log, komponen DC/low-freq raksasa akan
+  MENDOMINASI, artefak high-freq halus (yg justru dibutuhkan) jadi tak terlihat/negligible; nilai mentah
+  besar juga buruk utk training NN (normalisasi/gradien).
+- **Kekurangan:** "preserve range" terbalik (harusnya kompres); efek penghapusan log tak dijelaskan.
+- **Skor:** 5/10
+

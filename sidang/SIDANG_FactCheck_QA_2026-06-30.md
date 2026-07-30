@@ -1736,8 +1736,8 @@ Tidak ada kesalahan faktual. (Angka rumus kosong di extraction karena objek equa
 - §3.6 & §3.6.1 **paragraf pertama nyaris identik** ("eksperimen faktorial, tiga faktor: model/dataset/ukuran sampel, seed, reliabel"). Fix: §3.6 = tujuan singkat; §3.6.1 **langsung Tabel 3.12** tanpa mengulang framing faktorial.
 - | **Tabel 3.12 errors** (vs `run_all.py`, `MODELS_CORE=[spatial,freq,hybrid]`): | Masalah                                                                                               | Betul |
   | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----- |
-  | 🔴 "Ukuran sampel**CDF**"                                                     | berlaku**kedua** dataset (Tabel 3.3: FFPP & CDF sama 100/250/500/750) → "Ukuran sampel (per dataset)" |
-  | 🔴 "Total pelatihan: [kosong]" / "Total evaluasi: [kosong]"                   | **72 run** (3×2×4×3); **144 evaluasi** (72 × in+cross)                                                |
+  | 🔴 "Ukuran sampel**CDF**"                                                     | berlaku**kedua** dataset (Tabel 3.3: FFPP & CDF sama 100/250/500/750) → "Ukuran sampel (per dataset)" |       |
+  | 🔴 "Total pelatihan: [kosong]" / "Total evaluasi: [kosong]"                   | **72 run** (3×2×4×3); **144 evaluasi** (72 × in+cross)                                                |       |
 
 ---
 
