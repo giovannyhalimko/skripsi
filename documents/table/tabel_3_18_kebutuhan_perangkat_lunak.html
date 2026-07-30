@@ -43,6 +43,11 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
       <td>Pustaka standar untuk I/O video dan operasi citra</td>
     </tr>
     <tr>
+      <td><code>opencv-python-headless</code></td>
+      <td>Pembacaan dan pencuplikan <i>frame</i> video pada lingkungan <i>deployment</i> (Hugging Face Spaces) yang tidak memiliki antarmuka grafis (GUI)</td>
+      <td>Varian OpenCV tanpa dependensi GUI, sesuai untuk lingkungan server/CPU</td>
+    </tr>
+    <tr>
       <td>NumPy</td>
       <td>Komputasi Transformasi Fourier 2D (<code>fft2</code>, <code>fftshift</code>) dan operasi numerik berbasis <i>array</i></td>
       <td>Fondasi komputasi numerik Python</td>
@@ -77,8 +82,13 @@ caption { caption-side: bottom; text-align: left; font-size: 11pt; padding-top: 
       <td>Visualisasi hasil (kurva ROC, <i>learning curve</i>) pada BAB IV</td>
       <td>Pembuatan grafik publikasi</td>
     </tr>
+    <tr>
+      <td><i>Gradio</i></td>
+      <td>Membangun antarmuka purwarupa interaktif untuk perbandingan tiga model dan <i>deployment</i> ke Hugging Face Spaces (subbab 4.1.2)</td>
+      <td>SDK antarmuka ringan dengan dukungan <i>native</i> pada platform Hugging Face Spaces</td>
+    </tr>
   </tbody>
-  <caption>Tabel 3.18 Kebutuhan Perangkat Lunak</caption>
+  <caption>Tabel 3.16 Kebutuhan Perangkat Lunak</caption>
 </table>
 </div>
 <button class="copy-btn" onclick="copyTable()">Copy Table</button>
