@@ -1,7 +1,7 @@
 # Thesis Reference Index
 
 > Quick-reference index for all papers in `/thesis_reference/`. Organized by topic with keywords for fast lookup.
-> Total: **45 references** (44 PDFs + 1 HTML). Updated 2026-06-17: **added 6 theory references** (phase spectrum, CNN frequency/texture bias, domain adaptation) and **removed 3 orphans** no longer cited in the docx (Oppenheim — *Discrete-Time Signal Processing*; Easton; Robbins). Earlier (2026-06-02): added Zhang MTCNN. See "Cited but NOT in folder" for bibliography entries without a local PDF.
+> Total: **51 references**. Updated **2026-07-29** (later): added **Zhong et al — Random Erasing** (augmentasi RGB). Earlier same day: added **5 hyperparameter-justification refs** in §H (3 new downloads — Ioffe & Szegedy [BatchNorm], Wu & He [Group Norm], Keskar [large-batch]; 2 already-in-folder now indexed — Goyal [large minibatch/warmup], Howard & Ruder [discriminative fine-tuning]) to answer penguji Item 6 (dasar hyperparameter / batch size). Earlier (2026-06-17): **added 6 theory references** (phase spectrum, CNN frequency/texture bias, domain adaptation), **removed 3 orphans** (Oppenheim — *Discrete-Time Signal Processing*; Easton; Robbins). Earlier (2026-06-02): added Zhang MTCNN. See "Cited but NOT in folder" for bibliography entries without a local PDF.
 
 ---
 
@@ -25,6 +25,8 @@
 | **image processing fundamentals** | Gonzalez & Woods |
 | **signal processing / Fourier** | Gonzalez & Woods, Oppenheim & Lim (phase) |
 | **optimizer / gradient descent** | Ruder, Bottou |
+| **batch size / batch normalization** | Ioffe & Szegedy (BatchNorm), Wu & He (GroupNorm), Keskar (large-batch), Goyal (minibatch/warmup) |
+| **hyperparameter / fine-tuning basis** | Goyal (effective batch), Howard & Ruder (discriminative LR), Loshchilov (AdamW), Keskar |
 | **hybrid / multi-domain** | Alam (SpecXNet), Luo, Qian, Tan |
 | **generalization / cross-dataset** | Ma, Tan, Luo, Haliassos |
 | **domain adaptation / generalization** | Ben-David (theory), Ma, Tan, Haliassos |
@@ -336,6 +338,59 @@
 - **Keywords:** SGD, stochastic gradient descent, learning rate schedule, mini-batch, convergence tricks, practical tips
 - **Relevance:** Practical SGD guidance. Reference for learning rate scheduling concepts.
 - **Use in thesis:** BAB II (optimization theory, learning rate scheduling)
+
+### Hyperparameter Justification (added 2026-07-29 — landasan Tabel 3.11 / §3.5.5)
+
+> Ditambahkan untuk menjawab revisi penguji Item 6 ("dasar penyusunan hyperparameter") — khususnya **batch size** dan **learning rate**. Lihat `sidang/DEFENSE_Batch_Size_dan_Hyperparameter_2026-07-29.md`.
+
+#### Ioffe & Szegedy — Batch Normalization
+- **File:** `Ioffe & Szegedy - Batch Normalization.pdf`
+- **Full title:** Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (ICML 2015)
+- **Keywords:** batch normalization, internal covariate shift, mini-batch statistics, training stability, batch size dependence
+- **Relevance:** Sumber asli BatchNorm. Landasan mengapa ukuran batch yang memadai penting (Xception/FreqCNN BN-heavy). Sekaligus mengisi gap: konsep BatchNorm dibahas di BAB II tanpa sitasi sumber.
+- **Use in thesis:** BAB II (BatchNorm), BAB III §3.5.5 (landasan batch size)
+
+#### Wu & He — Group Normalization
+- **File:** `Wu & He - Group Normalization.pdf`
+- **Full title:** Group Normalization (ECCV 2018)
+- **Keywords:** group normalization, batch normalization degradation, small batch, normalization
+- **Relevance:** Menunjukkan akurasi BatchNorm menurun tajam pada batch kecil — dasar untuk memilih batch tidak terlalu kecil.
+- **Use in thesis:** BAB III §3.5.5 (landasan batch size, opsional)
+
+#### Keskar et al — On Large-Batch Training for Deep Learning
+- **File:** `Keskar et al - On Large-Batch Training for Deep Learning.pdf`
+- **Full title:** On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima (ICLR 2017)
+- **Keywords:** large-batch training, generalization gap, sharp minima, batch size, generalization
+- **Relevance:** Dasar mengapa batch tidak dibuat terlalu besar (generalization gap). Melengkapi argumen "128 = titik seimbang".
+- **Use in thesis:** BAB III §3.5.5 (landasan batch size)
+
+#### Goyal et al — Accurate, Large Minibatch SGD *(sudah ada di folder)*
+- **File:** `Goyal et al - Accurate, Large Minibatch SGD-Training ImageNet in 1 Hour.pdf`
+- **Full title:** Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour (2017)
+- **Keywords:** large minibatch, effective batch, linear scaling rule, learning rate warmup, gradient accumulation
+- **Relevance:** Dasar batch efektif (gradient accumulation) dan hubungan batch–learning rate (linear scaling). Juga landasan warmup.
+- **Use in thesis:** BAB III §3.5.3 (warmup), §3.5.5 (batch efektif)
+
+#### Howard & Ruder — Universal Language Model Fine-tuning (ULMFiT) *(sudah ada di folder)*
+- **File:** `Howard & Ruder - Universal Language Model Fine-tuning for Text Classification.pdf`
+- **Full title:** Universal Language Model Fine-tuning for Text Classification (ACL 2018)
+- **Keywords:** discriminative fine-tuning, differential learning rate, layer-wise LR, transfer learning, fine-tuning
+- **Relevance:** Sumber prinsip **discriminative fine-tuning** — dasar differential learning rate (backbone = base/10). Meski asalnya NLP, prinsip layer-wise LR-nya lintas domain.
+- **Use in thesis:** BAB III §3.5.2 (differential learning rate)
+
+#### Szegedy et al — Rethinking the Inception Architecture *(added 2026-07-29)*
+- **File:** `Szegedy et al - Rethinking the Inception Architecture for Computer Vision.pdf`
+- **Full title:** Rethinking the Inception Architecture for Computer Vision (CVPR 2016)
+- **Keywords:** label smoothing, model regularization, Inception-v3, softmax overconfidence
+- **Relevance:** **Sumber asli label smoothing** (§7 "Model Regularization via Label Smoothing"). Menjustifikasi persamaan 2.32 (label smoothing α) yang sebelumnya tak bersitasi.
+- **Use in thesis:** BAB II §2.15.5 (label smoothing), BAB III §3.5.4
+
+#### Zhong et al — Random Erasing Data Augmentation *(added 2026-07-29)*
+- **File:** `Zhong et al - Random Erasing Data Augmentation.pdf`
+- **Full title:** Random Erasing Data Augmentation (AAAI 2020)
+- **Keywords:** random erasing, data augmentation, occlusion, regularization, cutout, spatial masking
+- **Relevance:** Sumber teknik RandomErasing yang dipakai pada augmentasi cabang spasial (p=0,1). Landasan augmentasi penghapusan wilayah acak.
+- **Use in thesis:** BAB III §3.3.4 (augmentasi RGB — RandomErasing)
 
 *(Robbins et al — A Stochastic Approximation Method: **removed 2026-06-17** — orphan, never cited in the docx; PDF deleted.)*
 
