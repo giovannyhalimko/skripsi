@@ -12,7 +12,7 @@ class FreqBlock(nn.Module):
             nn.BatchNorm2d(out_ch),
             nn.ReLU(inplace=True),
         )
-        # 1x1 projection to match channel dims for residual add
+    # 1x1 projection to match channel dims for residual add
         self.shortcut = nn.Conv2d(in_ch, out_ch, kernel_size=1) if in_ch != out_ch else nn.Identity()
         self.pool = nn.MaxPool2d(2)
 
